@@ -130,4 +130,13 @@ options[:listen] = options[:listen] == "" ? nil : options[:listen].split(':')
 options[:connect] = options[:connect] == "" ? [] : options[:connect].split(',').map{|h| h.split(':')}
 
 node = Bitcoin::Network::Node.new(options)
-node.run
+
+require 'ruby-prof'
+res = RubyProf.profile do
+  node.run
+end
+
+printer = RubyProf::GraphHtmlPrinter.new(res)
+File.open("profile.html", "w") do |f|
+  printer.print(f, :min_percent=>1)
+end

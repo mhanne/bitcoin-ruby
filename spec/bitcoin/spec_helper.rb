@@ -8,6 +8,7 @@ begin
     end
     add_group "Protocol", "lib/bitcoin/protocol"
     add_group "Storage", "lib/bitcoin/storage"
+    add_group "Wallet", "lib/bitcoin/wallet"
     add_group("Utilities") do |file|
       ["logger.rb", "openssl.rb"].include?(file.filename.split("/").last)
     end
@@ -25,3 +26,4 @@ end
 Bitcoin::network = :bitcoin
 
 require 'bacon'; Bacon.summary_on_exit
+require 'minitest/mock'

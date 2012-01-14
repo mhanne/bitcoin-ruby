@@ -19,6 +19,7 @@ module Bitcoin
     OP_CHECKSIGVERIFY      = 173
     OP_CHECKMULTISIG       = 174
     OP_CHECKMULTISIGVERIFY = 175
+    OP_EVAL         = 176
     OP_TOALTSTACK   = 107
     OP_FROMALTSTACK = 108
     OP_TUCK         = 125
@@ -285,6 +286,10 @@ module Bitcoin
             @debug << "OP_CHECKMULTISIG"
             op_checkmultisig(check_callback)
 
+          when OP_EVAL
+            @debug << "OP_EVAL"
+            op_eval(check_callback)
+
           else
             name = OPCODES[chunk] || chunk
             raise "opcode #{name} unkown or not implemented"
@@ -353,6 +358,21 @@ module Bitcoin
       end
 
       @stack << 1  if valid_sigs >= n_sigs
+    end
+
+    # op_eval: https://en.bitcoin.it/wiki/BIP_0012
+    #
+    #  <sig> {<pub> OP_CHECKSIG} | OP_DUP OP_HASH160 <script hash> OP_EQUALVERIFY OP_EVAL
+    def op_eval(check_callback)
+      script = @stack.pop
+
+      # TODO: better way to encode stack data for new script?
+      # TODO: use all stack items
+      sig = Script.from_string(@stack.pop.unpack("H*")[0]).raw
+
+      script = Script.new(sig + script)
+
+      @stack << 1  if script.run(&check_callback)
     end
 
     def is_standard? # TODO: add

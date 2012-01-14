@@ -372,6 +372,15 @@ describe 'Bitcoin::Script' do
       # run_script(script, "foobar").should == false
     end
 
+    it "should do OP_EVAL" do
+      k1 = Bitcoin::Key.new; k1.generate
+      sig = (k1.sign("foobar") + "\x01").unpack("H*")[0]
+      inner_script = Bitcoin::Script.from_string("#{k1.pub} OP_CHECKSIG").raw.unpack("H*")[0]
+      script_hash = Bitcoin.hash160(inner_script)
+      script = "#{sig} #{inner_script} OP_DUP OP_HASH160 #{script_hash} OP_EQUALVERIFY OP_EVAL"
+      run_script(script, "foobar").should == true
+    end
+
   end
 
 end

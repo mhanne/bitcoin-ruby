@@ -261,6 +261,7 @@ module Bitcoin
 
     # run the script. +check_callback+ is called for OP_CHECKSIG operations
     def run(&check_callback)
+      return pay_to_script_hash(check_callback)  if is_p2sh?
       @debug = []
       @chunks.each{|chunk|
         break if invalid?
@@ -354,6 +355,25 @@ module Bitcoin
 
       @stack << 1  if valid_sigs >= n_sigs
     end
+
+    # pay_to_script_hash: https://en.bitcoin.it/wiki/BIP_0016
+    #
+    #  <sig> {<pub> OP_CHECKSIG} | OP_HASH160 <script_hash> OP_EQUAL
+    def pay_to_script_hash(check_callback)
+      script_hash = @chunks[-2]
+      script = @chunks[-4]
+      sig = Script.from_string(@chunks[0].unpack("H*")[0]).raw
+
+      return false  unless Bitcoin.hash160(script.unpack("H*")[0]) == script_hash.unpack("H*")[0]
+      script = Script.new(sig + script)
+      script.run(&check_callback)
+    end
+
+    def is_pay_to_script_hash?
+      @chunks.size >= 4 && @chunks[-3] == OP_HASH160 &&
+        @chunks[-2].bytesize == 20 && @chunks[-1] == OP_EQUAL
+    end
+    alias :is_p2sh? :is_pay_to_script_hash?
 
     def is_standard? # TODO: add
       # https://github.com/bitcoin/bitcoin/blob/master/src/script.cpp#L967

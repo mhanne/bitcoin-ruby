@@ -6,8 +6,14 @@ describe 'Bitcoin::Script' do
     ["410411db93e1dcdb8a016b49840f8c53bc1eb68a382e97b1482ecad7b148a6909a5cb2e0eaddfb84ccf9744464f82e160bfa9b8b64f9d4c03f999b8643f656b412a3ac"].pack("H*"),
     ["47304402204e45e16932b8af514961a1d3a1a25fdf3f4f7732e9d624c6c61548ab5fb8cd410220181522ec8eca07de4860a4acdd12909d831cc56cbbac4622082221a8768d1d0901"].pack("H*"),
     ["76a91417977bca1b6287a5e6559c57ef4b6525e9d7ded688ac"].pack("H*"),
-    ["524104573b6e9f3a714440048a7b87d606bcbf9e45b8586e70a67a3665ea720c095658471a523e5d923f3f3e015626e7c900bd08560ddffeb17d33c5b52c96edb875954104039c2f4e413a26901e67ad4adbb6a4759af87bc16c7120459ecc9482fed3dd4a4502947f7b4c7782dcadc2bed513ed14d5e770452b97ae246ac2030f13b80a5141048b0f9d04e495c3c754f8c3c109196d713d0778882ef098f785570ee6043f8c192d8f84df43ebafbcc168f5d95a074dc4010b62c003e560abc163c312966b74b653ae"].pack("H*"), # multisig 2 of 3
-    ["5141040ee607b584b36e995f2e96dec35457dbb40845d0ce0782c84002134e816a6b8cbc65e9eed047ae05e10760e4113f690fd49ad73b86b04a1d7813d843f8690ace4104220a78f5f6741bb0739675c2cc200643516b02cfdfda5cba21edeaa62c0f954936b30dfd956e3e99af0a8e7665cff6ac5b429c54c418184c81fbcd4bde4088f552ae"].pack("H*"), # multisig 1 of 2
+    ["524104fb0123fe2c399981bc77d522e2ae3268d2ab15e9a84ae49338a4b1db3886a1ea04cdab955d81e9fa1fcb0c062cb9a5af1ad5dd5064f4afcca322402b07030ec2410423b8161514560bc8638054b6637ab78f400b24e5694ec8061db635d1f28a17902b14dbf4f80780da659ab24f11ded3095c780452a4004c30ab58dffac33d839a4104f43e76afac66bf3927638b6c4f7e324513ce56d2d658ac9d24c420d09993a4464eea6141a68a4748c092ad0e8f4ac29c4a2f661ef4d22b21f20110f42fcd6f6d53ae"].pack("H*"), # multisig 2 of 3
+    ["514104fb0123fe2c399981bc77d522e2ae3268d2ab15e9a84ae49338a4b1db3886a1ea04cdab955d81e9fa1fcb0c062cb9a5af1ad5dd5064f4afcca322402b07030ec2410423b8161514560bc8638054b6637ab78f400b24e5694ec8061db635d1f28a17902b14dbf4f80780da659ab24f11ded3095c780452a4004c30ab58dffac33d839a52ae"].pack("H*"), # multisig 1 of 2
+  ]
+
+  @pubkeys = [
+    "04fb0123fe2c399981bc77d522e2ae3268d2ab15e9a84ae49338a4b1db3886a1ea04cdab955d81e9fa1fcb0c062cb9a5af1ad5dd5064f4afcca322402b07030ec2",
+    "0423b8161514560bc8638054b6637ab78f400b24e5694ec8061db635d1f28a17902b14dbf4f80780da659ab24f11ded3095c780452a4004c30ab58dffac33d839a",
+    "04f43e76afac66bf3927638b6c4f7e324513ce56d2d658ac9d24c420d09993a4464eea6141a68a4748c092ad0e8f4ac29c4a2f661ef4d22b21f20110f42fcd6f6d",
   ]
 
   it '#to_string' do
@@ -71,10 +77,10 @@ describe 'Bitcoin::Script' do
 
   it "#get multisig_addresses" do
     Bitcoin::Script.new(@script[3]).get_multisig_addresses.should == [
-      "1JiaVc3N3U3CwwcLtzNX1Q4eYfeYxVjtuj", "19Fm2gY7qDTXriNTEhFY2wjxbHna3Gvenk",
-      "1B6k6g1d2L975i7beAbiBRxfBWhxomPxvy"]
+      "1HxYGsr9qCfg1teney6SxELB8KZ19xfcTV", "177taeJAhJLEZsJua6cErn2Ze6nGqr9YNh",
+      "19p3bbfShrkgS1dRWhBUGRVLoSi5CZ6izn"]
     Bitcoin::Script.new(@script[4]).get_multisig_addresses.should == [
-      "1F2Nnyn7niMcheiYhkHrkc18aDxEkFowy5", "1EE7JGimkV7QqyHwXDJvk3b1yEN4ZUWeqx"]
+      "1HxYGsr9qCfg1teney6SxELB8KZ19xfcTV", "177taeJAhJLEZsJua6cErn2Ze6nGqr9YNh"]
   end
 
   it "#get_address" do
@@ -84,29 +90,32 @@ describe 'Bitcoin::Script' do
     Bitcoin::Script.new(@script[2]).get_address.should ==
       "139k1g5rtTsL4aGZbcASH3Fv3fUh9yBEdW"
     Bitcoin::Script.new(@script[3]).get_address.should == 
-      "1JiaVc3N3U3CwwcLtzNX1Q4eYfeYxVjtuj"
+      "1HxYGsr9qCfg1teney6SxELB8KZ19xfcTV"
     Bitcoin::Script.new(@script[4]).get_address.should == 
-      "1F2Nnyn7niMcheiYhkHrkc18aDxEkFowy5"
+      "1HxYGsr9qCfg1teney6SxELB8KZ19xfcTV"
   end
 
-  it '#is_send_to_ip?' do
-    Bitcoin::Script.new(@script[0]).is_send_to_ip?.should == true
-    Bitcoin::Script.new(@script[1]).is_send_to_ip?.should == false
-    Bitcoin::Script.new(@script[2]).is_send_to_ip?.should == false
+  it '#is_pubkey?' do
+    Bitcoin::Script.new(@script[0]).is_pubkey?.should == true
+    Bitcoin::Script.new(@script[1]).is_pubkey?.should == false
+    Bitcoin::Script.new(@script[2]).is_pubkey?.should == false
   end
 
-  it "#is_hash160?" do
-    Bitcoin::Script.new(@script[0]).is_hash160?.should == false
-    Bitcoin::Script.new(@script[1]).is_send_to_ip?.should == false
-    Bitcoin::Script.new(@script[2]).is_hash160?.should == true
+  it "#is_address?" do
+    Bitcoin::Script.new(@script[0]).is_address?.should == false
+    Bitcoin::Script.new(@script[1]).is_pubkey?.should == false
+    Bitcoin::Script.new(@script[2]).is_address?.should == true
     Bitcoin::Script.from_string("OP_DUP OP_HASH160 0 OP_EQUALVERIFY OP_CHECKSIG")
-      .is_hash160?.should == false
+      .is_address?.should == false
   end
 
   it "#is_multisig?" do
     Bitcoin::Script.new(@script[3]).is_multisig?.should == true
     Bitcoin::Script.new(@script[4]).is_multisig?.should == true
     Bitcoin::Script.new(@script[0]).is_multisig?.should == false
+    Bitcoin::Script.from_string("2 #{@pubkeys[0]} #{@pubkeys[1]} #{@pubkeys[2]} 3 OP_CHECKMULTISIG").is_multisig?.should == true
+    Bitcoin::Script.from_string("1 #{@pubkeys[0]} #{@pubkeys[1]} #{@pubkeys[2]} 3 OP_CHECKMULTISIG").is_multisig?.should == true
+    Bitcoin::Script.from_string("1 #{@pubkeys[0]} #{@pubkeys[1]} 2 OP_CHECKMULTISIG").is_multisig?.should == true
   end
 
   it '#run' do
@@ -125,6 +134,11 @@ describe 'Bitcoin::Script' do
     Bitcoin::Script.from_string("1 OP_DROP 2").run.should == false
   end
 
+  it "should generate pubkey script" do
+    Bitcoin::Script.pubkey_script([@pubkeys[0]].pack("H*")).raw.should ==
+      Bitcoin::Script.from_string("#{@pubkeys[0]} OP_CHECKSIG").raw
+  end
+
   it "should generate address script" do
     Bitcoin::Script.to_address_script('16Tc7znw2mfpWcqS84vBFfJ7PyoeHaXSz9')
       .should == ["76a9143be0c2daaabbf3d53e47352c19d1e8f047e2f94188ac"].pack("H*")
@@ -139,6 +153,11 @@ describe 'Bitcoin::Script' do
       .should == ["483045022062437a8f60651cd968137355775fa8bdb83d4ca717fdbc08bf9868a051e0542f022100f5cd626c15ef0de0803ddf299e8895743e7ff484d6335874edfe086ee0a08fec014104bc3e2b520d4be3e2651f2ba554392ea31edd69d2081186ab98acda3c4bf45e41a5f6e093277b774b5893347e38ffafce2b9e82226e6e0b378cf79b8c2eed983c"].pack("H*")
   end
 
+  it "should generate multisig script" do
+    pubkeys = @pubkeys.map{|k| [k].pack("H*")}
+    Bitcoin::Script.multisig_script(82, *pubkeys[0..2], 83).raw.should == @script[3]
+    Bitcoin::Script.multisig_script(81, *pubkeys[0..1], 82).raw.should == @script[4]
+  end
 
   describe "Bitcoin::Script OPCODES" do
 

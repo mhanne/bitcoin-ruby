@@ -10,6 +10,7 @@ module Bitcoin
   autoload :Connection, 'bitcoin/connection'
   autoload :Protocol,   'bitcoin/protocol'
   autoload :P,          'bitcoin/protocol'
+  autoload :Opcodes,    'bitcoin/opcodes'
   autoload :Script,     'bitcoin/script'
   autoload :VERSION,    'bitcoin/version'
   autoload :Storage,    'bitcoin/storage/storage'

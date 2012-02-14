@@ -1,55 +1,10 @@
 require 'bitcoin'
 
 module Bitcoin
+
   class Script
-    OP_1           = 81
-    OP_TRUE        = 81
-    OP_0           = 0
-    OP_FALSE       = 0
-    OP_PUSHDATA1   = 76
-    OP_PUSHDATA2   = 77
-    OP_PUSHDATA4   = 78
-    OP_NOP         = 97
-    OP_DUP         = 118
-    OP_HASH160     = 169
-    OP_EQUAL       = 135
-    OP_VERIFY      = 105
-    OP_EQUALVERIFY = 136
-    OP_CHECKSIG    = 172
-    OP_CHECKSIGVERIFY      = 173
-    OP_CHECKMULTISIG       = 174
-    OP_CHECKMULTISIGVERIFY = 175
-    OP_TOALTSTACK   = 107
-    OP_FROMALTSTACK = 108
-    OP_TUCK         = 125
-    OP_SWAP         = 124
-    OP_BOOLAND      = 154
-    OP_ADD          = 147
-    OP_SUB          = 148
-    OP_GREATERTHANOREQUAL = 162
-    OP_DROP         = 117
-    OP_HASH256      = 170
-    OP_SHA256       = 168
-    OP_SHA1         = 167
-    OP_RIPEMD160    = 166
-    OP_EVAL         = 176
-    OP_NOP2         = 177
-    OP_CHECKHASHVERIFY = 177
-    OP_CODESEPARATOR = 171
 
-    OPCODES = Hash[*constants.grep(/^OP_/).map{|i| [const_get(i), i.to_s] }.flatten]
-    OPCODES[0] = "0"
-    OPCODES[81] = "1"
-
-    OPCODES_ALIAS = {
-      "OP_TRUE"  => OP_1,
-      "OP_FALSE" => OP_0,
-      "OP_NOP1" => OP_EVAL,
-      "OP_NOP2" => OP_CHECKHASHVERIFY
-    }
-
-
-    OP_2_16 = (82..96).to_a
+    include Bitcoin::Opcodes
 
     attr_reader :raw, :chunks, :debug
 
@@ -114,25 +69,25 @@ module Bitcoin
     def self.binary_from_string(script_string)
       script_string.split(" ").map{|i|
         case i
-          when *OPCODES.values;          OPCODES.find{|k,v| v == i }.first
-          when *OPCODES_ALIAS.keys;      OPCODES_ALIAS.find{|k,v| k == i }.last
-          when /^([2-9]$|1[0-7])$/;      OP_2_16[$1.to_i-2]
-          when /\(opcode (\d+)\)/;       $1.to_i
-          else 
-            data = [i].pack("H*")
-            size = data.bytesize
+        when *OPCODES.values;          OPCODES.find{|k,v| v == i }.first
+        when *OPCODES_ALIAS.keys;      OPCODES_ALIAS.find{|k,v| k == i }.last
+        when /^([2-9]$|1[0-7])$/;      OP_2_16[$1.to_i-2]
+        when /\(opcode (\d+)\)/;       $1.to_i
+        else
+          data = [i].pack("H*")
+          size = data.bytesize
 
-            head = if size < OP_PUSHDATA1
-              [size].pack("C")
-            elsif size > OP_PUSHDATA1 && size <= 0xff
-              [OP_PUSHDATA1, size].pack("CC")
-            elsif size > 0xff && size <= 0xffff
-              [OP_PUSHDATA2, size].pack("Cn")
-            elsif size > 0xffff && size <= 0xffffffff
-              [OP_PUSHDATA4, size].pack("CN")
-            end
+          head = if size < OP_PUSHDATA1
+                   [size].pack("C")
+                 elsif size > OP_PUSHDATA1 && size <= 0xff
+                   [OP_PUSHDATA1, size].pack("CC")
+                 elsif size > 0xff && size <= 0xffff
+                   [OP_PUSHDATA2, size].pack("Cn")
+                 elsif size > 0xffff && size <= 0xffffffff
+                   [OP_PUSHDATA4, size].pack("CN")
+                 end
 
-            head + data
+          head + data
         end
       }.map{|i|
         i.is_a?(Fixnum) ? [i].pack("C*") : i # TODO yikes, implement/pack 2 byte opcodes.
@@ -143,220 +98,6 @@ module Bitcoin
       @script_invalid ||= false
     end
 
-    # Does nothing
-    def op_nop
-    end
-
-    # Duplicates the top stack item.
-    def op_dup
-      @stack << (@stack[-1].dup rescue @stack[-1])
-    end
-
-    # The input is hashed using SHA-256.
-    def op_sha256
-      buf = @stack.pop
-      @stack << Digest::SHA256.digest(buf)
-    end
-
-    # The input is hashed using SHA-1.
-    def op_sha1
-      buf = @stack.pop
-      @stack << Digest::SHA1.digest(buf)
-    end
-
-    # The input is hashed twice: first with SHA-256 and then with RIPEMD-160.
-    def op_hash160
-      buf = @stack.pop
-      @stack << Digest::RMD160.digest(Digest::SHA256.digest(buf))
-    end
-
-    # The input is hashed using RIPEMD-160.
-    def op_ripemd160
-      buf = @stack.pop
-      @stack << Digest::RMD160.digest(buf)
-    end
-
-    # The input is hashed two times with SHA-256.
-    def op_hash256
-      buf = @stack.pop
-      @stack << Digest::SHA256.digest(Digest::SHA256.digest(buf))
-    end
-
-    # Puts the input onto the top of the alt stack. Removes it from the main stack.
-    def op_toaltstack
-      @stack_alt << @stack.pop
-    end
-
-    # Puts the input onto the top of the main stack. Removes it from the alt stack.
-    def op_fromaltstack
-      @stack << @stack_alt.pop
-    end
-
-    # The item at the top of the stack is copied and inserted before the second-to-top item.
-    def op_tuck
-      @stack[-2..-1] = [ @stack[-1], *@stack[-2..-1] ]
-    end
-
-    # The top two items on the stack are swapped.
-    def op_swap
-      @stack[-2..-1] = @stack[-2..-1].reverse
-    end
-
-    # If both a and b are not 0, the output is 1. Otherwise 0.
-    def op_booland
-      a, b = @stack.pop(2)
-      @stack << (![a,b].any?{|n| n == 0 } ? 1 : 0)
-    end
-
-    # a is added to b.
-    def op_add
-      a, b = @stack.pop(2).reverse
-      @stack << a + b
-    end
-
-    # b is subtracted from a.
-    def op_sub
-      a, b = @stack.pop(2).reverse
-      @stack << a - b
-    end
-
-    # Returns 1 if a is greater than or equal to b, 0 otherwise.
-    def op_greaterthanorequal
-      a, b = @stack.pop(2).reverse
-      @stack << (a >= b ? 1 : 0)
-    end
-
-    # Removes the top stack item.
-    def op_drop
-      @stack.pop
-    end
-
-    # Returns 1 if the inputs are exactly equal, 0 otherwise.
-    def op_equal
-      a, b = @stack.pop(2).reverse
-      @stack << (a == b ? 1 : 0)
-    end
-
-    # Marks transaction as invalid if top stack value is not true. True is removed, but false is not.
-    def op_verify
-      res = @stack.pop
-      if res != 1
-        @stack << res
-        @script_invalid = true # raise 'transaction invalid' ?
-      else
-        @script_invalid = false
-      end
-    end
-
-    # Same as OP_EQUAL, but runs OP_VERIFY afterward.
-    def op_equalverify
-      op_equal; op_verify
-    end
-
-    # An empty array of bytes is pushed onto the stack.
-    def op_0
-      @stack << "" # []
-    end
-
-    # The number 1 is pushed onto the stack. Same as OP_TRUE
-    def op_1
-      @stack << 1
-    end
-
-    # https://en.bitcoin.it/wiki/BIP_0017  (old OP_NOP2)
-    # TODO: don't rely on it yet. add guards from wikipage too.
-    def op_checkhashverify
-      unless @checkhash && (@checkhash == @stack[-1].unpack("H*")[0])
-        @script_invalid = true
-      end
-    end
-
-    # All of the signature checking words will only match signatures to the data after the most recently-executed OP_CODESEPARATOR.
-    def op_codeseparator
-      @codehash_start = @chunks.size - @chunks.reverse.index(OP_CODESEPARATOR)
-    end
-
-    # do a CHECKSIG operation on the current stack,
-    # asking +check_callback+ to do the actual signature verification.
-    # This is used by Protocol::Tx#verify_input_signature
-    def op_checksig(check_callback)
-      return invalid if @stack.size < 2
-      pubkey = @stack.pop
-      drop_sigs      = [@stack[-1].unpack("H*")[0]]
-      sig, hash_type = parse_sig(@stack.pop)
-
-      if @chunks.include?(OP_CHECKHASHVERIFY)
-        # Subset of script starting at the most recent codeseparator to OP_CHECKSIG
-        script_code, @checkhash = codehash_script(OP_CHECKSIG)
-      else
-        script_code, drop_sigs = nil, nil
-      end
-
-      if check_callback == nil # for tests
-        @stack << 1
-      else # real signature check callback
-        @stack <<
-          ((check_callback.call(pubkey, sig, hash_type, drop_sigs, script_code) == true) ? 1 : 0)
-      end
-    end
-
-    def op_checksigverify(check_callback)
-      op_checksig(check_callback)
-      p @stack
-      op_verify
-    end
-
-    # do a CHECKMULTISIG operation on the current stack,
-    # asking +check_callback+ to do the actual signature verification.
-    #
-    # CHECKMULTISIG does a m-of-n signatures verification on scripts of the form:
-    #  0 <sig1> <sig2> | 2 <pub1> <pub2> 2 OP_CHECKMULTISIG
-    #  0 <sig1> <sig2> | 2 <pub1> <pub2> <pub3> 3 OP_CHECKMULTISIG
-    #  0 <sig1> <sig2> <sig3> | 3 <pub1> <pub2> <pub3> 3 OP_CHECKMULTISIG
-    #
-    # see https://en.bitcoin.it/wiki/BIP_0011 for details.
-    # see https://github.com/bitcoin/bitcoin/blob/master/src/script.cpp#L931
-    #
-    # TODO: validate signature order
-    # TODO: take global opcode count
-    def op_checkmultisig(check_callback)
-      n_pubkeys = @stack.pop
-      return invalid  unless (0..20).include?(n_pubkeys)
-      return invalid  unless @stack.last(n_pubkeys).all?{|e| e.is_a?(String) && e != '' }
-      #return invalid  if ((@op_count ||= 0) += n_pubkeys) > 201
-      pubkeys = @stack.pop(n_pubkeys)
-
-      n_sigs = @stack.pop
-      return invalid  unless (0..n_pubkeys).include?(n_sigs)
-      return invalid  unless @stack.last(n_sigs).all?{|e| e.is_a?(String) && e != '' }
-      sigs = (drop_sigs = @stack.pop(n_sigs)).map{|s| parse_sig(s) }
-
-      @stack.pop if @stack[-1] == '' # remove OP_NOP from stack
-
-      if @chunks.include?(OP_CHECKHASHVERIFY)
-        # Subset of script starting at the most recent codeseparator to OP_CHECKMULTISIG
-        script_code, @checkhash = codehash_script(OP_CHECKMULTISIG)
-        drop_sigs.map!{|i| i.unpack("H*")[0] }
-      else
-        script_code, drop_sigs = nil, nil
-      end
-
-      valid_sigs = 0
-      sigs.each{|sig, hash_type| pubkeys.each{|pubkey|
-        valid_sigs += 1  if check_callback.call(pubkey, sig, hash_type, drop_sigs, script_code)
-      }}
-
-      @stack << ((valid_sigs == n_sigs) ? 1 : (invalid; 0))
-    end
-
-
-
-
-    OPCODES_METHOD = Hash[*instance_methods.grep(/^op_/).map{|m|
-      [ (OPCODES.find{|k,v| v == m.to_s.upcase }.first rescue nil), m ]
-    }.flatten]
-    OPCODES_METHOD[0]  = :op_0
-    OPCODES_METHOD[81] = :op_1
 
 
     # run the script. +check_callback+ is called for OP_CHECKSIG operations
@@ -391,7 +132,7 @@ module Bitcoin
       if @script_invalid
         @stack << 0
         @debug << "INVALID TRANSACTION"
-        require 'pp'; pp @debug
+        #require 'pp'; pp @debug
       end
 
       @debug << "RESULT"
@@ -414,28 +155,99 @@ module Bitcoin
       script_pubkey = binary_from_string(script)
     end
 
+    # Script type definitions used to create scripts an determine script type.
+    # Defines the order in which data and opcodes are expected.
+    #
+    # Alternative options can be given as an array.
+    #
+    # A String means "that many bytes of data". If the number is prefixed with +?+,
+    # the element is optional, meaning if the input element doesn't match,
+    # it is ignored and the compared to the next definition element.
+    TYPES = {
+      :pubkey => ["65", OP_CHECKSIG],
+      :address => [OP_DUP, OP_HASH160, "20", OP_EQUALVERIFY, OP_CHECKSIG],
+      :multisig => [[OP_1, 82, 83], "65", "65", "?65", [82, 83], OP_CHECKMULTISIG],
+    }
+
+    # Match an opcode definition +match+ to given opcode +op+.
+    def self.match_opcode(match, op)
+      if match.is_a?(Array)
+        return match.map {|m| match_opcode(m, op)}.any?
+      elsif match.is_a?(String)
+        if match[0] == "?"
+          match = match[1..-1]
+          return :omit  unless op.is_a?(String)
+        end
+        return false  unless op.is_a?(String)
+        return false  unless op.bytesize == match.to_i
+      else
+        return false  unless op == match
+      end
+      true
+    end
+
+    # Check if script matches given +type+.
+    def is_type?(type)
+      i = 0
+      TYPES[type.to_sym].each do |c|
+        if !match = self.class.match_opcode(c, @chunks[i])
+          return false
+        elsif match != :omit
+          i += 1
+        end
+      end
+      true
+    end
+
+
+    # Create script of type +type+ using given data.
+    # Take opcodes from the script definition and insert +args+ for
+    # the data elements, while checking that it matches defined size.
+    def self.to_script(type, *args)
+      i, script = 0, new("")
+      TYPES[type.to_sym].each do |c|
+        if c.is_a?(Fixnum)
+          script.chunks[i] = c
+          next i += 1
+        end
+        val = args[0]
+        if c.is_a?(Array)
+          raise "error: expected #{c} opcode, got #{val}"  unless match_opcode(c, val)
+        elsif c.is_a?(String)
+          if c[0] == "?"
+            next  unless val.is_a?(String)  # skip optional data element
+            c = c[1..-1]
+          end
+          raise "error: expected #{c} bytes of data, got #{val.bytesize}"  if val.bytesize != c.to_i
+        end
+        script.chunks[i] = args.shift
+        i += 1
+      end
+      from_string(script.to_string)
+    end
+
+    def method_missing(name, *args)
+      if name =~ /^is_(.*?)\?/ && TYPES.keys.include?($1.to_sym)
+        return is_type?($1, *args)
+      end
+      super(name, *args)
+    end
+
+    def self.method_missing(name, *args)
+      if name =~ /^(.*?)_script/ && TYPES.keys.include?($1.to_sym)
+        return to_script($1, *args)
+      end
+      super(name, *args)
+    end
+
     # check if script is in one of the recognized standard formats
     def is_standard?
-      is_pubkey? || is_hash160?
+      TYPES.keys.map{|t| is_type?(t)}.any?
     end
 
-    # is this a send-to-ip (pubkey) tx
-    def is_send_to_ip?
-      return false if @chunks.size != 2
-      (@chunks[1] == OP_CHECKSIG) && @chunks[0].size > 1
-    end
-    alias :is_pubkey? :is_send_to_ip?
-
-    # is this a hash160 (address) tx
+    # Alias for #is_address?
     def is_hash160?
-      return false  if @chunks.size != 5
-      (@chunks[0..1] + @chunks[-2..-1]) ==
-        [OP_DUP, OP_HASH160, OP_EQUALVERIFY, OP_CHECKSIG] &&
-        @chunks[2].is_a?(String) && @chunks[2].bytesize == 20
-    end
-
-    def is_multisig?
-      @chunks[-1] == OP_CHECKMULTISIG
+      is_type?(:address)
     end
 
     # get the public key for this script (in generation scripts)
@@ -482,8 +294,7 @@ module Bitcoin
     def self.to_address_script(address)
       hash160 = Bitcoin.hash160_from_address(address)
       return nil  unless hash160
-      #  DUP   HASH160  length  hash160    EQUALVERIFY  CHECKSIG
-      [ ["76", "a9",    "14",   hash160,   "88",        "ac"].join ].pack("H*")
+      return to_script(:address, [hash160].pack("H*")).raw
     end
 
     def self.to_signature_pubkey_script(signature, pubkey)
@@ -491,14 +302,6 @@ module Bitcoin
       #pubkey = [pubkey].pack("H*") if pubkey.bytesize != 65
       raise "pubkey is not in binary form" unless pubkey.bytesize == 65  && pubkey[0] == "\x04"
       [ [signature.bytesize+1].pack("C"), signature, hash_type, [pubkey.bytesize].pack("C"), pubkey ].join
-    end
-
-    private
-
-    def parse_sig(sig)
-      hash_type = sig[-1].unpack("C")[0]
-      sig = sig[0...-1]
-      return sig, hash_type
     end
 
   end

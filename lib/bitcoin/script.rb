@@ -331,8 +331,12 @@ class Bitcoin::Script
     to_pubkey_script_sig(*a)
   end
 
-
   ## OPCODES
+
+  # count signature operations in this script
+  def sig_op_count
+    @chunks.select{|c| [OP_CHECKSIG, OP_CHECKSIGVERIFY].include?(c) }.count
+  end
 
   # Does nothing
   def op_nop

@@ -68,8 +68,8 @@ module Bitcoin
       [Bitcoin.network[:magic_head], cmd, length, checksum, payload].join
     end
 
-    def self.version_pkt(from_id, from, to, last_block=nil, time=nil, user_agent=nil)
-      payload = Protocol::Version.build_payload(from_id, from, to, last_block, time, user_agent)
+    def self.version_pkt(from_id, from, to, opts = {})
+      payload = Protocol::Version.build_payload(from_id, from, to, opts)
       pkt("version", payload)
     end
 

@@ -222,7 +222,7 @@ module Bitcoin::Network
       from_id = Bitcoin::Protocol::Uniq
       to      = @node.config[:listen].join(':')
 
-      pkt = Protocol.version_pkt(from_id, from, to, block)
+      pkt = Protocol.version_pkt(from_id, from, to, block: block, services: [:network])
       log.info { "<< version (#{Bitcoin::Protocol::VERSION})" }
       send_data(pkt)
     end

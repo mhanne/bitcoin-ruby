@@ -4,11 +4,16 @@ module Bitcoin
     class Version < Struct.new(:version, :services, :timestamp, :to, :from,
         :nonce, :user_agent, :block)
 
+      SERVICES = [:network, :service, :stratized]
+
       #
       # parse packet
       #
       def self.parse(payload)
-        version, services, timestamp, to, from, nonce, payload = payload.unpack("Ia8Qa26a26Qa*")
+        version, s, timestamp, to, from, nonce, payload = payload.unpack("Ia8Qa26a26Qa*")
+        services = []
+        s.unpack("c*").each_with_index {|s, i|
+          services << SERVICES[i]  if s == 1 }
         user_agent, payload = Protocol.unpack_var_string(payload)
         block = payload.unpack("I")[0]
         to, from = parse_ip(to), parse_ip(from)
@@ -32,15 +37,17 @@ module Bitcoin
         [[1].pack("Q"), "\x00"*10, "\xFF\xFF",  host, port].join
       end
 
-      def self.build_payload(from_id, from, to, last_block=nil, time=nil, user_agent = nil)
-        ver, services, time = [Bitcoin::Protocol::VERSION, 1, time || Time.now.tv_sec].pack("IQQ")
+      def self.build_payload(from_id, from, to, opts = {})
+        opts = {:version => Bitcoin::Protocol::VERSION, :services => [],
+          :block => 0, :time => Time.now.tv_sec,
+          :user_agent => "/bitcoin-ruby:#{Bitcoin::VERSION}/"}.merge(opts)
+        services = "\x00"*8; opts[:services].each {|s| services[SERVICES.index(s)] = "\x01"}
         payload = [
-          ver, services, time,
-          build_address(from),  # me
-          build_address(to),    # you
-          [ from_id ].pack("Q"),
-          Protocol.pack_var_string(user_agent || "/bitcoin-ruby:#{Bitcoin::VERSION}/"),
-          [last_block || 0].pack("I")
+          [opts[:version]].pack("I"), services, [opts[:time]].pack("Q"),
+          build_address(from), build_address(to),
+          [from_id].pack("Q"),
+          Protocol.pack_var_string(opts[:user_agent]),
+          [opts[:block]].pack("I")
         ].join
       end
     end

@@ -18,7 +18,24 @@ describe 'Bitcoin::Protocol::Parser (version)' do
 
     pkt = handler.pkt
     pkt.version.should == 60000
-    pkt.services.should == ["01 00 00 00 00 00 00 00".split(' ').join].pack("H*")
+    pkt.services.should == [:network]
+    pkt.timestamp.should == 1329775027
+    pkt.block.should == 46722
+    pkt.from.should == { :service => 1, :ip => [127, 0, 0, 1], :port => 18333 }
+    pkt.to.should   == { :service => 1, :ip => [127, 0, 0, 1], :port => 57802 }
+    pkt.user_agent.should == "/bitcoin-qt:0.6.0/"
+  end
+
+  it 'parses version' do
+    pkt = Bitcoin::Protocol.pkt("version",
+      ["60ea00000101010000000000b3c1424f00000000010000000000000000000000000000000000ffff7f000001e1ca010000000000000000000000000000000000ffff7f000001479d9525d0c7b30688ae122f626974636f696e2d71743a302e362e302f82b60000"].pack("H*"))
+
+    parser = Bitcoin::Protocol::Parser.new( handler = Version_Handler.new )
+    parser.parse(pkt + "AAAA").should == "AAAA"
+
+    pkt = handler.pkt
+    pkt.version.should == 60000
+    pkt.services.should == [:network, :service, :stratized]
     pkt.timestamp.should == 1329775027
     pkt.block.should == 46722
     pkt.from.should == { :service => 1, :ip => [127, 0, 0, 1], :port => 18333 }
@@ -37,7 +54,7 @@ describe 'Bitcoin::Protocol::Parser (version)' do
 
     pkt = handler.pkt
     pkt.version.should == 40000
-    pkt.services.should == ["01 00 00 00 00 00 00 00".split(' ').join].pack("H*")
+    pkt.services.should == [:network]
     pkt.timestamp.should == 1321812496
     pkt.block.should == 250
     pkt.from.should == { :service => 1, :ip => [127, 0, 0, 1], :port => 18333 }
@@ -47,18 +64,36 @@ describe 'Bitcoin::Protocol::Parser (version)' do
   it 'builds version' do
     id, block = Bitcoin::Protocol::Uniq, 12345
     from, to = "127.0.0.1:18333", "127.0.0.1:1234"
-    pkt = Bitcoin::Protocol::Version.build_payload(id, from, to, block)
+    pkt = Bitcoin::Protocol::Version.build_payload(id, from, to, services: [:stratized])
     parser = Bitcoin::Protocol::Parser.new( handler = Version_Handler.new )
     parser.parse(Bitcoin::Protocol.pkt("version", pkt))
 
     pkt = handler.pkt
     pkt.version.should == Bitcoin::Protocol::VERSION
-    pkt.services.should == "\x01\x00\x00\x00\x00\x00\x00\x00"
+    pkt.services.should == [:stratized]
+    Time.at(pkt.timestamp).should <= Time.now
+    pkt.to.should == {:service=>1, :ip=>[127, 0, 0, 1], :port=>18333}
+    pkt.from.should == {:service=>1, :ip=>[127, 0, 0, 1], :port=>1234}
+    pkt.block.should == 0
+    pkt.user_agent.should == "/bitcoin-ruby:#{Bitcoin::VERSION}/"
+  end
+
+  it 'builds version' do
+    id, block = Bitcoin::Protocol::Uniq, 12345
+    from, to = "127.0.0.1:18333", "127.0.0.1:1234"
+    pkt = Bitcoin::Protocol::Version.build_payload(id, from, to, block: block,
+      services: [:network, :service], version: 123456, user_agent: "/test:1.2.3/foo:4:5:6/")
+    parser = Bitcoin::Protocol::Parser.new( handler = Version_Handler.new )
+    parser.parse(Bitcoin::Protocol.pkt("version", pkt))
+
+    pkt = handler.pkt
+    pkt.version.should == 123456
+    pkt.services.should == [:network, :service]
     Time.at(pkt.timestamp).should <= Time.now
     pkt.to.should == {:service=>1, :ip=>[127, 0, 0, 1], :port=>18333}
     pkt.from.should == {:service=>1, :ip=>[127, 0, 0, 1], :port=>1234}
     pkt.block.should == 12345
-    pkt.user_agent.should == "/bitcoin-ruby:#{Bitcoin::VERSION}/"
+    pkt.user_agent.should == "/test:1.2.3/foo:4:5:6/"
   end
 
 end

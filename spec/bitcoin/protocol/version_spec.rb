@@ -11,14 +11,14 @@ describe 'Bitcoin::Protocol::Parser (version)' do
 
   it 'parses version' do
     pkt = Bitcoin::Protocol.pkt("version",
-      ["60ea00000100000000000000b3c1424f00000000010000000000000000000000000000000000ffff7f000001e1ca010000000000000000000000000000000000ffff7f000001479d9525d0c7b30688ae122f626974636f696e2d71743a302e362e302f82b60000"].pack("H*"))
+      ["60ea00000300000000000000b3c1424f00000000010000000000000000000000000000000000ffff7f000001e1ca010000000000000000000000000000000000ffff7f000001479d9525d0c7b30688ae122f626974636f696e2d71743a302e362e302f82b60000"].pack("H*"))
 
     parser = Bitcoin::Protocol::Parser.new( handler = Version_Handler.new )
     parser.parse(pkt + "AAAA").should == "AAAA"
 
     pkt = handler.pkt
     pkt.version.should == 60000
-    pkt.services.should == [:network]
+    pkt.services.should == [:network, :service]
     pkt.timestamp.should == 1329775027
     pkt.block.should == 46722
     pkt.from.should == { :service => 1, :ip => [127, 0, 0, 1], :port => 18333 }
@@ -28,7 +28,7 @@ describe 'Bitcoin::Protocol::Parser (version)' do
 
   it 'parses version' do
     pkt = Bitcoin::Protocol.pkt("version",
-      ["60ea00000101010000000000b3c1424f00000000010000000000000000000000000000000000ffff7f000001e1ca010000000000000000000000000000000000ffff7f000001479d9525d0c7b30688ae122f626974636f696e2d71743a302e362e302f82b60000"].pack("H*"))
+      ["60ea00000700000000000000b3c1424f00000000010000000000000000000000000000000000ffff7f000001e1ca010000000000000000000000000000000000ffff7f000001479d9525d0c7b30688ae122f626974636f696e2d71743a302e362e302f82b60000"].pack("H*"))
 
     parser = Bitcoin::Protocol::Parser.new( handler = Version_Handler.new )
     parser.parse(pkt + "AAAA").should == "AAAA"

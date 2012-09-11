@@ -11,15 +11,13 @@ module Bitcoin::Wallet
     # select txouts needed to spend +value+ btc (base units)
     def select(value)
       txouts = []
-      @txouts.each do |txout|
+      @txouts.select{|o|o['raw_output_script'] }.each do |txout|
         begin
-          next  if txout.get_next_in
-          next  unless txout.get_address
-          next  unless txout.get_tx.get_block
           txouts << txout
-          return txouts  if txouts.map(&:value).inject(:+) >= value
+          return txouts  if txouts.map{|o|o['value']}.inject(:+) >= value
         rescue
           p $!
+          puts *$@
         end
       end
       nil

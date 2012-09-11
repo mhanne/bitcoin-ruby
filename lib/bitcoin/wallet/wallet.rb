@@ -1,5 +1,7 @@
 Bitcoin.require_dependency :eventmachine, exit: false
 
+require "bitcoin/electrum/client"
+
 # The wallet implementation consists of several concepts:
 # Wallet::             the high-level API used to manage a wallet
 # SimpleKeyStore::     key store to manage keys/addresses/labels
@@ -23,57 +25,50 @@ module Bitcoin::Wallet
     # the Storage which holds the blockchain
     attr_reader :storage
 
+    attr_reader :electrum
+    attr_reader :txouts
+
+    attr_reader :height
+
     # open wallet with given +storage+ Storage backend, +keystore+ SimpleKeyStore
     # and +selector+ SimpleCoinSelector
     def initialize storage, keystore, selector
-      @storage = storage
+      @txouts = {}
       @keystore = keystore
       @selector = selector
       @callbacks = {}
-      connect_node  if defined?(EM)
+      @height = 0
+      connect_node  #if defined?(EM) && EM.reactor_running?
+    end
+
+    def connected &block
+      @callbacks[:connected] = block
     end
 
     def connect_node
-      return  unless EM.reactor_running?
-      host, port = "127.0.0.1", 9999
-      @node = Bitcoin::Network::CommandClient.connect(host, port, self, @storage) do
-        on_connected { request :monitor, "block", "tx" }
-        on_block do |block, depth|
-          EM.defer do
-            block['tx'].each do |tx|
-              relevant, tx = @args[0].check_tx(tx['hash'])
-              @args[0].callback(:tx, :confirmed, tx)  if relevant
+      EM.run do
+        @electrum = ElectrumClient.connect
+        @electrum.connected do |e|
+          e.request("blockchain.numblocks.subscribe") do |num|
+            @height = num
+          end
+          @keystore.keys.map do |key|
+            e.request("blockchain.address.get_history", key[:addr]) do |txouts|
+              @txouts[key[:addr]] = txouts
+            end
+            e.on("blockchain.address.subscribe", key[:addr]) do |*a|
+              p a
             end
           end
         end
-
-        on_tx do |response|
-          EM.defer do
-            relevant, tx = @args[0].check_tx(response['hash'])
-            @args[0].callback(:tx, relevant, tx)  if relevant
+        EM.defer do
+          while @txouts.keys.size < @keystore.keys.size
+            # p @txouts.keys.size
+            sleep 0.1
           end
+          @callbacks[:connected].call
         end
       end
-    end
-
-    def check_tx tx_hash
-      relevant = false
-      addrs = addrs
-      tx = @storage.get_tx(tx_hash)
-      unless tx
-        log.warn { "Received tx #{response['hash']} but not found in storage" }
-        binding.pry
-        return false
-      end
-      addrs = @keystore.keys.map {|k| k[:addr] }
-      tx.out.each do |txout|
-        return :incoming, tx  if (txout.get_addresses & addrs).any?
-      end
-      tx.in.each do |txin|
-        next unless  prev_out = txin.get_prev_out
-        return :outgoing, tx  if (prev_out.get_addresses & addrs).any?
-      end
-      return false
     end
 
     def log
@@ -103,15 +98,13 @@ module Bitcoin::Wallet
 
     # get all Storage::Models::TxOut concerning any address from this wallet
     def get_txouts(unconfirmed = false)
-      txouts = @keystore.keys.map {|k|
-        @storage.get_txouts_for_address(k[:addr])}.flatten.uniq
-      unconfirmed ? txouts : txouts.select {|o| !!o.get_tx.get_block}
+      txouts = @keystore.keys.map{|k| @txouts[k[:addr]] }.flatten
+      unconfirmed ? txouts : txouts.select {|o| o['height']}
     end
 
     # get total balance for all addresses in this wallet
     def get_balance(unconfirmed = false)
-      values = get_txouts(unconfirmed).select{|o| !o.get_next_in}.map(&:value)
-
+      values = get_txouts.map{|o| o['value'] }
       ([0] + values).inject(:+)
     end
 
@@ -138,7 +131,7 @@ module Bitcoin::Wallet
     # list all keys along with their balances
     def list
       @keystore.keys.map do |key|
-        [key, @storage.get_balance(Bitcoin.hash160_from_address(key[:addr]))]
+        [key, ([0]+@txouts[key[:addr]].map{|t| t['value']}).inject(:+)]
       end
     end
 
@@ -166,13 +159,10 @@ module Bitcoin::Wallet
     # see #get_change_addr
     def new_tx outputs, fee = 0, change_policy = :back
       output_value = outputs.map{|o|o[-1]}.inject(:+)
-
-      prev_outs = get_selector.select(output_value)
+      prev_outs = get_selector.select(output_value + fee)
       return nil  if !prev_outs
-
-      input_value = prev_outs.map(&:value).inject(:+)
+      input_value = prev_outs.map{|o|o['value']}.inject(:+)
       return nil  unless input_value >= (output_value + fee)
-
       tx = tx do |t|
         outputs.each do |type, *addrs, value|
           t.output do |o|
@@ -186,7 +176,8 @@ module Bitcoin::Wallet
 
         change_value = input_value - output_value - fee
         if change_value > 0
-          change_addr = get_change_addr(change_policy, prev_outs.sample.get_address)
+          change_addr = @keystore.keys.sample[:addr]
+          #get_change_addr(change_policy, prev_outs.sample.get_address)
           t.output do |o|
             o.value change_value
             o.script do |s|
@@ -198,15 +189,12 @@ module Bitcoin::Wallet
 
         prev_outs.each_with_index do |prev_out, idx|
           t.input do |i|
-            prev_tx = prev_out.get_tx
-            i.prev_out prev_tx
-            i.prev_out_index prev_tx.out.index(prev_out)
-            pk_script = Bitcoin::Script.new(prev_out.pk_script)
-            if pk_script.is_pubkey? || pk_script.is_hash160?
-              i.signature_key @keystore.key(prev_out.get_address)[:key]
-            elsif pk_script.is_multisig?
-              raise "multisig not implemented"
-            end
+            # prev_tx = prev_out.get_tx
+            i.prev_out prev_out['tx_hash']
+            i.prev_out_index prev_out['index']
+            script = Bitcoin::Script.new([prev_out['raw_output_script']].pack("H*"))
+            i.pk_script script.raw
+            i.signature_key(@keystore.key(script.get_address)[:key])
           end
         end
       end

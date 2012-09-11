@@ -60,264 +60,224 @@ optparse = OptionParser.new do |opts|
 end
 
 optparse.parse!
-
-cmd = ARGV.shift; cmdopts = ARGV
-unless cmd
-  exit puts optparse
-end
-
-Bitcoin.network = options[:network]
-backend, config = options[:keystore].split("::")
-config = Hash[config.split(",").map{|c| c.split("=")}]
-keystore = Bitcoin::Wallet.const_get("#{backend.capitalize}KeyStore").new(config)
-if backend == "deterministic" && !config["nonce"]
-  puts "nonce: #{keystore.generator.nonce}"
-end
-#puts *keystore.get_keys.map(&:addr)
-backend, config = options[:storage].split("::")
-storage = Bitcoin::Storage.send(backend, :db => config)
-
-
-wallet = Bitcoin::Wallet::Wallet.new(storage, keystore, Bitcoin::Wallet::SimpleCoinSelector)
-
-
-def str_val(val, pre='')
-  ("#{pre}%.8f" % (val / 1e8)).rjust(15)
-end
-
-def val_str(str)
-  (str.to_f * 1e8).to_i
-end
-
-case cmd
-when "balance"
-  if cmdopts && cmdopts.size == 1
-    addr = cmdopts[0]
-    balance = storage.get_balance(Bitcoin.hash160_from_address(addr))
-    puts "#{addr} balance: #{str_val balance}"
-  else
-    puts "Total balance: #{str_val wallet.get_balance}"
+EM.run do
+  cmd = ARGV.shift; cmdopts = ARGV
+  unless cmd
+    puts optparse; EM.stop; next
   end
 
-when "new"
-  puts "Generated new key with address: #{wallet.get_new_addr}"
-
-when "add"
-  key = {:label => ARGV[2]}
-  case ARGV[0]
-  when "pub"
-    k = Bitcoin::Key.new(nil, ARGV[1])
-    key[:key] = k
-    key[:addr] = k.addr
-  when "priv"
-    k = Bitcoin::Key.new(ARGV[1], nil)
-    k.regenerate_pubkey
-    key[:key] = k
-    key[:addr] = k.addr
-  when "addr"
-    key[:addr] = ARGV[1]
-  else
-    raise "unknown type #{ARGV[0]}"
+  Bitcoin.network = options[:network]
+  backend, config = options[:keystore].split("::")
+  config = Hash[config.split(",").map{|c| c.split("=")}]
+  keystore = Bitcoin::Wallet.const_get("#{backend.capitalize}KeyStore").new(config)
+  if backend == "deterministic" && !config["nonce"]
+    puts "nonce: #{keystore.generator.nonce}"
   end
-  wallet.add_key key
+  #puts *keystore.get_keys.map(&:addr)
+  backend, config = options[:storage].split("::")
+  storage = Bitcoin::Storage.send(backend, :db => config)
 
-when "label"
-  wallet.label(ARGV[0], ARGV[1])
 
-when "flag"
-  wallet.flag(ARGV[0], *ARGV[1].split("="))
+  wallet = Bitcoin::Wallet::Wallet.new(storage, keystore, Bitcoin::Wallet::SimpleCoinSelector)
 
-when "key"
-  key = wallet.keystore.key(ARGV[0])
-  puts "Label:   #{key[:label]}"
-  puts "Address: #{key[:addr]}"
-  puts "Pubkey:  #{key[:key].pub}"
-  puts "Privkey: #{key[:key].priv}"  if ARGV[1] == '-p'
-  puts "Mine:    #{key[:mine]}"
 
-  
-when "import"
-  if wallet.keystore.respond_to?(:import)
-    addr = wallet.keystore.import(cmdopts[0])
-    puts "Key for #{addr} imported."
-  else
-    puts "Keystore doesn't support importing."
+  def str_val(val, pre='')
+    ("#{pre}%.8f" % (val / 1e8)).rjust(15)
   end
 
-when "export"
-  base58 = wallet.keystore.export(cmdopts[0])
-  puts "Base58 encoded private key for #{cmdopts[0]}:"
-  puts base58
+  def val_str(str)
+    (str.to_f * 1e8).to_i
+  end
 
-when "list"
-  if cmdopts && cmdopts.size == 1
-    depth = storage.get_depth
-    total = 0
-    key = wallet.keystore.key(cmdopts[0])
-    storage.get_txouts_for_address(key[:addr]).each do |txout|
-      total += txout.value
-      tx = txout.get_tx
-      blocks = depth - tx.get_block.depth rescue 0
-      puts "#{tx.hash} | #{str_val txout.value, '+ '} | " +
-        "#{str_val total} | #{blocks}"
-      tx.in.map(&:get_prev_out).each do |prev_out|
-        if prev_out
-          puts "  <- #{prev_out.get_address}"
-        else
-          puts "  <- generation"
+  wallet.connected do
+    case cmd
+    when "balance"
+      if cmdopts && cmdopts.size == 1
+        addr = cmdopts[0]
+        balance = storage.get_balance(Bitcoin.hash160_from_address(addr))
+        puts "#{addr} balance: #{str_val balance}"
+      else
+        puts "Total balance: #{str_val wallet.get_balance}"
+      end
+
+    when "new"
+      puts "Generated new key with address: #{wallet.get_new_addr}"
+
+    when "add"
+      key = {:label => ARGV[2]}
+      case ARGV[0]
+      when "pub"
+        k = Bitcoin::Key.new(nil, ARGV[1])
+        key[:key] = k
+        key[:addr] = k.addr
+      when "priv"
+        k = Bitcoin::Key.new(ARGV[1], nil)
+        k.regenerate_pubkey
+        key[:key] = k
+        key[:addr] = k.addr
+      when "addr"
+        key[:addr] = ARGV[1]
+      else
+        raise "unknown type #{ARGV[0]}"
+      end
+      wallet.add_key key
+
+    when "label"
+      wallet.label(ARGV[0], ARGV[1])
+
+    when "flag"
+      wallet.flag(ARGV[0], *ARGV[1].split("="))
+
+    when "key"
+      key = wallet.keystore.key(ARGV[0])
+      puts "Label:   #{key[:label]}"
+      puts "Address: #{key[:addr]}"
+      puts "Pubkey:  #{key[:key].pub}"
+      puts "Privkey: #{key[:key].priv}"  if ARGV[1] == '-p'
+      puts "Mine:    #{key[:mine]}"
+
+      
+    when "import"
+      if wallet.keystore.respond_to?(:import)
+        addr = wallet.keystore.import(cmdopts[0])
+        puts "Key for #{addr} imported."
+      else
+        puts "Keystore doesn't support importing."
+      end
+
+    when "export"
+      base58 = wallet.keystore.export(cmdopts[0])
+      puts "Base58 encoded private key for #{cmdopts[0]}:"
+      puts base58
+
+    when "list"
+      if cmdopts && cmdopts.size == 1
+        depth = storage.get_depth
+        total = 0
+        key = wallet.keystore.key(cmdopts[0])
+        wallet.txouts[key[:addr]].each do |txout|
+          total += txout['value']
+          puts "#{Time.at(txout['timestamp']).strftime("%Y-%m-%d %H:%M")} | " +
+            "#{txout['tx_hash'][0..8]} | #{str_val txout['value']} #{str_val total} | " +
+            "#{wallet.height - txout['height'] rescue 0}"
+          p txout
+          if txout['is_input'] == 0
+            txout['outputs'].each {|o| puts "-> #{o}" }
+          else
+            txout['inputs'].each {|i| puts "<- #{i}" }
+          end
+          puts
         end
-      end
-      puts
-
-      if txin = txout.get_next_in
-        tx = txin.get_tx
-        total -= txout.value
-        blocks = depth - tx.get_block.depth rescue 0
-        puts "#{tx.hash} | #{str_val txout.value, '- '} | " +
-          "#{str_val total} | #{blocks}"
-        txin.get_tx.out.each do |out|
-          puts "  -> #{out.get_addresses.join(', ')}"
+        puts "Total balance: #{str_val total}"
+      else
+        puts "Wallet addresses:"
+        total = 0
+        wallet.list.each do |key, balance|
+          total += balance
+          icon = key[:key] && key[:key].priv ? "P" : (key[:mine] ? "M" : " ")
+          puts "  #{icon} #{key[:label].to_s.ljust(10)} (#{key[:addr].to_s.ljust(34)}) - #{("%.8f" % (balance / 1e8)).rjust(15)}"
         end
-        puts
+        puts "Total balance: #{str_val wallet.get_balance}"
       end
-    end
-    puts "Total balance: #{str_val total}"
-  else
-    puts "Wallet addresses:"
-    total = 0
-    wallet.list.each do |key, balance|
-      total += balance
-      icon = key[:key] && key[:key].priv ? "P" : (key[:mine] ? "M" : " ")
-      puts "  #{icon} #{key[:label].to_s.ljust(10)} (#{key[:addr].to_s.ljust(34)}) - #{("%.8f" % (balance / 1e8)).rjust(15)}"
-    end
-    puts "Total balance: #{str_val wallet.get_balance}"
-  end
+      EM.stop
 
-when "send"
-  to = cmdopts[0].split(',').map do |pair|
-    type, *addrs, value = pair.split(":")
-    value = val_str(value)
-    [type.to_sym, *addrs, value]
-  end
-  fee = val_str(cmdopts[1]) || 0
-  value = val_str value
-
-  unless wallet.get_balance >= (to.map{|t|t[-1]}.inject{|a,b|a+=b;a} + fee)
-    puts "Insufficient funds."; exit
-  end
-
-  tx = wallet.new_tx(to, fee)
-
-  if tx.is_a?(Bitcoin::Wallet::TxDP)
-    puts "Transaction needs to be signed by additional keys."
-    print "Filename to save TxDP: [./#{tx.id}.txdp] "
-    $stdout.flush
-    filename = $stdin.gets.strip
-    filename = "./#{tx.id}.txdp"  if filename == ""
-    File.open(filename, "w") {|f| f.write(tx.serialize) }
-    exit
-  end
-  
-  unless tx
-    puts "Error creating tx."; exit
-  end
-
-  total = 0
-  puts "Hash: #{tx.hash}"
-  puts "inputs:"
-  tx.in.each do |txin|
-    prev_out = storage.get_txout_for_txin(txin)
-    total += prev_out.value
-    puts " #{prev_out.get_address} - #{str_val prev_out.value}"
-  end
-
-  puts "outputs:"
-  tx.out.each do |txout|
-    total -= txout.value
-    script = Bitcoin::Script.new(txout.pk_script)
-    if script.is_pubkey?
-      puts "#{str_val txout.value} #{script.get_pubkey} (pubkey)"
-    elsif script.is_hash160?
-      puts "#{str_val txout.value} #{script.get_address} (address)"
-    elsif script.is_multisig?
-      puts "#{str_val txout.value} #{script.get_addresses.join(' ')} (multisig)"
-    end
-  end
-  puts "Fee: #{str_val total}"
-
-  $stdout.sync = true
-  print "Really send transaction? (y/N) " and $stdout.flush
-  unless $stdin.gets.chomp.downcase == 'y'
-    puts "Aborted."; exit
-  end
-
-  EM.run do
-    Bitcoin::Network::CommandClient.connect(*options[:command].split(":")) do
-      on_connected do
-        request(:relay_tx, tx)
+    when "send"
+      to = cmdopts[0].split(',').map do |pair|
+        type, *addrs, value = pair.split(":")
+        value = val_str(value)
+        [type.to_sym, *addrs, value]
       end
-      on_relay_tx do
-        puts "Transaction #{tx.hash} relayed"
+      fee = val_str(cmdopts[1]) || 0
+      value = val_str value
+      unless wallet.get_balance >= (to.map{|t|t[-1]}.inject{|a,b|a+=b;a} + fee)
+        puts "Insufficient funds."; exit
+      end
+      tx = wallet.new_tx(to, fee)
+      if tx.is_a?(Bitcoin::Wallet::TxDP)
+        puts "Transaction needs to be signed by additional keys."
+        print "Filename to save TxDP: [./#{tx.id}.txdp] "
+        $stdout.flush
+        filename = $stdin.gets.strip
+        filename = "./#{tx.id}.txdp"  if filename == ""
+        File.open(filename, "w") {|f| f.write(tx.serialize) }
+        exit
+      end
+
+      unless tx
+        puts "Error creating tx."; exit
+      end
+
+      total = 0
+      puts tx.to_json
+
+      $stdout.sync = true
+      print "Really send transaction? (y/N) " and $stdout.flush
+      unless $stdin.gets.chomp.downcase == 'y'
+        puts "Aborted."; EM.stop
+      end
+      wallet.electrum.request("blockchain.transaction.broadcast",
+        tx.to_payload.unpack("H*")[0]) do |tx_hash|
+        puts "Transaction #{tx_hash} relayed."
         EM.stop
       end
-    end
-  end
 
-when "sign"
-  txt = File.read(ARGV[0])
-  txdp = Bitcoin::Wallet::TxDP.parse(txt)
-  puts txdp.tx[0].to_json
+    when "sign"
+      txt = File.read(ARGV[0])
+      txdp = Bitcoin::Wallet::TxDP.parse(txt)
+      puts txdp.tx[0].to_json
 
-  print "Really sign transaction? (y/N) " and $stdout.flush
-  unless $stdin.gets.chomp.downcase == 'y'
-    puts "Aborted."; exit
-  end
+      print "Really sign transaction? (y/N) " and $stdout.flush
+      unless $stdin.gets.chomp.downcase == 'y'
+        puts "Aborted."; exit
+      end
+      txdp.sign_inputs do |tx, prev_tx, i, addr|
+        key = keystore.key(addr)[:key] rescue nil
+        next nil  unless key && !key.priv.nil?
+        sig_hash = tx.signature_hash_for_input(i, prev_tx)
+        sig = key.sign(sig_hash)
+        script_sig = Bitcoin::Script.to_pubkey_script_sig(sig, [key.pub].pack("H*"))
+        script_sig.unpack("H*")[0]
+      end
+      File.open(ARGV[0], "w") {|f| f.write txdp.serialize }
 
-  txdp.sign_inputs do |tx, prev_tx, i, addr|
-    key = keystore.key(addr)[:key] rescue nil
-    next nil  unless key && !key.priv.nil?
-    sig_hash = tx.signature_hash_for_input(i, prev_tx)
-    sig = key.sign(sig_hash)
-    script_sig = Bitcoin::Script.to_pubkey_script_sig(sig, [key.pub].pack("H*"))
-    script_sig.unpack("H*")[0]
-  end
-  File.open(ARGV[0], "w") {|f| f.write txdp.serialize }
+    when "relay"
+      txt = File.read(ARGV[0])
+      txdp = Bitcoin::Wallet::TxDP.parse(txt)
+      tx = txdp.tx[0]
+      puts tx.to_json
+      txdp.inputs.each_with_index do |s, i|
+        value, sigs = *s
+        tx.in[i].script_sig = [sigs[0][1]].pack("H*")
+      end
+      tx.in.each_with_index do |txin, i|
+        p txdp.tx.map(&:hash)
+        prev_tx = storage.get_tx(txin.prev_out.reverse.unpack("H*")[0])
+        raise "prev tx #{txin.prev_out.reverse.unpack("H*")[0]} not found"  unless prev_tx
+        raise "signature error"  unless tx.verify_input_signature(i, prev_tx)
+      end
 
-when "relay"
-  txt = File.read(ARGV[0])
-  txdp = Bitcoin::Wallet::TxDP.parse(txt)
-  tx = txdp.tx[0]
-  puts tx.to_json
-  txdp.inputs.each_with_index do |s, i|
-    value, sigs = *s
-    tx.in[i].script_sig = [sigs[0][1]].pack("H*")
-  end
-  tx.in.each_with_index do |txin, i|
-    p txdp.tx.map(&:hash)
-    prev_tx = storage.get_tx(txin.prev_out.reverse_hth)
-    raise "prev tx #{txin.prev_out.reverse_hth} not found"  unless prev_tx
-    raise "signature error"  unless tx.verify_input_signature(i, prev_tx)
-  end
+      $stdout.sync = true
+      print "Really send transaction? (y/N) " and $stdout.flush
+      unless $stdin.gets.chomp.downcase == 'y'
+        puts "Aborted."; exit
+      end
 
-  $stdout.sync = true
-  print "Really send transaction? (y/N) " and $stdout.flush
-  unless $stdin.gets.chomp.downcase == 'y'
-    puts "Aborted."; exit
-  end
-
-  EM.run do
-    EM.connect(*options[:command].split(":")) do |conn|
-      conn.send_data(["relay_tx", tx.to_payload.unpack("H*")[0]].to_json)
-      def conn.receive_data(data)
-        (@buf ||= BufferedTokenizer.new("\x00")).extract(data).each do |packet|
-          res = JSON.load(packet)
-          puts "Transaction relayed: #{res[1]["hash"]}"
-          EM.stop
+      EM.run do
+        EM.connect(*options[:command].split(":")) do |conn|
+          conn.send_data(["relay_tx", tx.to_payload.unpack("H*")[0]].to_json)
+          def conn.receive_data(data)
+            (@buf ||= BufferedTokenizer.new("\x00")).extract(data).each do |packet|
+              res = JSON.load(packet)
+              puts "Transaction relayed: #{res[1]["hash"]}"
+              EM.stop
+            end
+          end
         end
       end
-    end
-  end
 
-else
-  puts "Unknown command."
+    else
+      puts "Unknown command."
+    end
+#    EM.stop
+  end
 end

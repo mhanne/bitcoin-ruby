@@ -183,7 +183,7 @@ module Bitcoin::Validation
 
   end
 
-  class Tx
+  class Tx < Base
     attr_accessor :tx, :store
 
     RULES = {

@@ -7,7 +7,8 @@ module Bitcoin
 
     # build a Bitcoin::Protocol::Block matching the given +target+.
     # see BlockBuilder for details.
-    def blk(target = "00".ljust(64, 'f'))
+    def blk(target = nil)
+      target ||= Bitcoin.decode_compact_bits(Bitcoin.network[:proof_of_work_limit])
       c = BlockBuilder.new
       yield c
       c.block(target)
@@ -160,12 +161,23 @@ module Bitcoin
             next
           end
           prev_tx = inc.instance_variable_get(:@prev_out)
-          sig_hash = @tx.signature_hash_for_input(i, prev_tx)
-          sig = inc.key.sign(sig_hash)
-          script_sig = Bitcoin::Script.to_signature_pubkey_script(sig, [inc.key.pub].pack("H*"))
+          if prev_tx.is_a?(String)
+            pk_script = inc.instance_variable_get(:@pk_script)
+            sig_hash = @tx.signature_hash_for_input(i, nil, pk_script)
+            sig = inc.key.sign(sig_hash)
+            script_sig = Bitcoin::Script.to_signature_pubkey_script(sig, [inc.key.pub].pack("H*"))
+          else
+            sig_hash = @tx.signature_hash_for_input(i, prev_tx)
+            sig = inc.key.sign(sig_hash)
+            script_sig = Bitcoin::Script.to_signature_pubkey_script(sig, [inc.key.pub].pack("H*"))
+          end
           @tx.in[i].script_sig_length = script_sig.bytesize
           @tx.in[i].script_sig = script_sig
-          raise "Signature error"  unless @tx.verify_input_signature(i, prev_tx)
+          if prev_tx.is_a?(String)
+            raise "Signature error"  unless @tx.verify_input_signature(i, nil, pk_script)
+          else
+            raise "Signature error"  unless @tx.verify_input_signature(i, prev_tx)
+          end
         end
         Bitcoin::P::Tx.new(@tx.to_payload)
       end
@@ -192,6 +204,10 @@ module Bitcoin
         @prev_out_index = i
       end
 
+      def pk_script pk_script
+        @pk_script = pk_script
+      end
+
       # specify sequence. this is usually not needed.
       def sequence s
         @sequence = s
@@ -212,7 +228,8 @@ module Bitcoin
 
       # create the txin according to values specified via DSL
       def txin
-        @txin.prev_out = (@prev_out ? @prev_out.binary_hash : "\x00"*32)
+        prev_out = @prev_out ? @prev_out.is_a?(String) ? @prev_out : @prev_out.hash : "0"*64
+        @txin.prev_out = [prev_out].pack("H*").reverse
         @txin.prev_out_index = @prev_out_index
         @txin.sequence = @sequence || "\xff\xff\xff\xff"
         @txin

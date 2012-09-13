@@ -37,10 +37,12 @@ module Bitcoin::Network
     attr_reader :notifiers
 
     DEFAULT_CONFIG = {
+      :network => "bitcoin",
       :listen => ["0.0.0.0", Bitcoin.network[:default_port]],
       :connect => [],
-      :command => "",
-      :storage => Bitcoin::Storage.dummy({}),
+      :command => "127.0.0.1:9999",
+      :electrum => nil,
+      :storage => "sequel::sqlite://bitcoin.db",
       :mode => :full,
       :dns => true,
       :epoll => false,
@@ -50,13 +52,14 @@ module Bitcoin::Network
       :log => {
         :network => :info,
         :storage => :info,
+        :electrum => :info,
       },
       :max => {
         :connections => 8,
         :addr => 256,
-        :queue => 64,
-        :inv => 128,
-        :inv_cache => 1024,
+        :queue => 500,
+        :inv => 500,
+        :inv_cache => 0,
       },
       :intervals => {
         :queue => 5,
@@ -153,6 +156,11 @@ module Bitcoin::Network
           host, port = @config[:command]
           EM.start_server(host, port, CommandHandler, self)
           log.info { "Command socket listening on #{host}:#{port}" }
+        end
+
+        if @config[:electrum]
+          Bitcoin::Electrum::Server.new(self, @config)
+          host, port = @config[:electrum]
         end
 
         if @config[:listen]
@@ -279,8 +287,9 @@ module Bitcoin::Network
             if @store.send("store_#{obj[0]}", obj[1])
               if obj[0].to_sym == :block
                 block = @store.get_block(obj[1].hash)
-                @notifiers[:block].push([obj[1], block.depth])  if block.chain == 0
+                @notifiers[:block].push([obj[1], block.depth])  if block.chain == 0 && block == @store.get_head
               else
+
                 @notifiers[:tx].push([obj[1]])
               end
             end
@@ -318,6 +327,7 @@ module Bitcoin::Network
 
     # queue inv, caching the most current ones
     def queue_inv inv
+      return  if inv[0] == :tx
       @inv_cache.shift(128)  if @inv_cache.size > @config[:max][:inv_cache]
       return  if @inv_cache.include?([inv[0], inv[1]]) ||
         @inv_queue.size >= @config[:max][:inv] ||
@@ -340,6 +350,7 @@ module Bitcoin::Network
 
     def relay_tx(tx)
       return false  unless @store.in_sync?
+      log.info { "relaying tx #{tx.hash}" }
       @store.store_tx(tx)
       @connections.select(&:connected?).sample((@connections.size / 2) + 1).each do |peer|
         peer.send_inv(:tx, tx)
@@ -352,7 +363,6 @@ module Bitcoin::Network
     def work_relay
       log.debug { "relay worker running" }
       @store.get_unconfirmed_tx.each do |tx|
-        log.info { "relaying tx #{tx.hash}" }
         relay_tx(tx)
       end
     end

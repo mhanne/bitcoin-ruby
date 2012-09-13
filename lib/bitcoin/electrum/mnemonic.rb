@@ -1,8 +1,9 @@
-class Mnemonic
-  # ruby version of: https://github.com/spesmilo/electrum/blob/master/lib/mnemonic.py
+module Bitcoin::Electrum
+  class Mnemonic
+    # ruby version of: https://github.com/spesmilo/electrum/blob/master/lib/mnemonic.py
 
-  # list of words from http://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/Contemporary_poetry
-  Words = (<<-TEXT).split
+    # list of words from http://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/Contemporary_poetry
+    Words = (<<-TEXT).split
     like just love know never want time out there make look eye down only think
     heart back then into about more away still them take thing even through long always
     world too friend tell try hand thought over here other need smile again much cry
@@ -114,33 +115,33 @@ class Mnemonic
     thigh throne total unseen weapon weary
   TEXT
 
-  def self.encode(hex, words=Words)
-    n = words.size
-    [hex].pack("H*").unpack("N*").map{|x|
-      w1 = x % n
-      w2 = ((x / n) + w1) % n
-      w3 = ((x / n / n) + w2) % n
-      [ words[w1], words[w2], words[w3] ]
-    }.flatten
-  end
+    def self.encode(hex, words=Words)
+      n = words.size
+      [hex].pack("H*").unpack("N*").map{|x|
+        w1 = x % n
+        w2 = ((x / n) + w1) % n
+        w3 = ((x / n / n) + w2) % n
+        [ words[w1], words[w2], words[w3] ]
+      }.flatten
+    end
 
-  def self.decode(word_list, words=Words)
-    n = words.size
-    word_list.each_slice(3).map{|three_words|
-      w1, w2, w3 = three_words.map{|word| words.index(word) % n }
-      '%08x' % ( w1 + n*((w2-w1)%n) + n*n*((w3-w2)%n) )
-    }.join
+    def self.decode(word_list, words=Words)
+      n = words.size
+      word_list.each_slice(3).map{|three_words|
+        w1, w2, w3 = three_words.map{|word| words.index(word) % n }
+        '%08x' % ( w1 + n*((w2-w1)%n) + n*n*((w3-w2)%n) )
+      }.join
+    end
+
   end
 
 end
 
-
-
 if $0 == __FILE__
   hex = "4c7d10656aa55383a5d88e3f63300af5e169918f4058bf349d99b20239909b61"
   expected_words = ['horse', 'love', 'nose', 'speak', 'diamond', 'gaze', 'wash', 'drag', 'glance',
-                    'money', 'cease', 'soft', 'complete', 'huge', 'aside', 'confusion', 'touch',
-                    'grass', 'pie', 'play', 'bread', 'exactly', 'bubble', 'great']
+    'money', 'cease', 'soft', 'complete', 'huge', 'aside', 'confusion', 'touch',
+    'grass', 'pie', 'play', 'bread', 'exactly', 'bubble', 'great']
 
   # from http://brainwallet.org/#chains
   hex = "ff64b72c431f75799f0c5ebe438e46dd"

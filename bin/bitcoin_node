@@ -1,39 +1,39 @@
 #!/usr/bin/env ruby
 $:.unshift( File.expand_path("../../lib", __FILE__) )
 
+
 require 'bitcoin'
 require 'optparse'
 Bitcoin.require_dependency :eventmachine
 Bitcoin.require_dependency :json
-
-defaults = {
-  :network => "bitcoin",
-  :command => "127.0.0.1:9999",
-  :listen => "0.0.0.0:8332",
-  :connect => "",
-  :storage => "sequel::sqlite://bitcoin.db",
-  :headers_only => false,
-  :dns => true,
-  :epoll => false,
-  :epoll_limit => 10000,
-  :epoll_user => nil,
-  :log => {
-    :network => :info,
-    :storage => :info,
+ defaults = {
+  network: "bitcoin",
+  command: "127.0.0.1:9999",
+  listen: "0.0.0.0:8332",
+  connect: "",
+  storage: "sequel::sqlite://bitcoin.db",
+  mode: "full",
+  dns: true,
+  epoll: false,
+  epoll_limit: 10000,
+  epoll_user: nil,
+  log: {
+    network: :info,
+    storage: :info,
   },
-  :max => {
-    :connections => 32,
-    :addr => 1024,
-    :queue => 500,
-    :inv => 500,
+  max: {
+    connections: 32,
+    addr: 1024,
+    queue: 500,
+    inv: 500,
   },
-  :intervals => {
-    :queue => 5,
-    :inv_queue => 5,
-    :addrs => 15,
-    :connect => 30,
+  intervals: {
+    queue: 5,
+    inv_queue: 5,
+    addrs: 15,
+    connect: 30,
   },
-  :daemon => false,
+  daemon: false,
 }
 
 options = Bitcoin::Config.load(defaults, :blockchain)
@@ -56,6 +56,11 @@ optparse = OptionParser.new do |opts|
   opts.on("--command [HOST:PORT]",
     "Command socket (default: #{options[:command]})") do |command|
     options[:command] = command
+  end
+
+  opts.on("-e", "--electrum [HOST:PORT]",
+    "Electrum server socket (default: nil)") do |electrum|
+    options[:electrum] = electrum
   end
 
   opts.on("-l", "--listen [HOST:PORT]",
@@ -139,7 +144,8 @@ optparse.parse!
 Bitcoin.network = options[:network]
 options[:command] = options[:command] == "" ? nil : options[:command].split(':')
 options[:listen] = options[:listen] == "" ? nil : options[:listen].split(':')
-options[:connect] = options[:connect] == "" ? [] : options[:connect].split(',').map{|h| h.split(':')}
+options[:connect] = options[:connect] ? options[:connect].split(',').map{|h| h.split(':')} : []
+options[:electrum] = options[:electrum] ? options[:electrum].split(':') : nil
 
 if ARGV.any?
   EM.run do

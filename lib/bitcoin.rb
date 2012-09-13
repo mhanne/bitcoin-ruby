@@ -40,6 +40,12 @@ module Bitcoin
     autoload :Connection, 'bitcoin/gui/connection'
   end
 
+  module Electrum
+    autoload :Mnemonic,   'bitcoin/electrum/mnemonic'
+    autoload :Server,     'bitcoin/electrum/server'
+    autoload :Client,     'bitcoin/electrum/client'
+  end
+
   def self.require_dependency name, opts = {}
     begin
       require name.to_s

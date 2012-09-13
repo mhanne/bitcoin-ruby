@@ -266,7 +266,7 @@ module Bitcoin::Storage::Backends
       return []  unless addr
       txouts = @db[:addr_txout].where(:addr_id => addr[:id])
         .map{|t| @db[:txout][:id => t[:txout_id]] }
-        .map{|o| wrap_txout(o) }
+        .map{|o| wrap_txout(o) }.compact
       unless unconfirmed
         txouts.select!{|o| @db[:blk][:id => o.get_tx.blk_id][:chain] == MAIN rescue false }
       end

@@ -160,11 +160,11 @@ EM.run do
           puts "#{Time.at(txout['timestamp']).strftime("%Y-%m-%d %H:%M")} | " +
             "#{txout['tx_hash'][0..8]} | #{str_val txout['value']} #{str_val total} | " +
             "#{wallet.height - txout['height'] rescue 0}"
-          p txout
+          #p txout
           if txout['is_input'] == 0
-            txout['outputs'].each {|o| puts "-> #{o}" }
+            txout['inputs'].each {|o| puts "<- #{o}" }
           else
-            txout['inputs'].each {|i| puts "<- #{i}" }
+            txout['outputs'].each {|i| puts "-> #{i}" }
           end
           puts
         end

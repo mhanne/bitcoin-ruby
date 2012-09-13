@@ -1,7 +1,5 @@
 Bitcoin.require_dependency :eventmachine, exit: false
 
-require "bitcoin/electrum/client"
-
 # The wallet implementation consists of several concepts:
 # Wallet::             the high-level API used to manage a wallet
 # SimpleKeyStore::     key store to manage keys/addresses/labels
@@ -47,7 +45,7 @@ module Bitcoin::Wallet
 
     def connect_node
       EM.run do
-        @electrum = ElectrumClient.connect
+        @electrum = Bitcoin::Electrum::Client.connect
         @electrum.connected do |e|
           e.request("blockchain.numblocks.subscribe") do |num|
             @height = num
@@ -56,9 +54,9 @@ module Bitcoin::Wallet
             e.request("blockchain.address.get_history", key[:addr]) do |txouts|
               @txouts[key[:addr]] = txouts
             end
-            e.on("blockchain.address.subscribe", key[:addr]) do |*a|
-              p a
-            end
+#            e.on("blockchain.address.subscribe", key[:addr]) do |*a|
+#              p a
+#            end
           end
         end
         EM.defer do

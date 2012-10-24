@@ -1,57 +1,55 @@
-#!/usr/bin/env ruby
-$:.unshift( File.expand_path("../../lib", __FILE__) )
 require 'bitcoin'
 require 'eventmachine'
+require 'evma_httpserver'
 require 'json'
 
 module Bitcoin::Electrum
 
   class Server
+
     attr_reader :node, :log
+
     def initialize node, config
       @node = node
+      @config = config[:electrum]
       @log = Bitcoin::Logger.create(:electrum, config[:log][:electrum])
-      @log.level = :debug
-      run(*config[:electrum])
+      run
     end
-    def run host, port
-      EM.start_server(host, port, ConnectionHandler, self)
-      log.info { "Electrum server listening on #{host}:#{port}" }
+
+    def run
+      host = @config[:listen]
+      %w(tcp ssl http https).each do |c|
+        next  unless port = @config["#{c}_port".to_sym]
+        EM.start_server(host, port, Bitcoin::Electrum.const_get("#{c.upcase}Connection"), self)
+        log.info { "Electrum #{c} server listening on #{host}:#{port}" }
+      end
+      EM.add_periodic_timer(HTTPSession::TIMEOUT) { HTTPSession.timeout }
     end
+
   end
 
-  class ConnectionHandler < EM::Connection
+  module ConnectionHandler
 
-    def initialize server
-      @server = server
-      @buf = BufferedTokenizer.new("\n")
-      @port, @host = Socket.unpack_sockaddr_in(get_peername)
-      @subscribed_addresses = []
-      @subscribed_numblocks = false
+    def store; @server.node.store; end
+    def log; @log ||= Bitcoin::Logger::LogWrapper.new("#{peer.join(':')}", @server.log); end
+    def peer; Socket.unpack_sockaddr_in(get_peername).reverse; end
+
+    def client_connected
       @block_channel = @server.node.notifiers[:block].subscribe do |block, depth|
         if @subscribed_numblocks
           respond({}, method: "blockchain.numblocks.subscribe", params: [depth])
         end
         block.tx.each {|tx| check_tx(tx, block.hash) }
       end
-      # @tx_channel = @server.node.notifiers[:tx].subscribe {|tx| check_tx(tx) }
-    end
-
-    def store; @server.node.store; end
-    def log; @log ||= Bitcoin::Logger::LogWrapper.new("#@host:#@port", @server.log); end
-
-    def post_init
       log.info { "client connected" }
     end
 
-    def receive_data data
-      @buf.extract(data).each do |packet|
-        EM.defer { handle_request(packet) }
-      end
+    def client_disconnected
+      @server.node.notifiers[:block].unsubscribe(@block_channel)  if @block_channel
+      log.info { "client disconnected" }
     end
 
-    def handle_request packet
-      pkt = JSON.load(packet)
+    def handle_request pkt
       log.debug { "req##{pkt['id']} #{pkt['method']}(#{pkt['params'].inspect})" }
       case pkt['method']
       when /version/
@@ -79,6 +77,7 @@ module Bitcoin::Electrum
       end
     rescue
       respond(pkt, error: "error: #{$!.message}")
+      log.warn { "error handling request: #{$!.inspect}" }
     end
 
     def get_history pkt
@@ -97,6 +96,7 @@ module Bitcoin::Electrum
           value: txout.value,
           height: (block ? block[:depth] : 0),
           raw_output_script: txout.pk_script.unpack("H*")[0] }
+
         next  unless txin = txout.get_next_in
         txouts[-1].delete(:raw_output_script)
         tx = txin.get_tx
@@ -128,7 +128,6 @@ module Bitcoin::Electrum
       txouts = store.get_txouts_for_address(pkt['params'][0])
       if txouts.any?
         hash = txouts.map do |txout|
-
           block = store.db[:blk][id: txout.get_tx.blk_id]
           [block[:hash].unpack("H*"), block[:depth]]
         end.sort_by {|b| b[1]}.last[0]
@@ -141,33 +140,157 @@ module Bitcoin::Electrum
     def check_tx tx, block_hash = "mempool:x"
       prev_outs = tx.in[0].coinbase? ? [] : tx.in.map {|i|
         store.get_tx(i.prev_out.reverse_hth).out[i.prev_out_index] }
-      (prev_outs + tx.out).map {|o|
+      (prev_outs + tx.out).compact.map {|o|
         Bitcoin::Script.new(o.pk_script).get_addresses & @subscribed_addresses
       }.flatten.uniq.each {|a|
         respond({}, method: "blockchain.address.subscribe", params: [a, block_hash]) }
     end
 
     def respond req, data
-      data['id'] = req['id']  if req['id']
+      data['id'] = req['id']  if req && req['id']
+      data['method'] = req['method']  if req['method']
       log.debug { "res##{req['id']} #{data.inspect}" }
+      send_response(data)
+    end
+
+  end
+
+  class TCPConnection < EM::Connection
+
+    include ConnectionHandler
+
+    def initialize server
+      @buf = BufferedTokenizer.new("\n")
+
+      @server = server
+      @subscribed_addresses = []
+      @subscribed_numblocks = false
+    end
+
+    def post_init
+      client_connected
+    end
+
+    def receive_data data
+      @buf.extract(data).each do |packet|
+        EM.defer { handle_request(JSON.load(packet)) }  if packet
+      end
+    end
+
+    def send_response data
       send_data(data.to_json + "\n")
     end
 
     def unbind
-      @server.node.notifiers[:block].unsubscribe(@block_channel)  if @block_channel
-      # @server.node.notifiers[:tx].unsubscribe(@tx_channel)  if @tx_channel
-      log.info { "client disconnected" }
+      client_disconnected
+    end
+
+  end
+
+  class SSLConnection < TCPConnection
+
+    def post_init
+      start_tls
+      super
+    end
+
+    def ssl_handshake_completed
+      log.info { "SSL connection established" }
+    end
+
+  end
+
+  class HTTPSession
+
+    include ConnectionHandler
+
+    attr_accessor :sid, :responses, :last_active, :connection
+
+    TIMEOUT = 30
+
+    @@sessions = {}
+
+    def initialize connection
+      @sid = SecureRandom.uuid
+      @@sessions[@sid] = self
+      @connection = connection
+      @responses = []
+      @last_active = Time.now
+
+      @server = connection.server
+      @subscribed_addresses = []
+      @subscribed_numblocks = false
+      client_connected
+    end
+
+    def self.get id, connection
+      session = @@sessions[id]  if id
+      return new(connection)  unless session
+      session.connection = connection
+      session.last_active = Time.now
+      session
+    end
+
+    def send_response data
+      @responses << data
+    end
+
+    def respond!
+      response = EM::DelegatedHttpResponse.new(connection)
+      response.status = 200
+      response.content_type 'application/json'
+      response.content = @responses.to_json
+      @responses = []
+      response.headers["Set-Cookie"] = "SESSION=#{@sid}"
+      response.send_response
+    end
+
+    def destroy
+      client_disconnected
+      @@sessions.delete(@sid)
+    end
+
+    def self.timeout
+      @@sessions.each {|_, s| s.destroy  if s.last_active <= (Time.now - TIMEOUT) }
+    end
+
+    def get_peername
+      @connection.get_peername
+    end
+  end
+
+  class HTTPConnection < EM::Connection
+    include EM::HttpServer
+
+    attr_reader :server, :session
+
+    def initialize server
+      @server = server
+    end
+
+    def post_init
+      super
+      no_environment_strings
+    end
+
+    def process_http_request
+      sid = (@http_cookie && @http_cookie =~ /SESSION=(.*)/) ? $1 : nil
+      @session = HTTPSession.get(sid, self)
+      JSON.load(@http_post_content).each {|r| session.handle_request(r) }  if @http_post_content
+      session.respond!
+    rescue
+      log.warn { "error processing http request: #{$!.inspect}" }
+    end
+
+  end
+
+  class HTTPSConnection < HTTPConnection
+
+    def post_init
+      start_tls
+      super
     end
 
   end
 
 end
-
-# if $0 == __FILE__
-#   EM.run do
-#     Bitcoin.network = :bitcoin
-#     store = Bitcoin::Storage.sequel(db: "postgres:/bitcoin")
-#     EM.start_server("127.0.0.1", 50001, Bitcoin::Electrum::Server, store)
-#     p :running
-#   end
-# end

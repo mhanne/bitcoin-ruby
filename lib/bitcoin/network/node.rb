@@ -40,8 +40,14 @@ module Bitcoin::Network
       :network => "bitcoin",
       :listen => ["0.0.0.0", Bitcoin.network[:default_port]],
       :connect => [],
-      :command => "127.0.0.1:9999",
-      :electrum => nil,
+      :command => ["127.0.0.1", 9999],
+      :electrum => {
+        :listen => nil,
+        :tcp_port => 50001,
+        :ssl_port => 50002,
+        :http_port => 8081,
+        :https_port => 8082,
+      },
       :storage => "sequel::sqlite://bitcoin.db",
       :mode => :full,
       :dns => true,
@@ -64,7 +70,7 @@ module Bitcoin::Network
       :intervals => {
         :queue => 5,
         :inv_queue => 5,
-        :addrs => 5,
+        :addrs => 60,
         :connect => 15,
         :relay => 600,
       },
@@ -158,9 +164,8 @@ module Bitcoin::Network
           log.info { "Command socket listening on #{host}:#{port}" }
         end
 
-        if @config[:electrum]
+        if @config[:electrum][:listen]
           Bitcoin::Electrum::Server.new(self, @config)
-          host, port = @config[:electrum]
         end
 
         if @config[:listen]

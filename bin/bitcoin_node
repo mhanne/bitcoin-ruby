@@ -32,9 +32,9 @@ optparse = OptionParser.new do |opts|
     options[:command] = command.split(":")
   end
 
-  opts.on("-e", "--electrum [HOST:PORT]",
-    "Electrum server socket (default: nil)") do |electrum|
-    options[:electrum] = electrum
+  opts.on("-e", "--electrum [HOST]",
+    "Electrum server listen host (default: nil)") do |electrum|
+    options[:electrum][:listen] = electrum
   end
 
   opts.on("-l", "--listen [HOST:PORT]",

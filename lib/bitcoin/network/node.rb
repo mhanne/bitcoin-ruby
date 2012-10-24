@@ -54,6 +54,13 @@ module Bitcoin::Network
       :connect => [],
       :command => ["127.0.0.1", 9999],
       :storage => "utxo::sqlite://~/.bitcoin-ruby/<network>/blocks.db",
+      :electrum => {
+        :listen => nil,
+        :tcp_port => 50001,
+        :ssl_port => 50002,
+        :http_port => 8081,
+        :https_port => 8082,
+      },
       :mode => :full,
       :cache_head => true,
       :index_nhash => false,
@@ -77,10 +84,10 @@ module Bitcoin::Network
         :unconfirmed => 100,
       },
       :intervals => {
-        :queue => 1,
-        :inv_queue => 1,
-        :addrs => 5,
-        :connect => 5,
+        :queue => 5,
+        :inv_queue => 5,
+        :addrs => 60,
+        :connect => 15,
         :relay => 0,
       },
       :import => nil,
@@ -236,9 +243,8 @@ module Bitcoin::Network
           log.info { "Server socket listening on #{host}:#{port}" }
         end
 
-        if @config[:electrum]
+        if @config[:electrum] && @config[:electrum][:listen]
           Bitcoin::Electrum::Server.new(self, @config)
-          host, port = @config[:electrum]
         end
 
         @config[:connect].each do |host, port|

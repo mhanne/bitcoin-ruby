@@ -39,6 +39,9 @@ module Bitcoin::Electrum
         if @subscribed_numblocks
           respond({}, method: "blockchain.numblocks.subscribe", params: [depth])
         end
+        if @subscribed_headers
+          respond({}, method: "blockchain.headers.subscribe", params: [get_header])
+        end
         block.tx.each {|tx| check_tx(tx, block.hash) }
       end
       log.info { "client connected" }
@@ -53,18 +56,25 @@ module Bitcoin::Electrum
       log.debug { "req##{pkt['id']} #{pkt['method']}(#{pkt['params'].inspect})" }
       case pkt['method']
       when /version/
-        respond(pkt, result: "0.1")
+        respond(pkt, result: "0.4")
       when /banner/
         respond(pkt, result: "bitcoin-ruby test")
       when /blockchain.numblocks.subscribe/
         @subscribed_numblocks = true
         respond(pkt, result: store.get_depth)
+      when /blockchain.headers.subscribe/
+        @subscribed_headers = true
+        respond(pkt, result: get_header)
       when /blockchain.address.get_history/
         get_history(pkt)
       when /server.peers/
         respond(pkt, result: []) # TODO
       when /blockchain.address.subscribe/
         subscribe_address(pkt)
+      when /blockchain.transaction.get_merkle/
+        get_merkle(pkt)
+      when /blockchain.block.get_chunk/
+        get_chunk(pkt)
       when /blockchain.transaction.broadcast/
         tx = Bitcoin::P::Tx.new(pkt['params'].pack("H*"))
         if @server.node.relay_tx(tx)
@@ -135,6 +145,31 @@ module Bitcoin::Electrum
         hash = nil
       end
       respond(pkt, result: hash)
+    end
+
+    def get_header
+      b = store.get_head
+      { nonce: b.nonce,
+        prev_block_hash: b.prev_block.reverse_hth,
+        timestamp: b.time, merkle_root: b.mrkl_root.reverse_hth,
+        block_height: b.depth, version: b.ver, bits: b.bits }
+    end
+
+    def get_merkle pkt
+      hash = pkt['params'][0]
+      tx = store.get_tx(pkt['params'][0])
+      block = tx.get_block
+      respond(pkt, result: {pos: block.tx.index(tx), block_height: block.depth,
+        merkle: Bitcoin.hash_mrkl_branch(block.tx.map(&:hash), tx.hash) })
+    end
+
+    def get_chunk pkt
+      i = pkt['params'][0]
+      r = store.db[:blk].where(chain: 0, depth: ((i * 2016)...((i + 1) * 2016))).map {|b|
+        [ b[:version], b[:prev_hash].reverse, b[:mrkl_root].reverse,
+          b[:time], b[:bits], b[:nonce] ].pack("Ia32a32III")
+      }.join.unpack("H*")[0]
+      respond(pkt, result: r)
     end
 
     def check_tx tx, block_hash = "mempool:x"

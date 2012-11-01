@@ -60,6 +60,8 @@ module Bitcoin::Network
         :ssl_port => 50002,
         :http_port => 8081,
         :https_port => 8082,
+        :host => nil,
+        :nick => nil,
       },
       :mode => :full,
       :cache_head => true,

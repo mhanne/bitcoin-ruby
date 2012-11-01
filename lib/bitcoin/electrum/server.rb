@@ -7,16 +7,23 @@ module Bitcoin::Electrum
 
   class Server
 
-    attr_reader :node, :log
+    VERSION = "0.4"
+
+    attr_reader :node, :log, :config, :banner, :peers
 
     def initialize node, config
       @node = node
       @config = config[:electrum]
       @log = Bitcoin::Logger.create(:electrum, config[:log][:electrum])
+      @banner = File.read("/etc/electrum.banner") rescue ""
+      @banner += "\n===========\nbitcoin-ruby v#{Bitcoin::VERSION}" +
+        " - http://github.com/lian/bitcoin-ruby"
+      @peers = {}
       run
     end
 
     def run
+      EM.connect("irc.freenode.net", 6667, IrcConnection, self)  if @config[:nick]
       host = @config[:listen]
       %w(tcp ssl http https).each do |c|
         next  unless port = @config["#{c}_port".to_sym]
@@ -26,6 +33,54 @@ module Bitcoin::Electrum
       EM.add_periodic_timer(HTTPSession::TIMEOUT) { HTTPSession.timeout }
     end
 
+  end
+
+  class IrcConnection < EM::Connection
+
+    CHANNEL = "#electrum"
+
+    def initialize server
+      @server = server
+    end
+
+    def config; @server.config; end
+
+    def get_name
+      name = "v#{Server::VERSION}"
+      name << " t#{config[:tcp_port]}"  if config[:tcp_port]
+      name << " h#{config[:http_port]}"  if config[:http_port]
+      name << " s#{config[:ssl_port]}"  if config[:ssl_port]
+      name << " g#{config[:https_port]}"  if config[:https_port]
+    end
+
+    def post_init
+      send_data("USER electrum 0 * : #{config[:host] || config[:listen]} #{get_name} \n")
+      send_data("NICK E_#{config[:nick] || (0...10).map{65.+(rand(26)).chr}.join }\n")
+      send_data("JOIN #{CHANNEL}\n")
+    end
+
+    def receive_data data
+      data.split("\r\n").each do |line|
+        @server.log.debug { line }
+        begin
+          line = line.split(" ")
+          if line.include?("PING")
+            send_data("NAMES #{CHANNEL}\n")
+          elsif line.include?("353") # /names
+            line[line.index("353")..-1].each {|l| send_data("WHO #{l}\n")  if l =~ /^E_/ }
+          elsif line.include?("352") # /who
+            i = line.index("352")
+            ip = Socket.getaddrinfo(line[i+4], nil)[0][2]
+            name = line[i+6]
+            host = line[i+9]
+            ports = line[i+10..-1]
+            @server.peers[name] = [ip, host, ports]
+          end
+        rescue
+          @server.log.warn { "Error handling line: #{$!.inspect}" }
+        end
+      end
+    end
   end
 
   module ConnectionHandler
@@ -56,9 +111,9 @@ module Bitcoin::Electrum
       log.debug { "req##{pkt['id']} #{pkt['method']}(#{pkt['params'].inspect})" }
       case pkt['method']
       when /version/
-        respond(pkt, result: "0.4")
+        respond(pkt, result: Server::VERSION)
       when /banner/
-        respond(pkt, result: "bitcoin-ruby test")
+        respond(pkt, result: @server.banner)
       when /blockchain.numblocks.subscribe/
         @subscribed_numblocks = true
         respond(pkt, result: store.get_depth)
@@ -68,7 +123,7 @@ module Bitcoin::Electrum
       when /blockchain.address.get_history/
         get_history(pkt)
       when /server.peers/
-        respond(pkt, result: []) # TODO
+        respond(pkt, result: @server.peers.values)
       when /blockchain.address.subscribe/
         subscribe_address(pkt)
       when /blockchain.transaction.get_merkle/

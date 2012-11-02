@@ -64,6 +64,7 @@ module Bitcoin::Network
       :log => {
         :network => :info,
         :storage => :info,
+        :electrum => :info,
       },
       :max => {
         :connections_out => 8,
@@ -233,6 +234,11 @@ module Bitcoin::Network
           log.debug { "Trying to bind server socket to #{host}:#{port}" }
           EM.start_server(host, port.to_i, ConnectionHandler, self, host, port.to_i, :in)
           log.info { "Server socket listening on #{host}:#{port}" }
+        end
+
+        if @config[:electrum]
+          Bitcoin::Electrum::Server.new(self, @config)
+          host, port = @config[:electrum]
         end
 
         @config[:connect].each do |host, port|

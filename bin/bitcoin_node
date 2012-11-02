@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 $:.unshift( File.expand_path("../../lib", __FILE__) )
 
+
 require 'bitcoin'
 require 'optparse'
 require 'fileutils'
@@ -29,6 +30,11 @@ optparse = OptionParser.new do |opts|
   opts.on("--command [HOST:PORT]",
           "Command socket (default: #{options[:command].join(':')})") do |command|
     options[:command] = command.split(":")
+  end
+
+  opts.on("-e", "--electrum [HOST:PORT]",
+    "Electrum server socket (default: nil)") do |electrum|
+    options[:electrum] = electrum
   end
 
   opts.on("-l", "--listen [HOST:PORT]",

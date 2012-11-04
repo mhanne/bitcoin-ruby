@@ -212,10 +212,13 @@ module Bitcoin::Electrum
 
     def get_merkle pkt
       hash = pkt['params'][0]
-      tx = store.get_tx(pkt['params'][0])
-      block = tx.get_block
-      respond(pkt, result: {pos: block.tx.index(tx), block_height: block.depth,
-        merkle: Bitcoin.hash_mrkl_branch(block.tx.map(&:hash), tx.hash) })
+      @merkle_cache ||= {}
+      unless @merkle_cache[hash]
+        tx = store.get_tx(hash); block = tx.get_block
+        @merkle_cache[hash] = { pos: block.tx.index(tx), block_height: block.depth,
+          merkle: Bitcoin.hash_mrkl_branch(block.tx.map(&:hash), tx.hash) }
+      end
+      respond(pkt, result: @merkle_cache[hash])
     end
 
     def get_chunk pkt

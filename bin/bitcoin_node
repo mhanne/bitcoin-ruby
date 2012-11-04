@@ -138,6 +138,8 @@ end
 
 optparse.parse!
 
+[:command, :listen, :connect].each {|n| options[n] = options[n].split(":")  if options[n].is_a?(String) }
+
 Bitcoin.network = options[:network]
 FileUtils.mkdir_p File.join(ENV['HOME'], ".bitcoin-ruby/#{Bitcoin.network_name}")
 

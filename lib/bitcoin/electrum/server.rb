@@ -110,54 +110,56 @@ module Bitcoin::Electrum
 
     def handle_request pkt
       log.debug { "req##{pkt['id']} #{pkt['method']}(#{pkt['params'].inspect})" }
-      pkt[:result] = case pkt['method']
-                      when /version/
-                        @version = pkt['params'][1]
-                        Server::VERSION
-                      when /banner/
-                        @server.banner
-                      when /blockchain.numblocks.subscribe/
-                        @subscribed_numblocks = true
-                        store.get_depth
-                      when /blockchain.headers.subscribe/
-                        @subscribed_headers = true
-                        get_header
-                      when /blockchain.address.get_history/
-                        get_history(pkt)
-                      when /server.peers/
-                        @server.peers.values
-                      when /blockchain.address.subscribe/
-                        subscribe_address(pkt)
-                      when /blockchain.transaction.get_merkle/
-                        get_merkle(pkt)
-                      when /blockchain.transaction.get/
-                        get_transaction(pkt)
-                      when /blockchain.block.get_chunk/
-                        get_chunk(pkt)
-                      when /blockchain.transaction.broadcast/
-                        tx = Bitcoin::P::Tx.new(pkt['params'].pack("H*"))
-                        if @server.node.relay_tx(tx)
-                          tx.hash
-                        else
-                          raise "error broadcasting tx"
-                        end
-                      else
-                        raise "Method #{pkt['method']} not supported."
-                      end
+      result = case pkt['method']
+               when /version/
+                 @version = pkt['params'][1]
+                 Server::VERSION
+               when /banner/
+                 @server.banner
+               when /blockchain.numblocks.subscribe/
+                 @subscribed_numblocks = true
+                 store.get_depth
+               when /blockchain.headers.subscribe/
+                 @subscribed_headers = true
+                 get_header
+               when /blockchain.address.get_history/
+                 get_history(pkt['params'][0])
+               when /server.peers/
+                 @server.peers.values
+               when /blockchain.address.subscribe/
+                 subscribe_address(pkt['params'][0])
+               when /blockchain.transaction.get_merkle/
+                 get_merkle(pkt['params'][0])
+               when /blockchain.transaction.get/
+                 get_transaction(pkt['params'][0])
+               when /blockchain.block.get_chunk/
+                 get_chunk(pkt['params'][0])
+               when /blockchain.block.get_header/
+                 get_header(pkt['params'][0])
+               when /blockchain.transaction.broadcast/
+                 tx = Bitcoin::P::Tx.new(pkt['params'].pack("H*"))
+                 if @server.node.relay_tx(tx)
+                   tx.hash
+                 else
+                   raise "error broadcasting tx"
+                 end
+               else
+                 raise "Method #{pkt['method']} not supported."
+               end
 
       log.debug { "res##{pkt['id']} #{pkt.inspect}" }
-      send_response(pkt)
+      send_response({ id: pkt['id'], result: result })
     rescue Exception
-      pkt[:error] = "error: #{$!.message}"
-      send_response(pkt)
+      send_response({ id: pkt['id'], error: $!.message })
       log.warn { "error handling request: #{$!.inspect}" }
-      # puts *$@
+      puts *$@
+      exit
     end
 
-    def get_history pkt
-      return get_history2(pkt)  if @version && @version >= "0.5"
+    def get_history addr
+      return get_history2(addr)  if @version && @version >= "0.5"
       txouts = []
-      store.get_txouts_for_address(pkt['params'][0], true).each do |txout|
+      store.get_txouts_for_address(addr, true).each do |txout|
         tx = txout.get_tx
         block = store.db[:blk][id: tx.blk_id]
         txouts << {
@@ -190,9 +192,9 @@ module Bitcoin::Electrum
       txouts
     end
 
-    def get_history2 pkt
+    def get_history2 addr
       txs = []
-      store.get_txouts_for_address(pkt['params'][0], true).each do |txout|
+      store.get_txouts_for_address(addr, true).each do |txout|
         tx = txout.get_tx
         binding.pry  unless tx
         block = store.db[:blk][id: tx.blk_id]
@@ -206,16 +208,15 @@ module Bitcoin::Electrum
       txs.uniq.sort_by {|t| t[:height] }
     end
 
-    def subscribe_address pkt
-      addr = pkt['params'][0]
+    def subscribe_address addr
       raise "Address #{addr} invalid."  unless Bitcoin.valid_address?(addr)
       @subscribed_addresses << addr
-      get_status(pkt)
+      get_status(addr)
     end
 
-    def get_status pkt
-      return get_status2(pkt)  if @version && @version >= "0.5"
-      txouts = store.get_txouts_for_address(pkt['params'][0])
+    def get_status addr
+      return get_status2(addr)  if @version && @version >= "0.5"
+      txouts = store.get_txouts_for_address(addr)
       if txouts.any?
         hash = txouts.map do |txout|
           block = store.db[:blk][id: txout.get_tx.blk_id]
@@ -234,20 +235,19 @@ module Bitcoin::Electrum
       Digest::SHA256.hexdigest(status)
     end
 
-    def get_header
-      b = store.get_head
+    def get_header depth = nil
+      b = depth ? store.get_block_by_depth(depth) : store.get_head
       { nonce: b.nonce,
         prev_block_hash: b.prev_block.reverse_hth,
         timestamp: b.time, merkle_root: b.mrkl_root.reverse_hth,
         block_height: b.depth, version: b.ver, bits: b.bits }
     end
 
-    def get_transaction(pkt)
-      store.get_tx(pkt['params'][0]).to_payload.unpack("H*")[0]
+    def get_transaction hash
+      store.get_tx(hash).to_payload.unpack("H*")[0]
     end
 
-    def get_merkle pkt
-      hash = pkt['params'][0]
+    def get_merkle hash
       @merkle_cache ||= {}
       unless @merkle_cache[hash]
         tx = store.get_tx(hash); block = tx.get_block
@@ -257,8 +257,7 @@ module Bitcoin::Electrum
       @merkle_cache[hash]
     end
 
-    def get_chunk pkt
-      i = pkt['params'][0]
+    def get_chunk i
       store.db[:blk].where(chain: 0, depth: ((i * 2016)...((i + 1) * 2016))).map {|b|
         [ b[:version], b[:prev_hash].reverse, b[:mrkl_root].reverse,
           b[:time], b[:bits], b[:nonce] ].pack("Ia32a32III")

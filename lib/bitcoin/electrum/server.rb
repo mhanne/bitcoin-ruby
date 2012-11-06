@@ -203,7 +203,7 @@ module Bitcoin::Electrum
         block = store.db[:blk][id: tx.blk_id]
         txs << { tx_hash: tx.hash, height: block[:depth] }
       end
-      txs
+      txs.uniq.sort_by {|t| t[:height] }
     end
 
     def subscribe_address pkt
@@ -228,8 +228,9 @@ module Bitcoin::Electrum
     end
 
     def get_status2 pkt
-      txouts = store.get_txouts_for_address(pkt['params'][0])
-      status = get_history2(pkt).map {|o| "#{o[:tx_hash]}:#{o[:height]}" }.join
+      history = get_history2(pkt)
+      return nil  unless history.any?
+      status = history.map {|o| "#{o[:tx_hash]}:#{o[:height]}" }.join(":") + ":"
       Digest::SHA256.hexdigest(status)
     end
 

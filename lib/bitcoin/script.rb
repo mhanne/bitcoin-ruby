@@ -38,6 +38,7 @@ class Bitcoin::Script
   OP_CODESEPARATOR = 171
   OP_MIN          = 163
   OP_MAX          = 164
+  OP_2DROP        = 109
   OP_2OVER        = 112
   OP_2SWAP        = 114
   OP_IFDUP        = 115
@@ -286,13 +287,54 @@ class Bitcoin::Script
     @chunks[-1] == OP_CHECKMULTISIG
   end
 
+  # is namecoin name_new tx
+  def is_name_new?
+    return false  if @chunks.size < 8
+    [-8, -6, -5, -4, -2, -1].map {|i| @chunks[i] } ==
+      [OP_1, OP_2DROP, OP_DUP, OP_HASH160, OP_EQUALVERIFY, OP_CHECKSIG]
+  end
+
+  # is namecoin name_firstupdate tx
+  def is_name_firstupdate?
+    return false  if @chunks.size < 11
+    [-11, -7, -6, -5, -4, -2, -1].map {|i| @chunks[i] } ==
+    [OP_2_16[0], OP_2DROP, OP_2DROP, OP_DUP, OP_HASH160, OP_EQUALVERIFY, OP_CHECKSIG]
+  end
+
+  # is namecoin name_update tx
+  def is_name_update?
+    return false  if @chunks.size < 10
+    [-10, -7, -6, -5, -4, -2, -1].map {|i| @chunks[i] } ==
+      [83, OP_2DROP, OP_DROP, OP_DUP, OP_HASH160, OP_EQUALVERIFY, OP_CHECKSIG]
+  end
+
+  # get type of this tx
   def type
-       if is_hash160?;   :hash160
-    elsif is_pubkey?;    :pubkey
-    elsif is_multisig?;  :multisig
-    elsif is_p2sh?;      :p2sh
-    else;                :unknown
+       if is_hash160?;          :hash160
+    elsif is_pubkey?;           :pubkey
+    elsif is_multisig?;         :multisig
+    elsif is_p2sh?;             :p2sh
+    elsif is_name_new?;         :name_new
+    elsif is_name_firstupdate?; :name_firstupdate
+    elsif is_name_update?;      :name_update
+    else;                       :unknown
     end
+  end
+
+  # get the name_hash of a namecoin name_new tx
+  def get_name_hash
+    @chunks[-7].hth  if is_name_new?
+  end
+
+  # get the name of a namecoin name_firstupdate or name_update tx
+  def get_name
+    return @chunks[-10]  if is_name_firstupdate?
+    return @chunks[-9]  if is_name_update?
+  end
+
+  # get the value name of a namecoin name_firstupdate or name_update tx
+  def get_value
+    @chunks[-8]  if is_name_firstupdate? || is_name_update?
   end
 
   # get the public key for this pubkey script
@@ -533,20 +575,26 @@ class Bitcoin::Script
   def op_max
     @stack << @stack.pop(2).map{|i| (i.is_a?(String) && i.bytesize == 1) ? i.ord : i }.max
   end
-  
+
+  # Removes the top two stack items.
+  def op_2drop
+    return false  if @stack.size < 2
+    @stack.pop(2)
+  end
+
   # Copies the pair of items two spaces back in the stack to the front.
   def op_2over
     @stack << @stack[-4]
     @stack << @stack[-4]
   end
-  
+
   # Swaps the top two pairs of items.
   def op_2swap
     p1 = @stack.pop(2)
     p2 = @stack.pop(2)
     @stack += p1 += p2
   end
-  
+
   # If the input is true, duplicate it.
   def op_ifdup
     if @stack.last != 0

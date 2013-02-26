@@ -368,6 +368,10 @@ module Bitcoin
     @network = name.to_sym
   end
 
+  def self.network_name
+    @network
+  end
+
   CENT =   1_000_000
   COIN = 100_000_000
   MAX_MONEY = 21_000_000 * COIN
@@ -387,6 +391,7 @@ module Bitcoin
       :p2sh_version => "05",
       :privkey_version => "80",
       :default_port => 8333,
+      :protocol_version => 60002,
       :dns_seeds => ["bitseed.xf2.org", "dnsseed.bluematt.me",
         "dnsseed.bitcoin.dashjr.org", "seed.bitcoin.sipa.be"],
       :genesis_hash => "000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f",
@@ -396,7 +401,14 @@ module Bitcoin
         'mining.bitcoin.cz',
         'blockchain.info',
         'blockexplorer.com',
-      ]
+      ],
+      :checkpoints => {
+        1 => "00000000839a8e6886ab5951d76f411475428afc90947ee320161bbf18eb6048",
+        50000 => "000000001aeae195809d120b5d66a39c83eb48792e068f8ea1fea19d84a4278a",
+        100000 => "000000000003ba27aa200b1cecaad478d2b00432346c3f1f3986da1afd33e506",
+        150000 => "0000000000000a3290f20e75860d505ce0e948a1d1d846bec7e39015d242884b",
+        200000 => "000000000000034a7dedef4a161fa058a2d67a173a90155f3a2fe6fc132e0ebf",
+      }
     },
     :testnet => {
       :magic_head => "\xFA\xBF\xB5\xDA",
@@ -415,11 +427,28 @@ module Bitcoin
       :p2sh_version => "c4",
       :privkey_version => "ef",
       :default_port => 18333,
+      :protocol_version => 60002,
       :dns_seeds => [],
       :genesis_hash => "000000000933ea01ad0ee984209779baaec3ced90fa3f408719526f8d77f4943",
       :proof_of_work_limit => 0x1d07fff8,
       :known_nodes => []
-    }
+    },
+    :namecoin => {
+      :magic_head => "\xF9\xBE\xB4\xFE",
+      :address_version => "6f",
+      :default_port => 8334,
+      :protocol_version => 35000,
+      :dns_seeds => [],
+      :genesis_hash => "000000000062b72c5e2ceb45fbc8587e807c155b0da735e6483dfba2f0a9c770",
+      :proof_of_work_limit => 0x1d00ffff,
+      :known_nodes => ["127.0.0.1"],
+      :checkpoints => {
+        0 => "000000000062b72c5e2ceb45fbc8587e807c155b0da735e6483dfba2f0a9c770",
+        19200 => "d8a7c3e01e1e95bcee015e6fcc7583a2ca60b79e5a3aa0a171eddd344ada903d",
+        24000 => "425ab0983cf04f43f346a4ca53049d0dc2db952c0a68eb0b55c3bb64108d5371",
+        97778 => "7553b1e43da01cfcda4335de1caf623e941d43894bd81c2af27b6582f9d83c6f",
+      }
+    },
   }
-  
+
 end

@@ -20,7 +20,7 @@ module Bitcoin::Storage::Backends
 
     include Bitcoin::Storage::Backends::SequelMigrations
 
-    DEFAULT_CONFIG = {mode: :full}
+    DEFAULT_CONFIG = { mode: :full, cache_head: false }
 
     # create sequel store with given +config+
     def initialize config, *args

@@ -11,7 +11,7 @@ module Bitcoin::Storage
   @log = Bitcoin::Logger.create(:storage)
   def self.log; @log; end
 
-  BACKENDS = [:dummy, :sequel]
+  BACKENDS = [:dummy, :sequel, :utxo]
   BACKENDS.each do |name|
     module_eval <<-EOS
       def self.#{name} config, *args
@@ -153,7 +153,7 @@ module Bitcoin::Storage
       end
 
       # store given +tx+
-      def store_tx(tx)
+      def store_tx(tx, validate = true)
         raise "Not implemented"
       end
 

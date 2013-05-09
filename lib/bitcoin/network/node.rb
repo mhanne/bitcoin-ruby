@@ -99,6 +99,7 @@ module Bitcoin::Network
             @store.import(@config[:import]); @importing = false
           rescue
             log.fatal { $!.message }
+            puts *$@
             stop
           end
         end

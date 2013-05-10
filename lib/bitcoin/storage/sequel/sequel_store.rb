@@ -399,6 +399,14 @@ module Bitcoin::Storage::Backends
       txouts
     end
 
+    def get_txouts_for_name_hash(hash)
+      @db[:names].filter(hash: hash).map {|n| get_txout_by_id(n[:txout_id]) }
+    end
+
+    # def get_txouts_for_name(name)
+    #   @db[:names].filter(name: name).map {|n| get_txout_by_id(n[:txout_id]) }
+    # end
+
     # get all unconfirmed Models::TxOut
     def get_unconfirmed_tx
       @db[:unconfirmed].map{|t| wrap_tx(t)}
@@ -412,6 +420,7 @@ module Bitcoin::Storage::Backends
       names = @db[:names].where(:name => name.to_sequel_blob).order(:txout_id).reverse
       return nil  unless names.any?
       wrap_name(names.first)
+#      wrap_name(get_txouts_for_name(name).last)
     end
 
     def name_history name

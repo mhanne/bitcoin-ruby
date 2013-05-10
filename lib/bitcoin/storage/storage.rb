@@ -40,7 +40,7 @@ module Bitcoin::Storage
       # orphan branch (not connected to main branch / genesis block)
       ORPHAN = 2
 
-      attr_reader :log
+      attr_reader :log, :config
 
       def initialize(config = {}, getblocks_callback = nil)
         @config = config
@@ -64,7 +64,7 @@ module Bitcoin::Storage
         res = store_block(blk)
         log.info { "block #{blk.hash} " +
           "[#{res[0]}, #{['main', 'side', 'orphan'][res[1]]}] " +
-          "(#{"%.4fs, %.3fkb" % [(Time.now - time), blk.payload.bytesize.to_f/1000]})" }  if res && res[1]
+          "(#{"%.4fs, %3dtx, %.3fkb" % [(Time.now - time), blk.tx.size, blk.payload.bytesize.to_f/1000]})" }  if res && res[1]
         res
       end
 
@@ -106,6 +106,7 @@ module Bitcoin::Storage
           if prev_block == get_head
             log.debug { "=> main (#{depth})" }
             if !@checkpoints.any? || depth > @checkpoints.keys.last
+              @config[:utxo_cache] = 0  if self.class.name =~ /UtxoStore/
               validator.validate(rules: [:context], raise_errors: true)
             end
             return persist_block(blk, MAIN, depth, prev_block.work)
@@ -287,7 +288,7 @@ module Bitcoin::Storage
         elsif File.directory?(filename)
           Dir.entries(filename).sort.each do |file|
             next  unless file =~ /^blk.*?\.dat$/
-            import(File.join(filename, file))
+            import(File.join(filename, file), max_depth)
           end
         else
           raise "Import dir/file #{filename} not found"

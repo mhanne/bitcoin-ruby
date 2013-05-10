@@ -86,8 +86,8 @@ module Bitcoin::Network
 
     def set_store
       backend, config = @config[:storage].split('::')
-      @store = Bitcoin::Storage.send(backend, {
-          db: config, mode: @config[:mode], cache_head: true}, ->(locator) {
+      @store = Bitcoin::Storage.send(backend, { db: config, mode: @config[:mode],
+          cache_head: true, log_level: @config[:log][:storage]}, ->(locator) {
           peer = @connections.select(&:connected?).sample
           peer.send_getblocks(locator)
         })
@@ -140,6 +140,7 @@ module Bitcoin::Network
 
     def stop
       log.info { "Shutting down..." }
+      stop_timers
       EM.next_tick { EM.stop }
     end
 
@@ -156,10 +157,15 @@ module Bitcoin::Network
       end
     end
 
+    def stop_timers
+      @timers.each {|n, t| EM.cancel_timer t }
+    end
+
     def run
       @started = Time.now
 
       EM.add_shutdown_hook do
+        store.flush
         store_addrs
         log.info { "Bye" }
       end

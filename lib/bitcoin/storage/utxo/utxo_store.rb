@@ -249,6 +249,34 @@ module Bitcoin::Storage::Backends
       txout
     end
 
+    def get_txouts_for_name_hash(hash)
+      name_new_pattern = "Q\x14#{hash.htb}mv\xa9\x14%"
+      @db[:utxo].filter("pk_script LIKE ?", name_new_pattern.to_sequel_blob).map {|o|
+        wrap_txout(o) }
+    end
+
+    def get_txouts_for_name(name)
+      name_firstupdate_pattern = "R\x04#{name}%mmv\xa9\x14%"
+      name_update_pattern = "S\x04#{name}%muv\xa9\x14%"
+      @db[:utxo].filter("pk_script LIKE ?", name_firstupdate_pattern.to_sequel_blob)
+       .or("pk_script LIKE ?", name_update_pattern.to_sequel_blob).sort_by {|o| o[:blk_id] }
+    end
+
+    def name_show(name)
+      wrap_name(get_txouts_for_name(name).last)
+    end
+
+    def wrap_name txout
+      return nil  unless txout
+      script = Bitcoin::Script.new(txout[:pk_script])
+      data = { txout_id: [txout[:tx_hash].hth, txout[:tx_idx]],
+        hash: script.get_namecoin_hash,
+        name: script.get_namecoin_name,
+        value: script.get_namecoin_value }
+      Bitcoin::Storage::Models::Name.new(self, data)
+
+    end
+
   end
 
 end

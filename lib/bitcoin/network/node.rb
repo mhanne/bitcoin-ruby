@@ -171,7 +171,6 @@ module Bitcoin::Network
       @started = Time.now
 
       EM.add_shutdown_hook do
-        store.flush
         store_addrs
         log.info { "Bye" }
       end

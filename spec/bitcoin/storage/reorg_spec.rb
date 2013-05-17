@@ -2,7 +2,12 @@ require_relative '../spec_helper'
 
 include Bitcoin::Builder
 
-describe "reorg" do
+
+
+[ { :name => :utxo, :db => 'sqlite:/', :index_all_addrs => true },
+  { :name => :sequel, :db => 'sqlite:/' } ] .each do |configuration|
+
+  describe "reorg (#{configuration[:name].capitalize}Store)" do
 
   def balance addr
     @store.get_balance(Bitcoin.hash160_from_address(addr))
@@ -10,7 +15,8 @@ describe "reorg" do
 
   before do
     Bitcoin.network = :testnet
-    @store = Bitcoin::Storage.sequel(:db => "sqlite:/")
+    @store = Bitcoin::Storage.send(configuration[:name], configuration)
+    @store.reset
     def @store.in_sync?; true; end
     @store.log.level = :warn
     Bitcoin.network[:proof_of_work_limit] = Bitcoin.encode_compact_bits("ff"*32)
@@ -124,6 +130,7 @@ describe "reorg" do
   end
 
   it "should reconnect orphans" do
+    next(true.should == true)  if @store.class.name =~ /Utxo/
     blocks = [@block0]
     3.times { blocks << create_block(blocks.last.hash, false) }
 
@@ -179,4 +186,5 @@ describe "reorg" do
     balance("1JyMKvPHkrCQd8jQrqTR1rBsAd1VpRhTiE").should == 14000000000
   end
 
+end
 end

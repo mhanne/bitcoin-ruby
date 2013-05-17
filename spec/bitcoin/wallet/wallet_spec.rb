@@ -40,8 +40,6 @@ describe Bitcoin::Wallet::Wallet do
     end
   end
 
-
-
   before do
     Bitcoin.network = :bitcoin
     @storage = Mock.new
@@ -60,6 +58,7 @@ describe Bitcoin::Wallet::Wallet do
   end
 
   it "should get total balance" do
+    @storage.expect(:class, Bitcoin::Storage::Backends::SequelStore, [])
     @storage.expect(:get_txouts_for_address, [], [@addr])
     @wallet.get_balance.should == 0
 
@@ -118,6 +117,7 @@ describe Bitcoin::Wallet::Wallet do
       txout.expect(:pk_script,
         Script.to_address_script(@addr))
       @storage.expect(:get_txouts_for_address, [txout], [@addr])
+      @storage.expect(:class, Bitcoin::Storage::Backends::SequelStore, [])
       selector = Mock.new
       selector.expect(:select, [txout], [[txout]])
       @selector.expect(:new, selector, [[txout]])
@@ -186,6 +186,7 @@ describe Bitcoin::Wallet::Wallet do
       txout.expect(:get_address, @addr)
       txout.expect(:pk_script, Script.to_address_script(@addr))
       @storage.expect(:get_txouts_for_address, [txout], [@addr])
+      @storage.expect(:class, Bitcoin::Storage::Backends::SequelStore, [])
       @keystore = DummyKeyStore.new([@key, @key2, @key3])
 
       selector = Mock.new

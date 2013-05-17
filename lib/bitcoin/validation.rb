@@ -31,17 +31,6 @@ module Bitcoin::Validation
   class Block
     attr_accessor :block, :store, :prev_block
 
-    RULES = {
-      syntax: [:hash, :tx_list, :bits, :max_timestamp, :coinbase, :coinbase_scriptsig, :mrkl_root, :transactions_syntax],
-      context: [:prev_hash, :difficulty, :coinbase_value, :min_timestamp, :transactions_context]
-    }
-
-    # TODO merged mining validations
-    if Bitcoin.namecoin?
-      RULES[:syntax] -= [:bits, :coinbase, :coinbase_scriptsig, :mrkl_root]
-      RULES[:context] -= [:difficulty, :coinbase_value]
-    end
-
     # validate block rules. +opts+ are:
     # rules:: which rulesets to validate (default: [:syntax, :context])
     # raise_errors:: whether to raise ValidationError on failure (default: false)
@@ -51,7 +40,7 @@ module Bitcoin::Validation
 
       opts[:rules].each do |name|
         store.log.debug { "validating block #{name} #{block.hash} (#{block.to_payload.bytesize} bytes)" }
-        RULES[name].each.with_index do |rule, i|
+        @rules[name].each.with_index do |rule, i|
           unless send(rule)
             raise ValidationError, "block error: #{name} check #{i} - #{rule} failed"  if opts[:raise_errors]
             return false
@@ -66,6 +55,7 @@ module Bitcoin::Validation
     def initialize block, store, prev_block = nil
       @block, @store = block, store
       @prev_block = prev_block || store.get_block(block.prev_block.reverse_hth)
+      @rules = Bitcoin.network[:validation][:block]
     end
 
     # check that block hash matches header
@@ -141,7 +131,7 @@ module Bitcoin::Validation
     end
 
     # check transactions
-    def transactions_syntax
+    def tx_syntax
       tx_validators.all?{|v|
         begin
           v.validate(rules: [:syntax], raise_errors: true)
@@ -152,7 +142,7 @@ module Bitcoin::Validation
       }
     end
 
-    def transactions_context
+    def tx_context
       tx_validators.all?{|v|
         begin
           v.validate(rules: [:context], raise_errors: true)
@@ -198,11 +188,6 @@ module Bitcoin::Validation
   class Tx
     attr_accessor :tx, :store
 
-    RULES = {
-      syntax: [:hash, :lists, :max_size, :output_values, :inputs, :lock_time, :standard],
-      context: [:prev_out, :signatures, :spent, :input_values, :output_sum]
-    }
-
     # validate tx rules. +opts+ are:
     # rules:: which rulesets to validate (default: [:syntax, :context])
     # raise_errors:: whether to raise ValidationError on failure (default: false)
@@ -211,7 +196,7 @@ module Bitcoin::Validation
       opts[:rules] ||= [:syntax, :context]
       opts[:rules].each do |name|
         store.log.debug { "validating tx #{name} #{tx.hash} (#{tx.to_payload.bytesize} bytes)" } if store
-        RULES[name].each.with_index do |rule, i|
+        @rules[name].each.with_index do |rule, i|
           unless send(rule)
             raise ValidationError, "tx error: #{name} check #{i} - #{rule} failed"  if opts[:raise_errors]
             return false
@@ -232,6 +217,7 @@ module Bitcoin::Validation
     # also needs the +block+ to find prev_outs for chains of tx inside one block.
     def initialize tx, store, block = nil
       @tx, @store, @block = tx, store, block
+      @rules = Bitcoin.network[:validation][:tx]
     end
 
     # check that tx hash matches data

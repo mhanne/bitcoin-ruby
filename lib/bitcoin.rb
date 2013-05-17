@@ -446,7 +446,16 @@ module Bitcoin
         210000 => "000000000000048b95347e83192f69cf0366076336c639f9b7228e9ba171342e",
         216116 => "00000000000001b4f4b433e81ee46494af945cf96014816a4e2370f11b23df4e",
         225430 => "00000000000001c108384350f74090433e7fcf79a606b8e797f065b130575932",
-      }
+      },
+      :validation => {
+        :block => {
+          :syntax => [:hash, :tx_list, :bits, :max_timestamp, :coinbase,
+                      :coinbase_scriptsig, :mrkl_root, :tx_syntax],
+          :context => [:prev_hash, :difficulty, :coinbase_value, :min_timestamp,
+                       :tx_context] },
+        :tx => {
+          :syntax => [:hash, :lists, :max_size, :output_values, :inputs, :lock_time, :standard],
+          :context => [:prev_out, :signatures, :spent, :input_values, :output_sum] } }
     },
 
     :testnet => {
@@ -461,7 +470,16 @@ module Bitcoin
       :proof_of_work_limit => 0x1d07fff8,
       :alert_pubkeys => ["04302390343f91cc401d56d68b123028bf52e5fca1939df127f63c6467cdf9c8e2c14b61104cf817d0b780da337893ecc4aaff1309e536162dabbdb45200ca2b0a"],
       :known_nodes => [],
-      :checkpoints => {}
+      :checkpoints => {},
+      :validation => {
+        :block => {
+          :syntax => [:hash, :tx_list, :bits, :max_timestamp, :coinbase,
+                      :coinbase_scriptsig, :mrkl_root, :tx_syntax],
+          :context => [:prev_hash, :difficulty, :coinbase_value, :min_timestamp,
+                       :tx_context] },
+        :tx => {
+          :syntax => [:hash, :lists, :max_size, :output_values, :inputs, :lock_time, :standard],
+          :context => [:prev_out, :signatures, :spent, :input_values, :output_sum] } }
     },
 
     :testnet3 => {
@@ -484,7 +502,16 @@ module Bitcoin
         # 542 contains invalid transaction
         542 => "0000000083c1f82cf72c6724f7a317325806384b06408bce7a4327f418dfd5ad",
         71018 => "000000000010dd93dc55541116b2744eb8f4c3b706df6e8512d231a03fb9e435",
-      }
+      },
+      :validation => {
+        :block => {
+          :syntax => [:hash, :tx_list, :bits, :max_timestamp, :coinbase,
+                      :coinbase_scriptsig, :mrkl_root, :tx_syntax],
+          :context => [:prev_hash, :difficulty, :coinbase_value, :min_timestamp,
+                       :tx_context] },
+        :tx => {
+          :syntax => [:hash, :lists, :max_size, :output_values, :inputs, :lock_time, :standard],
+          :context => [:prev_out, :signatures, :spent, :input_values, :output_sum] } }
     },
 
     :ppcoin => {
@@ -501,9 +528,17 @@ module Bitcoin
       :alert_pubkeys => [],
       :known_nodes => [ "theseven.bounceme.net", "cryptocoinexplorer.com" ],
       :checkpoints => {
-        19080 => "000000000000bca54d9ac17881f94193fd6a270c1bb21c3bf0b37f588a40dbd7",
-        30583 => "d39d1481a7eecba48932ea5913be58ad3894c7ee6d5a8ba8abeb772c66a6696e",
-      }
+       19080 => "000000000000bca54d9ac17881f94193fd6a270c1bb21c3bf0b37f588a40dbd7",
+       30583 => "d39d1481a7eecba48932ea5913be58ad3894c7ee6d5a8ba8abeb772c66a6696e",
+      },
+      :validation => {
+        :block => {
+          :syntax => [:hash, :tx_list, :max_timestamp, :coinbase,
+                      :coinbase_scriptsig, :mrkl_root, :tx_syntax],
+          :context => [:prev_hash, :coinbase_value, :min_timestamp] },
+        :tx => {
+          :syntax => [:hash, :lists, :max_size, :output_values, :inputs, :lock_time, :standard],
+          :context => [:prev_out, :signatures, :spent, :input_values, :output_sum] } }
     },
 
     :ppcoin_testnet => {
@@ -519,7 +554,15 @@ module Bitcoin
       :proof_of_work_limit => 0,
       :alert_pubkeys => [],
       :known_nodes => [],
-      :checkpoints => {}
+      :checkpoints => {},
+      :validation => {
+        :block => {
+          :syntax => [:hash, :tx_list, :max_timestamp, :coinbase,
+                      :coinbase_scriptsig, :mrkl_root, :tx_syntax],
+          :context => [:prev_hash, :min_timestamp] },
+        :tx => {
+          :syntax => [:hash, :lists, :max_size, :output_values, :inputs, :lock_time, :standard],
+          :context => [:prev_out, :signatures, :spent, :input_values, :output_sum] } }
     },
 
     :litecoin => {
@@ -552,7 +595,15 @@ module Bitcoin
         120000 => "bd9d26924f05f6daa7f0155f32828ec89e8e29cee9e7121b026a7a3552ac6131",
         161500 => "dbe89880474f4bb4f75c227c77ba1cdc024991123b28b8418dbbf7798471ff43",
         179620 => "2ad9c65c990ac00426d18e446e0fd7be2ffa69e9a7dcb28358a50b2b78b9f709",
-      }
+      },
+      :validation => {
+        :block => {
+          :syntax => [:hash, :tx_list, :max_timestamp, :coinbase,
+                      :coinbase_scriptsig, :mrkl_root, :tx_syntax],
+          :context => [:prev_hash, :coinbase_value, :min_timestamp, :tx_context] },
+        :tx => {
+          :syntax => [:hash, :lists, :max_size, :output_values, :inputs, :lock_time, :standard],
+          :context => [:prev_out, :signatures, :spent, :input_values, :output_sum] } }
     },
 
     :litecoin_testnet => {
@@ -568,9 +619,16 @@ module Bitcoin
       :proof_of_work_limit => 0,
       :alert_pubkeys => [],
       :known_nodes => [],
-      :checkpoints => {}
+      :checkpoints => {},
+      :validation => {
+        :block => {
+          :syntax => [:hash, :tx_list, :max_timestamp, :coinbase,
+                      :coinbase_scriptsig, :mrkl_root, :tx_syntax],
+          :context => [:prev_hash, :coinbase_value, :min_timestamp, :tx_context] },
+        :tx => {
+          :syntax => [:hash, :lists, :max_size, :output_values, :inputs, :lock_time, :standard],
+          :context => [:prev_out, :signatures, :spent, :input_values, :output_sum] } }
     },
-
 
     :freicoin => {
       :project => :freicoin,
@@ -588,7 +646,15 @@ module Bitcoin
       :checkpoints => {
         10080 => "00000000003ff9c4b806639ec4376cc9acafcdded0e18e9dbcc2fc42e8e72331",
         15779 => "000000000003eb31742b35f5efd8ffb5cdd19dcd8e82cdaad90e592c450363b6",
-      }
+      },
+      :validation => {
+        :block => {
+          :syntax => [:hash, :tx_list, :bits, :max_timestamp, :coinbase,
+                      :coinbase_scriptsig, :tx_syntax],
+          :context => [:prev_hash, :min_timestamp, :tx_context] },
+        :tx => {
+          :syntax => [:hash, :lists, :max_size, :output_values, :inputs, :lock_time, :standard],
+          :context => [:prev_out, :signatures, :spent, :input_values, :output_sum] } }
     },
 
     :namecoin => {
@@ -606,7 +672,14 @@ module Bitcoin
         19200 => "d8a7c3e01e1e95bcee015e6fcc7583a2ca60b79e5a3aa0a171eddd344ada903d",
         24000 => "425ab0983cf04f43f346a4ca53049d0dc2db952c0a68eb0b55c3bb64108d5371",
         97778 => "7553b1e43da01cfcda4335de1caf623e941d43894bd81c2af27b6582f9d83c6f",
-      }
+      },
+      :validation => {
+        :block => {
+          :syntax => [:hash, :tx_list, :max_timestamp, :tx_syntax],
+          :context => [:prev_hash, :min_timestamp, :tx_context] },
+        :tx => {
+          :syntax => [:hash, :lists, :max_size, :output_values, :inputs, :lock_time, :standard],
+          :context => [:prev_out, :signatures, :spent, :input_values, :output_sum] } }
     },
 
     :namecoin_testnet => {
@@ -621,8 +694,15 @@ module Bitcoin
       :known_nodes => ["178.32.31.41"],
       :checkpoints => {
         0 => "000000000062b72c5e2ceb45fbc8587e807c155b0da735e6483dfba2f0a9c770",
+      },
+      :validation => {
+        :block => {
+          :syntax => [:hash, :tx_list, :max_timestamp, :tx_syntax],
+          :context => [:prev_hash, :min_timestamp, :tx_context] },
+        :tx => {
+          :syntax => [:hash, :lists, :max_size, :output_values, :inputs, :lock_time, :standard],
+          :context => [:prev_out, :signatures, :spent, :input_values, :output_sum] } }
 
-      }
     },
   }
 

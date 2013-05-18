@@ -36,6 +36,8 @@ module Bitcoin::Network
     # clients to be notified for new block/tx events
     attr_reader :notifiers
 
+    attr_accessor :external_ips
+
     DEFAULT_CONFIG = {
       :network => :bitcoin,
       :listen => "0.0.0.0:#{Bitcoin.network[:default_port]}",
@@ -85,6 +87,7 @@ module Bitcoin::Network
       @timers = {}
       @inv_cache = []
       @notifiers = Hash[[:block, :tx, :connection, :addr].map {|n| [n, EM::Channel.new]}]
+      @external_ips = []
     end
 
     def set_store
@@ -406,6 +409,13 @@ module Bitcoin::Network
       @store.get_unconfirmed_tx.each do |tx|
         relay_tx(tx)
       end
+    end
+
+
+    def external_ip
+      @external_ips.inject({}) {|a, b| a[b] ||= 0; a[b] += 1; a }.sort_by {|k, v| v}[-1][0]
+    rescue
+      @config[:listen].split(":")[0]
     end
 
   end

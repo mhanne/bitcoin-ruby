@@ -310,6 +310,21 @@ module Bitcoin::Network
         getblocks  if @inv_queue.size == 0 && !@store.in_sync?
         return
       end
+
+      # switch of utxo cache once there aren't tons of new blocks coming in
+      if @store.in_sync?
+        if @store.is_a?(Bitcoin::Storage::Backends::UtxoStore) && @store.config[:utxo_cache] > 0
+          log.debug { "switching off utxo cache" }
+          @store.config[:utxo_cache] = 0
+        end
+        @config[:intervals].each do |name, value|
+          if value <= 1
+            log.debug { "setting #{name} interval to 5 seconds" }
+            @config[:intervals][name] = 5
+          end
+        end
+      end
+
       while obj = @queue.shift
         begin
           if res = @store.send("new_#{obj[0]}", obj[1])
@@ -336,8 +351,8 @@ module Bitcoin::Network
     # check for new items in the inv queue and process them,
     # unless the queue is already full
     def work_inv_queue
-      return  if @inv_queue.size == 0
       @log.debug { "inv queue worker running" }
+      return  if @inv_queue.size == 0
       return  if @queue.size >= @config[:max][:queue]
       while inv = @inv_queue.shift
         next  if !@store.in_sync? && inv[0] == :tx

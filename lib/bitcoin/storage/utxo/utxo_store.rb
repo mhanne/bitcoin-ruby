@@ -98,8 +98,6 @@ module Bitcoin::Storage::Backends
       txs.each.with_index do |tx, tx_blk_idx|
         tx.in.each.with_index do |txin, txin_tx_idx|
           next  if txin.coinbase?
-          utxo = @db[:utxo][tx_hash: txin.prev_out.reverse.hth.to_sequel_blob,
-                            tx_idx: txin.prev_out_index]
           @spent_outs << {
             tx_hash: txin.prev_out.reverse.hth.to_sequel_blob,
             tx_idx: txin.prev_out_index  }

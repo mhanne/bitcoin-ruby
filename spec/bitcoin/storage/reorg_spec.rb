@@ -7,11 +7,14 @@ include Bitcoin::Builder
 Bitcoin.network = :testnet
     
 [
- [:utxo, :sqlite, index_all_addrs: true],
- [:sequel, :sqlite], # [:sequel, :postgres],
- [:utxo, :postgres, index_all_addrs: true],
- [:sequel, :mysql],
- [:utxo, :mysql, index_all_addrs: true],
+  [:utxo, :sqlite, index_all_addrs: true],
+  [:sequel, :sqlite], # [:sequel, :postgres],
+  [:utxo, :postgres, index_all_addrs: true],
+  [:sequel, :mysql],
+  [:utxo, :mysql, index_all_addrs: true],
+
+# TODO
+# [:spv, "spec/test_spv"],
 ].compact.each do |options|
 
   next  unless storage = setup_db(*options)
@@ -209,8 +212,13 @@ Bitcoin.network = :testnet
   # see https://bitcointalk.org/index.php?topic=46370.0
   it "should pass reorg unit tests" do
     Bitcoin.network = :bitcoin
+
     # Disable difficulty check
     Bitcoin.network[:no_difficulty] = true
+
+    # TODO: watch addresses (for spv store)
+    # ["1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa", "1NiEGXeURREqqMjCvjCeZn6SwEBZ9AdVet", "1JyMKvPHkrCQd8jQrqTR1rBsAd1VpRhTiE"].each {|a| @store.add_watched_address a }
+
     @store.import "./spec/bitcoin/fixtures/reorg/blk_0_to_4.dat"
     @store.get_depth.should == 4
     @store.get_head.hash.should =~ /000000002f264d65040/

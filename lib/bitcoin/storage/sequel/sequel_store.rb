@@ -345,7 +345,7 @@ module Bitcoin::Storage::Backends
     def wrap_block(block)
       return nil  unless block
 
-      data = {:id => block[:id], :depth => block[:depth], :chain => block[:chain], :work => block[:work].to_i, :hash => block[:hash].hth}
+      data = {:id => block[:id], :depth => block[:depth], :chain => block[:chain], :work => block[:work].to_i, :hash => block[:hash].hth, :size => block[:blk_size]}
       blk = Bitcoin::Storage::Models::Block.new(self, data)
 
       blk.ver = block[:version]
@@ -371,7 +371,7 @@ module Bitcoin::Storage::Backends
       block_id ||= @db[:blk_tx].join(:blk, id: :blk_id)
         .where(tx_id: transaction[:id], chain: 0).first[:blk_id] rescue nil
 
-      data = {id: transaction[:id], blk_id: block_id}
+      data = {id: transaction[:id], blk_id: block_id, size: transaction[:tx_size], idx: transaction[:idx]}
       tx = Bitcoin::Storage::Models::Tx.new(self, data)
 
       inputs = db[:txin].filter(:tx_id => transaction[:id]).order(:tx_idx)
@@ -429,6 +429,22 @@ module Bitcoin::Storage::Backends
         prev_blk = blk
       end
       log.info { "Last #{count} blocks are consistent." }
+    end
+
+    # get total received of +address+ address
+    def get_received(address)
+      return 0 unless Bitcoin.valid_address?(address)
+
+      txouts = get_txouts_for_address(address)
+      return 0 unless txouts.any?
+
+      txouts.inject(0){ |m, out| m + out.value }
+
+      # total = 0
+      # txouts.each do |txout|
+      #   tx = txout.get_tx
+      #   total += txout.value
+      # end
     end
 
   end

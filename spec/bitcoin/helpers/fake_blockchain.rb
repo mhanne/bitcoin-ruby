@@ -177,7 +177,8 @@ class FakeBlockchain
   end
 
   def block_path(depth)
-    fixtures_path "fake_chain/#{depth}.blk"
+    # fixtures_path "fake_chain/#{depth}.blk"
+    "spec/bitcoin/fixtures/fake_chain/#{depth}.blk"
   end
 
 end

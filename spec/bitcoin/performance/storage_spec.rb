@@ -16,7 +16,7 @@ require 'benchmark'
       @store = storage
       @store.reset
       @store.log.level = :error
-      @fake_chain = FakeBlockchain.new 10
+      @fake_chain = FakeBlockchain.new 2
     end
 
     it "block storage" do

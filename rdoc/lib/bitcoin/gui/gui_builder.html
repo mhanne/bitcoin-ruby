@@ -1,0 +1,1962 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+<title>gui.builder - bitcoin-ruby RDoc</title>
+
+<link type="text/css" media="screen" href="../../../rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "../../../";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="../../../js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../../js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../../js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../../js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../../js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../../js/darkfish.js"></script>
+
+
+<body class="file">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="../../../index.html">Home</a>
+    <a href="../../../table_of_contents.html#classes">Classes</a>
+    <a href="../../../table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  
+
+  <div id="project-metadata">
+    <nav id="fileindex-section" class="section project-section">
+  <h3 class="section-header">Pages</h3>
+
+  <ul>
+  
+    <li class="file"><a href="../../../COPYING.html">COPYING</a>
+  
+    <li class="file"><a href="../../../README_rdoc.html">README</a>
+  
+    <li class="file"><a href="../../../doc/CONFIG_rdoc.html">CONFIG</a>
+  
+    <li class="file"><a href="../../../doc/EXAMPLES_rdoc.html">EXAMPLES</a>
+  
+    <li class="file"><a href="../../../doc/NAMECOIN_rdoc.html">NAMECOIN</a>
+  
+    <li class="file"><a href="../../../doc/NODE_rdoc.html">NODE</a>
+  
+    <li class="file"><a href="../../../doc/STORAGE_rdoc.html">STORAGE</a>
+  
+    <li class="file"><a href="../../../doc/WALLET_rdoc.html">WALLET</a>
+  
+    <li class="file"><a href="../../../examples/graph_benchmark_results_rb~.html">graph_benchmark_results.rb~</a>
+  
+    <li class="file"><a href="../../../examples/import_rb~.html">import.rb~</a>
+  
+    <li class="file"><a href="../../../examples/run_bench_rb~.html">run_bench.rb~</a>
+  
+    <li class="file"><a href="../../../examples/run_benchmarks_rb~.html">run_benchmarks.rb~</a>
+  
+    <li class="file"><a href="../../../lib/bitcoin/gui/bitcoin-ruby_svg.html">bitcoin-ruby.svg</a>
+  
+    <li class="file"><a href="../../../lib/bitcoin/gui/gui_builder.html">gui.builder</a>
+  
+  </ul>
+</nav>
+
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="../../../Array.html">Array</a>
+  
+    <li><a href="../../../Bitcoin.html">Bitcoin</a>
+  
+    <li><a href="../../../Bitcoin/BinaryExtensions.html">Bitcoin::BinaryExtensions</a>
+  
+    <li><a href="../../../Bitcoin/Builder.html">Bitcoin::Builder</a>
+  
+    <li><a href="../../../Bitcoin/Builder/BlockBuilder.html">Bitcoin::Builder::BlockBuilder</a>
+  
+    <li><a href="../../../Bitcoin/Builder/ScriptBuilder.html">Bitcoin::Builder::ScriptBuilder</a>
+  
+    <li><a href="../../../Bitcoin/Builder/TxBuilder.html">Bitcoin::Builder::TxBuilder</a>
+  
+    <li><a href="../../../Bitcoin/Builder/TxInBuilder.html">Bitcoin::Builder::TxInBuilder</a>
+  
+    <li><a href="../../../Bitcoin/Builder/TxOutBuilder.html">Bitcoin::Builder::TxOutBuilder</a>
+  
+    <li><a href="../../../Bitcoin/Config.html">Bitcoin::Config</a>
+  
+    <li><a href="../../../Bitcoin/Connection.html">Bitcoin::Connection</a>
+  
+    <li><a href="../../../Bitcoin/ConnectionHandler.html">Bitcoin::ConnectionHandler</a>
+  
+    <li><a href="../../../Bitcoin/Gui.html">Bitcoin::Gui</a>
+  
+    <li><a href="../../../Bitcoin/Gui/AddrView.html">Bitcoin::Gui::AddrView</a>
+  
+    <li><a href="../../../Bitcoin/Gui/Bitcoin.html">Bitcoin::Gui::Bitcoin</a>
+  
+    <li><a href="../../../Bitcoin/Gui/Bitcoin/Gui.html">Bitcoin::Gui::Bitcoin::Gui</a>
+  
+    <li><a href="../../../Bitcoin/Gui/Bitcoin/Gui/Bitcoin.html">Bitcoin::Gui::Bitcoin::Gui::Bitcoin</a>
+  
+    <li><a href="../../../Bitcoin/Gui/Bitcoin/Gui/Bitcoin/Network.html">Bitcoin::Gui::Bitcoin::Gui::Bitcoin::Network</a>
+  
+    <li><a href="../../../Bitcoin/Gui/Bitcoin/Gui/Bitcoin/Network/CommandClient.html">Bitcoin::Gui::Bitcoin::Gui::Bitcoin::Network::CommandClient</a>
+  
+    <li><a href="../../../Bitcoin/Gui/ConnView.html">Bitcoin::Gui::ConnView</a>
+  
+    <li><a href="../../../Bitcoin/Gui/Connection.html">Bitcoin::Gui::Connection</a>
+  
+    <li><a href="../../../Bitcoin/Gui/Gui.html">Bitcoin::Gui::Gui</a>
+  
+    <li><a href="../../../Bitcoin/Gui/Helpers.html">Bitcoin::Gui::Helpers</a>
+  
+    <li><a href="../../../Bitcoin/Gui/TreeView.html">Bitcoin::Gui::TreeView</a>
+  
+    <li><a href="../../../Bitcoin/Gui/TxInView.html">Bitcoin::Gui::TxInView</a>
+  
+    <li><a href="../../../Bitcoin/Gui/TxView.html">Bitcoin::Gui::TxView</a>
+  
+    <li><a href="../../../Bitcoin/Key.html">Bitcoin::Key</a>
+  
+    <li><a href="../../../Bitcoin/Logger.html">Bitcoin::Logger</a>
+  
+    <li><a href="../../../Bitcoin/Logger/LogWrapper.html">Bitcoin::Logger::LogWrapper</a>
+  
+    <li><a href="../../../Bitcoin/Logger/Logger.html">Bitcoin::Logger::Logger</a>
+  
+    <li><a href="../../../Bitcoin/Logger/TimeLogger.html">Bitcoin::Logger::TimeLogger</a>
+  
+    <li><a href="../../../Bitcoin/Namecoin.html">Bitcoin::Namecoin</a>
+  
+    <li><a href="../../../Bitcoin/Namecoin/Script.html">Bitcoin::Namecoin::Script</a>
+  
+    <li><a href="../../../Bitcoin/Namecoin/Storage.html">Bitcoin::Namecoin::Storage</a>
+  
+    <li><a href="../../../Bitcoin/Namecoin/Storage/Backend.html">Bitcoin::Namecoin::Storage::Backend</a>
+  
+    <li><a href="../../../Bitcoin/Namecoin/Storage/Models.html">Bitcoin::Namecoin::Storage::Models</a>
+  
+    <li><a href="../../../Bitcoin/Namecoin/Storage/Models/Name.html">Bitcoin::Namecoin::Storage::Models::Name</a>
+  
+    <li><a href="../../../Bitcoin/Network.html">Bitcoin::Network</a>
+  
+    <li><a href="../../../Bitcoin/Network/CommandClient.html">Bitcoin::Network::CommandClient</a>
+  
+    <li><a href="../../../Bitcoin/Network/CommandHandler.html">Bitcoin::Network::CommandHandler</a>
+  
+    <li><a href="../../../Bitcoin/Network/ConnectionHandler.html">Bitcoin::Network::ConnectionHandler</a>
+  
+    <li><a href="../../../Bitcoin/Network/Node.html">Bitcoin::Network::Node</a>
+  
+    <li><a href="../../../Bitcoin/OpenSSL_EC.html">Bitcoin::OpenSSL_EC</a>
+  
+    <li><a href="../../../Bitcoin/OpenSSL_EC/FFI.html">Bitcoin::OpenSSL_EC::FFI</a>
+  
+    <li><a href="../../../Bitcoin/P.html">Bitcoin::P</a>
+  
+    <li><a href="../../../Bitcoin/Protocol.html">Bitcoin::Protocol</a>
+  
+    <li><a href="../../../Bitcoin/Protocol/Addr.html">Bitcoin::Protocol::Addr</a>
+  
+    <li><a href="../../../Bitcoin/Protocol/Alert.html">Bitcoin::Protocol::Alert</a>
+  
+    <li><a href="../../../Bitcoin/Protocol/AuxPow.html">Bitcoin::Protocol::AuxPow</a>
+  
+    <li><a href="../../../Bitcoin/Protocol/Block.html">Bitcoin::Protocol::Block</a>
+  
+    <li><a href="../../../Bitcoin/Protocol/Handler.html">Bitcoin::Protocol::Handler</a>
+  
+    <li><a href="../../../Bitcoin/Protocol/Parser.html">Bitcoin::Protocol::Parser</a>
+  
+    <li><a href="../../../Bitcoin/Protocol/Tx.html">Bitcoin::Protocol::Tx</a>
+  
+    <li><a href="../../../Bitcoin/Protocol/TxIn.html">Bitcoin::Protocol::TxIn</a>
+  
+    <li><a href="../../../Bitcoin/Protocol/TxOut.html">Bitcoin::Protocol::TxOut</a>
+  
+    <li><a href="../../../Bitcoin/Protocol/Version.html">Bitcoin::Protocol::Version</a>
+  
+    <li><a href="../../../Bitcoin/Script.html">Bitcoin::Script</a>
+  
+    <li><a href="../../../Bitcoin/Script/ScriptOpcodeError.html">Bitcoin::Script::ScriptOpcodeError</a>
+  
+    <li><a href="../../../Bitcoin/Storage.html">Bitcoin::Storage</a>
+  
+    <li><a href="../../../Bitcoin/Storage/Backends.html">Bitcoin::Storage::Backends</a>
+  
+    <li><a href="../../../Bitcoin/Storage/Backends/DummyStore.html">Bitcoin::Storage::Backends::DummyStore</a>
+  
+    <li><a href="../../../Bitcoin/Storage/Backends/SequelMigrations.html">Bitcoin::Storage::Backends::SequelMigrations</a>
+  
+    <li><a href="../../../Bitcoin/Storage/Backends/SequelStore.html">Bitcoin::Storage::Backends::SequelStore</a>
+  
+    <li><a href="../../../Bitcoin/Storage/Backends/StoreBase.html">Bitcoin::Storage::Backends::StoreBase</a>
+  
+    <li><a href="../../../Bitcoin/Storage/Backends/UtxoStore.html">Bitcoin::Storage::Backends::UtxoStore</a>
+  
+    <li><a href="../../../Bitcoin/Storage/Models.html">Bitcoin::Storage::Models</a>
+  
+    <li><a href="../../../Bitcoin/Storage/Models/Block.html">Bitcoin::Storage::Models::Block</a>
+  
+    <li><a href="../../../Bitcoin/Storage/Models/Tx.html">Bitcoin::Storage::Models::Tx</a>
+  
+    <li><a href="../../../Bitcoin/Storage/Models/TxIn.html">Bitcoin::Storage::Models::TxIn</a>
+  
+    <li><a href="../../../Bitcoin/Storage/Models/TxOut.html">Bitcoin::Storage::Models::TxOut</a>
+  
+    <li><a href="../../../Bitcoin/Util.html">Bitcoin::Util</a>
+  
+    <li><a href="../../../Bitcoin/Validation.html">Bitcoin::Validation</a>
+  
+    <li><a href="../../../Bitcoin/Validation/Block.html">Bitcoin::Validation::Block</a>
+  
+    <li><a href="../../../Bitcoin/Validation/Tx.html">Bitcoin::Validation::Tx</a>
+  
+    <li><a href="../../../Bitcoin/Validation/ValidationError.html">Bitcoin::Validation::ValidationError</a>
+  
+    <li><a href="../../../Bitcoin/Wallet.html">Bitcoin::Wallet</a>
+  
+    <li><a href="../../../Bitcoin/Wallet/DeterministicKeyStore.html">Bitcoin::Wallet::DeterministicKeyStore</a>
+  
+    <li><a href="../../../Bitcoin/Wallet/KeyGenerator.html">Bitcoin::Wallet::KeyGenerator</a>
+  
+    <li><a href="../../../Bitcoin/Wallet/SimpleCoinSelector.html">Bitcoin::Wallet::SimpleCoinSelector</a>
+  
+    <li><a href="../../../Bitcoin/Wallet/SimpleKeyStore.html">Bitcoin::Wallet::SimpleKeyStore</a>
+  
+    <li><a href="../../../Bitcoin/Wallet/TxDP.html">Bitcoin::Wallet::TxDP</a>
+  
+    <li><a href="../../../Bitcoin/Wallet/Wallet.html">Bitcoin::Wallet::Wallet</a>
+  
+    <li><a href="../../../EM.html">EM</a>
+  
+    <li><a href="../../../Gtk.html">Gtk</a>
+  
+    <li><a href="../../../Hash.html">Hash</a>
+  
+    <li><a href="../../../JSON.html">JSON</a>
+  
+    <li><a href="../../../Litecoin.html">Litecoin</a>
+  
+    <li><a href="../../../Litecoin/Scrypt.html">Litecoin::Scrypt</a>
+  
+    <li><a href="../../../Log4r.html">Log4r</a>
+  
+    <li><a href="../../../Log4r/Logger.html">Log4r::Logger</a>
+  
+    <li><a href="../../../Mnemonic.html">Mnemonic</a>
+  
+    <li><a href="../../../Object.html">Object</a>
+  
+    <li><a href="../../../OpenSSL.html">OpenSSL</a>
+  
+    <li><a href="../../../OpenSSL/BN.html">OpenSSL::BN</a>
+  
+    <li><a href="../../../OpenSSL/PKey.html">OpenSSL::PKey</a>
+  
+    <li><a href="../../../OpenSSL/PKey/EC.html">OpenSSL::PKey::EC</a>
+  
+    <li><a href="../../../OpenSSL/PKey/EC/Point.html">OpenSSL::PKey::EC::Point</a>
+  
+    <li><a href="../../../RawJSON_Connection.html">RawJSON_Connection</a>
+  
+    <li><a href="../../../SimpleNode.html">SimpleNode</a>
+  
+    <li><a href="../../../SimpleNode/Connection.html">SimpleNode::Connection</a>
+  
+    <li><a href="../../../String.html">String</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation" class="description">
+  
+<p>&lt;interface&gt;</p>
+
+<pre>&lt;!-- interface-requires gtk+ 3.0 --&gt;
+&lt;object class=&quot;GtkAboutDialog&quot; id=&quot;about_dialog&quot;&gt;
+  &lt;property name=&quot;can_focus&quot;&gt;False&lt;/property&gt;
+  &lt;property name=&quot;border_width&quot;&gt;5&lt;/property&gt;
+  &lt;property name=&quot;title&quot; translatable=&quot;yes&quot;&gt;About&lt;/property&gt;
+  &lt;property name=&quot;type_hint&quot;&gt;dialog&lt;/property&gt;
+  &lt;property name=&quot;program_name&quot;&gt;Bitcoin-Ruby GUI&lt;/property&gt;
+  &lt;property name=&quot;version&quot;&gt;0.0.1&lt;/property&gt;
+  &lt;property name=&quot;copyright&quot; translatable=&quot;yes&quot;&gt;Copyright (c) 2011 Julian Langschaedel &amp;lt;meta.rb@gmail.com&amp;gt;</pre>
+
+<p>Copyright © 2012 Marius Hanne
+&amp;lt;marius.hanne@sourceagency.org&amp;gt;&lt;/property&gt;</p>
+
+<pre>&lt;property name=&quot;comments&quot; translatable=&quot;yes&quot;&gt;a ruby library for interacting with the bitcoin protocol/network&lt;/property&gt;
+&lt;property name=&quot;website&quot;&gt;http://mhanne.github.com/bitcoin-ruby/&lt;/property&gt;
+&lt;property name=&quot;license&quot; translatable=&quot;yes&quot;&gt;Permission is hereby granted, free of charge, to any person obtaining a copy</pre>
+
+<p>of this software and associated documentation files (the “Software”), to
+deal in the Software without restriction, including without limitation the
+rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+sell copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:</p>
+
+<p>The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.</p>
+
+<p>THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
+ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.&lt;/property&gt;</p>
+
+<pre>&lt;property name=&quot;authors&quot;&gt;Julian Langschaedel</pre>
+
+<p>Marius Hanne&lt;/property&gt;</p>
+
+<pre>  &lt;property name=&quot;logo&quot;&gt;bitcoin-ruby.png&lt;/property&gt;
+  &lt;property name=&quot;wrap_license&quot;&gt;True&lt;/property&gt;
+  &lt;property name=&quot;license_type&quot;&gt;artistic&lt;/property&gt;
+  &lt;signal name=&quot;response&quot; handler=&quot;on_about_close&quot; swapped=&quot;no&quot;/&gt;
+  &lt;child internal-child=&quot;vbox&quot;&gt;
+    &lt;object class=&quot;GtkBox&quot; id=&quot;aboutdialog-vbox1&quot;&gt;
+      &lt;property name=&quot;can_focus&quot;&gt;False&lt;/property&gt;
+      &lt;property name=&quot;orientation&quot;&gt;vertical&lt;/property&gt;
+      &lt;property name=&quot;spacing&quot;&gt;2&lt;/property&gt;
+      &lt;child internal-child=&quot;action_area&quot;&gt;
+        &lt;object class=&quot;GtkButtonBox&quot; id=&quot;aboutdialog-action_area1&quot;&gt;
+          &lt;property name=&quot;can_focus&quot;&gt;False&lt;/property&gt;
+          &lt;property name=&quot;layout_style&quot;&gt;end&lt;/property&gt;
+          &lt;signal name=&quot;add&quot; handler=&quot;on_about_close&quot; swapped=&quot;no&quot;/&gt;
+          &lt;signal name=&quot;remove&quot; handler=&quot;on_about_close&quot; swapped=&quot;no&quot;/&gt;
+        &lt;/object&gt;
+        &lt;packing&gt;
+          &lt;property name=&quot;expand&quot;&gt;False&lt;/property&gt;
+          &lt;property name=&quot;fill&quot;&gt;True&lt;/property&gt;
+          &lt;property name=&quot;pack_type&quot;&gt;end&lt;/property&gt;
+          &lt;property name=&quot;position&quot;&gt;0&lt;/property&gt;
+        &lt;/packing&gt;
+      &lt;/child&gt;
+      &lt;child&gt;
+        &lt;placeholder/&gt;
+      &lt;/child&gt;
+    &lt;/object&gt;
+  &lt;/child&gt;
+&lt;/object&gt;
+&lt;object class=&quot;GtkAccelGroup&quot; id=&quot;accelgroup1&quot;&gt;
+  &lt;signal name=&quot;accel-activate&quot; handler=&quot;on_accel_activate&quot; swapped=&quot;no&quot;/&gt;
+&lt;/object&gt;
+&lt;object class=&quot;GtkAction&quot; id=&quot;action_exit&quot;&gt;
+  &lt;property name=&quot;label&quot; translatable=&quot;yes&quot;&gt;aaa&lt;/property&gt;
+  &lt;signal name=&quot;activate&quot; handler=&quot;on_exit&quot; swapped=&quot;no&quot;/&gt;
+&lt;/object&gt;
+&lt;object class=&quot;GtkTreeStore&quot; id=&quot;addr_store&quot;&gt;
+  &lt;columns&gt;
+    &lt;!-- column-name Address --&gt;
+    &lt;column type=&quot;gchararray&quot;/&gt;
+    &lt;!-- column-name column1 --&gt;
+    &lt;column type=&quot;gchararray&quot;/&gt;
+    &lt;!-- column-name Balance --&gt;
+    &lt;column type=&quot;gchararray&quot;/&gt;
+  &lt;/columns&gt;
+&lt;/object&gt;
+&lt;object class=&quot;GtkImage&quot; id=&quot;image_new_addr&quot;&gt;
+  &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+  &lt;property name=&quot;can_focus&quot;&gt;False&lt;/property&gt;
+  &lt;property name=&quot;stock&quot;&gt;gtk-add&lt;/property&gt;
+&lt;/object&gt;
+&lt;object class=&quot;GtkImage&quot; id=&quot;image_new_tx&quot;&gt;
+  &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+  &lt;property name=&quot;can_focus&quot;&gt;False&lt;/property&gt;
+  &lt;property name=&quot;stock&quot;&gt;gtk-go-forward&lt;/property&gt;
+&lt;/object&gt;
+&lt;object class=&quot;GtkListStore&quot; id=&quot;liststore1&quot;/&gt;
+&lt;object class=&quot;GtkWindow&quot; id=&quot;main_window&quot;&gt;
+  &lt;property name=&quot;can_focus&quot;&gt;False&lt;/property&gt;
+  &lt;property name=&quot;title&quot; translatable=&quot;yes&quot;&gt;Bitcoin-Ruby GUI&lt;/property&gt;
+  &lt;accel-groups&gt;
+    &lt;group name=&quot;accelgroup1&quot;/&gt;
+  &lt;/accel-groups&gt;
+  &lt;signal name=&quot;delete-event&quot; handler=&quot;on_exit&quot; swapped=&quot;no&quot;/&gt;
+  &lt;child&gt;
+    &lt;object class=&quot;GtkBox&quot; id=&quot;box1&quot;&gt;
+      &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+      &lt;property name=&quot;can_focus&quot;&gt;False&lt;/property&gt;
+      &lt;property name=&quot;orientation&quot;&gt;vertical&lt;/property&gt;
+      &lt;child&gt;
+        &lt;object class=&quot;GtkMenuBar&quot; id=&quot;menubar1&quot;&gt;
+          &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+          &lt;property name=&quot;can_focus&quot;&gt;False&lt;/property&gt;
+          &lt;child&gt;
+            &lt;object class=&quot;GtkMenuItem&quot; id=&quot;menuitem1&quot;&gt;
+              &lt;property name=&quot;use_action_appearance&quot;&gt;False&lt;/property&gt;
+              &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;can_focus&quot;&gt;False&lt;/property&gt;
+              &lt;property name=&quot;label&quot; translatable=&quot;yes&quot;&gt;_File&lt;/property&gt;
+              &lt;property name=&quot;use_underline&quot;&gt;True&lt;/property&gt;
+              &lt;child type=&quot;submenu&quot;&gt;
+                &lt;object class=&quot;GtkMenu&quot; id=&quot;menu1&quot;&gt;
+                  &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+                  &lt;property name=&quot;can_focus&quot;&gt;False&lt;/property&gt;
+                  &lt;child&gt;
+                    &lt;object class=&quot;GtkImageMenuItem&quot; id=&quot;menu_file_new&quot;&gt;
+                      &lt;property name=&quot;label&quot;&gt;gtk-new&lt;/property&gt;
+                      &lt;property name=&quot;use_action_appearance&quot;&gt;False&lt;/property&gt;
+                      &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+                      &lt;property name=&quot;can_focus&quot;&gt;False&lt;/property&gt;
+                      &lt;property name=&quot;use_underline&quot;&gt;True&lt;/property&gt;
+                      &lt;property name=&quot;use_stock&quot;&gt;True&lt;/property&gt;
+                      &lt;signal name=&quot;activate&quot; handler=&quot;on_new_wallet&quot; swapped=&quot;no&quot;/&gt;
+                    &lt;/object&gt;
+                  &lt;/child&gt;
+                  &lt;child&gt;
+                    &lt;object class=&quot;GtkImageMenuItem&quot; id=&quot;menu_file_open&quot;&gt;
+                      &lt;property name=&quot;label&quot;&gt;gtk-open&lt;/property&gt;
+                      &lt;property name=&quot;use_action_appearance&quot;&gt;False&lt;/property&gt;
+                      &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+                      &lt;property name=&quot;can_focus&quot;&gt;False&lt;/property&gt;
+                      &lt;property name=&quot;use_underline&quot;&gt;True&lt;/property&gt;
+                      &lt;property name=&quot;use_stock&quot;&gt;True&lt;/property&gt;
+                      &lt;signal name=&quot;activate&quot; handler=&quot;on_open_wallet&quot; swapped=&quot;no&quot;/&gt;
+                    &lt;/object&gt;
+                  &lt;/child&gt;
+                  &lt;child&gt;
+                    &lt;object class=&quot;GtkSeparatorMenuItem&quot; id=&quot;separatormenuitem1&quot;&gt;
+                      &lt;property name=&quot;use_action_appearance&quot;&gt;False&lt;/property&gt;
+                      &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+                      &lt;property name=&quot;can_focus&quot;&gt;False&lt;/property&gt;
+                    &lt;/object&gt;
+                  &lt;/child&gt;
+                  &lt;child&gt;
+                    &lt;object class=&quot;GtkImageMenuItem&quot; id=&quot;menu_file_quit&quot;&gt;
+                      &lt;property name=&quot;label&quot;&gt;gtk-quit&lt;/property&gt;
+                      &lt;property name=&quot;use_action_appearance&quot;&gt;False&lt;/property&gt;
+                      &lt;property name=&quot;related_action&quot;&gt;action_exit&lt;/property&gt;
+                      &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+                      &lt;property name=&quot;can_focus&quot;&gt;False&lt;/property&gt;
+                      &lt;property name=&quot;use_underline&quot;&gt;True&lt;/property&gt;
+                      &lt;property name=&quot;use_stock&quot;&gt;True&lt;/property&gt;
+                      &lt;signal name=&quot;activate&quot; handler=&quot;on_exit&quot; swapped=&quot;no&quot;/&gt;
+                    &lt;/object&gt;
+                  &lt;/child&gt;
+                &lt;/object&gt;
+              &lt;/child&gt;
+            &lt;/object&gt;
+          &lt;/child&gt;
+          &lt;child&gt;
+            &lt;object class=&quot;GtkMenuItem&quot; id=&quot;menuitem2&quot;&gt;
+              &lt;property name=&quot;use_action_appearance&quot;&gt;False&lt;/property&gt;
+              &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;can_focus&quot;&gt;False&lt;/property&gt;
+              &lt;property name=&quot;label&quot; translatable=&quot;yes&quot;&gt;_Edit&lt;/property&gt;
+              &lt;property name=&quot;use_underline&quot;&gt;True&lt;/property&gt;
+              &lt;child type=&quot;submenu&quot;&gt;
+                &lt;object class=&quot;GtkMenu&quot; id=&quot;menu2&quot;&gt;
+                  &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+                  &lt;property name=&quot;can_focus&quot;&gt;False&lt;/property&gt;
+                  &lt;child&gt;
+                    &lt;object class=&quot;GtkImageMenuItem&quot; id=&quot;menu_edit_copy&quot;&gt;
+                      &lt;property name=&quot;label&quot;&gt;gtk-copy&lt;/property&gt;
+                      &lt;property name=&quot;use_action_appearance&quot;&gt;False&lt;/property&gt;
+                      &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+                      &lt;property name=&quot;can_focus&quot;&gt;False&lt;/property&gt;
+                      &lt;property name=&quot;use_underline&quot;&gt;True&lt;/property&gt;
+                      &lt;property name=&quot;use_stock&quot;&gt;True&lt;/property&gt;
+                      &lt;signal name=&quot;activate&quot; handler=&quot;on_copy_addr&quot; swapped=&quot;no&quot;/&gt;
+                    &lt;/object&gt;
+                  &lt;/child&gt;
+                  &lt;child&gt;
+                    &lt;object class=&quot;GtkImageMenuItem&quot; id=&quot;menu_edit_paste&quot;&gt;
+                      &lt;property name=&quot;label&quot;&gt;gtk-paste&lt;/property&gt;
+                      &lt;property name=&quot;use_action_appearance&quot;&gt;False&lt;/property&gt;
+                      &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+                      &lt;property name=&quot;can_focus&quot;&gt;False&lt;/property&gt;
+                      &lt;property name=&quot;use_underline&quot;&gt;True&lt;/property&gt;
+                      &lt;property name=&quot;use_stock&quot;&gt;True&lt;/property&gt;
+                      &lt;signal name=&quot;activate&quot; handler=&quot;on_paste_addr&quot; swapped=&quot;no&quot;/&gt;
+                    &lt;/object&gt;
+                  &lt;/child&gt;
+                  &lt;child&gt;
+                    &lt;object class=&quot;GtkSeparatorMenuItem&quot; id=&quot;separatormenuitem2&quot;&gt;
+                      &lt;property name=&quot;use_action_appearance&quot;&gt;False&lt;/property&gt;
+                      &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+                      &lt;property name=&quot;can_focus&quot;&gt;False&lt;/property&gt;
+                    &lt;/object&gt;
+                  &lt;/child&gt;
+                  &lt;child&gt;
+                    &lt;object class=&quot;GtkImageMenuItem&quot; id=&quot;menu_edit_preferences&quot;&gt;
+                      &lt;property name=&quot;label&quot;&gt;gtk-preferences&lt;/property&gt;
+                      &lt;property name=&quot;use_action_appearance&quot;&gt;False&lt;/property&gt;
+                      &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+                      &lt;property name=&quot;can_focus&quot;&gt;False&lt;/property&gt;
+                      &lt;property name=&quot;use_underline&quot;&gt;True&lt;/property&gt;
+                      &lt;property name=&quot;use_stock&quot;&gt;True&lt;/property&gt;
+                      &lt;signal name=&quot;activate&quot; handler=&quot;on_preferences&quot; swapped=&quot;no&quot;/&gt;
+                    &lt;/object&gt;
+                  &lt;/child&gt;
+                &lt;/object&gt;
+              &lt;/child&gt;
+            &lt;/object&gt;
+          &lt;/child&gt;
+          &lt;child&gt;
+            &lt;object class=&quot;GtkMenuItem&quot; id=&quot;menuitem3&quot;&gt;
+              &lt;property name=&quot;use_action_appearance&quot;&gt;False&lt;/property&gt;
+              &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;can_focus&quot;&gt;False&lt;/property&gt;
+              &lt;property name=&quot;label&quot; translatable=&quot;yes&quot;&gt;_View&lt;/property&gt;
+              &lt;property name=&quot;use_underline&quot;&gt;True&lt;/property&gt;
+              &lt;child type=&quot;submenu&quot;&gt;
+                &lt;object class=&quot;GtkMenu&quot; id=&quot;menu4&quot;&gt;
+                  &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+                  &lt;property name=&quot;can_focus&quot;&gt;False&lt;/property&gt;
+                  &lt;child&gt;
+                    &lt;object class=&quot;GtkCheckMenuItem&quot; id=&quot;check_unconfirmed&quot;&gt;
+                      &lt;property name=&quot;use_action_appearance&quot;&gt;False&lt;/property&gt;
+                      &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+                      &lt;property name=&quot;can_focus&quot;&gt;False&lt;/property&gt;
+                      &lt;property name=&quot;tooltip_text&quot; translatable=&quot;yes&quot;&gt;Display transactions that are not yet confirmed and use unconfirmed values to calculate balances&lt;/property&gt;
+                      &lt;property name=&quot;label&quot; translatable=&quot;yes&quot;&gt;Display Unconfirmed&lt;/property&gt;
+                      &lt;property name=&quot;use_underline&quot;&gt;True&lt;/property&gt;
+                      &lt;signal name=&quot;toggled&quot; handler=&quot;on_check_unconfirmed_toggled&quot; swapped=&quot;no&quot;/&gt;
+                    &lt;/object&gt;
+                  &lt;/child&gt;
+                &lt;/object&gt;
+              &lt;/child&gt;
+            &lt;/object&gt;
+          &lt;/child&gt;
+          &lt;child&gt;
+            &lt;object class=&quot;GtkMenuItem&quot; id=&quot;menuitem4&quot;&gt;
+              &lt;property name=&quot;use_action_appearance&quot;&gt;False&lt;/property&gt;
+              &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;can_focus&quot;&gt;False&lt;/property&gt;
+              &lt;property name=&quot;label&quot; translatable=&quot;yes&quot;&gt;_Help&lt;/property&gt;
+              &lt;property name=&quot;use_underline&quot;&gt;True&lt;/property&gt;
+              &lt;child type=&quot;submenu&quot;&gt;
+                &lt;object class=&quot;GtkMenu&quot; id=&quot;menu3&quot;&gt;
+                  &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+                  &lt;property name=&quot;can_focus&quot;&gt;False&lt;/property&gt;
+                  &lt;child&gt;
+                    &lt;object class=&quot;GtkImageMenuItem&quot; id=&quot;menu_help_about&quot;&gt;
+                      &lt;property name=&quot;label&quot;&gt;gtk-about&lt;/property&gt;
+                      &lt;property name=&quot;use_action_appearance&quot;&gt;False&lt;/property&gt;
+                      &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+                      &lt;property name=&quot;can_focus&quot;&gt;False&lt;/property&gt;
+                      &lt;property name=&quot;use_underline&quot;&gt;True&lt;/property&gt;
+                      &lt;property name=&quot;use_stock&quot;&gt;True&lt;/property&gt;
+                      &lt;property name=&quot;accel_group&quot;&gt;accelgroup1&lt;/property&gt;
+                      &lt;signal name=&quot;activate&quot; handler=&quot;on_about&quot; swapped=&quot;no&quot;/&gt;
+                    &lt;/object&gt;
+                  &lt;/child&gt;
+                &lt;/object&gt;
+              &lt;/child&gt;
+            &lt;/object&gt;
+          &lt;/child&gt;
+        &lt;/object&gt;
+        &lt;packing&gt;
+          &lt;property name=&quot;expand&quot;&gt;False&lt;/property&gt;
+          &lt;property name=&quot;fill&quot;&gt;True&lt;/property&gt;
+          &lt;property name=&quot;position&quot;&gt;0&lt;/property&gt;
+        &lt;/packing&gt;
+      &lt;/child&gt;
+      &lt;child&gt;
+        &lt;object class=&quot;GtkNotebook&quot; id=&quot;notebook&quot;&gt;
+          &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+          &lt;property name=&quot;can_focus&quot;&gt;True&lt;/property&gt;
+          &lt;child&gt;
+            &lt;object class=&quot;GtkScrolledWindow&quot; id=&quot;scrolledwindow1&quot;&gt;
+              &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;can_focus&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;shadow_type&quot;&gt;in&lt;/property&gt;
+              &lt;child&gt;
+                &lt;object class=&quot;GtkTreeView&quot; id=&quot;addr_view&quot;&gt;
+                  &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+                  &lt;property name=&quot;can_focus&quot;&gt;True&lt;/property&gt;
+                  &lt;property name=&quot;model&quot;&gt;addr_store&lt;/property&gt;
+                  &lt;property name=&quot;enable_grid_lines&quot;&gt;both&lt;/property&gt;
+                  &lt;child internal-child=&quot;selection&quot;&gt;
+                    &lt;object class=&quot;GtkTreeSelection&quot; id=&quot;treeview-selection1&quot;/&gt;
+                  &lt;/child&gt;
+                &lt;/object&gt;
+              &lt;/child&gt;
+            &lt;/object&gt;
+            &lt;packing&gt;
+              &lt;property name=&quot;tab_expand&quot;&gt;True&lt;/property&gt;
+            &lt;/packing&gt;
+          &lt;/child&gt;
+          &lt;child type=&quot;tab&quot;&gt;
+            &lt;object class=&quot;GtkLabel&quot; id=&quot;notebook_label_addresses&quot;&gt;
+              &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;can_focus&quot;&gt;False&lt;/property&gt;
+              &lt;property name=&quot;label&quot; translatable=&quot;yes&quot;&gt;Addresses&lt;/property&gt;
+            &lt;/object&gt;
+            &lt;packing&gt;
+              &lt;property name=&quot;tab_fill&quot;&gt;False&lt;/property&gt;
+            &lt;/packing&gt;
+          &lt;/child&gt;
+          &lt;child&gt;
+            &lt;object class=&quot;GtkScrolledWindow&quot; id=&quot;scrolledwindow2&quot;&gt;
+              &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;can_focus&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;shadow_type&quot;&gt;in&lt;/property&gt;
+              &lt;child&gt;
+                &lt;object class=&quot;GtkTreeView&quot; id=&quot;tx_view&quot;&gt;
+                  &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+                  &lt;property name=&quot;can_focus&quot;&gt;True&lt;/property&gt;
+                  &lt;child internal-child=&quot;selection&quot;&gt;
+                    &lt;object class=&quot;GtkTreeSelection&quot; id=&quot;treeview-selection2&quot;/&gt;
+                  &lt;/child&gt;
+                &lt;/object&gt;
+              &lt;/child&gt;
+            &lt;/object&gt;
+            &lt;packing&gt;
+              &lt;property name=&quot;position&quot;&gt;1&lt;/property&gt;
+              &lt;property name=&quot;tab_expand&quot;&gt;True&lt;/property&gt;
+            &lt;/packing&gt;
+          &lt;/child&gt;
+          &lt;child type=&quot;tab&quot;&gt;
+            &lt;object class=&quot;GtkLabel&quot; id=&quot;notebook_label_transactions&quot;&gt;
+              &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;can_focus&quot;&gt;False&lt;/property&gt;
+              &lt;property name=&quot;label&quot; translatable=&quot;yes&quot;&gt;Transactions&lt;/property&gt;
+            &lt;/object&gt;
+            &lt;packing&gt;
+              &lt;property name=&quot;position&quot;&gt;1&lt;/property&gt;
+              &lt;property name=&quot;tab_fill&quot;&gt;False&lt;/property&gt;
+            &lt;/packing&gt;
+          &lt;/child&gt;
+          &lt;child&gt;
+            &lt;object class=&quot;GtkScrolledWindow&quot; id=&quot;scrolledwindow3&quot;&gt;
+              &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;can_focus&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;shadow_type&quot;&gt;in&lt;/property&gt;
+              &lt;child&gt;
+                &lt;object class=&quot;GtkTreeView&quot; id=&quot;conn_view&quot;&gt;
+                  &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+                  &lt;property name=&quot;can_focus&quot;&gt;True&lt;/property&gt;
+                  &lt;child internal-child=&quot;selection&quot;&gt;
+                    &lt;object class=&quot;GtkTreeSelection&quot; id=&quot;treeview-selection4&quot;/&gt;
+                  &lt;/child&gt;
+                &lt;/object&gt;
+              &lt;/child&gt;
+            &lt;/object&gt;
+            &lt;packing&gt;
+              &lt;property name=&quot;position&quot;&gt;2&lt;/property&gt;
+              &lt;property name=&quot;tab_expand&quot;&gt;True&lt;/property&gt;
+            &lt;/packing&gt;
+          &lt;/child&gt;
+          &lt;child type=&quot;tab&quot;&gt;
+            &lt;object class=&quot;GtkLabel&quot; id=&quot;notebook_label_peers&quot;&gt;
+              &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;can_focus&quot;&gt;False&lt;/property&gt;
+              &lt;property name=&quot;label&quot; translatable=&quot;yes&quot;&gt;Connections&lt;/property&gt;
+            &lt;/object&gt;
+            &lt;packing&gt;
+              &lt;property name=&quot;position&quot;&gt;2&lt;/property&gt;
+              &lt;property name=&quot;tab_fill&quot;&gt;False&lt;/property&gt;
+            &lt;/packing&gt;
+          &lt;/child&gt;
+          &lt;child&gt;
+            &lt;placeholder/&gt;
+          &lt;/child&gt;
+          &lt;child type=&quot;tab&quot;&gt;
+            &lt;placeholder/&gt;
+          &lt;/child&gt;
+        &lt;/object&gt;
+        &lt;packing&gt;
+          &lt;property name=&quot;expand&quot;&gt;True&lt;/property&gt;
+          &lt;property name=&quot;fill&quot;&gt;True&lt;/property&gt;
+          &lt;property name=&quot;position&quot;&gt;1&lt;/property&gt;
+        &lt;/packing&gt;
+      &lt;/child&gt;
+      &lt;child&gt;
+        &lt;object class=&quot;GtkButtonBox&quot; id=&quot;buttonbar&quot;&gt;
+          &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+          &lt;property name=&quot;can_focus&quot;&gt;False&lt;/property&gt;
+          &lt;property name=&quot;homogeneous&quot;&gt;True&lt;/property&gt;
+          &lt;property name=&quot;layout_style&quot;&gt;start&lt;/property&gt;
+          &lt;child&gt;
+            &lt;object class=&quot;GtkButton&quot; id=&quot;button_new_addr&quot;&gt;
+              &lt;property name=&quot;label&quot; translatable=&quot;yes&quot;&gt;New Address&lt;/property&gt;
+              &lt;property name=&quot;use_action_appearance&quot;&gt;False&lt;/property&gt;
+              &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;can_focus&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;receives_default&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;use_action_appearance&quot;&gt;False&lt;/property&gt;
+              &lt;property name=&quot;image&quot;&gt;image_new_addr&lt;/property&gt;
+              &lt;signal name=&quot;clicked&quot; handler=&quot;on_new_addr&quot; swapped=&quot;no&quot;/&gt;
+            &lt;/object&gt;
+            &lt;packing&gt;
+              &lt;property name=&quot;expand&quot;&gt;False&lt;/property&gt;
+              &lt;property name=&quot;fill&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;position&quot;&gt;0&lt;/property&gt;
+            &lt;/packing&gt;
+          &lt;/child&gt;
+          &lt;child&gt;
+            &lt;object class=&quot;GtkButton&quot; id=&quot;button_new_tx&quot;&gt;
+              &lt;property name=&quot;label&quot; translatable=&quot;yes&quot;&gt;New Transaction&lt;/property&gt;
+              &lt;property name=&quot;use_action_appearance&quot;&gt;False&lt;/property&gt;
+              &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;can_focus&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;receives_default&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;use_action_appearance&quot;&gt;False&lt;/property&gt;
+              &lt;property name=&quot;image&quot;&gt;image_new_tx&lt;/property&gt;
+              &lt;signal name=&quot;clicked&quot; handler=&quot;on_new_tx&quot; swapped=&quot;no&quot;/&gt;
+            &lt;/object&gt;
+            &lt;packing&gt;
+              &lt;property name=&quot;expand&quot;&gt;False&lt;/property&gt;
+              &lt;property name=&quot;fill&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;position&quot;&gt;1&lt;/property&gt;
+            &lt;/packing&gt;
+          &lt;/child&gt;
+          &lt;child&gt;
+            &lt;placeholder/&gt;
+          &lt;/child&gt;
+        &lt;/object&gt;
+        &lt;packing&gt;
+          &lt;property name=&quot;expand&quot;&gt;False&lt;/property&gt;
+          &lt;property name=&quot;fill&quot;&gt;True&lt;/property&gt;
+          &lt;property name=&quot;position&quot;&gt;2&lt;/property&gt;
+        &lt;/packing&gt;
+      &lt;/child&gt;
+      &lt;child&gt;
+        &lt;object class=&quot;GtkBox&quot; id=&quot;box4&quot;&gt;
+          &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+          &lt;property name=&quot;can_focus&quot;&gt;False&lt;/property&gt;
+          &lt;child&gt;
+            &lt;object class=&quot;GtkImage&quot; id=&quot;image1&quot;&gt;
+              &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;can_focus&quot;&gt;False&lt;/property&gt;
+              &lt;property name=&quot;stock&quot;&gt;gtk-network&lt;/property&gt;
+            &lt;/object&gt;
+            &lt;packing&gt;
+              &lt;property name=&quot;expand&quot;&gt;False&lt;/property&gt;
+              &lt;property name=&quot;fill&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;position&quot;&gt;0&lt;/property&gt;
+            &lt;/packing&gt;
+          &lt;/child&gt;
+          &lt;child&gt;
+            &lt;object class=&quot;GtkStatusbar&quot; id=&quot;status_network&quot;&gt;
+              &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;can_focus&quot;&gt;False&lt;/property&gt;
+              &lt;property name=&quot;orientation&quot;&gt;vertical&lt;/property&gt;
+              &lt;property name=&quot;spacing&quot;&gt;2&lt;/property&gt;
+            &lt;/object&gt;
+            &lt;packing&gt;
+              &lt;property name=&quot;expand&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;fill&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;padding&quot;&gt;10&lt;/property&gt;
+              &lt;property name=&quot;position&quot;&gt;1&lt;/property&gt;
+            &lt;/packing&gt;
+          &lt;/child&gt;
+          &lt;child&gt;
+            &lt;object class=&quot;GtkImage&quot; id=&quot;image2&quot;&gt;
+              &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;can_focus&quot;&gt;False&lt;/property&gt;
+              &lt;property name=&quot;stock&quot;&gt;gtk-harddisk&lt;/property&gt;
+            &lt;/object&gt;
+            &lt;packing&gt;
+              &lt;property name=&quot;expand&quot;&gt;False&lt;/property&gt;
+              &lt;property name=&quot;fill&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;position&quot;&gt;2&lt;/property&gt;
+            &lt;/packing&gt;
+          &lt;/child&gt;
+          &lt;child&gt;
+            &lt;object class=&quot;GtkStatusbar&quot; id=&quot;status_store&quot;&gt;
+              &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;can_focus&quot;&gt;False&lt;/property&gt;
+              &lt;property name=&quot;orientation&quot;&gt;vertical&lt;/property&gt;
+              &lt;property name=&quot;spacing&quot;&gt;2&lt;/property&gt;
+            &lt;/object&gt;
+            &lt;packing&gt;
+              &lt;property name=&quot;expand&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;fill&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;padding&quot;&gt;10&lt;/property&gt;
+              &lt;property name=&quot;position&quot;&gt;3&lt;/property&gt;
+            &lt;/packing&gt;
+          &lt;/child&gt;
+          &lt;child&gt;
+            &lt;object class=&quot;GtkImage&quot; id=&quot;image3&quot;&gt;
+              &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;can_focus&quot;&gt;False&lt;/property&gt;
+              &lt;property name=&quot;stock&quot;&gt;gtk-dialog-authentication&lt;/property&gt;
+            &lt;/object&gt;
+            &lt;packing&gt;
+              &lt;property name=&quot;expand&quot;&gt;False&lt;/property&gt;
+              &lt;property name=&quot;fill&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;position&quot;&gt;4&lt;/property&gt;
+            &lt;/packing&gt;
+          &lt;/child&gt;
+          &lt;child&gt;
+            &lt;object class=&quot;GtkStatusbar&quot; id=&quot;status_wallet&quot;&gt;
+              &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;can_focus&quot;&gt;False&lt;/property&gt;
+              &lt;property name=&quot;orientation&quot;&gt;vertical&lt;/property&gt;
+              &lt;property name=&quot;spacing&quot;&gt;2&lt;/property&gt;
+            &lt;/object&gt;
+            &lt;packing&gt;
+              &lt;property name=&quot;expand&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;fill&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;padding&quot;&gt;10&lt;/property&gt;
+              &lt;property name=&quot;position&quot;&gt;5&lt;/property&gt;
+            &lt;/packing&gt;
+          &lt;/child&gt;
+        &lt;/object&gt;
+        &lt;packing&gt;
+          &lt;property name=&quot;expand&quot;&gt;False&lt;/property&gt;
+          &lt;property name=&quot;fill&quot;&gt;True&lt;/property&gt;
+          &lt;property name=&quot;position&quot;&gt;3&lt;/property&gt;
+        &lt;/packing&gt;
+      &lt;/child&gt;
+    &lt;/object&gt;
+  &lt;/child&gt;
+&lt;/object&gt;
+&lt;object class=&quot;GtkMessageDialog&quot; id=&quot;message_dialog&quot;&gt;
+  &lt;property name=&quot;can_focus&quot;&gt;False&lt;/property&gt;
+  &lt;property name=&quot;border_width&quot;&gt;5&lt;/property&gt;
+  &lt;property name=&quot;window_position&quot;&gt;mouse&lt;/property&gt;
+  &lt;property name=&quot;type_hint&quot;&gt;dialog&lt;/property&gt;
+  &lt;property name=&quot;skip_taskbar_hint&quot;&gt;True&lt;/property&gt;
+  &lt;property name=&quot;text&quot; translatable=&quot;yes&quot;&gt;aaa&lt;/property&gt;
+  &lt;property name=&quot;secondary_text&quot; translatable=&quot;yes&quot;&gt;aaaaa&lt;/property&gt;
+  &lt;child internal-child=&quot;vbox&quot;&gt;
+    &lt;object class=&quot;GtkBox&quot; id=&quot;messagedialog-vbox1&quot;&gt;
+      &lt;property name=&quot;can_focus&quot;&gt;False&lt;/property&gt;
+      &lt;property name=&quot;orientation&quot;&gt;vertical&lt;/property&gt;
+      &lt;property name=&quot;spacing&quot;&gt;2&lt;/property&gt;
+      &lt;child internal-child=&quot;action_area&quot;&gt;
+        &lt;object class=&quot;GtkButtonBox&quot; id=&quot;messagedialog-action_area1&quot;&gt;
+          &lt;property name=&quot;can_focus&quot;&gt;False&lt;/property&gt;
+          &lt;property name=&quot;layout_style&quot;&gt;end&lt;/property&gt;
+          &lt;child&gt;
+            &lt;object class=&quot;GtkButton&quot; id=&quot;message_dialog_button_no&quot;&gt;
+              &lt;property name=&quot;label&quot;&gt;gtk-no&lt;/property&gt;
+              &lt;property name=&quot;use_action_appearance&quot;&gt;False&lt;/property&gt;
+              &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;can_focus&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;receives_default&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;use_action_appearance&quot;&gt;False&lt;/property&gt;
+              &lt;property name=&quot;use_stock&quot;&gt;True&lt;/property&gt;
+            &lt;/object&gt;
+            &lt;packing&gt;
+              &lt;property name=&quot;expand&quot;&gt;False&lt;/property&gt;
+              &lt;property name=&quot;fill&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;position&quot;&gt;0&lt;/property&gt;
+            &lt;/packing&gt;
+          &lt;/child&gt;
+          &lt;child&gt;
+            &lt;object class=&quot;GtkButton&quot; id=&quot;message_dialog_button_yes&quot;&gt;
+              &lt;property name=&quot;label&quot;&gt;gtk-yes&lt;/property&gt;
+              &lt;property name=&quot;use_action_appearance&quot;&gt;False&lt;/property&gt;
+              &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;can_focus&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;receives_default&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;use_action_appearance&quot;&gt;False&lt;/property&gt;
+              &lt;property name=&quot;use_stock&quot;&gt;True&lt;/property&gt;
+            &lt;/object&gt;
+            &lt;packing&gt;
+              &lt;property name=&quot;expand&quot;&gt;False&lt;/property&gt;
+              &lt;property name=&quot;fill&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;position&quot;&gt;1&lt;/property&gt;
+            &lt;/packing&gt;
+          &lt;/child&gt;
+          &lt;child&gt;
+            &lt;object class=&quot;GtkButton&quot; id=&quot;message_dialog_button_ok&quot;&gt;
+              &lt;property name=&quot;label&quot;&gt;gtk-ok&lt;/property&gt;
+              &lt;property name=&quot;use_action_appearance&quot;&gt;False&lt;/property&gt;
+              &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;can_focus&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;receives_default&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;use_action_appearance&quot;&gt;False&lt;/property&gt;
+              &lt;property name=&quot;use_stock&quot;&gt;True&lt;/property&gt;
+            &lt;/object&gt;
+            &lt;packing&gt;
+              &lt;property name=&quot;expand&quot;&gt;False&lt;/property&gt;
+              &lt;property name=&quot;fill&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;position&quot;&gt;2&lt;/property&gt;
+            &lt;/packing&gt;
+          &lt;/child&gt;
+        &lt;/object&gt;
+        &lt;packing&gt;
+          &lt;property name=&quot;expand&quot;&gt;False&lt;/property&gt;
+          &lt;property name=&quot;fill&quot;&gt;True&lt;/property&gt;
+          &lt;property name=&quot;pack_type&quot;&gt;end&lt;/property&gt;
+          &lt;property name=&quot;position&quot;&gt;0&lt;/property&gt;
+        &lt;/packing&gt;
+      &lt;/child&gt;
+    &lt;/object&gt;
+  &lt;/child&gt;
+  &lt;action-widgets&gt;
+    &lt;action-widget response=&quot;-1&quot;&gt;message_dialog_button_no&lt;/action-widget&gt;
+    &lt;action-widget response=&quot;1&quot;&gt;message_dialog_button_yes&lt;/action-widget&gt;
+    &lt;action-widget response=&quot;1&quot;&gt;message_dialog_button_ok&lt;/action-widget&gt;
+  &lt;/action-widgets&gt;
+&lt;/object&gt;
+&lt;object class=&quot;GtkDialog&quot; id=&quot;new_addr_dialog&quot;&gt;
+  &lt;property name=&quot;can_focus&quot;&gt;False&lt;/property&gt;
+  &lt;property name=&quot;border_width&quot;&gt;5&lt;/property&gt;
+  &lt;property name=&quot;title&quot; translatable=&quot;yes&quot;&gt;New Address&lt;/property&gt;
+  &lt;property name=&quot;type_hint&quot;&gt;dialog&lt;/property&gt;
+  &lt;child internal-child=&quot;vbox&quot;&gt;
+    &lt;object class=&quot;GtkBox&quot; id=&quot;dialog-vbox1&quot;&gt;
+      &lt;property name=&quot;can_focus&quot;&gt;False&lt;/property&gt;
+      &lt;property name=&quot;orientation&quot;&gt;vertical&lt;/property&gt;
+      &lt;property name=&quot;spacing&quot;&gt;2&lt;/property&gt;
+      &lt;child internal-child=&quot;action_area&quot;&gt;
+        &lt;object class=&quot;GtkButtonBox&quot; id=&quot;dialog-action_area1&quot;&gt;
+          &lt;property name=&quot;can_focus&quot;&gt;False&lt;/property&gt;
+          &lt;property name=&quot;layout_style&quot;&gt;end&lt;/property&gt;
+          &lt;child&gt;
+            &lt;object class=&quot;GtkButton&quot; id=&quot;new_addr_dialog_cancel&quot;&gt;
+              &lt;property name=&quot;label&quot;&gt;gtk-cancel&lt;/property&gt;
+              &lt;property name=&quot;use_action_appearance&quot;&gt;False&lt;/property&gt;
+              &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;can_focus&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;receives_default&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;use_action_appearance&quot;&gt;False&lt;/property&gt;
+              &lt;property name=&quot;use_stock&quot;&gt;True&lt;/property&gt;
+              &lt;signal name=&quot;clicked&quot; handler=&quot;on_new_addr_cancel&quot; swapped=&quot;no&quot;/&gt;
+            &lt;/object&gt;
+            &lt;packing&gt;
+              &lt;property name=&quot;expand&quot;&gt;False&lt;/property&gt;
+              &lt;property name=&quot;fill&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;position&quot;&gt;0&lt;/property&gt;
+            &lt;/packing&gt;
+          &lt;/child&gt;
+          &lt;child&gt;
+            &lt;object class=&quot;GtkButton&quot; id=&quot;new_addr_dialog_apply&quot;&gt;
+              &lt;property name=&quot;label&quot;&gt;gtk-apply&lt;/property&gt;
+              &lt;property name=&quot;use_action_appearance&quot;&gt;False&lt;/property&gt;
+              &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;can_focus&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;receives_default&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;use_action_appearance&quot;&gt;False&lt;/property&gt;
+              &lt;property name=&quot;use_stock&quot;&gt;True&lt;/property&gt;
+              &lt;signal name=&quot;clicked&quot; handler=&quot;on_new_addr_apply&quot; swapped=&quot;no&quot;/&gt;
+            &lt;/object&gt;
+            &lt;packing&gt;
+              &lt;property name=&quot;expand&quot;&gt;False&lt;/property&gt;
+              &lt;property name=&quot;fill&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;position&quot;&gt;1&lt;/property&gt;
+            &lt;/packing&gt;
+          &lt;/child&gt;
+        &lt;/object&gt;
+        &lt;packing&gt;
+          &lt;property name=&quot;expand&quot;&gt;False&lt;/property&gt;
+          &lt;property name=&quot;fill&quot;&gt;True&lt;/property&gt;
+          &lt;property name=&quot;pack_type&quot;&gt;end&lt;/property&gt;
+          &lt;property name=&quot;position&quot;&gt;0&lt;/property&gt;
+        &lt;/packing&gt;
+      &lt;/child&gt;
+      &lt;child&gt;
+        &lt;object class=&quot;GtkGrid&quot; id=&quot;grid8&quot;&gt;
+          &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+          &lt;property name=&quot;can_focus&quot;&gt;False&lt;/property&gt;
+          &lt;child&gt;
+            &lt;object class=&quot;GtkLabel&quot; id=&quot;label22&quot;&gt;
+              &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;can_focus&quot;&gt;False&lt;/property&gt;
+              &lt;property name=&quot;label&quot; translatable=&quot;yes&quot;&gt;Label&lt;/property&gt;
+            &lt;/object&gt;
+            &lt;packing&gt;
+              &lt;property name=&quot;left_attach&quot;&gt;0&lt;/property&gt;
+              &lt;property name=&quot;top_attach&quot;&gt;0&lt;/property&gt;
+              &lt;property name=&quot;width&quot;&gt;1&lt;/property&gt;
+              &lt;property name=&quot;height&quot;&gt;1&lt;/property&gt;
+            &lt;/packing&gt;
+          &lt;/child&gt;
+          &lt;child&gt;
+            &lt;object class=&quot;GtkEntry&quot; id=&quot;new_addr_entry_label&quot;&gt;
+              &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;can_focus&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;invisible_char&quot;&gt;●&lt;/property&gt;
+              &lt;property name=&quot;invisible_char_set&quot;&gt;True&lt;/property&gt;
+            &lt;/object&gt;
+            &lt;packing&gt;
+              &lt;property name=&quot;left_attach&quot;&gt;1&lt;/property&gt;
+              &lt;property name=&quot;top_attach&quot;&gt;0&lt;/property&gt;
+              &lt;property name=&quot;width&quot;&gt;1&lt;/property&gt;
+              &lt;property name=&quot;height&quot;&gt;1&lt;/property&gt;
+            &lt;/packing&gt;
+          &lt;/child&gt;
+          &lt;child&gt;
+            &lt;object class=&quot;GtkCheckButton&quot; id=&quot;new_addr_check_addr&quot;&gt;
+              &lt;property name=&quot;label&quot; translatable=&quot;yes&quot;&gt;Address&lt;/property&gt;
+              &lt;property name=&quot;use_action_appearance&quot;&gt;False&lt;/property&gt;
+              &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;can_focus&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;receives_default&quot;&gt;False&lt;/property&gt;
+              &lt;property name=&quot;use_action_appearance&quot;&gt;False&lt;/property&gt;
+              &lt;property name=&quot;xalign&quot;&gt;0&lt;/property&gt;
+              &lt;property name=&quot;draw_indicator&quot;&gt;True&lt;/property&gt;
+            &lt;/object&gt;
+            &lt;packing&gt;
+              &lt;property name=&quot;left_attach&quot;&gt;0&lt;/property&gt;
+              &lt;property name=&quot;top_attach&quot;&gt;1&lt;/property&gt;
+              &lt;property name=&quot;width&quot;&gt;1&lt;/property&gt;
+              &lt;property name=&quot;height&quot;&gt;1&lt;/property&gt;
+            &lt;/packing&gt;
+          &lt;/child&gt;
+          &lt;child&gt;
+            &lt;object class=&quot;GtkEntry&quot; id=&quot;new_addr_entry_addr&quot;&gt;
+              &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;can_focus&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;invisible_char&quot;&gt;●&lt;/property&gt;
+              &lt;property name=&quot;invisible_char_set&quot;&gt;True&lt;/property&gt;
+            &lt;/object&gt;
+            &lt;packing&gt;
+              &lt;property name=&quot;left_attach&quot;&gt;1&lt;/property&gt;
+              &lt;property name=&quot;top_attach&quot;&gt;1&lt;/property&gt;
+              &lt;property name=&quot;width&quot;&gt;1&lt;/property&gt;
+              &lt;property name=&quot;height&quot;&gt;1&lt;/property&gt;
+            &lt;/packing&gt;
+          &lt;/child&gt;
+          &lt;child&gt;
+            &lt;object class=&quot;GtkCheckButton&quot; id=&quot;new_addr_check_pubkey&quot;&gt;
+              &lt;property name=&quot;label&quot; translatable=&quot;yes&quot;&gt;Pubkey&lt;/property&gt;
+              &lt;property name=&quot;use_action_appearance&quot;&gt;False&lt;/property&gt;
+              &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;can_focus&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;receives_default&quot;&gt;False&lt;/property&gt;
+              &lt;property name=&quot;use_action_appearance&quot;&gt;False&lt;/property&gt;
+              &lt;property name=&quot;xalign&quot;&gt;0&lt;/property&gt;
+              &lt;property name=&quot;draw_indicator&quot;&gt;True&lt;/property&gt;
+            &lt;/object&gt;
+            &lt;packing&gt;
+              &lt;property name=&quot;left_attach&quot;&gt;0&lt;/property&gt;
+              &lt;property name=&quot;top_attach&quot;&gt;2&lt;/property&gt;
+              &lt;property name=&quot;width&quot;&gt;1&lt;/property&gt;
+              &lt;property name=&quot;height&quot;&gt;1&lt;/property&gt;
+            &lt;/packing&gt;
+          &lt;/child&gt;
+          &lt;child&gt;
+            &lt;object class=&quot;GtkEntry&quot; id=&quot;new_addr_entry_pubkey&quot;&gt;
+              &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;can_focus&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;invisible_char&quot;&gt;●&lt;/property&gt;
+              &lt;property name=&quot;invisible_char_set&quot;&gt;True&lt;/property&gt;
+            &lt;/object&gt;
+            &lt;packing&gt;
+              &lt;property name=&quot;left_attach&quot;&gt;1&lt;/property&gt;
+              &lt;property name=&quot;top_attach&quot;&gt;2&lt;/property&gt;
+              &lt;property name=&quot;width&quot;&gt;1&lt;/property&gt;
+              &lt;property name=&quot;height&quot;&gt;1&lt;/property&gt;
+            &lt;/packing&gt;
+          &lt;/child&gt;
+          &lt;child&gt;
+            &lt;object class=&quot;GtkCheckButton&quot; id=&quot;new_addr_check_mine&quot;&gt;
+              &lt;property name=&quot;label&quot; translatable=&quot;yes&quot;&gt;Mine&lt;/property&gt;
+              &lt;property name=&quot;use_action_appearance&quot;&gt;False&lt;/property&gt;
+              &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;can_focus&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;receives_default&quot;&gt;False&lt;/property&gt;
+              &lt;property name=&quot;use_action_appearance&quot;&gt;False&lt;/property&gt;
+              &lt;property name=&quot;xalign&quot;&gt;0&lt;/property&gt;
+              &lt;property name=&quot;active&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;draw_indicator&quot;&gt;True&lt;/property&gt;
+            &lt;/object&gt;
+            &lt;packing&gt;
+              &lt;property name=&quot;left_attach&quot;&gt;0&lt;/property&gt;
+              &lt;property name=&quot;top_attach&quot;&gt;3&lt;/property&gt;
+              &lt;property name=&quot;width&quot;&gt;1&lt;/property&gt;
+              &lt;property name=&quot;height&quot;&gt;1&lt;/property&gt;
+            &lt;/packing&gt;
+          &lt;/child&gt;
+          &lt;child&gt;
+            &lt;placeholder/&gt;
+          &lt;/child&gt;
+        &lt;/object&gt;
+        &lt;packing&gt;
+          &lt;property name=&quot;expand&quot;&gt;False&lt;/property&gt;
+          &lt;property name=&quot;fill&quot;&gt;True&lt;/property&gt;
+          &lt;property name=&quot;position&quot;&gt;1&lt;/property&gt;
+        &lt;/packing&gt;
+      &lt;/child&gt;
+    &lt;/object&gt;
+  &lt;/child&gt;
+  &lt;action-widgets&gt;
+    &lt;action-widget response=&quot;0&quot;&gt;new_addr_dialog_cancel&lt;/action-widget&gt;
+    &lt;action-widget response=&quot;1&quot;&gt;new_addr_dialog_apply&lt;/action-widget&gt;
+  &lt;/action-widgets&gt;
+&lt;/object&gt;
+&lt;object class=&quot;GtkDialog&quot; id=&quot;new_tx_dialog&quot;&gt;
+  &lt;property name=&quot;can_focus&quot;&gt;False&lt;/property&gt;
+  &lt;property name=&quot;border_width&quot;&gt;5&lt;/property&gt;
+  &lt;property name=&quot;title&quot; translatable=&quot;yes&quot;&gt;New Transaction&lt;/property&gt;
+  &lt;property name=&quot;type_hint&quot;&gt;dialog&lt;/property&gt;
+  &lt;child internal-child=&quot;vbox&quot;&gt;
+    &lt;object class=&quot;GtkBox&quot; id=&quot;dialog-vbox3&quot;&gt;
+      &lt;property name=&quot;can_focus&quot;&gt;False&lt;/property&gt;
+      &lt;property name=&quot;orientation&quot;&gt;vertical&lt;/property&gt;
+      &lt;property name=&quot;spacing&quot;&gt;2&lt;/property&gt;
+      &lt;child internal-child=&quot;action_area&quot;&gt;
+        &lt;object class=&quot;GtkButtonBox&quot; id=&quot;dialog-action_area3&quot;&gt;
+          &lt;property name=&quot;can_focus&quot;&gt;False&lt;/property&gt;
+          &lt;property name=&quot;layout_style&quot;&gt;end&lt;/property&gt;
+          &lt;child&gt;
+            &lt;object class=&quot;GtkButton&quot; id=&quot;button5&quot;&gt;
+              &lt;property name=&quot;label&quot;&gt;gtk-cancel&lt;/property&gt;
+              &lt;property name=&quot;use_action_appearance&quot;&gt;False&lt;/property&gt;
+              &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;can_focus&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;receives_default&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;use_action_appearance&quot;&gt;False&lt;/property&gt;
+              &lt;property name=&quot;use_stock&quot;&gt;True&lt;/property&gt;
+            &lt;/object&gt;
+            &lt;packing&gt;
+              &lt;property name=&quot;expand&quot;&gt;False&lt;/property&gt;
+              &lt;property name=&quot;fill&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;position&quot;&gt;0&lt;/property&gt;
+            &lt;/packing&gt;
+          &lt;/child&gt;
+          &lt;child&gt;
+            &lt;object class=&quot;GtkButton&quot; id=&quot;button6&quot;&gt;
+              &lt;property name=&quot;label&quot;&gt;gtk-apply&lt;/property&gt;
+              &lt;property name=&quot;use_action_appearance&quot;&gt;False&lt;/property&gt;
+              &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;can_focus&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;receives_default&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;use_action_appearance&quot;&gt;False&lt;/property&gt;
+              &lt;property name=&quot;use_stock&quot;&gt;True&lt;/property&gt;
+            &lt;/object&gt;
+            &lt;packing&gt;
+              &lt;property name=&quot;expand&quot;&gt;False&lt;/property&gt;
+              &lt;property name=&quot;fill&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;position&quot;&gt;1&lt;/property&gt;
+            &lt;/packing&gt;
+          &lt;/child&gt;
+        &lt;/object&gt;
+        &lt;packing&gt;
+          &lt;property name=&quot;expand&quot;&gt;False&lt;/property&gt;
+          &lt;property name=&quot;fill&quot;&gt;True&lt;/property&gt;
+          &lt;property name=&quot;pack_type&quot;&gt;end&lt;/property&gt;
+          &lt;property name=&quot;position&quot;&gt;0&lt;/property&gt;
+        &lt;/packing&gt;
+      &lt;/child&gt;
+      &lt;child&gt;
+        &lt;object class=&quot;GtkGrid&quot; id=&quot;grid2&quot;&gt;
+          &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+          &lt;property name=&quot;can_focus&quot;&gt;False&lt;/property&gt;
+          &lt;child&gt;
+            &lt;object class=&quot;GtkLabel&quot; id=&quot;label4&quot;&gt;
+              &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;can_focus&quot;&gt;False&lt;/property&gt;
+              &lt;property name=&quot;label&quot; translatable=&quot;yes&quot;&gt;Recipient&lt;/property&gt;
+            &lt;/object&gt;
+            &lt;packing&gt;
+              &lt;property name=&quot;left_attach&quot;&gt;0&lt;/property&gt;
+              &lt;property name=&quot;top_attach&quot;&gt;0&lt;/property&gt;
+              &lt;property name=&quot;width&quot;&gt;1&lt;/property&gt;
+              &lt;property name=&quot;height&quot;&gt;1&lt;/property&gt;
+            &lt;/packing&gt;
+          &lt;/child&gt;
+          &lt;child&gt;
+            &lt;object class=&quot;GtkLabel&quot; id=&quot;label5&quot;&gt;
+              &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;can_focus&quot;&gt;False&lt;/property&gt;
+              &lt;property name=&quot;label&quot; translatable=&quot;yes&quot;&gt;Amount&lt;/property&gt;
+            &lt;/object&gt;
+            &lt;packing&gt;
+              &lt;property name=&quot;left_attach&quot;&gt;0&lt;/property&gt;
+              &lt;property name=&quot;top_attach&quot;&gt;1&lt;/property&gt;
+              &lt;property name=&quot;width&quot;&gt;1&lt;/property&gt;
+              &lt;property name=&quot;height&quot;&gt;1&lt;/property&gt;
+            &lt;/packing&gt;
+          &lt;/child&gt;
+          &lt;child&gt;
+            &lt;object class=&quot;GtkEntry&quot; id=&quot;new_tx_entry_address&quot;&gt;
+              &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;can_focus&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;invisible_char&quot;&gt;●&lt;/property&gt;
+            &lt;/object&gt;
+            &lt;packing&gt;
+              &lt;property name=&quot;left_attach&quot;&gt;1&lt;/property&gt;
+              &lt;property name=&quot;top_attach&quot;&gt;0&lt;/property&gt;
+              &lt;property name=&quot;width&quot;&gt;1&lt;/property&gt;
+              &lt;property name=&quot;height&quot;&gt;1&lt;/property&gt;
+            &lt;/packing&gt;
+          &lt;/child&gt;
+          &lt;child&gt;
+            &lt;object class=&quot;GtkEntry&quot; id=&quot;new_tx_entry_amount&quot;&gt;
+              &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;can_focus&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;invisible_char&quot;&gt;●&lt;/property&gt;
+            &lt;/object&gt;
+            &lt;packing&gt;
+              &lt;property name=&quot;left_attach&quot;&gt;1&lt;/property&gt;
+              &lt;property name=&quot;top_attach&quot;&gt;1&lt;/property&gt;
+              &lt;property name=&quot;width&quot;&gt;1&lt;/property&gt;
+              &lt;property name=&quot;height&quot;&gt;1&lt;/property&gt;
+            &lt;/packing&gt;
+          &lt;/child&gt;
+        &lt;/object&gt;
+        &lt;packing&gt;
+          &lt;property name=&quot;expand&quot;&gt;False&lt;/property&gt;
+          &lt;property name=&quot;fill&quot;&gt;True&lt;/property&gt;
+          &lt;property name=&quot;position&quot;&gt;1&lt;/property&gt;
+        &lt;/packing&gt;
+      &lt;/child&gt;
+    &lt;/object&gt;
+  &lt;/child&gt;
+  &lt;action-widgets&gt;
+    &lt;action-widget response=&quot;0&quot;&gt;button5&lt;/action-widget&gt;
+    &lt;action-widget response=&quot;1&quot;&gt;button6&lt;/action-widget&gt;
+  &lt;/action-widgets&gt;
+&lt;/object&gt;
+&lt;object class=&quot;GtkEntryCompletion&quot; id=&quot;new_tx_recipient_completion&quot;/&gt;
+&lt;object class=&quot;GtkMenu&quot; id=&quot;popup_menu&quot;&gt;
+  &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+  &lt;property name=&quot;can_focus&quot;&gt;False&lt;/property&gt;
+  &lt;child&gt;
+    &lt;object class=&quot;GtkImageMenuItem&quot; id=&quot;menu_popup_quit&quot;&gt;
+      &lt;property name=&quot;label&quot;&gt;gtk-quit&lt;/property&gt;
+      &lt;property name=&quot;use_action_appearance&quot;&gt;False&lt;/property&gt;
+      &lt;property name=&quot;related_action&quot;&gt;action_exit&lt;/property&gt;
+      &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+      &lt;property name=&quot;can_focus&quot;&gt;False&lt;/property&gt;
+      &lt;property name=&quot;use_underline&quot;&gt;True&lt;/property&gt;
+      &lt;property name=&quot;use_stock&quot;&gt;True&lt;/property&gt;
+    &lt;/object&gt;
+  &lt;/child&gt;
+&lt;/object&gt;
+&lt;object class=&quot;GtkDialog&quot; id=&quot;preferences_dialog&quot;&gt;
+  &lt;property name=&quot;can_focus&quot;&gt;False&lt;/property&gt;
+  &lt;property name=&quot;border_width&quot;&gt;5&lt;/property&gt;
+  &lt;property name=&quot;title&quot; translatable=&quot;yes&quot;&gt;Preferences&lt;/property&gt;
+  &lt;property name=&quot;type_hint&quot;&gt;dialog&lt;/property&gt;
+  &lt;child internal-child=&quot;vbox&quot;&gt;
+    &lt;object class=&quot;GtkBox&quot; id=&quot;dialog-vbox4&quot;&gt;
+      &lt;property name=&quot;can_focus&quot;&gt;False&lt;/property&gt;
+      &lt;property name=&quot;orientation&quot;&gt;vertical&lt;/property&gt;
+      &lt;property name=&quot;spacing&quot;&gt;2&lt;/property&gt;
+      &lt;child internal-child=&quot;action_area&quot;&gt;
+        &lt;object class=&quot;GtkButtonBox&quot; id=&quot;dialog-action_area4&quot;&gt;
+          &lt;property name=&quot;can_focus&quot;&gt;False&lt;/property&gt;
+          &lt;property name=&quot;layout_style&quot;&gt;end&lt;/property&gt;
+          &lt;child&gt;
+            &lt;object class=&quot;GtkButton&quot; id=&quot;button7&quot;&gt;
+              &lt;property name=&quot;label&quot;&gt;gtk-cancel&lt;/property&gt;
+              &lt;property name=&quot;use_action_appearance&quot;&gt;False&lt;/property&gt;
+              &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;can_focus&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;receives_default&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;use_action_appearance&quot;&gt;False&lt;/property&gt;
+              &lt;property name=&quot;use_stock&quot;&gt;True&lt;/property&gt;
+            &lt;/object&gt;
+            &lt;packing&gt;
+              &lt;property name=&quot;expand&quot;&gt;False&lt;/property&gt;
+              &lt;property name=&quot;fill&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;position&quot;&gt;0&lt;/property&gt;
+            &lt;/packing&gt;
+          &lt;/child&gt;
+          &lt;child&gt;
+            &lt;object class=&quot;GtkButton&quot; id=&quot;button8&quot;&gt;
+              &lt;property name=&quot;label&quot;&gt;gtk-save&lt;/property&gt;
+              &lt;property name=&quot;use_action_appearance&quot;&gt;False&lt;/property&gt;
+              &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;can_focus&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;receives_default&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;use_action_appearance&quot;&gt;False&lt;/property&gt;
+              &lt;property name=&quot;use_stock&quot;&gt;True&lt;/property&gt;
+            &lt;/object&gt;
+            &lt;packing&gt;
+              &lt;property name=&quot;expand&quot;&gt;False&lt;/property&gt;
+              &lt;property name=&quot;fill&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;position&quot;&gt;1&lt;/property&gt;
+            &lt;/packing&gt;
+          &lt;/child&gt;
+        &lt;/object&gt;
+        &lt;packing&gt;
+          &lt;property name=&quot;expand&quot;&gt;False&lt;/property&gt;
+          &lt;property name=&quot;fill&quot;&gt;True&lt;/property&gt;
+          &lt;property name=&quot;pack_type&quot;&gt;end&lt;/property&gt;
+          &lt;property name=&quot;position&quot;&gt;0&lt;/property&gt;
+        &lt;/packing&gt;
+      &lt;/child&gt;
+      &lt;child&gt;
+        &lt;object class=&quot;GtkNotebook&quot; id=&quot;notebook1&quot;&gt;
+          &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+          &lt;property name=&quot;can_focus&quot;&gt;True&lt;/property&gt;
+          &lt;property name=&quot;tab_pos&quot;&gt;left&lt;/property&gt;
+          &lt;child&gt;
+            &lt;object class=&quot;GtkGrid&quot; id=&quot;grid3&quot;&gt;
+              &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;can_focus&quot;&gt;False&lt;/property&gt;
+              &lt;child&gt;
+                &lt;object class=&quot;GtkLabel&quot; id=&quot;label9&quot;&gt;
+                  &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+                  &lt;property name=&quot;can_focus&quot;&gt;False&lt;/property&gt;
+                  &lt;property name=&quot;label&quot; translatable=&quot;yes&quot;&gt;Network&lt;/property&gt;
+                &lt;/object&gt;
+                &lt;packing&gt;
+                  &lt;property name=&quot;left_attach&quot;&gt;0&lt;/property&gt;
+                  &lt;property name=&quot;top_attach&quot;&gt;0&lt;/property&gt;
+                  &lt;property name=&quot;width&quot;&gt;1&lt;/property&gt;
+                  &lt;property name=&quot;height&quot;&gt;1&lt;/property&gt;
+                &lt;/packing&gt;
+              &lt;/child&gt;
+              &lt;child&gt;
+                &lt;object class=&quot;GtkLabel&quot; id=&quot;label10&quot;&gt;
+                  &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+                  &lt;property name=&quot;can_focus&quot;&gt;False&lt;/property&gt;
+                  &lt;property name=&quot;label&quot; translatable=&quot;yes&quot;&gt;Command Socket&lt;/property&gt;
+                &lt;/object&gt;
+                &lt;packing&gt;
+                  &lt;property name=&quot;left_attach&quot;&gt;0&lt;/property&gt;
+                  &lt;property name=&quot;top_attach&quot;&gt;1&lt;/property&gt;
+                  &lt;property name=&quot;width&quot;&gt;1&lt;/property&gt;
+                  &lt;property name=&quot;height&quot;&gt;1&lt;/property&gt;
+                &lt;/packing&gt;
+              &lt;/child&gt;
+              &lt;child&gt;
+                &lt;object class=&quot;GtkLabel&quot; id=&quot;label11&quot;&gt;
+                  &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+                  &lt;property name=&quot;can_focus&quot;&gt;False&lt;/property&gt;
+                  &lt;property name=&quot;label&quot; translatable=&quot;yes&quot;&gt;Listen Socket&lt;/property&gt;
+                &lt;/object&gt;
+                &lt;packing&gt;
+                  &lt;property name=&quot;left_attach&quot;&gt;0&lt;/property&gt;
+                  &lt;property name=&quot;top_attach&quot;&gt;2&lt;/property&gt;
+                  &lt;property name=&quot;width&quot;&gt;1&lt;/property&gt;
+                  &lt;property name=&quot;height&quot;&gt;1&lt;/property&gt;
+                &lt;/packing&gt;
+              &lt;/child&gt;
+              &lt;child&gt;
+                &lt;object class=&quot;GtkEntry&quot; id=&quot;preferences_entry_command&quot;&gt;
+                  &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+                  &lt;property name=&quot;can_focus&quot;&gt;True&lt;/property&gt;
+                  &lt;property name=&quot;invisible_char&quot;&gt;●&lt;/property&gt;
+                &lt;/object&gt;
+                &lt;packing&gt;
+                  &lt;property name=&quot;left_attach&quot;&gt;1&lt;/property&gt;
+                  &lt;property name=&quot;top_attach&quot;&gt;1&lt;/property&gt;
+                  &lt;property name=&quot;width&quot;&gt;1&lt;/property&gt;
+                  &lt;property name=&quot;height&quot;&gt;1&lt;/property&gt;
+                &lt;/packing&gt;
+              &lt;/child&gt;
+              &lt;child&gt;
+                &lt;object class=&quot;GtkEntry&quot; id=&quot;preferences_entry_listen&quot;&gt;
+                  &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+                  &lt;property name=&quot;can_focus&quot;&gt;True&lt;/property&gt;
+                  &lt;property name=&quot;invisible_char&quot;&gt;●&lt;/property&gt;
+                &lt;/object&gt;
+                &lt;packing&gt;
+                  &lt;property name=&quot;left_attach&quot;&gt;1&lt;/property&gt;
+                  &lt;property name=&quot;top_attach&quot;&gt;2&lt;/property&gt;
+                  &lt;property name=&quot;width&quot;&gt;1&lt;/property&gt;
+                  &lt;property name=&quot;height&quot;&gt;1&lt;/property&gt;
+                &lt;/packing&gt;
+              &lt;/child&gt;
+              &lt;child&gt;
+                &lt;object class=&quot;GtkEntry&quot; id=&quot;preferences_entry_network&quot;&gt;
+                  &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+                  &lt;property name=&quot;can_focus&quot;&gt;True&lt;/property&gt;
+                  &lt;property name=&quot;invisible_char&quot;&gt;●&lt;/property&gt;
+                &lt;/object&gt;
+                &lt;packing&gt;
+                  &lt;property name=&quot;left_attach&quot;&gt;1&lt;/property&gt;
+                  &lt;property name=&quot;top_attach&quot;&gt;0&lt;/property&gt;
+                  &lt;property name=&quot;width&quot;&gt;1&lt;/property&gt;
+                  &lt;property name=&quot;height&quot;&gt;1&lt;/property&gt;
+                &lt;/packing&gt;
+              &lt;/child&gt;
+              &lt;child&gt;
+                &lt;object class=&quot;GtkLabel&quot; id=&quot;label17&quot;&gt;
+                  &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+                  &lt;property name=&quot;can_focus&quot;&gt;False&lt;/property&gt;
+                  &lt;property name=&quot;label&quot; translatable=&quot;yes&quot;&gt;Storage Backend&lt;/property&gt;
+                &lt;/object&gt;
+                &lt;packing&gt;
+                  &lt;property name=&quot;left_attach&quot;&gt;0&lt;/property&gt;
+                  &lt;property name=&quot;top_attach&quot;&gt;3&lt;/property&gt;
+                  &lt;property name=&quot;width&quot;&gt;1&lt;/property&gt;
+                  &lt;property name=&quot;height&quot;&gt;1&lt;/property&gt;
+                &lt;/packing&gt;
+              &lt;/child&gt;
+              &lt;child&gt;
+                &lt;object class=&quot;GtkComboBox&quot; id=&quot;combobox2&quot;&gt;
+                  &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+                  &lt;property name=&quot;can_focus&quot;&gt;False&lt;/property&gt;
+                &lt;/object&gt;
+                &lt;packing&gt;
+                  &lt;property name=&quot;left_attach&quot;&gt;1&lt;/property&gt;
+                  &lt;property name=&quot;top_attach&quot;&gt;3&lt;/property&gt;
+                  &lt;property name=&quot;width&quot;&gt;1&lt;/property&gt;
+                  &lt;property name=&quot;height&quot;&gt;1&lt;/property&gt;
+                &lt;/packing&gt;
+              &lt;/child&gt;
+            &lt;/object&gt;
+          &lt;/child&gt;
+          &lt;child type=&quot;tab&quot;&gt;
+            &lt;object class=&quot;GtkLabel&quot; id=&quot;label6&quot;&gt;
+              &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;can_focus&quot;&gt;False&lt;/property&gt;
+              &lt;property name=&quot;label&quot; translatable=&quot;yes&quot;&gt;General&lt;/property&gt;
+            &lt;/object&gt;
+            &lt;packing&gt;
+              &lt;property name=&quot;tab_fill&quot;&gt;False&lt;/property&gt;
+            &lt;/packing&gt;
+          &lt;/child&gt;
+          &lt;child&gt;
+            &lt;object class=&quot;GtkGrid&quot; id=&quot;grid4&quot;&gt;
+              &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;can_focus&quot;&gt;False&lt;/property&gt;
+              &lt;child&gt;
+                &lt;object class=&quot;GtkLabel&quot; id=&quot;label12&quot;&gt;
+                  &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+                  &lt;property name=&quot;can_focus&quot;&gt;False&lt;/property&gt;
+                  &lt;property name=&quot;label&quot; translatable=&quot;yes&quot;&gt;Headers Only&lt;/property&gt;
+                &lt;/object&gt;
+                &lt;packing&gt;
+                  &lt;property name=&quot;left_attach&quot;&gt;0&lt;/property&gt;
+                  &lt;property name=&quot;top_attach&quot;&gt;0&lt;/property&gt;
+                  &lt;property name=&quot;width&quot;&gt;1&lt;/property&gt;
+                  &lt;property name=&quot;height&quot;&gt;1&lt;/property&gt;
+                &lt;/packing&gt;
+              &lt;/child&gt;
+              &lt;child&gt;
+                &lt;object class=&quot;GtkLabel&quot; id=&quot;label13&quot;&gt;
+                  &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+                  &lt;property name=&quot;can_focus&quot;&gt;False&lt;/property&gt;
+                  &lt;property name=&quot;label&quot; translatable=&quot;yes&quot;&gt;DNS&lt;/property&gt;
+                &lt;/object&gt;
+                &lt;packing&gt;
+                  &lt;property name=&quot;left_attach&quot;&gt;0&lt;/property&gt;
+                  &lt;property name=&quot;top_attach&quot;&gt;1&lt;/property&gt;
+                  &lt;property name=&quot;width&quot;&gt;1&lt;/property&gt;
+                  &lt;property name=&quot;height&quot;&gt;1&lt;/property&gt;
+                &lt;/packing&gt;
+              &lt;/child&gt;
+              &lt;child&gt;
+                &lt;object class=&quot;GtkLabel&quot; id=&quot;label14&quot;&gt;
+                  &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+                  &lt;property name=&quot;can_focus&quot;&gt;False&lt;/property&gt;
+                &lt;/object&gt;
+                &lt;packing&gt;
+                  &lt;property name=&quot;left_attach&quot;&gt;0&lt;/property&gt;
+                  &lt;property name=&quot;top_attach&quot;&gt;2&lt;/property&gt;
+                  &lt;property name=&quot;width&quot;&gt;1&lt;/property&gt;
+                  &lt;property name=&quot;height&quot;&gt;1&lt;/property&gt;
+                &lt;/packing&gt;
+              &lt;/child&gt;
+              &lt;child&gt;
+                &lt;object class=&quot;GtkSwitch&quot; id=&quot;switch1&quot;&gt;
+                  &lt;property name=&quot;use_action_appearance&quot;&gt;False&lt;/property&gt;
+                  &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+                  &lt;property name=&quot;can_focus&quot;&gt;True&lt;/property&gt;
+                  &lt;property name=&quot;use_action_appearance&quot;&gt;False&lt;/property&gt;
+                &lt;/object&gt;
+                &lt;packing&gt;
+                  &lt;property name=&quot;left_attach&quot;&gt;1&lt;/property&gt;
+                  &lt;property name=&quot;top_attach&quot;&gt;0&lt;/property&gt;
+                  &lt;property name=&quot;width&quot;&gt;1&lt;/property&gt;
+                  &lt;property name=&quot;height&quot;&gt;1&lt;/property&gt;
+                &lt;/packing&gt;
+              &lt;/child&gt;
+              &lt;child&gt;
+                &lt;object class=&quot;GtkSwitch&quot; id=&quot;switch2&quot;&gt;
+                  &lt;property name=&quot;use_action_appearance&quot;&gt;False&lt;/property&gt;
+                  &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+                  &lt;property name=&quot;can_focus&quot;&gt;True&lt;/property&gt;
+                  &lt;property name=&quot;use_action_appearance&quot;&gt;False&lt;/property&gt;
+                &lt;/object&gt;
+                &lt;packing&gt;
+                  &lt;property name=&quot;left_attach&quot;&gt;1&lt;/property&gt;
+                  &lt;property name=&quot;top_attach&quot;&gt;1&lt;/property&gt;
+                  &lt;property name=&quot;width&quot;&gt;1&lt;/property&gt;
+                  &lt;property name=&quot;height&quot;&gt;1&lt;/property&gt;
+                &lt;/packing&gt;
+              &lt;/child&gt;
+              &lt;child&gt;
+                &lt;placeholder/&gt;
+              &lt;/child&gt;
+            &lt;/object&gt;
+            &lt;packing&gt;
+              &lt;property name=&quot;position&quot;&gt;1&lt;/property&gt;
+            &lt;/packing&gt;
+          &lt;/child&gt;
+          &lt;child type=&quot;tab&quot;&gt;
+            &lt;object class=&quot;GtkLabel&quot; id=&quot;label7&quot;&gt;
+              &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;can_focus&quot;&gt;False&lt;/property&gt;
+              &lt;property name=&quot;label&quot; translatable=&quot;yes&quot;&gt;Node&lt;/property&gt;
+            &lt;/object&gt;
+            &lt;packing&gt;
+              &lt;property name=&quot;position&quot;&gt;1&lt;/property&gt;
+              &lt;property name=&quot;tab_fill&quot;&gt;False&lt;/property&gt;
+            &lt;/packing&gt;
+          &lt;/child&gt;
+          &lt;child&gt;
+            &lt;object class=&quot;GtkGrid&quot; id=&quot;grid5&quot;&gt;
+              &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;can_focus&quot;&gt;False&lt;/property&gt;
+              &lt;child&gt;
+                &lt;object class=&quot;GtkLabel&quot; id=&quot;label15&quot;&gt;
+                  &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+                  &lt;property name=&quot;can_focus&quot;&gt;False&lt;/property&gt;
+                  &lt;property name=&quot;label&quot; translatable=&quot;yes&quot;&gt;Backend&lt;/property&gt;
+                &lt;/object&gt;
+                &lt;packing&gt;
+                  &lt;property name=&quot;left_attach&quot;&gt;0&lt;/property&gt;
+                  &lt;property name=&quot;top_attach&quot;&gt;0&lt;/property&gt;
+                  &lt;property name=&quot;width&quot;&gt;1&lt;/property&gt;
+                  &lt;property name=&quot;height&quot;&gt;1&lt;/property&gt;
+                &lt;/packing&gt;
+              &lt;/child&gt;
+              &lt;child&gt;
+                &lt;object class=&quot;GtkLabel&quot; id=&quot;label16&quot;&gt;
+                  &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+                  &lt;property name=&quot;can_focus&quot;&gt;False&lt;/property&gt;
+                  &lt;property name=&quot;label&quot; translatable=&quot;yes&quot;&gt;File&lt;/property&gt;
+                &lt;/object&gt;
+                &lt;packing&gt;
+                  &lt;property name=&quot;left_attach&quot;&gt;1&lt;/property&gt;
+                  &lt;property name=&quot;top_attach&quot;&gt;0&lt;/property&gt;
+                  &lt;property name=&quot;width&quot;&gt;1&lt;/property&gt;
+                  &lt;property name=&quot;height&quot;&gt;1&lt;/property&gt;
+                &lt;/packing&gt;
+              &lt;/child&gt;
+              &lt;child&gt;
+                &lt;object class=&quot;GtkComboBox&quot; id=&quot;combobox1&quot;&gt;
+                  &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+                  &lt;property name=&quot;can_focus&quot;&gt;False&lt;/property&gt;
+                &lt;/object&gt;
+                &lt;packing&gt;
+                  &lt;property name=&quot;left_attach&quot;&gt;0&lt;/property&gt;
+                  &lt;property name=&quot;top_attach&quot;&gt;1&lt;/property&gt;
+                  &lt;property name=&quot;width&quot;&gt;1&lt;/property&gt;
+                  &lt;property name=&quot;height&quot;&gt;1&lt;/property&gt;
+                &lt;/packing&gt;
+              &lt;/child&gt;
+              &lt;child&gt;
+                &lt;object class=&quot;GtkFileChooserButton&quot; id=&quot;filechooserbutton1&quot;&gt;
+                  &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+                  &lt;property name=&quot;can_focus&quot;&gt;False&lt;/property&gt;
+                  &lt;property name=&quot;orientation&quot;&gt;vertical&lt;/property&gt;
+                &lt;/object&gt;
+                &lt;packing&gt;
+                  &lt;property name=&quot;left_attach&quot;&gt;1&lt;/property&gt;
+                  &lt;property name=&quot;top_attach&quot;&gt;1&lt;/property&gt;
+                  &lt;property name=&quot;width&quot;&gt;1&lt;/property&gt;
+                  &lt;property name=&quot;height&quot;&gt;1&lt;/property&gt;
+                &lt;/packing&gt;
+              &lt;/child&gt;
+            &lt;/object&gt;
+            &lt;packing&gt;
+              &lt;property name=&quot;position&quot;&gt;2&lt;/property&gt;
+            &lt;/packing&gt;
+          &lt;/child&gt;
+          &lt;child type=&quot;tab&quot;&gt;
+            &lt;object class=&quot;GtkLabel&quot; id=&quot;label8&quot;&gt;
+              &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;can_focus&quot;&gt;False&lt;/property&gt;
+              &lt;property name=&quot;label&quot; translatable=&quot;yes&quot;&gt;Wallet&lt;/property&gt;
+            &lt;/object&gt;
+            &lt;packing&gt;
+              &lt;property name=&quot;position&quot;&gt;2&lt;/property&gt;
+              &lt;property name=&quot;tab_fill&quot;&gt;False&lt;/property&gt;
+            &lt;/packing&gt;
+          &lt;/child&gt;
+        &lt;/object&gt;
+        &lt;packing&gt;
+          &lt;property name=&quot;expand&quot;&gt;False&lt;/property&gt;
+          &lt;property name=&quot;fill&quot;&gt;True&lt;/property&gt;
+          &lt;property name=&quot;position&quot;&gt;1&lt;/property&gt;
+        &lt;/packing&gt;
+      &lt;/child&gt;
+    &lt;/object&gt;
+  &lt;/child&gt;
+  &lt;action-widgets&gt;
+    &lt;action-widget response=&quot;0&quot;&gt;button7&lt;/action-widget&gt;
+    &lt;action-widget response=&quot;0&quot;&gt;button8&lt;/action-widget&gt;
+  &lt;/action-widgets&gt;
+&lt;/object&gt;
+&lt;object class=&quot;GtkStatusIcon&quot; id=&quot;statusicon&quot;&gt;
+  &lt;property name=&quot;pixbuf&quot;&gt;bitcoin-ruby.png&lt;/property&gt;
+&lt;/object&gt;
+&lt;object class=&quot;GtkDialog&quot; id=&quot;tx_dialog&quot;&gt;
+  &lt;property name=&quot;can_focus&quot;&gt;False&lt;/property&gt;
+  &lt;property name=&quot;border_width&quot;&gt;5&lt;/property&gt;
+  &lt;property name=&quot;title&quot; translatable=&quot;yes&quot;&gt;Transaction&lt;/property&gt;
+  &lt;property name=&quot;type_hint&quot;&gt;dialog&lt;/property&gt;
+  &lt;child internal-child=&quot;vbox&quot;&gt;
+    &lt;object class=&quot;GtkBox&quot; id=&quot;dialog-vbox6&quot;&gt;
+      &lt;property name=&quot;can_focus&quot;&gt;False&lt;/property&gt;
+      &lt;property name=&quot;orientation&quot;&gt;vertical&lt;/property&gt;
+      &lt;property name=&quot;spacing&quot;&gt;2&lt;/property&gt;
+      &lt;child internal-child=&quot;action_area&quot;&gt;
+        &lt;object class=&quot;GtkButtonBox&quot; id=&quot;dialog-action_area6&quot;&gt;
+          &lt;property name=&quot;can_focus&quot;&gt;False&lt;/property&gt;
+          &lt;property name=&quot;layout_style&quot;&gt;end&lt;/property&gt;
+          &lt;child&gt;
+            &lt;placeholder/&gt;
+          &lt;/child&gt;
+          &lt;child&gt;
+            &lt;object class=&quot;GtkButton&quot; id=&quot;button9&quot;&gt;
+              &lt;property name=&quot;label&quot;&gt;gtk-close&lt;/property&gt;
+              &lt;property name=&quot;use_action_appearance&quot;&gt;False&lt;/property&gt;
+              &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;can_focus&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;receives_default&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;use_action_appearance&quot;&gt;False&lt;/property&gt;
+              &lt;property name=&quot;use_stock&quot;&gt;True&lt;/property&gt;
+            &lt;/object&gt;
+            &lt;packing&gt;
+              &lt;property name=&quot;expand&quot;&gt;False&lt;/property&gt;
+              &lt;property name=&quot;fill&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;position&quot;&gt;1&lt;/property&gt;
+            &lt;/packing&gt;
+          &lt;/child&gt;
+        &lt;/object&gt;
+        &lt;packing&gt;
+          &lt;property name=&quot;expand&quot;&gt;False&lt;/property&gt;
+          &lt;property name=&quot;fill&quot;&gt;True&lt;/property&gt;
+          &lt;property name=&quot;pack_type&quot;&gt;end&lt;/property&gt;
+          &lt;property name=&quot;position&quot;&gt;0&lt;/property&gt;
+        &lt;/packing&gt;
+      &lt;/child&gt;
+      &lt;child&gt;
+        &lt;object class=&quot;GtkGrid&quot; id=&quot;grid6&quot;&gt;
+          &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+          &lt;property name=&quot;can_focus&quot;&gt;False&lt;/property&gt;
+          &lt;child&gt;
+            &lt;object class=&quot;GtkLabel&quot; id=&quot;tx_label_hash&quot;&gt;
+              &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;can_focus&quot;&gt;False&lt;/property&gt;
+              &lt;property name=&quot;label&quot; translatable=&quot;yes&quot;&gt;label&lt;/property&gt;
+            &lt;/object&gt;
+            &lt;packing&gt;
+              &lt;property name=&quot;left_attach&quot;&gt;0&lt;/property&gt;
+              &lt;property name=&quot;top_attach&quot;&gt;0&lt;/property&gt;
+              &lt;property name=&quot;width&quot;&gt;4&lt;/property&gt;
+              &lt;property name=&quot;height&quot;&gt;1&lt;/property&gt;
+            &lt;/packing&gt;
+          &lt;/child&gt;
+          &lt;child&gt;
+            &lt;object class=&quot;GtkScrolledWindow&quot; id=&quot;scrolledwindow4&quot;&gt;
+              &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;can_focus&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;shadow_type&quot;&gt;in&lt;/property&gt;
+              &lt;child&gt;
+                &lt;object class=&quot;GtkTreeView&quot; id=&quot;treeview2&quot;&gt;
+                  &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+                  &lt;property name=&quot;can_focus&quot;&gt;True&lt;/property&gt;
+                  &lt;child internal-child=&quot;selection&quot;&gt;
+                    &lt;object class=&quot;GtkTreeSelection&quot; id=&quot;treeview-selection6&quot;/&gt;
+                  &lt;/child&gt;
+                &lt;/object&gt;
+              &lt;/child&gt;
+            &lt;/object&gt;
+            &lt;packing&gt;
+              &lt;property name=&quot;left_attach&quot;&gt;2&lt;/property&gt;
+              &lt;property name=&quot;top_attach&quot;&gt;3&lt;/property&gt;
+              &lt;property name=&quot;width&quot;&gt;2&lt;/property&gt;
+              &lt;property name=&quot;height&quot;&gt;2&lt;/property&gt;
+            &lt;/packing&gt;
+          &lt;/child&gt;
+          &lt;child&gt;
+            &lt;object class=&quot;GtkScrolledWindow&quot; id=&quot;scrolledwindow5&quot;&gt;
+              &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;can_focus&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;shadow_type&quot;&gt;in&lt;/property&gt;
+              &lt;child&gt;
+                &lt;object class=&quot;GtkTreeView&quot; id=&quot;tx_txin_view&quot;&gt;
+                  &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+                  &lt;property name=&quot;can_focus&quot;&gt;True&lt;/property&gt;
+                  &lt;child internal-child=&quot;selection&quot;&gt;
+                    &lt;object class=&quot;GtkTreeSelection&quot; id=&quot;treeview-selection5&quot;/&gt;
+                  &lt;/child&gt;
+                &lt;/object&gt;
+              &lt;/child&gt;
+            &lt;/object&gt;
+            &lt;packing&gt;
+              &lt;property name=&quot;left_attach&quot;&gt;0&lt;/property&gt;
+              &lt;property name=&quot;top_attach&quot;&gt;3&lt;/property&gt;
+              &lt;property name=&quot;width&quot;&gt;2&lt;/property&gt;
+              &lt;property name=&quot;height&quot;&gt;2&lt;/property&gt;
+            &lt;/packing&gt;
+          &lt;/child&gt;
+          &lt;child&gt;
+            &lt;object class=&quot;GtkLabel&quot; id=&quot;label19&quot;&gt;
+              &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;can_focus&quot;&gt;False&lt;/property&gt;
+              &lt;property name=&quot;label&quot; translatable=&quot;yes&quot;&gt;Value:&lt;/property&gt;
+            &lt;/object&gt;
+            &lt;packing&gt;
+              &lt;property name=&quot;left_attach&quot;&gt;0&lt;/property&gt;
+              &lt;property name=&quot;top_attach&quot;&gt;1&lt;/property&gt;
+              &lt;property name=&quot;width&quot;&gt;1&lt;/property&gt;
+              &lt;property name=&quot;height&quot;&gt;1&lt;/property&gt;
+            &lt;/packing&gt;
+          &lt;/child&gt;
+          &lt;child&gt;
+            &lt;object class=&quot;GtkLabel&quot; id=&quot;tx_label_value&quot;&gt;
+              &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;can_focus&quot;&gt;False&lt;/property&gt;
+            &lt;/object&gt;
+            &lt;packing&gt;
+              &lt;property name=&quot;left_attach&quot;&gt;1&lt;/property&gt;
+              &lt;property name=&quot;top_attach&quot;&gt;1&lt;/property&gt;
+              &lt;property name=&quot;width&quot;&gt;1&lt;/property&gt;
+              &lt;property name=&quot;height&quot;&gt;1&lt;/property&gt;
+            &lt;/packing&gt;
+          &lt;/child&gt;
+          &lt;child&gt;
+            &lt;object class=&quot;GtkLabel&quot; id=&quot;label21&quot;&gt;
+              &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;can_focus&quot;&gt;False&lt;/property&gt;
+              &lt;property name=&quot;label&quot; translatable=&quot;yes&quot;&gt;Confirmations:&lt;/property&gt;
+            &lt;/object&gt;
+            &lt;packing&gt;
+              &lt;property name=&quot;left_attach&quot;&gt;2&lt;/property&gt;
+              &lt;property name=&quot;top_attach&quot;&gt;1&lt;/property&gt;
+              &lt;property name=&quot;width&quot;&gt;1&lt;/property&gt;
+              &lt;property name=&quot;height&quot;&gt;1&lt;/property&gt;
+            &lt;/packing&gt;
+          &lt;/child&gt;
+          &lt;child&gt;
+            &lt;object class=&quot;GtkLabel&quot; id=&quot;tx_label_confirmations&quot;&gt;
+              &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;can_focus&quot;&gt;False&lt;/property&gt;
+            &lt;/object&gt;
+            &lt;packing&gt;
+              &lt;property name=&quot;left_attach&quot;&gt;3&lt;/property&gt;
+              &lt;property name=&quot;top_attach&quot;&gt;1&lt;/property&gt;
+              &lt;property name=&quot;width&quot;&gt;1&lt;/property&gt;
+              &lt;property name=&quot;height&quot;&gt;1&lt;/property&gt;
+            &lt;/packing&gt;
+          &lt;/child&gt;
+          &lt;child&gt;
+            &lt;object class=&quot;GtkLabel&quot; id=&quot;label18&quot;&gt;
+              &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;can_focus&quot;&gt;False&lt;/property&gt;
+              &lt;property name=&quot;label&quot; translatable=&quot;yes&quot;&gt;Inputs&lt;/property&gt;
+            &lt;/object&gt;
+            &lt;packing&gt;
+              &lt;property name=&quot;left_attach&quot;&gt;0&lt;/property&gt;
+              &lt;property name=&quot;top_attach&quot;&gt;2&lt;/property&gt;
+              &lt;property name=&quot;width&quot;&gt;2&lt;/property&gt;
+              &lt;property name=&quot;height&quot;&gt;1&lt;/property&gt;
+            &lt;/packing&gt;
+          &lt;/child&gt;
+          &lt;child&gt;
+            &lt;object class=&quot;GtkLabel&quot; id=&quot;label20&quot;&gt;
+              &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;can_focus&quot;&gt;False&lt;/property&gt;
+              &lt;property name=&quot;label&quot; translatable=&quot;yes&quot;&gt;Outputs&lt;/property&gt;
+            &lt;/object&gt;
+            &lt;packing&gt;
+              &lt;property name=&quot;left_attach&quot;&gt;2&lt;/property&gt;
+              &lt;property name=&quot;top_attach&quot;&gt;2&lt;/property&gt;
+              &lt;property name=&quot;width&quot;&gt;2&lt;/property&gt;
+              &lt;property name=&quot;height&quot;&gt;1&lt;/property&gt;
+            &lt;/packing&gt;
+          &lt;/child&gt;
+        &lt;/object&gt;
+        &lt;packing&gt;
+          &lt;property name=&quot;expand&quot;&gt;False&lt;/property&gt;
+          &lt;property name=&quot;fill&quot;&gt;True&lt;/property&gt;
+          &lt;property name=&quot;position&quot;&gt;1&lt;/property&gt;
+        &lt;/packing&gt;
+      &lt;/child&gt;
+    &lt;/object&gt;
+  &lt;/child&gt;
+  &lt;action-widgets&gt;
+    &lt;action-widget response=&quot;0&quot;&gt;button9&lt;/action-widget&gt;
+  &lt;/action-widgets&gt;
+&lt;/object&gt;
+&lt;object class=&quot;GtkWindow&quot; id=&quot;tx_window&quot;&gt;
+  &lt;property name=&quot;can_focus&quot;&gt;False&lt;/property&gt;
+  &lt;child&gt;
+    &lt;placeholder/&gt;
+  &lt;/child&gt;
+&lt;/object&gt;
+&lt;object class=&quot;GtkFileChooserDialog&quot; id=&quot;wallet_open_dialog&quot;&gt;
+  &lt;property name=&quot;can_focus&quot;&gt;False&lt;/property&gt;
+  &lt;property name=&quot;border_width&quot;&gt;5&lt;/property&gt;
+  &lt;property name=&quot;title&quot; translatable=&quot;yes&quot;&gt;Open wallet&lt;/property&gt;
+  &lt;property name=&quot;window_position&quot;&gt;center-on-parent&lt;/property&gt;
+  &lt;property name=&quot;type_hint&quot;&gt;dialog&lt;/property&gt;
+  &lt;signal name=&quot;response&quot; handler=&quot;on_foobar&quot; swapped=&quot;no&quot;/&gt;
+  &lt;child internal-child=&quot;vbox&quot;&gt;
+    &lt;object class=&quot;GtkBox&quot; id=&quot;filechooserdialog-vbox1&quot;&gt;
+      &lt;property name=&quot;can_focus&quot;&gt;False&lt;/property&gt;
+      &lt;property name=&quot;orientation&quot;&gt;vertical&lt;/property&gt;
+      &lt;property name=&quot;spacing&quot;&gt;2&lt;/property&gt;
+      &lt;child internal-child=&quot;action_area&quot;&gt;
+        &lt;object class=&quot;GtkButtonBox&quot; id=&quot;filechooserdialog-action_area1&quot;&gt;
+          &lt;property name=&quot;can_focus&quot;&gt;False&lt;/property&gt;
+          &lt;property name=&quot;layout_style&quot;&gt;end&lt;/property&gt;
+          &lt;child&gt;
+            &lt;object class=&quot;GtkButton&quot; id=&quot;button1&quot;&gt;
+              &lt;property name=&quot;label&quot;&gt;gtk-cancel&lt;/property&gt;
+              &lt;property name=&quot;use_action_appearance&quot;&gt;False&lt;/property&gt;
+              &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;can_focus&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;receives_default&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;use_action_appearance&quot;&gt;False&lt;/property&gt;
+              &lt;property name=&quot;use_stock&quot;&gt;True&lt;/property&gt;
+              &lt;signal name=&quot;clicked&quot; handler=&quot;on_wallet_open_cancel&quot; swapped=&quot;no&quot;/&gt;
+            &lt;/object&gt;
+            &lt;packing&gt;
+              &lt;property name=&quot;expand&quot;&gt;False&lt;/property&gt;
+              &lt;property name=&quot;fill&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;position&quot;&gt;0&lt;/property&gt;
+            &lt;/packing&gt;
+          &lt;/child&gt;
+          &lt;child&gt;
+            &lt;object class=&quot;GtkButton&quot; id=&quot;button2&quot;&gt;
+              &lt;property name=&quot;label&quot;&gt;gtk-apply&lt;/property&gt;
+              &lt;property name=&quot;use_action_appearance&quot;&gt;False&lt;/property&gt;
+              &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;can_focus&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;receives_default&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;use_action_appearance&quot;&gt;False&lt;/property&gt;
+              &lt;property name=&quot;use_stock&quot;&gt;True&lt;/property&gt;
+              &lt;signal name=&quot;clicked&quot; handler=&quot;on_wallet_open&quot; swapped=&quot;no&quot;/&gt;
+            &lt;/object&gt;
+            &lt;packing&gt;
+              &lt;property name=&quot;expand&quot;&gt;False&lt;/property&gt;
+              &lt;property name=&quot;fill&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;position&quot;&gt;1&lt;/property&gt;
+            &lt;/packing&gt;
+          &lt;/child&gt;
+        &lt;/object&gt;
+        &lt;packing&gt;
+          &lt;property name=&quot;expand&quot;&gt;False&lt;/property&gt;
+          &lt;property name=&quot;fill&quot;&gt;True&lt;/property&gt;
+          &lt;property name=&quot;pack_type&quot;&gt;end&lt;/property&gt;
+          &lt;property name=&quot;position&quot;&gt;0&lt;/property&gt;
+        &lt;/packing&gt;
+      &lt;/child&gt;
+      &lt;child&gt;
+        &lt;object class=&quot;GtkLabel&quot; id=&quot;label1&quot;&gt;
+          &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+          &lt;property name=&quot;can_focus&quot;&gt;False&lt;/property&gt;
+          &lt;property name=&quot;label&quot; translatable=&quot;yes&quot;&gt;Select a wallet file&lt;/property&gt;
+        &lt;/object&gt;
+        &lt;packing&gt;
+          &lt;property name=&quot;expand&quot;&gt;False&lt;/property&gt;
+          &lt;property name=&quot;fill&quot;&gt;True&lt;/property&gt;
+          &lt;property name=&quot;position&quot;&gt;2&lt;/property&gt;
+        &lt;/packing&gt;
+      &lt;/child&gt;
+    &lt;/object&gt;
+  &lt;/child&gt;
+  &lt;action-widgets&gt;
+    &lt;action-widget response=&quot;0&quot;&gt;button1&lt;/action-widget&gt;
+    &lt;action-widget response=&quot;1&quot;&gt;button2&lt;/action-widget&gt;
+  &lt;/action-widgets&gt;
+&lt;/object&gt;
+&lt;object class=&quot;GtkFileChooserDialog&quot; id=&quot;wallet_save_dialog&quot;&gt;
+  &lt;property name=&quot;can_focus&quot;&gt;False&lt;/property&gt;
+  &lt;property name=&quot;border_width&quot;&gt;5&lt;/property&gt;
+  &lt;property name=&quot;title&quot; translatable=&quot;yes&quot;&gt;Save wallet&lt;/property&gt;
+  &lt;property name=&quot;type_hint&quot;&gt;dialog&lt;/property&gt;
+  &lt;property name=&quot;action&quot;&gt;save&lt;/property&gt;
+  &lt;signal name=&quot;update-preview&quot; handler=&quot;on_wallet_save_dialog_update_preview&quot; swapped=&quot;no&quot;/&gt;
+  &lt;child internal-child=&quot;vbox&quot;&gt;
+    &lt;object class=&quot;GtkBox&quot; id=&quot;filechooserdialog-vbox2&quot;&gt;
+      &lt;property name=&quot;can_focus&quot;&gt;False&lt;/property&gt;
+      &lt;property name=&quot;orientation&quot;&gt;vertical&lt;/property&gt;
+      &lt;property name=&quot;spacing&quot;&gt;2&lt;/property&gt;
+      &lt;child internal-child=&quot;action_area&quot;&gt;
+        &lt;object class=&quot;GtkButtonBox&quot; id=&quot;filechooserdialog-action_area2&quot;&gt;
+          &lt;property name=&quot;can_focus&quot;&gt;False&lt;/property&gt;
+          &lt;property name=&quot;layout_style&quot;&gt;end&lt;/property&gt;
+          &lt;child&gt;
+            &lt;object class=&quot;GtkButton&quot; id=&quot;button3&quot;&gt;
+              &lt;property name=&quot;label&quot;&gt;gtk-cancel&lt;/property&gt;
+              &lt;property name=&quot;use_action_appearance&quot;&gt;False&lt;/property&gt;
+              &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;can_focus&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;receives_default&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;use_action_appearance&quot;&gt;False&lt;/property&gt;
+              &lt;property name=&quot;use_stock&quot;&gt;True&lt;/property&gt;
+              &lt;signal name=&quot;clicked&quot; handler=&quot;on_wallet_save_cancel&quot; swapped=&quot;no&quot;/&gt;
+            &lt;/object&gt;
+            &lt;packing&gt;
+              &lt;property name=&quot;expand&quot;&gt;False&lt;/property&gt;
+              &lt;property name=&quot;fill&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;position&quot;&gt;0&lt;/property&gt;
+            &lt;/packing&gt;
+          &lt;/child&gt;
+          &lt;child&gt;
+            &lt;object class=&quot;GtkButton&quot; id=&quot;button4&quot;&gt;
+              &lt;property name=&quot;label&quot;&gt;gtk-apply&lt;/property&gt;
+              &lt;property name=&quot;use_action_appearance&quot;&gt;False&lt;/property&gt;
+              &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;can_focus&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;receives_default&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;use_action_appearance&quot;&gt;False&lt;/property&gt;
+              &lt;property name=&quot;use_stock&quot;&gt;True&lt;/property&gt;
+              &lt;signal name=&quot;clicked&quot; handler=&quot;on_wallet_save&quot; swapped=&quot;no&quot;/&gt;
+            &lt;/object&gt;
+            &lt;packing&gt;
+              &lt;property name=&quot;expand&quot;&gt;False&lt;/property&gt;
+              &lt;property name=&quot;fill&quot;&gt;True&lt;/property&gt;
+              &lt;property name=&quot;position&quot;&gt;1&lt;/property&gt;
+            &lt;/packing&gt;
+          &lt;/child&gt;
+        &lt;/object&gt;
+        &lt;packing&gt;
+          &lt;property name=&quot;expand&quot;&gt;False&lt;/property&gt;
+          &lt;property name=&quot;fill&quot;&gt;True&lt;/property&gt;
+          &lt;property name=&quot;pack_type&quot;&gt;end&lt;/property&gt;
+          &lt;property name=&quot;position&quot;&gt;0&lt;/property&gt;
+        &lt;/packing&gt;
+      &lt;/child&gt;
+      &lt;child&gt;
+        &lt;object class=&quot;GtkLabel&quot; id=&quot;label3&quot;&gt;
+          &lt;property name=&quot;visible&quot;&gt;True&lt;/property&gt;
+          &lt;property name=&quot;can_focus&quot;&gt;False&lt;/property&gt;
+          &lt;property name=&quot;label&quot; translatable=&quot;yes&quot;&gt;Choose a filename to save your wallet&lt;/property&gt;
+        &lt;/object&gt;
+        &lt;packing&gt;
+          &lt;property name=&quot;expand&quot;&gt;False&lt;/property&gt;
+          &lt;property name=&quot;fill&quot;&gt;True&lt;/property&gt;
+          &lt;property name=&quot;position&quot;&gt;2&lt;/property&gt;
+        &lt;/packing&gt;
+      &lt;/child&gt;
+    &lt;/object&gt;
+  &lt;/child&gt;
+  &lt;action-widgets&gt;
+    &lt;action-widget response=&quot;0&quot;&gt;button3&lt;/action-widget&gt;
+    &lt;action-widget response=&quot;1&quot;&gt;button4&lt;/action-widget&gt;
+  &lt;/action-widgets&gt;
+&lt;/object&gt;</pre>
+
+<p>&lt;/interface&gt;</p>
+
+</div>
+
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 4.0.1.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+

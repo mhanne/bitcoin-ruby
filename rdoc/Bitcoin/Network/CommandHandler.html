@@ -1,0 +1,1606 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+<title>class Bitcoin::Network::CommandHandler - bitcoin-ruby RDoc</title>
+
+<link type="text/css" media="screen" href="../../rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "../../";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="../../js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../js/darkfish.js"></script>
+
+
+<body id="top" class="class">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="../../index.html">Home</a>
+    <a href="../../table_of_contents.html#classes">Classes</a>
+    <a href="../../table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>lib/bitcoin/network/command_handler.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    
+    <nav id="parent-class-section" class="section">
+  <h3 class="section-header">Parent</h3>
+  
+  <p class="link">EM::Connection
+  
+</nav>
+
+    
+    
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li ><a href="#method-c-new">::new</a>
+    
+    <li ><a href="#method-i-format_uptime">#format_uptime</a>
+    
+    <li ><a href="#method-i-handle_addrs">#handle_addrs</a>
+    
+    <li ><a href="#method-i-handle_assemble_tx">#handle_assemble_tx</a>
+    
+    <li ><a href="#method-i-handle_config">#handle_config</a>
+    
+    <li ><a href="#method-i-handle_connect">#handle_connect</a>
+    
+    <li ><a href="#method-i-handle_connections">#handle_connections</a>
+    
+    <li ><a href="#method-i-handle_create_tx">#handle_create_tx</a>
+    
+    <li ><a href="#method-i-handle_disconnect">#handle_disconnect</a>
+    
+    <li ><a href="#method-i-handle_getaddr">#handle_getaddr</a>
+    
+    <li ><a href="#method-i-handle_getblocks">#handle_getblocks</a>
+    
+    <li ><a href="#method-i-handle_help">#handle_help</a>
+    
+    <li ><a href="#method-i-handle_info">#handle_info</a>
+    
+    <li ><a href="#method-i-handle_monitor">#handle_monitor</a>
+    
+    <li ><a href="#method-i-handle_monitor_block">#handle_monitor_block</a>
+    
+    <li ><a href="#method-i-handle_monitor_connection">#handle_monitor_connection</a>
+    
+    <li ><a href="#method-i-handle_monitor_output">#handle_monitor_output</a>
+    
+    <li ><a href="#method-i-handle_monitor_tx">#handle_monitor_tx</a>
+    
+    <li ><a href="#method-i-handle_relay_tx">#handle_relay_tx</a>
+    
+    <li ><a href="#method-i-handle_rescan">#handle_rescan</a>
+    
+    <li ><a href="#method-i-handle_stop">#handle_stop</a>
+    
+    <li ><a href="#method-i-handle_store_block">#handle_store_block</a>
+    
+    <li ><a href="#method-i-handle_store_tx">#handle_store_tx</a>
+    
+    <li ><a href="#method-i-handle_tslb">#handle_tslb</a>
+    
+    <li ><a href="#method-i-log">#log</a>
+    
+    <li ><a href="#method-i-receive_data">#receive_data</a>
+    
+    <li ><a href="#method-i-respond">#respond</a>
+    
+    <li ><a href="#method-i-unbind">#unbind</a>
+    
+  </ul>
+</nav>
+
+  </div>
+
+  <div id="project-metadata">
+    <nav id="fileindex-section" class="section project-section">
+  <h3 class="section-header">Pages</h3>
+
+  <ul>
+  
+    <li class="file"><a href="../../COPYING.html">COPYING</a>
+  
+    <li class="file"><a href="../../README_rdoc.html">README</a>
+  
+    <li class="file"><a href="../../doc/CONFIG_rdoc.html">CONFIG</a>
+  
+    <li class="file"><a href="../../doc/EXAMPLES_rdoc.html">EXAMPLES</a>
+  
+    <li class="file"><a href="../../doc/NAMECOIN_rdoc.html">NAMECOIN</a>
+  
+    <li class="file"><a href="../../doc/NODE_rdoc.html">NODE</a>
+  
+    <li class="file"><a href="../../doc/STORAGE_rdoc.html">STORAGE</a>
+  
+    <li class="file"><a href="../../doc/WALLET_rdoc.html">WALLET</a>
+  
+    <li class="file"><a href="../../examples/graph_benchmark_results_rb~.html">graph_benchmark_results.rb~</a>
+  
+    <li class="file"><a href="../../examples/import_rb~.html">import.rb~</a>
+  
+    <li class="file"><a href="../../examples/run_bench_rb~.html">run_bench.rb~</a>
+  
+    <li class="file"><a href="../../examples/run_benchmarks_rb~.html">run_benchmarks.rb~</a>
+  
+    <li class="file"><a href="../../lib/bitcoin/gui/bitcoin-ruby_svg.html">bitcoin-ruby.svg</a>
+  
+    <li class="file"><a href="../../lib/bitcoin/gui/gui_builder.html">gui.builder</a>
+  
+  </ul>
+</nav>
+
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="../../Array.html">Array</a>
+  
+    <li><a href="../../Bitcoin.html">Bitcoin</a>
+  
+    <li><a href="../../Bitcoin/BinaryExtensions.html">Bitcoin::BinaryExtensions</a>
+  
+    <li><a href="../../Bitcoin/Builder.html">Bitcoin::Builder</a>
+  
+    <li><a href="../../Bitcoin/Builder/BlockBuilder.html">Bitcoin::Builder::BlockBuilder</a>
+  
+    <li><a href="../../Bitcoin/Builder/ScriptBuilder.html">Bitcoin::Builder::ScriptBuilder</a>
+  
+    <li><a href="../../Bitcoin/Builder/TxBuilder.html">Bitcoin::Builder::TxBuilder</a>
+  
+    <li><a href="../../Bitcoin/Builder/TxInBuilder.html">Bitcoin::Builder::TxInBuilder</a>
+  
+    <li><a href="../../Bitcoin/Builder/TxOutBuilder.html">Bitcoin::Builder::TxOutBuilder</a>
+  
+    <li><a href="../../Bitcoin/Config.html">Bitcoin::Config</a>
+  
+    <li><a href="../../Bitcoin/Connection.html">Bitcoin::Connection</a>
+  
+    <li><a href="../../Bitcoin/ConnectionHandler.html">Bitcoin::ConnectionHandler</a>
+  
+    <li><a href="../../Bitcoin/Gui.html">Bitcoin::Gui</a>
+  
+    <li><a href="../../Bitcoin/Gui/AddrView.html">Bitcoin::Gui::AddrView</a>
+  
+    <li><a href="../../Bitcoin/Gui/Bitcoin.html">Bitcoin::Gui::Bitcoin</a>
+  
+    <li><a href="../../Bitcoin/Gui/Bitcoin/Gui.html">Bitcoin::Gui::Bitcoin::Gui</a>
+  
+    <li><a href="../../Bitcoin/Gui/Bitcoin/Gui/Bitcoin.html">Bitcoin::Gui::Bitcoin::Gui::Bitcoin</a>
+  
+    <li><a href="../../Bitcoin/Gui/Bitcoin/Gui/Bitcoin/Network.html">Bitcoin::Gui::Bitcoin::Gui::Bitcoin::Network</a>
+  
+    <li><a href="../../Bitcoin/Gui/Bitcoin/Gui/Bitcoin/Network/CommandClient.html">Bitcoin::Gui::Bitcoin::Gui::Bitcoin::Network::CommandClient</a>
+  
+    <li><a href="../../Bitcoin/Gui/ConnView.html">Bitcoin::Gui::ConnView</a>
+  
+    <li><a href="../../Bitcoin/Gui/Connection.html">Bitcoin::Gui::Connection</a>
+  
+    <li><a href="../../Bitcoin/Gui/Gui.html">Bitcoin::Gui::Gui</a>
+  
+    <li><a href="../../Bitcoin/Gui/Helpers.html">Bitcoin::Gui::Helpers</a>
+  
+    <li><a href="../../Bitcoin/Gui/TreeView.html">Bitcoin::Gui::TreeView</a>
+  
+    <li><a href="../../Bitcoin/Gui/TxInView.html">Bitcoin::Gui::TxInView</a>
+  
+    <li><a href="../../Bitcoin/Gui/TxView.html">Bitcoin::Gui::TxView</a>
+  
+    <li><a href="../../Bitcoin/Key.html">Bitcoin::Key</a>
+  
+    <li><a href="../../Bitcoin/Logger.html">Bitcoin::Logger</a>
+  
+    <li><a href="../../Bitcoin/Logger/LogWrapper.html">Bitcoin::Logger::LogWrapper</a>
+  
+    <li><a href="../../Bitcoin/Logger/Logger.html">Bitcoin::Logger::Logger</a>
+  
+    <li><a href="../../Bitcoin/Logger/TimeLogger.html">Bitcoin::Logger::TimeLogger</a>
+  
+    <li><a href="../../Bitcoin/Namecoin.html">Bitcoin::Namecoin</a>
+  
+    <li><a href="../../Bitcoin/Namecoin/Script.html">Bitcoin::Namecoin::Script</a>
+  
+    <li><a href="../../Bitcoin/Namecoin/Storage.html">Bitcoin::Namecoin::Storage</a>
+  
+    <li><a href="../../Bitcoin/Namecoin/Storage/Backend.html">Bitcoin::Namecoin::Storage::Backend</a>
+  
+    <li><a href="../../Bitcoin/Namecoin/Storage/Models.html">Bitcoin::Namecoin::Storage::Models</a>
+  
+    <li><a href="../../Bitcoin/Namecoin/Storage/Models/Name.html">Bitcoin::Namecoin::Storage::Models::Name</a>
+  
+    <li><a href="../../Bitcoin/Network.html">Bitcoin::Network</a>
+  
+    <li><a href="../../Bitcoin/Network/CommandClient.html">Bitcoin::Network::CommandClient</a>
+  
+    <li><a href="../../Bitcoin/Network/CommandHandler.html">Bitcoin::Network::CommandHandler</a>
+  
+    <li><a href="../../Bitcoin/Network/ConnectionHandler.html">Bitcoin::Network::ConnectionHandler</a>
+  
+    <li><a href="../../Bitcoin/Network/Node.html">Bitcoin::Network::Node</a>
+  
+    <li><a href="../../Bitcoin/OpenSSL_EC.html">Bitcoin::OpenSSL_EC</a>
+  
+    <li><a href="../../Bitcoin/OpenSSL_EC/FFI.html">Bitcoin::OpenSSL_EC::FFI</a>
+  
+    <li><a href="../../Bitcoin/P.html">Bitcoin::P</a>
+  
+    <li><a href="../../Bitcoin/Protocol.html">Bitcoin::Protocol</a>
+  
+    <li><a href="../../Bitcoin/Protocol/Addr.html">Bitcoin::Protocol::Addr</a>
+  
+    <li><a href="../../Bitcoin/Protocol/Alert.html">Bitcoin::Protocol::Alert</a>
+  
+    <li><a href="../../Bitcoin/Protocol/AuxPow.html">Bitcoin::Protocol::AuxPow</a>
+  
+    <li><a href="../../Bitcoin/Protocol/Block.html">Bitcoin::Protocol::Block</a>
+  
+    <li><a href="../../Bitcoin/Protocol/Handler.html">Bitcoin::Protocol::Handler</a>
+  
+    <li><a href="../../Bitcoin/Protocol/Parser.html">Bitcoin::Protocol::Parser</a>
+  
+    <li><a href="../../Bitcoin/Protocol/Tx.html">Bitcoin::Protocol::Tx</a>
+  
+    <li><a href="../../Bitcoin/Protocol/TxIn.html">Bitcoin::Protocol::TxIn</a>
+  
+    <li><a href="../../Bitcoin/Protocol/TxOut.html">Bitcoin::Protocol::TxOut</a>
+  
+    <li><a href="../../Bitcoin/Protocol/Version.html">Bitcoin::Protocol::Version</a>
+  
+    <li><a href="../../Bitcoin/Script.html">Bitcoin::Script</a>
+  
+    <li><a href="../../Bitcoin/Script/ScriptOpcodeError.html">Bitcoin::Script::ScriptOpcodeError</a>
+  
+    <li><a href="../../Bitcoin/Storage.html">Bitcoin::Storage</a>
+  
+    <li><a href="../../Bitcoin/Storage/Backends.html">Bitcoin::Storage::Backends</a>
+  
+    <li><a href="../../Bitcoin/Storage/Backends/DummyStore.html">Bitcoin::Storage::Backends::DummyStore</a>
+  
+    <li><a href="../../Bitcoin/Storage/Backends/SequelMigrations.html">Bitcoin::Storage::Backends::SequelMigrations</a>
+  
+    <li><a href="../../Bitcoin/Storage/Backends/SequelStore.html">Bitcoin::Storage::Backends::SequelStore</a>
+  
+    <li><a href="../../Bitcoin/Storage/Backends/StoreBase.html">Bitcoin::Storage::Backends::StoreBase</a>
+  
+    <li><a href="../../Bitcoin/Storage/Backends/UtxoStore.html">Bitcoin::Storage::Backends::UtxoStore</a>
+  
+    <li><a href="../../Bitcoin/Storage/Models.html">Bitcoin::Storage::Models</a>
+  
+    <li><a href="../../Bitcoin/Storage/Models/Block.html">Bitcoin::Storage::Models::Block</a>
+  
+    <li><a href="../../Bitcoin/Storage/Models/Tx.html">Bitcoin::Storage::Models::Tx</a>
+  
+    <li><a href="../../Bitcoin/Storage/Models/TxIn.html">Bitcoin::Storage::Models::TxIn</a>
+  
+    <li><a href="../../Bitcoin/Storage/Models/TxOut.html">Bitcoin::Storage::Models::TxOut</a>
+  
+    <li><a href="../../Bitcoin/Util.html">Bitcoin::Util</a>
+  
+    <li><a href="../../Bitcoin/Validation.html">Bitcoin::Validation</a>
+  
+    <li><a href="../../Bitcoin/Validation/Block.html">Bitcoin::Validation::Block</a>
+  
+    <li><a href="../../Bitcoin/Validation/Tx.html">Bitcoin::Validation::Tx</a>
+  
+    <li><a href="../../Bitcoin/Validation/ValidationError.html">Bitcoin::Validation::ValidationError</a>
+  
+    <li><a href="../../Bitcoin/Wallet.html">Bitcoin::Wallet</a>
+  
+    <li><a href="../../Bitcoin/Wallet/DeterministicKeyStore.html">Bitcoin::Wallet::DeterministicKeyStore</a>
+  
+    <li><a href="../../Bitcoin/Wallet/KeyGenerator.html">Bitcoin::Wallet::KeyGenerator</a>
+  
+    <li><a href="../../Bitcoin/Wallet/SimpleCoinSelector.html">Bitcoin::Wallet::SimpleCoinSelector</a>
+  
+    <li><a href="../../Bitcoin/Wallet/SimpleKeyStore.html">Bitcoin::Wallet::SimpleKeyStore</a>
+  
+    <li><a href="../../Bitcoin/Wallet/TxDP.html">Bitcoin::Wallet::TxDP</a>
+  
+    <li><a href="../../Bitcoin/Wallet/Wallet.html">Bitcoin::Wallet::Wallet</a>
+  
+    <li><a href="../../EM.html">EM</a>
+  
+    <li><a href="../../Gtk.html">Gtk</a>
+  
+    <li><a href="../../Hash.html">Hash</a>
+  
+    <li><a href="../../JSON.html">JSON</a>
+  
+    <li><a href="../../Litecoin.html">Litecoin</a>
+  
+    <li><a href="../../Litecoin/Scrypt.html">Litecoin::Scrypt</a>
+  
+    <li><a href="../../Log4r.html">Log4r</a>
+  
+    <li><a href="../../Log4r/Logger.html">Log4r::Logger</a>
+  
+    <li><a href="../../Mnemonic.html">Mnemonic</a>
+  
+    <li><a href="../../Object.html">Object</a>
+  
+    <li><a href="../../OpenSSL.html">OpenSSL</a>
+  
+    <li><a href="../../OpenSSL/BN.html">OpenSSL::BN</a>
+  
+    <li><a href="../../OpenSSL/PKey.html">OpenSSL::PKey</a>
+  
+    <li><a href="../../OpenSSL/PKey/EC.html">OpenSSL::PKey::EC</a>
+  
+    <li><a href="../../OpenSSL/PKey/EC/Point.html">OpenSSL::PKey::EC::Point</a>
+  
+    <li><a href="../../RawJSON_Connection.html">RawJSON_Connection</a>
+  
+    <li><a href="../../SimpleNode.html">SimpleNode</a>
+  
+    <li><a href="../../SimpleNode/Connection.html">SimpleNode::Connection</a>
+  
+    <li><a href="../../String.html">String</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation">
+  <h1 class="class">class Bitcoin::Network::CommandHandler</h1>
+
+  <div id="description" class="description">
+    
+<p>Started by the Node, accepts connections from CommandClient and answers
+requests or registers for events and notifies the clients when they happen.</p>
+
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+
+    
+
+    <!-- Methods -->
+    
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Class Methods</h3>
+
+    
+      <div id="method-c-new" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">new</span><span
+            class="method-args">(node)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>create <a href="CommandHandler.html#method-c-new">::new</a> <a
+href="CommandHandler.html">CommandHandler</a></p>
+          
+          
+
+          
+          <div class="method-source-code" id="new-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/network/command_handler.rb, line 10</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span> <span class="ruby-identifier">node</span>
+  <span class="ruby-ivar">@node</span> = <span class="ruby-identifier">node</span>
+  <span class="ruby-ivar">@node</span>.<span class="ruby-identifier">command_connections</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-keyword">self</span>
+  <span class="ruby-ivar">@buf</span> = <span class="ruby-constant">BufferedTokenizer</span>.<span class="ruby-identifier">new</span>(<span class="ruby-string">&quot;\x00&quot;</span>)
+  <span class="ruby-ivar">@lock</span> = <span class="ruby-constant">Monitor</span>.<span class="ruby-identifier">new</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- new-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- new-method -->
+
+    
+    </section><!-- public-class-method-details -->
+  
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="method-i-format_uptime" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">format_uptime</span><span
+            class="method-args">(t)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>format node uptime</p>
+          
+          
+
+          
+          <div class="method-source-code" id="format_uptime-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/network/command_handler.rb, line 351</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">format_uptime</span> <span class="ruby-identifier">t</span>
+  <span class="ruby-identifier">mm</span>, <span class="ruby-identifier">ss</span> = <span class="ruby-identifier">t</span>.<span class="ruby-identifier">divmod</span>(<span class="ruby-value">60</span>)            <span class="ruby-comment">#=&gt; [4515, 21]</span>
+  <span class="ruby-identifier">hh</span>, <span class="ruby-identifier">mm</span> = <span class="ruby-identifier">mm</span>.<span class="ruby-identifier">divmod</span>(<span class="ruby-value">60</span>)           <span class="ruby-comment">#=&gt; [75, 15]</span>
+  <span class="ruby-identifier">dd</span>, <span class="ruby-identifier">hh</span> = <span class="ruby-identifier">hh</span>.<span class="ruby-identifier">divmod</span>(<span class="ruby-value">24</span>)           <span class="ruby-comment">#=&gt; [3, 3]</span>
+  <span class="ruby-string">&quot;%02d:%02d:%02d:%02d&quot;</span> <span class="ruby-operator">%</span> [<span class="ruby-identifier">dd</span>, <span class="ruby-identifier">hh</span>, <span class="ruby-identifier">mm</span>, <span class="ruby-identifier">ss</span>]
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- format_uptime-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- format_uptime-method -->
+
+    
+      <div id="method-i-handle_addrs" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">handle_addrs</span><span
+            class="method-args">(count = 32)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Get known peer addresses (used by bin/bitcoin_dns_seed).</p>
+
+<pre>bitcoin_node addrs [count]</pre>
+          
+          
+
+          
+          <div class="method-source-code" id="handle_addrs-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/network/command_handler.rb, line 209</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">handle_addrs</span> <span class="ruby-identifier">count</span> = <span class="ruby-value">32</span>
+  <span class="ruby-ivar">@node</span>.<span class="ruby-identifier">addrs</span>.<span class="ruby-identifier">weighted_sample</span>(<span class="ruby-identifier">count</span>.<span class="ruby-identifier">to_i</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">addr</span><span class="ruby-operator">|</span>
+    <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>.<span class="ruby-identifier">tv_sec</span> <span class="ruby-operator">+</span> <span class="ruby-value">7200</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">addr</span>.<span class="ruby-identifier">time</span>
+  <span class="ruby-keyword">end</span>.<span class="ruby-identifier">map</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">addr</span><span class="ruby-operator">|</span>
+    [<span class="ruby-identifier">addr</span>.<span class="ruby-identifier">ip</span>, <span class="ruby-identifier">addr</span>.<span class="ruby-identifier">port</span>, <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>.<span class="ruby-identifier">tv_sec</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">addr</span>.<span class="ruby-identifier">time</span>] <span class="ruby-keyword">rescue</span> <span class="ruby-keyword">nil</span>
+  <span class="ruby-keyword">end</span>.<span class="ruby-identifier">compact</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- handle_addrs-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- handle_addrs-method -->
+
+    
+      <div id="method-i-handle_assemble_tx" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">handle_assemble_tx</span><span
+            class="method-args">(tx_hex, sig_pubs)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Assemble an unsigned transaction from the <code>tx_hex</code> and
+<code>sig_pubkeys</code>. The <code>tx_hex</code> is the regular
+transaction structure, with empty input scripts (as returned by #create_tx
+when called without privkeys). <code>sig_pubkeys</code> is an array of
+[signature, pubkey] pairs used to build the input scripts.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="handle_assemble_tx-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/network/command_handler.rb, line 271</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">handle_assemble_tx</span> <span class="ruby-identifier">tx_hex</span>, <span class="ruby-identifier">sig_pubs</span>
+  <span class="ruby-identifier">tx</span> = <span class="ruby-constant">Bitcoin</span><span class="ruby-operator">::</span><span class="ruby-constant">P</span><span class="ruby-operator">::</span><span class="ruby-constant">Tx</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">tx_hex</span>.<span class="ruby-identifier">htb</span>)
+  <span class="ruby-identifier">sig_pubs</span>.<span class="ruby-identifier">each</span>.<span class="ruby-identifier">with_index</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">sig_pub</span>, <span class="ruby-identifier">idx</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">sig</span>, <span class="ruby-identifier">pub</span> = <span class="ruby-operator">*</span><span class="ruby-identifier">sig_pub</span>.<span class="ruby-identifier">map</span>(<span class="ruby-operator">&amp;</span><span class="ruby-value">:htb</span>)
+    <span class="ruby-identifier">script_sig</span> = <span class="ruby-constant">Bitcoin</span><span class="ruby-operator">::</span><span class="ruby-constant">Script</span>.<span class="ruby-identifier">to_signature_pubkey_script</span>(<span class="ruby-identifier">sig</span>, <span class="ruby-identifier">pub</span>)
+    <span class="ruby-identifier">tx</span>.<span class="ruby-identifier">in</span>[<span class="ruby-identifier">idx</span>].<span class="ruby-identifier">script_sig_length</span> = <span class="ruby-identifier">script_sig</span>.<span class="ruby-identifier">bytesize</span>
+    <span class="ruby-identifier">tx</span>.<span class="ruby-identifier">in</span>[<span class="ruby-identifier">idx</span>].<span class="ruby-identifier">script_sig</span> = <span class="ruby-identifier">script_sig</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">tx</span> = <span class="ruby-constant">Bitcoin</span><span class="ruby-operator">::</span><span class="ruby-constant">P</span><span class="ruby-operator">::</span><span class="ruby-constant">Tx</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">tx</span>.<span class="ruby-identifier">to_payload</span>)
+  <span class="ruby-identifier">tx</span>.<span class="ruby-identifier">validator</span>(<span class="ruby-ivar">@node</span>.<span class="ruby-identifier">store</span>).<span class="ruby-identifier">validate</span>(<span class="ruby-identifier">raise_errors</span><span class="ruby-operator">:</span> <span class="ruby-keyword">true</span>)
+  <span class="ruby-identifier">tx</span>.<span class="ruby-identifier">to_payload</span>.<span class="ruby-identifier">hth</span>
+<span class="ruby-keyword">rescue</span>
+  { <span class="ruby-identifier">error</span><span class="ruby-operator">:</span> <span class="ruby-node">&quot;Error assembling tx: #{$!.message}&quot;</span> }
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- handle_assemble_tx-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- handle_assemble_tx-method -->
+
+    
+      <div id="method-i-handle_config" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">handle_config</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Get the currently active configuration.</p>
+
+<pre>bitcoin_node config</pre>
+          
+          
+
+          
+          <div class="method-source-code" id="handle_config-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/network/command_handler.rb, line 160</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">handle_config</span>
+  <span class="ruby-ivar">@node</span>.<span class="ruby-identifier">config</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- handle_config-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- handle_config-method -->
+
+    
+      <div id="method-i-handle_connect" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">handle_connect</span><span
+            class="method-args">(*args)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Connect to given peer(s).</p>
+
+<pre>bitcoin_node connect &lt;ip&gt;:&lt;port&gt;[,&lt;ip&gt;:&lt;port&gt;]</pre>
+          
+          
+
+          
+          <div class="method-source-code" id="handle_connect-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/network/command_handler.rb, line 177</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">handle_connect</span> <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>
+  <span class="ruby-identifier">args</span>.<span class="ruby-identifier">each</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">a</span><span class="ruby-operator">|</span> <span class="ruby-ivar">@node</span>.<span class="ruby-identifier">connect_peer</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">a</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">':'</span>)) }
+  {<span class="ruby-value">:state</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;Connecting...&quot;</span>}
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- handle_connect-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- handle_connect-method -->
+
+    
+      <div id="method-i-handle_connections" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">handle_connections</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Get currently connected peers.</p>
+
+<pre>bitcoin_node connections</pre>
+          
+          
+
+          
+          <div class="method-source-code" id="handle_connections-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/network/command_handler.rb, line 166</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">handle_connections</span>
+  <span class="ruby-ivar">@node</span>.<span class="ruby-identifier">connections</span>.<span class="ruby-identifier">sort</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">x</span>,<span class="ruby-identifier">y</span><span class="ruby-operator">|</span> <span class="ruby-identifier">y</span>.<span class="ruby-identifier">uptime</span> <span class="ruby-operator">&lt;=&gt;</span> <span class="ruby-identifier">x</span>.<span class="ruby-identifier">uptime</span>}.<span class="ruby-identifier">map</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">c</span><span class="ruby-operator">|</span>
+    <span class="ruby-node">&quot;#{c.host.rjust(15)}:#{c.port} [#{c.direction}, state: #{c.state}, &quot;</span> <span class="ruby-operator">+</span>
+    <span class="ruby-node">&quot;version: #{c.version.version rescue '?'}, &quot;</span> <span class="ruby-operator">+</span>
+    <span class="ruby-node">&quot;block: #{c.version.block rescue '?'}, &quot;</span> <span class="ruby-operator">+</span>
+    <span class="ruby-node">&quot;uptime: #{format_uptime(c.uptime) rescue 0}, &quot;</span> <span class="ruby-operator">+</span>
+    <span class="ruby-node">&quot;client: #{c.version.user_agent rescue '?'}]&quot;</span> }
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- handle_connections-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- handle_connections-method -->
+
+    
+      <div id="method-i-handle_create_tx" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">handle_create_tx</span><span
+            class="method-args">(keys, recipients, fee = 0)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Create a transaction, collecting outputs from given <code>keys</code>,
+spending to <code>recipients</code> with an optional <code>fee</code>. Keys
+is an array that can contain either privkeys, pubkeys or addresses. When a
+privkey is given, the corresponding inputs are signed. If not, the
+signature_hash is computed and passed along with the response. After
+creating an unsigned transaction, one just needs to sign the sig_hashes and
+send everything to #assemble_tx, to receive the complete transaction that
+can be relayed to the network.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="handle_create_tx-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/network/command_handler.rb, line 238</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">handle_create_tx</span> <span class="ruby-identifier">keys</span>, <span class="ruby-identifier">recipients</span>, <span class="ruby-identifier">fee</span> = <span class="ruby-value">0</span>
+  <span class="ruby-identifier">keystore</span> = <span class="ruby-constant">Bitcoin</span><span class="ruby-operator">::</span><span class="ruby-constant">Wallet</span><span class="ruby-operator">::</span><span class="ruby-constant">SimpleKeyStore</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">file</span><span class="ruby-operator">:</span> <span class="ruby-constant">StringIO</span>.<span class="ruby-identifier">new</span>(<span class="ruby-string">&quot;[]&quot;</span>))
+  <span class="ruby-identifier">keys</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">k</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">begin</span>
+      <span class="ruby-identifier">key</span> = <span class="ruby-constant">Bitcoin</span><span class="ruby-operator">::</span><span class="ruby-constant">Key</span>.<span class="ruby-identifier">from_base58</span>(<span class="ruby-identifier">k</span>)
+      <span class="ruby-identifier">key</span> = { <span class="ruby-identifier">addr</span><span class="ruby-operator">:</span> <span class="ruby-identifier">key</span>.<span class="ruby-identifier">addr</span>, <span class="ruby-identifier">key</span><span class="ruby-operator">:</span> <span class="ruby-identifier">key</span> }
+    <span class="ruby-keyword">rescue</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-constant">Bitcoin</span>.<span class="ruby-identifier">valid_address?</span>(<span class="ruby-identifier">k</span>)
+        <span class="ruby-identifier">key</span> = { <span class="ruby-identifier">addr</span><span class="ruby-operator">:</span> <span class="ruby-identifier">k</span> }
+      <span class="ruby-keyword">else</span>
+        <span class="ruby-keyword">begin</span>
+          <span class="ruby-identifier">key</span> = <span class="ruby-constant">Bitcoin</span><span class="ruby-operator">::</span><span class="ruby-constant">Key</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword">nil</span>, <span class="ruby-identifier">k</span>)
+          <span class="ruby-identifier">key</span> = { <span class="ruby-identifier">addr</span><span class="ruby-operator">:</span> <span class="ruby-identifier">key</span>.<span class="ruby-identifier">addr</span>, <span class="ruby-identifier">key</span><span class="ruby-operator">:</span> <span class="ruby-identifier">key</span> }
+        <span class="ruby-keyword">rescue</span>
+          <span class="ruby-keyword">return</span> { <span class="ruby-identifier">error</span><span class="ruby-operator">:</span> <span class="ruby-node">&quot;Input not valid address, pub- or privkey: #{k}&quot;</span> }
+        <span class="ruby-keyword">end</span>
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-identifier">keystore</span>.<span class="ruby-identifier">add_key</span>(<span class="ruby-identifier">key</span>)
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">wallet</span> = <span class="ruby-constant">Bitcoin</span><span class="ruby-operator">::</span><span class="ruby-constant">Wallet</span><span class="ruby-operator">::</span><span class="ruby-constant">Wallet</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@node</span>.<span class="ruby-identifier">store</span>, <span class="ruby-identifier">keystore</span>)
+  <span class="ruby-identifier">tx</span> = <span class="ruby-identifier">wallet</span>.<span class="ruby-identifier">new_tx</span>(<span class="ruby-identifier">recipients</span>.<span class="ruby-identifier">map</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">r</span><span class="ruby-operator">|</span> [<span class="ruby-value">:address</span>, <span class="ruby-identifier">r</span>[<span class="ruby-value">0</span>], <span class="ruby-identifier">r</span>[<span class="ruby-value">1</span>]]}, <span class="ruby-identifier">fee</span>)
+  <span class="ruby-keyword">return</span> { <span class="ruby-identifier">error</span><span class="ruby-operator">:</span> <span class="ruby-string">&quot;Error creating tx.&quot;</span> }  <span class="ruby-keyword">unless</span> <span class="ruby-identifier">tx</span>
+  [ <span class="ruby-identifier">tx</span>.<span class="ruby-identifier">to_payload</span>.<span class="ruby-identifier">hth</span>, <span class="ruby-identifier">tx</span>.<span class="ruby-identifier">in</span>.<span class="ruby-identifier">map</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span> [<span class="ruby-identifier">i</span>.<span class="ruby-identifier">sig_hash</span>.<span class="ruby-identifier">hth</span>, <span class="ruby-identifier">i</span>.<span class="ruby-identifier">sig_address</span>] <span class="ruby-keyword">rescue</span> <span class="ruby-keyword">nil</span> } ]
+<span class="ruby-keyword">rescue</span>
+  { <span class="ruby-identifier">error</span><span class="ruby-operator">:</span> <span class="ruby-node">&quot;Error creating tx: #{$!.message}&quot;</span> }
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- handle_create_tx-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- handle_create_tx-method -->
+
+    
+      <div id="method-i-handle_disconnect" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">handle_disconnect</span><span
+            class="method-args">(*args)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Disconnect given peer(s).</p>
+
+<pre>bitcoin_node disconnect &lt;ip&gt;:&lt;port&gt;[,&lt;ip&gt;,&lt;port&gt;]</pre>
+          
+          
+
+          
+          <div class="method-source-code" id="handle_disconnect-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/network/command_handler.rb, line 184</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">handle_disconnect</span> <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>
+  <span class="ruby-identifier">args</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">c</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">host</span>, <span class="ruby-identifier">port</span> = <span class="ruby-operator">*</span><span class="ruby-identifier">c</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot;:&quot;</span>)
+    <span class="ruby-identifier">conn</span> = <span class="ruby-ivar">@node</span>.<span class="ruby-identifier">connections</span>.<span class="ruby-identifier">select</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">c</span><span class="ruby-operator">|</span> <span class="ruby-identifier">c</span>.<span class="ruby-identifier">host</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">host</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">c</span>.<span class="ruby-identifier">port</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">port</span>.<span class="ruby-identifier">to_i</span>}.<span class="ruby-identifier">first</span>
+    <span class="ruby-identifier">conn</span>.<span class="ruby-identifier">close_connection</span>  <span class="ruby-keyword">if</span> <span class="ruby-identifier">conn</span>
+  <span class="ruby-keyword">end</span>
+  {<span class="ruby-value">:state</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;Disconnected&quot;</span>}
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- handle_disconnect-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- handle_disconnect-method -->
+
+    
+      <div id="method-i-handle_getaddr" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">handle_getaddr</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Trigger the node to ask its for <a
+href="CommandHandler.html#method-c-new">::new</a> peer addresses.</p>
+
+<pre>bitcoin_node getaddr</pre>
+          
+          
+
+          
+          <div class="method-source-code" id="handle_getaddr-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/network/command_handler.rb, line 202</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">handle_getaddr</span>
+  <span class="ruby-ivar">@node</span>.<span class="ruby-identifier">connections</span>.<span class="ruby-identifier">sample</span>.<span class="ruby-identifier">send_getaddr</span>
+  {<span class="ruby-value">:state</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;Sending getaddr...&quot;</span>}
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- handle_getaddr-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- handle_getaddr-method -->
+
+    
+      <div id="method-i-handle_getblocks" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">handle_getblocks</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Trigger the node to ask its peers for <a
+href="CommandHandler.html#method-c-new">::new</a> blocks.</p>
+
+<pre>bitcoin_node getblocks</pre>
+          
+          
+
+          
+          <div class="method-source-code" id="handle_getblocks-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/network/command_handler.rb, line 195</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">handle_getblocks</span>
+  <span class="ruby-ivar">@node</span>.<span class="ruby-identifier">connections</span>.<span class="ruby-identifier">sample</span>.<span class="ruby-identifier">send_getblocks</span>
+  {<span class="ruby-value">:state</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;Sending getblocks...&quot;</span>}
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- handle_getblocks-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- handle_getblocks-method -->
+
+    
+      <div id="method-i-handle_help" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">handle_help</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>List all available commands.</p>
+
+<pre>bitcoin_node help</pre>
+          
+          
+
+          
+          <div class="method-source-code" id="handle_help-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/network/command_handler.rb, line 330</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">handle_help</span>
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">methods</span>.<span class="ruby-identifier">grep</span>(<span class="ruby-regexp">/^handle_(.*?)/</span>).<span class="ruby-identifier">map</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">m</span><span class="ruby-operator">|</span> <span class="ruby-identifier">m</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">sub</span>(<span class="ruby-regexp">/^(.*?)_/</span>, <span class="ruby-string">''</span>)}
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- handle_help-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- handle_help-method -->
+
+    
+      <div id="method-i-handle_info" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">handle_info</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Get various statistics.</p>
+
+<pre>bitcoin_node info</pre>
+          
+          
+
+          
+          <div class="method-source-code" id="handle_info-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/network/command_handler.rb, line 139</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">handle_info</span>
+  <span class="ruby-identifier">blocks</span> = <span class="ruby-ivar">@node</span>.<span class="ruby-identifier">connections</span>.<span class="ruby-identifier">map</span>(<span class="ruby-operator">&amp;</span><span class="ruby-value">:version</span>).<span class="ruby-identifier">compact</span>.<span class="ruby-identifier">map</span>(<span class="ruby-operator">&amp;</span><span class="ruby-value">:last_block</span>) <span class="ruby-keyword">rescue</span> <span class="ruby-keyword">nil</span>
+  <span class="ruby-identifier">established</span> = <span class="ruby-ivar">@node</span>.<span class="ruby-identifier">connections</span>.<span class="ruby-identifier">select</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">c</span><span class="ruby-operator">|</span> <span class="ruby-identifier">c</span>.<span class="ruby-identifier">state</span> <span class="ruby-operator">==</span> <span class="ruby-value">:connected</span> }
+  <span class="ruby-identifier">info</span> = {
+    <span class="ruby-value">:blocks</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;#{@node.store.get_depth} (#{(blocks.inject{|a,b| a+=b; a } / blocks.size rescue '?' )})#{@node.store.in_sync? ? ' sync' : ''}&quot;</span>,
+    <span class="ruby-value">:addrs</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;#{@node.addrs.select{|a| a.alive?}.size} (#{@node.addrs.size})&quot;</span>,
+    <span class="ruby-value">:connections</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;#{established.size} established (#{established.select(&amp;:outgoing?).size} out, #{established.select(&amp;:incoming?).size} in), #{@node.connections.size - established.size} connecting&quot;</span>,
+    <span class="ruby-value">:queue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@node</span>.<span class="ruby-identifier">queue</span>.<span class="ruby-identifier">size</span>,
+    <span class="ruby-value">:inv_queue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@node</span>.<span class="ruby-identifier">inv_queue</span>.<span class="ruby-identifier">size</span>,
+    <span class="ruby-value">:inv_cache</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@node</span>.<span class="ruby-identifier">inv_cache</span>.<span class="ruby-identifier">size</span>,
+    <span class="ruby-value">:network</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@node</span>.<span class="ruby-identifier">config</span>[<span class="ruby-value">:network</span>],
+    <span class="ruby-value">:storage</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@node</span>.<span class="ruby-identifier">config</span>[<span class="ruby-value">:storage</span>],
+    <span class="ruby-value">:version</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">Bitcoin</span>.<span class="ruby-identifier">network</span>[<span class="ruby-value">:protocol_version</span>],
+    <span class="ruby-value">:external_ip</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@node</span>.<span class="ruby-identifier">external_ip</span>,
+    <span class="ruby-value">:uptime</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">format_uptime</span>(<span class="ruby-ivar">@node</span>.<span class="ruby-identifier">uptime</span>),
+  }
+  <span class="ruby-constant">Bitcoin</span>.<span class="ruby-identifier">namecoin?</span> <span class="ruby-operator">?</span> {<span class="ruby-value">:names</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@node</span>.<span class="ruby-identifier">store</span>.<span class="ruby-identifier">db</span>[<span class="ruby-value">:names</span>].<span class="ruby-identifier">count</span>}.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">info</span>) <span class="ruby-operator">:</span> <span class="ruby-identifier">info</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- handle_info-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- handle_info-method -->
+
+    
+      <div id="method-i-handle_monitor" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">handle_monitor</span><span
+            class="method-args">(*channels)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>handle <code>monitor</code> command; subscribe client to specified channels
+(<code>block</code>, <code>tx</code>, <code>output</code>,
+<code>connection</code>). Some commands can have parameters, e.g. the
+number of confirmations <code>tx</code> or <code>output</code> should have.
+Parameters are appended to the command name after an underscore (_), e.g.
+subscribe to channel “tx_6” to receive only transactions with 6
+confirmations.</p>
+
+<p>Receive <a href="CommandHandler.html#method-c-new">::new</a> blocks:</p>
+
+<pre>bitcoin_node monitor block</pre>
+
+<p>Receive <a href="CommandHandler.html#method-c-new">::new</a> (unconfirmed)
+transactions:</p>
+
+<pre>bitcoin_node monitor tx</pre>
+
+<p>Receive transactions with 6 confirmations:</p>
+
+<pre>bitcoin_node monitor tx_6</pre>
+
+<p>Receive [txhash, address, value] for each output:</p>
+
+<pre>bitcoin_node monitor output</pre>
+
+<p>Receive peer connections/disconnections:</p>
+
+<pre>bitcoin_node monitor connection&quot;</pre>
+
+<p>Combine multiple channels:</p>
+
+<pre>bitcoin_node monitor &quot;block tx tx_1 tx_6 connection&quot;</pre>
+
+<p>NOTE: When a <a href="CommandHandler.html#method-c-new">::new</a> block is
+found, it might include transactions that we didn’t previously receive as
+unconfirmed. To make sure you receive all transactions, also subscribe to
+the tx_1 channel.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="handle_monitor-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/network/command_handler.rb, line 76</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">handle_monitor</span> <span class="ruby-operator">*</span><span class="ruby-identifier">channels</span>
+  <span class="ruby-identifier">channels</span>.<span class="ruby-identifier">map</span>(<span class="ruby-operator">&amp;</span><span class="ruby-value">:to_sym</span>).<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">channel</span><span class="ruby-operator">|</span>
+    <span class="ruby-ivar">@node</span>.<span class="ruby-identifier">subscribe</span>(<span class="ruby-identifier">channel</span>) {<span class="ruby-operator">|</span><span class="ruby-operator">*</span><span class="ruby-identifier">data</span><span class="ruby-operator">|</span> <span class="ruby-identifier">respond</span>(<span class="ruby-string">&quot;monitor&quot;</span>, [<span class="ruby-identifier">channel</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">data</span>]) }
+    <span class="ruby-identifier">name</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">params</span> = <span class="ruby-identifier">channel</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot;_&quot;</span>)
+    <span class="ruby-identifier">send</span>(<span class="ruby-node">&quot;handle_monitor_#{name}&quot;</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">params</span>)
+    <span class="ruby-identifier">log</span>.<span class="ruby-identifier">info</span> { <span class="ruby-node">&quot;Client subscribed to channel #{channel}&quot;</span> }
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">nil</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- handle_monitor-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- handle_monitor-method -->
+
+    
+      <div id="method-i-handle_monitor_block" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">handle_monitor_block</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Handle +monitor block+ command; send the current chain head after client is
+subscribed to :block channel</p>
+          
+          
+
+          
+          <div class="method-source-code" id="handle_monitor_block-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/network/command_handler.rb, line 88</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">handle_monitor_block</span>
+  <span class="ruby-identifier">head</span> = <span class="ruby-constant">Bitcoin</span><span class="ruby-operator">::</span><span class="ruby-constant">P</span><span class="ruby-operator">::</span><span class="ruby-constant">Block</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@node</span>.<span class="ruby-identifier">store</span>.<span class="ruby-identifier">get_head</span>.<span class="ruby-identifier">to_payload</span>) <span class="ruby-keyword">rescue</span> <span class="ruby-keyword">nil</span>
+  <span class="ruby-identifier">respond</span>(<span class="ruby-string">&quot;monitor&quot;</span>, [<span class="ruby-string">&quot;block&quot;</span>, [<span class="ruby-identifier">head</span>, <span class="ruby-ivar">@node</span>.<span class="ruby-identifier">store</span>.<span class="ruby-identifier">get_depth</span>]])  <span class="ruby-keyword">if</span> <span class="ruby-identifier">head</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- handle_monitor_block-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- handle_monitor_block-method -->
+
+    
+      <div id="method-i-handle_monitor_connection" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">handle_monitor_connection</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Handle +monitor connection+ command; send current connections after client
+is subscribed to :connection channel.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="handle_monitor_connection-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/network/command_handler.rb, line 131</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">handle_monitor_connection</span>
+  <span class="ruby-ivar">@node</span>.<span class="ruby-identifier">connections</span>.<span class="ruby-identifier">select</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">c</span><span class="ruby-operator">|</span> <span class="ruby-identifier">c</span>.<span class="ruby-identifier">connected?</span>}.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">conn</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">respond</span>(<span class="ruby-string">&quot;monitor&quot;</span>, [<span class="ruby-value">:connection</span>, [<span class="ruby-value">:connected</span>, <span class="ruby-identifier">conn</span>.<span class="ruby-identifier">info</span>]])
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- handle_monitor_connection-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- handle_monitor_connection-method -->
+
+    
+      <div id="method-i-handle_monitor_output" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">handle_monitor_output</span><span
+            class="method-args">(conf = 0)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Handle +monitor output+ command. Receive tx hash, recipient address and
+value for each output. This allows easy scanning for <a
+href="CommandHandler.html#method-c-new">::new</a> payments without parsing
+the tx format and running scripts. See #handle_monitor_tx for confirmation
+behavior.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="handle_monitor_output-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/network/command_handler.rb, line 114</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">handle_monitor_output</span> <span class="ruby-identifier">conf</span> = <span class="ruby-value">0</span>
+  <span class="ruby-keyword">return</span>  <span class="ruby-keyword">unless</span> (<span class="ruby-identifier">conf</span> = <span class="ruby-identifier">conf</span>.<span class="ruby-identifier">to_i</span>) <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
+  <span class="ruby-ivar">@node</span>.<span class="ruby-identifier">subscribe</span>(<span class="ruby-value">:block</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">block</span>, <span class="ruby-identifier">depth</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">block</span> = <span class="ruby-ivar">@node</span>.<span class="ruby-identifier">store</span>.<span class="ruby-identifier">get_block_by_depth</span>(<span class="ruby-identifier">depth</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">conf</span> <span class="ruby-operator">+</span> <span class="ruby-value">1</span>)
+    <span class="ruby-keyword">next</span>  <span class="ruby-keyword">unless</span> <span class="ruby-identifier">block</span>
+    <span class="ruby-identifier">block</span>.<span class="ruby-identifier">tx</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">tx</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">tx</span>.<span class="ruby-identifier">out</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">out</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">addr</span> = <span class="ruby-constant">Bitcoin</span><span class="ruby-operator">::</span><span class="ruby-constant">Script</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">out</span>.<span class="ruby-identifier">pk_script</span>).<span class="ruby-identifier">get_address</span>
+        <span class="ruby-identifier">res</span> = [<span class="ruby-identifier">tx</span>.<span class="ruby-identifier">hash</span>, <span class="ruby-identifier">addr</span>, <span class="ruby-identifier">out</span>.<span class="ruby-identifier">value</span>, <span class="ruby-identifier">conf</span>]
+        <span class="ruby-ivar">@node</span>.<span class="ruby-identifier">push_notification</span>(<span class="ruby-node">&quot;output_#{conf}&quot;</span>.<span class="ruby-identifier">to_sym</span>, <span class="ruby-identifier">res</span>)
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- handle_monitor_output-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- handle_monitor_output-method -->
+
+    
+      <div id="method-i-handle_monitor_tx" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">handle_monitor_tx</span><span
+            class="method-args">(conf = nil)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Handle +monitor tx+ command. When <code>conf</code> is given, don’t
+subscribe to the :tx channel for unconfirmed transactions. Instead,
+subscribe to the :block channel, and whenever a <a
+href="CommandHandler.html#method-c-new">::new</a> block comes in, send all
+transactions that now have <code>conf</code> confirmations.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="handle_monitor_tx-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/network/command_handler.rb, line 97</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">handle_monitor_tx</span> <span class="ruby-identifier">conf</span> = <span class="ruby-keyword">nil</span>
+  <span class="ruby-keyword">return</span>  <span class="ruby-keyword">unless</span> <span class="ruby-identifier">conf</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">conf</span>.<span class="ruby-identifier">to_i</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span> <span class="ruby-comment"># 'tx_0' is just an alias for 'tx'</span>
+    <span class="ruby-keyword">return</span> <span class="ruby-ivar">@node</span>.<span class="ruby-identifier">subscribe</span>(<span class="ruby-value">:tx</span>) {<span class="ruby-operator">|</span><span class="ruby-operator">*</span><span class="ruby-identifier">a</span><span class="ruby-operator">|</span> <span class="ruby-ivar">@node</span>.<span class="ruby-identifier">notifiers</span>[<span class="ruby-value">:tx_0</span>].<span class="ruby-identifier">push</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">a</span>) }
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-ivar">@node</span>.<span class="ruby-identifier">subscribe</span>(<span class="ruby-value">:block</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">block</span>, <span class="ruby-identifier">depth</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">block</span> = <span class="ruby-ivar">@node</span>.<span class="ruby-identifier">store</span>.<span class="ruby-identifier">get_block_by_depth</span>(<span class="ruby-identifier">depth</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">conf</span>.<span class="ruby-identifier">to_i</span> <span class="ruby-operator">+</span> <span class="ruby-value">1</span>)
+    <span class="ruby-keyword">next</span>  <span class="ruby-keyword">unless</span> <span class="ruby-identifier">block</span>
+    <span class="ruby-identifier">block</span>.<span class="ruby-identifier">tx</span>.<span class="ruby-identifier">each</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">tx</span><span class="ruby-operator">|</span> <span class="ruby-ivar">@node</span>.<span class="ruby-identifier">notifiers</span>[<span class="ruby-node">&quot;tx_#{conf}&quot;</span>.<span class="ruby-identifier">to_sym</span>].<span class="ruby-identifier">push</span>([<span class="ruby-identifier">tx</span>, <span class="ruby-identifier">conf</span>.<span class="ruby-identifier">to_i</span>]) }
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- handle_monitor_tx-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- handle_monitor_tx-method -->
+
+    
+      <div id="method-i-handle_relay_tx" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">handle_relay_tx</span><span
+            class="method-args">(hex, send = 3, wait = 3)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Relay given transaction (in hex).</p>
+
+<pre>bitcoin_node relay_tx &lt;tx in hex&gt;</pre>
+          
+          
+
+          
+          <div class="method-source-code" id="handle_relay_tx-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/network/command_handler.rb, line 288</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">handle_relay_tx</span> <span class="ruby-identifier">hex</span>, <span class="ruby-identifier">send</span> = <span class="ruby-value">3</span>, <span class="ruby-identifier">wait</span> = <span class="ruby-value">3</span>
+  <span class="ruby-keyword">begin</span>
+    <span class="ruby-identifier">tx</span> = <span class="ruby-constant">Bitcoin</span><span class="ruby-operator">::</span><span class="ruby-constant">P</span><span class="ruby-operator">::</span><span class="ruby-constant">Tx</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">hex</span>.<span class="ruby-identifier">htb</span>)
+  <span class="ruby-keyword">rescue</span>
+    <span class="ruby-keyword">return</span> <span class="ruby-identifier">respond</span>(<span class="ruby-string">&quot;relay_tx&quot;</span>, { <span class="ruby-identifier">error</span><span class="ruby-operator">:</span> <span class="ruby-string">&quot;Error decoding transaction.&quot;</span> })
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">validator</span> = <span class="ruby-identifier">tx</span>.<span class="ruby-identifier">validator</span>(<span class="ruby-ivar">@node</span>.<span class="ruby-identifier">store</span>)
+  <span class="ruby-keyword">unless</span> <span class="ruby-identifier">validator</span>.<span class="ruby-identifier">validate</span>(<span class="ruby-identifier">rules</span><span class="ruby-operator">:</span> [<span class="ruby-value">:syntax</span>])
+    <span class="ruby-keyword">return</span> <span class="ruby-identifier">respond</span>(<span class="ruby-string">&quot;relay_tx&quot;</span>, { <span class="ruby-identifier">error</span><span class="ruby-operator">:</span> <span class="ruby-string">&quot;Transaction syntax invalid.&quot;</span>,
+                   <span class="ruby-identifier">details</span><span class="ruby-operator">:</span> <span class="ruby-identifier">validator</span>.<span class="ruby-identifier">error</span> })
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">unless</span> <span class="ruby-identifier">validator</span>.<span class="ruby-identifier">validate</span>(<span class="ruby-identifier">rules</span><span class="ruby-operator">:</span> [<span class="ruby-value">:context</span>])
+    <span class="ruby-keyword">return</span> <span class="ruby-identifier">respond</span>(<span class="ruby-string">&quot;relay_tx&quot;</span>, { <span class="ruby-identifier">error</span><span class="ruby-operator">:</span> <span class="ruby-string">&quot;Transaction context invalid.&quot;</span>,
+                   <span class="ruby-identifier">details</span><span class="ruby-operator">:</span> <span class="ruby-identifier">validator</span>.<span class="ruby-identifier">error</span> })
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-comment">#@node.store.store_tx(tx)</span>
+  <span class="ruby-ivar">@node</span>.<span class="ruby-identifier">relay_tx</span>[<span class="ruby-identifier">tx</span>.<span class="ruby-identifier">hash</span>] = <span class="ruby-identifier">tx</span>
+  <span class="ruby-ivar">@node</span>.<span class="ruby-identifier">relay_propagation</span>[<span class="ruby-identifier">tx</span>.<span class="ruby-identifier">hash</span>] = <span class="ruby-value">0</span>
+  <span class="ruby-ivar">@node</span>.<span class="ruby-identifier">connections</span>.<span class="ruby-identifier">select</span>(<span class="ruby-operator">&amp;</span><span class="ruby-value">:connected?</span>).<span class="ruby-identifier">sample</span>(<span class="ruby-identifier">send</span>).<span class="ruby-identifier">each</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">c</span><span class="ruby-operator">|</span> <span class="ruby-identifier">c</span>.<span class="ruby-identifier">send_inv</span>(<span class="ruby-value">:tx</span>, <span class="ruby-identifier">tx</span>.<span class="ruby-identifier">hash</span>) }
+
+  <span class="ruby-constant">EM</span>.<span class="ruby-identifier">add_timer</span>(<span class="ruby-identifier">wait</span>) <span class="ruby-keyword">do</span>
+    <span class="ruby-identifier">received</span> = <span class="ruby-ivar">@node</span>.<span class="ruby-identifier">relay_propagation</span>[<span class="ruby-identifier">tx</span>.<span class="ruby-identifier">hash</span>]
+    <span class="ruby-identifier">total</span> = <span class="ruby-ivar">@node</span>.<span class="ruby-identifier">connections</span>.<span class="ruby-identifier">select</span>(<span class="ruby-operator">&amp;</span><span class="ruby-value">:connected?</span>).<span class="ruby-identifier">size</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">send</span>
+    <span class="ruby-identifier">percent</span> = <span class="ruby-value">100.0</span> <span class="ruby-operator">/</span> <span class="ruby-identifier">total</span> <span class="ruby-operator">*</span> <span class="ruby-identifier">received</span>
+    <span class="ruby-identifier">respond</span>(<span class="ruby-string">&quot;relay_tx&quot;</span>, { <span class="ruby-identifier">success</span><span class="ruby-operator">:</span> <span class="ruby-keyword">true</span>, <span class="ruby-identifier">hash</span><span class="ruby-operator">:</span> <span class="ruby-identifier">tx</span>.<span class="ruby-identifier">hash</span>, <span class="ruby-identifier">propagation</span><span class="ruby-operator">:</span> {
+                <span class="ruby-identifier">received</span><span class="ruby-operator">:</span> <span class="ruby-identifier">received</span>, <span class="ruby-identifier">sent</span><span class="ruby-operator">:</span> <span class="ruby-value">1</span>, <span class="ruby-identifier">percent</span><span class="ruby-operator">:</span> <span class="ruby-identifier">percent</span> } })
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">rescue</span>
+  <span class="ruby-identifier">respond</span>(<span class="ruby-string">&quot;relay_tx&quot;</span>, { <span class="ruby-identifier">error</span><span class="ruby-operator">:</span> <span class="ruby-identifier">$!</span>.<span class="ruby-identifier">message</span>, <span class="ruby-identifier">backtrace</span><span class="ruby-operator">:</span> <span class="ruby-identifier">$@</span> })
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- handle_relay_tx-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- handle_relay_tx-method -->
+
+    
+      <div id="method-i-handle_rescan" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">handle_rescan</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Trigger a rescan operation when used with a UtxoStore.</p>
+
+<pre>bitcoin_node rescan</pre>
+          
+          
+
+          
+          <div class="method-source-code" id="handle_rescan-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/network/command_handler.rb, line 219</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">handle_rescan</span>
+  <span class="ruby-constant">EM</span>.<span class="ruby-identifier">defer</span> { <span class="ruby-ivar">@node</span>.<span class="ruby-identifier">store</span>.<span class="ruby-identifier">rescan</span> }
+  {<span class="ruby-value">:state</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;Rescanning ...&quot;</span>}
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- handle_rescan-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- handle_rescan-method -->
+
+    
+      <div id="method-i-handle_stop" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">handle_stop</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Stop the bitcoin node.</p>
+
+<pre>bitcoin_node stop</pre>
+          
+          
+
+          
+          <div class="method-source-code" id="handle_stop-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/network/command_handler.rb, line 323</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">handle_stop</span>
+  <span class="ruby-constant">Thread</span>.<span class="ruby-identifier">start</span> { <span class="ruby-identifier">sleep</span> <span class="ruby-value">0.1</span>; <span class="ruby-ivar">@node</span>.<span class="ruby-identifier">stop</span> }
+  {<span class="ruby-value">:state</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;Stopping...&quot;</span>}
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- handle_stop-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- handle_stop-method -->
+
+    
+      <div id="method-i-handle_store_block" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">handle_store_block</span><span
+            class="method-args">(hex)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Validate and store given block (in hex) as if it was received by a peer.</p>
+
+<pre>bitcoin_node store_block &lt;block in hex&gt;</pre>
+          
+          
+
+          
+          <div class="method-source-code" id="handle_store_block-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/network/command_handler.rb, line 336</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">handle_store_block</span> <span class="ruby-identifier">hex</span>
+  <span class="ruby-identifier">block</span> = <span class="ruby-constant">Bitcoin</span><span class="ruby-operator">::</span><span class="ruby-constant">P</span><span class="ruby-operator">::</span><span class="ruby-constant">Block</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">hex</span>.<span class="ruby-identifier">htb</span>)
+  <span class="ruby-ivar">@node</span>.<span class="ruby-identifier">queue</span> <span class="ruby-operator">&lt;&lt;</span> [<span class="ruby-value">:block</span>, <span class="ruby-identifier">block</span>]
+  { <span class="ruby-identifier">queued</span><span class="ruby-operator">:</span> [ <span class="ruby-value">:block</span>, <span class="ruby-identifier">block</span>.<span class="ruby-identifier">hash</span> ] }
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- handle_store_block-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- handle_store_block-method -->
+
+    
+      <div id="method-i-handle_store_tx" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">handle_store_tx</span><span
+            class="method-args">(hex)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Store given transaction (in hex) as if it was received by a peer.</p>
+
+<pre>bitcoin_node store_tx &lt;tx in hex&gt;</pre>
+          
+          
+
+          
+          <div class="method-source-code" id="handle_store_tx-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/network/command_handler.rb, line 344</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">handle_store_tx</span> <span class="ruby-identifier">hex</span>
+  <span class="ruby-identifier">tx</span> = <span class="ruby-constant">Bitcoin</span><span class="ruby-operator">::</span><span class="ruby-constant">P</span><span class="ruby-operator">::</span><span class="ruby-constant">Tx</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">hex</span>.<span class="ruby-identifier">htb</span>)
+  <span class="ruby-ivar">@node</span>.<span class="ruby-identifier">queue</span> <span class="ruby-operator">&lt;&lt;</span> [<span class="ruby-value">:tx</span>, <span class="ruby-identifier">tx</span>]
+  { <span class="ruby-identifier">queued</span><span class="ruby-operator">:</span> [ <span class="ruby-value">:tx</span>, <span class="ruby-identifier">tx</span>.<span class="ruby-identifier">hash</span> ] }
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- handle_store_tx-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- handle_store_tx-method -->
+
+    
+      <div id="method-i-handle_tslb" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">handle_tslb</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Get Time Since Last Block.</p>
+
+<pre>bitcoin_node tslb</pre>
+          
+          
+
+          
+          <div class="method-source-code" id="handle_tslb-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/network/command_handler.rb, line 226</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">handle_tslb</span>
+  { <span class="ruby-identifier">tslb</span><span class="ruby-operator">:</span> (<span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span> <span class="ruby-operator">-</span> <span class="ruby-ivar">@node</span>.<span class="ruby-identifier">last_block_time</span>).<span class="ruby-identifier">to_i</span> }
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- handle_tslb-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- handle_tslb-method -->
+
+    
+      <div id="method-i-log" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">log</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>wrap logger and append prefix</p>
+          
+          
+
+          
+          <div class="method-source-code" id="log-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/network/command_handler.rb, line 18</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">log</span>
+  <span class="ruby-ivar">@log</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">Bitcoin</span><span class="ruby-operator">::</span><span class="ruby-constant">Logger</span><span class="ruby-operator">::</span><span class="ruby-constant">LogWrapper</span>.<span class="ruby-identifier">new</span>(<span class="ruby-string">&quot;command:&quot;</span>, <span class="ruby-ivar">@node</span>.<span class="ruby-identifier">log</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- log-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- log-method -->
+
+    
+      <div id="method-i-receive_data" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">receive_data</span><span
+            class="method-args">(data)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>receive request from the client</p>
+          
+          
+
+          
+          <div class="method-source-code" id="receive_data-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/network/command_handler.rb, line 31</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">receive_data</span> <span class="ruby-identifier">data</span>
+  <span class="ruby-ivar">@buf</span>.<span class="ruby-identifier">extract</span>(<span class="ruby-identifier">data</span>).<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">packet</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">begin</span>
+      <span class="ruby-identifier">cmd</span>, <span class="ruby-identifier">args</span> = <span class="ruby-constant">JSON</span><span class="ruby-operator">::</span><span class="ruby-identifier">parse</span>(<span class="ruby-identifier">packet</span>)
+      <span class="ruby-identifier">log</span>.<span class="ruby-identifier">debug</span> { [<span class="ruby-identifier">cmd</span>, <span class="ruby-identifier">args</span>] }
+      <span class="ruby-keyword">if</span> <span class="ruby-identifier">cmd</span> <span class="ruby-operator">==</span> <span class="ruby-string">&quot;relay_tx&quot;</span>
+        <span class="ruby-identifier">handle_relay_tx</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+        <span class="ruby-keyword">return</span>
+      <span class="ruby-keyword">end</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-identifier">respond_to?</span>(<span class="ruby-node">&quot;handle_#{cmd}&quot;</span>)
+        <span class="ruby-identifier">respond</span>(<span class="ruby-identifier">cmd</span>, <span class="ruby-identifier">send</span>(<span class="ruby-node">&quot;handle_#{cmd}&quot;</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>))
+      <span class="ruby-keyword">else</span>
+        <span class="ruby-identifier">respond</span>(<span class="ruby-identifier">cmd</span>, { <span class="ruby-identifier">error</span><span class="ruby-operator">:</span> <span class="ruby-node">&quot;unknown command: #{cmd}. send 'help' for help.&quot;</span> })
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">rescue</span> <span class="ruby-constant">ArgumentError</span>
+      <span class="ruby-identifier">respond</span>(<span class="ruby-identifier">cmd</span>, { <span class="ruby-identifier">error</span><span class="ruby-operator">:</span> <span class="ruby-identifier">$!</span>.<span class="ruby-identifier">message</span> })
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">rescue</span> <span class="ruby-constant">Exception</span>
+  <span class="ruby-identifier">p</span> <span class="ruby-identifier">$!</span>; <span class="ruby-identifier">puts</span> <span class="ruby-operator">*</span><span class="ruby-identifier">$@</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- receive_data-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- receive_data-method -->
+
+    
+      <div id="method-i-respond" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">respond</span><span
+            class="method-args">(cmd, data)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p><a href="CommandHandler.html#method-i-respond">#respond</a> to a command;
+send serialized response to the client</p>
+          
+          
+
+          
+          <div class="method-source-code" id="respond-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/network/command_handler.rb, line 23</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">respond</span>(<span class="ruby-identifier">cmd</span>, <span class="ruby-identifier">data</span>)
+  <span class="ruby-keyword">return</span>  <span class="ruby-keyword">unless</span> <span class="ruby-identifier">data</span>
+  <span class="ruby-ivar">@lock</span>.<span class="ruby-identifier">synchronize</span> <span class="ruby-keyword">do</span>
+    <span class="ruby-identifier">send_data</span>([<span class="ruby-identifier">cmd</span>, <span class="ruby-identifier">data</span>].<span class="ruby-identifier">to_json</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;\x00&quot;</span>)
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- respond-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- respond-method -->
+
+    
+      <div id="method-i-unbind" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">unbind</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>disconnect notification clients when connection is closed</p>
+          
+          
+
+          
+          <div class="method-source-code" id="unbind-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/network/command_handler.rb, line 359</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">unbind</span>
+  <span class="ruby-comment">#@node.notifiers.unsubscribe(@notify_sid)  if @notify_sid</span>
+  <span class="ruby-ivar">@node</span>.<span class="ruby-identifier">command_connections</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-keyword">self</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- unbind-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- unbind-method -->
+
+    
+    </section><!-- public-instance-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+</div><!-- documentation -->
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 4.0.1.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+

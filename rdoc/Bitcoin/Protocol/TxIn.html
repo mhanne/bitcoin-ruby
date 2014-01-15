@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+<title>class Bitcoin::Protocol::TxIn - bitcoin-ruby RDoc</title>
+
+<link type="text/css" media="screen" href="../../rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "../../";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="../../js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../js/darkfish.js"></script>
+
+
+<body id="top" class="class">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="../../index.html">Home</a>
+    <a href="../../table_of_contents.html#classes">Classes</a>
+    <a href="../../table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>lib/bitcoin/protocol/txin.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    
+    <nav id="parent-class-section" class="section">
+  <h3 class="section-header">Parent</h3>
+  
+  <p class="link"><a href="../../Object.html">Object</a>
+  
+</nav>
+
+    
+    
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li ><a href="#method-c-from_hash">::from_hash</a>
+    
+    <li ><a href="#method-c-from_hex_hash">::from_hex_hash</a>
+    
+    <li ><a href="#method-c-from_io">::from_io</a>
+    
+    <li ><a href="#method-c-new">::new</a>
+    
+    <li ><a href="#method-i-3D-3D">#==</a>
+    
+    <li ><a href="#method-i-add_signature_pubkey_script">#add_signature_pubkey_script</a>
+    
+    <li ><a href="#method-i-coinbase-3F">#coinbase?</a>
+    
+    <li ><a href="#method-i-parse_data">#parse_data</a>
+    
+    <li ><a href="#method-i-parse_data_from_io">#parse_data_from_io</a>
+    
+    <li ><a href="#method-i-previous_output">#previous_output</a>
+    
+    <li ><a href="#method-i-script-3D">#script=</a>
+    
+    <li ><a href="#method-i-script_sig-3D">#script_sig=</a>
+    
+    <li ><a href="#method-i-to_hash">#to_hash</a>
+    
+    <li ><a href="#method-i-to_payload">#to_payload</a>
+    
+  </ul>
+</nav>
+
+  </div>
+
+  <div id="project-metadata">
+    <nav id="fileindex-section" class="section project-section">
+  <h3 class="section-header">Pages</h3>
+
+  <ul>
+  
+    <li class="file"><a href="../../COPYING.html">COPYING</a>
+  
+    <li class="file"><a href="../../README_rdoc.html">README</a>
+  
+    <li class="file"><a href="../../doc/CONFIG_rdoc.html">CONFIG</a>
+  
+    <li class="file"><a href="../../doc/EXAMPLES_rdoc.html">EXAMPLES</a>
+  
+    <li class="file"><a href="../../doc/NAMECOIN_rdoc.html">NAMECOIN</a>
+  
+    <li class="file"><a href="../../doc/NODE_rdoc.html">NODE</a>
+  
+    <li class="file"><a href="../../doc/STORAGE_rdoc.html">STORAGE</a>
+  
+    <li class="file"><a href="../../doc/WALLET_rdoc.html">WALLET</a>
+  
+    <li class="file"><a href="../../examples/graph_benchmark_results_rb~.html">graph_benchmark_results.rb~</a>
+  
+    <li class="file"><a href="../../examples/import_rb~.html">import.rb~</a>
+  
+    <li class="file"><a href="../../examples/run_bench_rb~.html">run_bench.rb~</a>
+  
+    <li class="file"><a href="../../examples/run_benchmarks_rb~.html">run_benchmarks.rb~</a>
+  
+    <li class="file"><a href="../../lib/bitcoin/gui/bitcoin-ruby_svg.html">bitcoin-ruby.svg</a>
+  
+    <li class="file"><a href="../../lib/bitcoin/gui/gui_builder.html">gui.builder</a>
+  
+  </ul>
+</nav>
+
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="../../Array.html">Array</a>
+  
+    <li><a href="../../Bitcoin.html">Bitcoin</a>
+  
+    <li><a href="../../Bitcoin/BinaryExtensions.html">Bitcoin::BinaryExtensions</a>
+  
+    <li><a href="../../Bitcoin/Builder.html">Bitcoin::Builder</a>
+  
+    <li><a href="../../Bitcoin/Builder/BlockBuilder.html">Bitcoin::Builder::BlockBuilder</a>
+  
+    <li><a href="../../Bitcoin/Builder/ScriptBuilder.html">Bitcoin::Builder::ScriptBuilder</a>
+  
+    <li><a href="../../Bitcoin/Builder/TxBuilder.html">Bitcoin::Builder::TxBuilder</a>
+  
+    <li><a href="../../Bitcoin/Builder/TxInBuilder.html">Bitcoin::Builder::TxInBuilder</a>
+  
+    <li><a href="../../Bitcoin/Builder/TxOutBuilder.html">Bitcoin::Builder::TxOutBuilder</a>
+  
+    <li><a href="../../Bitcoin/Config.html">Bitcoin::Config</a>
+  
+    <li><a href="../../Bitcoin/Connection.html">Bitcoin::Connection</a>
+  
+    <li><a href="../../Bitcoin/ConnectionHandler.html">Bitcoin::ConnectionHandler</a>
+  
+    <li><a href="../../Bitcoin/Gui.html">Bitcoin::Gui</a>
+  
+    <li><a href="../../Bitcoin/Gui/AddrView.html">Bitcoin::Gui::AddrView</a>
+  
+    <li><a href="../../Bitcoin/Gui/Bitcoin.html">Bitcoin::Gui::Bitcoin</a>
+  
+    <li><a href="../../Bitcoin/Gui/Bitcoin/Gui.html">Bitcoin::Gui::Bitcoin::Gui</a>
+  
+    <li><a href="../../Bitcoin/Gui/Bitcoin/Gui/Bitcoin.html">Bitcoin::Gui::Bitcoin::Gui::Bitcoin</a>
+  
+    <li><a href="../../Bitcoin/Gui/Bitcoin/Gui/Bitcoin/Network.html">Bitcoin::Gui::Bitcoin::Gui::Bitcoin::Network</a>
+  
+    <li><a href="../../Bitcoin/Gui/Bitcoin/Gui/Bitcoin/Network/CommandClient.html">Bitcoin::Gui::Bitcoin::Gui::Bitcoin::Network::CommandClient</a>
+  
+    <li><a href="../../Bitcoin/Gui/ConnView.html">Bitcoin::Gui::ConnView</a>
+  
+    <li><a href="../../Bitcoin/Gui/Connection.html">Bitcoin::Gui::Connection</a>
+  
+    <li><a href="../../Bitcoin/Gui/Gui.html">Bitcoin::Gui::Gui</a>
+  
+    <li><a href="../../Bitcoin/Gui/Helpers.html">Bitcoin::Gui::Helpers</a>
+  
+    <li><a href="../../Bitcoin/Gui/TreeView.html">Bitcoin::Gui::TreeView</a>
+  
+    <li><a href="../../Bitcoin/Gui/TxInView.html">Bitcoin::Gui::TxInView</a>
+  
+    <li><a href="../../Bitcoin/Gui/TxView.html">Bitcoin::Gui::TxView</a>
+  
+    <li><a href="../../Bitcoin/Key.html">Bitcoin::Key</a>
+  
+    <li><a href="../../Bitcoin/Logger.html">Bitcoin::Logger</a>
+  
+    <li><a href="../../Bitcoin/Logger/LogWrapper.html">Bitcoin::Logger::LogWrapper</a>
+  
+    <li><a href="../../Bitcoin/Logger/Logger.html">Bitcoin::Logger::Logger</a>
+  
+    <li><a href="../../Bitcoin/Logger/TimeLogger.html">Bitcoin::Logger::TimeLogger</a>
+  
+    <li><a href="../../Bitcoin/Namecoin.html">Bitcoin::Namecoin</a>
+  
+    <li><a href="../../Bitcoin/Namecoin/Script.html">Bitcoin::Namecoin::Script</a>
+  
+    <li><a href="../../Bitcoin/Namecoin/Storage.html">Bitcoin::Namecoin::Storage</a>
+  
+    <li><a href="../../Bitcoin/Namecoin/Storage/Backend.html">Bitcoin::Namecoin::Storage::Backend</a>
+  
+    <li><a href="../../Bitcoin/Namecoin/Storage/Models.html">Bitcoin::Namecoin::Storage::Models</a>
+  
+    <li><a href="../../Bitcoin/Namecoin/Storage/Models/Name.html">Bitcoin::Namecoin::Storage::Models::Name</a>
+  
+    <li><a href="../../Bitcoin/Network.html">Bitcoin::Network</a>
+  
+    <li><a href="../../Bitcoin/Network/CommandClient.html">Bitcoin::Network::CommandClient</a>
+  
+    <li><a href="../../Bitcoin/Network/CommandHandler.html">Bitcoin::Network::CommandHandler</a>
+  
+    <li><a href="../../Bitcoin/Network/ConnectionHandler.html">Bitcoin::Network::ConnectionHandler</a>
+  
+    <li><a href="../../Bitcoin/Network/Node.html">Bitcoin::Network::Node</a>
+  
+    <li><a href="../../Bitcoin/OpenSSL_EC.html">Bitcoin::OpenSSL_EC</a>
+  
+    <li><a href="../../Bitcoin/OpenSSL_EC/FFI.html">Bitcoin::OpenSSL_EC::FFI</a>
+  
+    <li><a href="../../Bitcoin/P.html">Bitcoin::P</a>
+  
+    <li><a href="../../Bitcoin/Protocol.html">Bitcoin::Protocol</a>
+  
+    <li><a href="../../Bitcoin/Protocol/Addr.html">Bitcoin::Protocol::Addr</a>
+  
+    <li><a href="../../Bitcoin/Protocol/Alert.html">Bitcoin::Protocol::Alert</a>
+  
+    <li><a href="../../Bitcoin/Protocol/AuxPow.html">Bitcoin::Protocol::AuxPow</a>
+  
+    <li><a href="../../Bitcoin/Protocol/Block.html">Bitcoin::Protocol::Block</a>
+  
+    <li><a href="../../Bitcoin/Protocol/Handler.html">Bitcoin::Protocol::Handler</a>
+  
+    <li><a href="../../Bitcoin/Protocol/Parser.html">Bitcoin::Protocol::Parser</a>
+  
+    <li><a href="../../Bitcoin/Protocol/Tx.html">Bitcoin::Protocol::Tx</a>
+  
+    <li><a href="../../Bitcoin/Protocol/TxIn.html">Bitcoin::Protocol::TxIn</a>
+  
+    <li><a href="../../Bitcoin/Protocol/TxOut.html">Bitcoin::Protocol::TxOut</a>
+  
+    <li><a href="../../Bitcoin/Protocol/Version.html">Bitcoin::Protocol::Version</a>
+  
+    <li><a href="../../Bitcoin/Script.html">Bitcoin::Script</a>
+  
+    <li><a href="../../Bitcoin/Script/ScriptOpcodeError.html">Bitcoin::Script::ScriptOpcodeError</a>
+  
+    <li><a href="../../Bitcoin/Storage.html">Bitcoin::Storage</a>
+  
+    <li><a href="../../Bitcoin/Storage/Backends.html">Bitcoin::Storage::Backends</a>
+  
+    <li><a href="../../Bitcoin/Storage/Backends/DummyStore.html">Bitcoin::Storage::Backends::DummyStore</a>
+  
+    <li><a href="../../Bitcoin/Storage/Backends/SequelMigrations.html">Bitcoin::Storage::Backends::SequelMigrations</a>
+  
+    <li><a href="../../Bitcoin/Storage/Backends/SequelStore.html">Bitcoin::Storage::Backends::SequelStore</a>
+  
+    <li><a href="../../Bitcoin/Storage/Backends/StoreBase.html">Bitcoin::Storage::Backends::StoreBase</a>
+  
+    <li><a href="../../Bitcoin/Storage/Backends/UtxoStore.html">Bitcoin::Storage::Backends::UtxoStore</a>
+  
+    <li><a href="../../Bitcoin/Storage/Models.html">Bitcoin::Storage::Models</a>
+  
+    <li><a href="../../Bitcoin/Storage/Models/Block.html">Bitcoin::Storage::Models::Block</a>
+  
+    <li><a href="../../Bitcoin/Storage/Models/Tx.html">Bitcoin::Storage::Models::Tx</a>
+  
+    <li><a href="../../Bitcoin/Storage/Models/TxIn.html">Bitcoin::Storage::Models::TxIn</a>
+  
+    <li><a href="../../Bitcoin/Storage/Models/TxOut.html">Bitcoin::Storage::Models::TxOut</a>
+  
+    <li><a href="../../Bitcoin/Util.html">Bitcoin::Util</a>
+  
+    <li><a href="../../Bitcoin/Validation.html">Bitcoin::Validation</a>
+  
+    <li><a href="../../Bitcoin/Validation/Block.html">Bitcoin::Validation::Block</a>
+  
+    <li><a href="../../Bitcoin/Validation/Tx.html">Bitcoin::Validation::Tx</a>
+  
+    <li><a href="../../Bitcoin/Validation/ValidationError.html">Bitcoin::Validation::ValidationError</a>
+  
+    <li><a href="../../Bitcoin/Wallet.html">Bitcoin::Wallet</a>
+  
+    <li><a href="../../Bitcoin/Wallet/DeterministicKeyStore.html">Bitcoin::Wallet::DeterministicKeyStore</a>
+  
+    <li><a href="../../Bitcoin/Wallet/KeyGenerator.html">Bitcoin::Wallet::KeyGenerator</a>
+  
+    <li><a href="../../Bitcoin/Wallet/SimpleCoinSelector.html">Bitcoin::Wallet::SimpleCoinSelector</a>
+  
+    <li><a href="../../Bitcoin/Wallet/SimpleKeyStore.html">Bitcoin::Wallet::SimpleKeyStore</a>
+  
+    <li><a href="../../Bitcoin/Wallet/TxDP.html">Bitcoin::Wallet::TxDP</a>
+  
+    <li><a href="../../Bitcoin/Wallet/Wallet.html">Bitcoin::Wallet::Wallet</a>
+  
+    <li><a href="../../EM.html">EM</a>
+  
+    <li><a href="../../Gtk.html">Gtk</a>
+  
+    <li><a href="../../Hash.html">Hash</a>
+  
+    <li><a href="../../JSON.html">JSON</a>
+  
+    <li><a href="../../Litecoin.html">Litecoin</a>
+  
+    <li><a href="../../Litecoin/Scrypt.html">Litecoin::Scrypt</a>
+  
+    <li><a href="../../Log4r.html">Log4r</a>
+  
+    <li><a href="../../Log4r/Logger.html">Log4r::Logger</a>
+  
+    <li><a href="../../Mnemonic.html">Mnemonic</a>
+  
+    <li><a href="../../Object.html">Object</a>
+  
+    <li><a href="../../OpenSSL.html">OpenSSL</a>
+  
+    <li><a href="../../OpenSSL/BN.html">OpenSSL::BN</a>
+  
+    <li><a href="../../OpenSSL/PKey.html">OpenSSL::PKey</a>
+  
+    <li><a href="../../OpenSSL/PKey/EC.html">OpenSSL::PKey::EC</a>
+  
+    <li><a href="../../OpenSSL/PKey/EC/Point.html">OpenSSL::PKey::EC::Point</a>
+  
+    <li><a href="../../RawJSON_Connection.html">RawJSON_Connection</a>
+  
+    <li><a href="../../SimpleNode.html">SimpleNode</a>
+  
+    <li><a href="../../SimpleNode/Connection.html">SimpleNode::Connection</a>
+  
+    <li><a href="../../String.html">String</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation">
+  <h1 class="class">class Bitcoin::Protocol::TxIn</h1>
+
+  <div id="description" class="description">
+    
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+    <!-- Constants -->
+    <section id="constants-list" class="section">
+      <h3 class="section-header">Constants</h3>
+      <dl>
+      
+        <dt id="COINBASE_INDEX">COINBASE_INDEX
+        
+        <dd class="description">
+        
+      
+        <dt id="DEFAULT_SEQUENCE">DEFAULT_SEQUENCE
+        
+        <dd class="description">
+        
+      
+        <dt id="NULL_HASH">NULL_HASH
+        
+        <dd class="description">
+        
+      
+      </dl>
+    </section>
+    
+
+    
+    <!-- Attributes -->
+    <section id="attribute-method-details" class="method-section section">
+      <h3 class="section-header">Attributes</h3>
+
+      
+      <div id="attribute-i-prev_out" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">prev_out</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>previous output hash</p>
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-prev_out_index" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">prev_out_index</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>previous output index</p>
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-script" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">script</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p><a href="TxIn.html#attribute-i-script_sig">#script_sig</a> input <a
+href="../Script.html">Script</a> (signature)</p>
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-script_length" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">script_length</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p><a href="TxIn.html#attribute-i-script_sig">#script_sig</a> input <a
+href="../Script.html">Script</a> (signature)</p>
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-script_sig" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">script_sig</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p><a href="TxIn.html#attribute-i-script_sig">#script_sig</a> input <a
+href="../Script.html">Script</a> (signature)</p>
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-script_sig_length" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">script_sig_length</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p><a href="TxIn.html#attribute-i-script_sig">#script_sig</a> input <a
+href="../Script.html">Script</a> (signature)</p>
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-sequence" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">sequence</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p><a href="TxIn.html#attribute-i-sequence">#sequence</a></p>
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-sig_address" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">sig_address</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>signature hash and the address of the key that needs to sign it (used when
+dealing with unsigned or partly signed tx)</p>
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-sig_hash" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">sig_hash</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>signature hash and the address of the key that needs to sign it (used when
+dealing with unsigned or partly signed tx)</p>
+        
+        </div>
+      </div>
+      
+    </section><!-- attribute-method-details -->
+    
+
+    <!-- Methods -->
+    
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Class Methods</h3>
+
+    
+      <div id="method-c-from_hash" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">from_hash</span><span
+            class="method-args">(input)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="from_hash-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/protocol/txin.rb, line 79</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">from_hash</span>(<span class="ruby-identifier">input</span>)
+  <span class="ruby-identifier">txin</span> = <span class="ruby-constant">TxIn</span>.<span class="ruby-identifier">new</span>([ <span class="ruby-identifier">input</span>[<span class="ruby-string">'prev_out'</span>][<span class="ruby-string">'hash'</span>] ].<span class="ruby-identifier">pack</span>(<span class="ruby-string">'H*'</span>).<span class="ruby-identifier">reverse</span>, <span class="ruby-identifier">input</span>[<span class="ruby-string">'prev_out'</span>][<span class="ruby-string">'n'</span>])
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">input</span>[<span class="ruby-string">'coinbase'</span>]
+    <span class="ruby-identifier">txin</span>.<span class="ruby-identifier">script_sig</span> = [ <span class="ruby-identifier">input</span>[<span class="ruby-string">'coinbase'</span>] ].<span class="ruby-identifier">pack</span>(<span class="ruby-string">&quot;H*&quot;</span>)
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">txin</span>.<span class="ruby-identifier">script_sig</span> = <span class="ruby-constant">Script</span>.<span class="ruby-identifier">binary_from_string</span>(<span class="ruby-identifier">input</span>[<span class="ruby-string">'scriptSig'</span>])
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">txin</span>.<span class="ruby-identifier">sequence</span> = [ <span class="ruby-identifier">input</span>[<span class="ruby-string">'sequence'</span>] <span class="ruby-operator">||</span> <span class="ruby-value">0xffffffff</span> ].<span class="ruby-identifier">pack</span>(<span class="ruby-string">&quot;V&quot;</span>)
+  <span class="ruby-identifier">txin</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- from_hash-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- from_hash-method -->
+
+    
+      <div id="method-c-from_hex_hash" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">from_hex_hash</span><span
+            class="method-args">(hash, index)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="from_hex_hash-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/protocol/txin.rb, line 90</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">from_hex_hash</span>(<span class="ruby-identifier">hash</span>, <span class="ruby-identifier">index</span>)
+  <span class="ruby-constant">TxIn</span>.<span class="ruby-identifier">new</span>([<span class="ruby-identifier">hash</span>].<span class="ruby-identifier">pack</span>(<span class="ruby-string">&quot;H*&quot;</span>).<span class="ruby-identifier">reverse</span>, <span class="ruby-identifier">index</span>, <span class="ruby-value">0</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- from_hex_hash-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- from_hex_hash-method -->
+
+    
+      <div id="method-c-from_io" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">from_io</span><span
+            class="method-args">(buf)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="from_io-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/protocol/txin.rb, line 53</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">from_io</span>(<span class="ruby-identifier">buf</span>)
+  <span class="ruby-identifier">txin</span> = <span class="ruby-identifier">new</span>; <span class="ruby-identifier">txin</span>.<span class="ruby-identifier">parse_data_from_io</span>(<span class="ruby-identifier">buf</span>); <span class="ruby-identifier">txin</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- from_io-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- from_io-method -->
+
+    
+      <div id="method-c-new" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">new</span><span
+            class="method-args">(*args)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="new-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/protocol/txin.rb, line 30</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span> <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>
+  <span class="ruby-ivar">@prev_out</span>, <span class="ruby-ivar">@prev_out_index</span>, <span class="ruby-ivar">@script_sig_length</span>,
+  <span class="ruby-ivar">@script_sig</span>, <span class="ruby-ivar">@sequence</span> = <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>
+  <span class="ruby-ivar">@script_sig_length</span> <span class="ruby-operator">||=</span> <span class="ruby-value">0</span>
+  <span class="ruby-ivar">@script_sig</span> <span class="ruby-operator">||=</span> <span class="ruby-string">''</span>
+  <span class="ruby-ivar">@sequence</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">DEFAULT_SEQUENCE</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- new-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- new-method -->
+
+    
+    </section><!-- public-class-method-details -->
+  
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="method-i-3D-3D" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">==</span><span
+            class="method-args">(other)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>compare to another txout</p>
+          
+          
+
+          
+          <div class="method-source-code" id="3D-3D-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/protocol/txin.rb, line 39</span>
+<span class="ruby-keyword">def</span> <span class="ruby-operator">==</span>(<span class="ruby-identifier">other</span>)
+  <span class="ruby-ivar">@prev_out</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">other</span>.<span class="ruby-identifier">prev_out</span> <span class="ruby-operator">&amp;&amp;</span>
+    <span class="ruby-ivar">@prev_out_index</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">other</span>.<span class="ruby-identifier">prev_out_index</span> <span class="ruby-operator">&amp;&amp;</span>
+    <span class="ruby-ivar">@script_sig</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">other</span>.<span class="ruby-identifier">script_sig</span> <span class="ruby-operator">&amp;&amp;</span>
+    <span class="ruby-ivar">@sequence</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">other</span>.<span class="ruby-identifier">sequence</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- 3D-3D-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- 3D-3D-method -->
+
+    
+      <div id="method-i-add_signature_pubkey_script" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">add_signature_pubkey_script</span><span
+            class="method-args">(sig, pubkey_hex)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="add_signature_pubkey_script-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/protocol/txin.rb, line 111</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">add_signature_pubkey_script</span>(<span class="ruby-identifier">sig</span>, <span class="ruby-identifier">pubkey_hex</span>)
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">script</span> = <span class="ruby-constant">Bitcoin</span><span class="ruby-operator">::</span><span class="ruby-constant">Script</span>.<span class="ruby-identifier">to_signature_pubkey_script</span>(<span class="ruby-identifier">sig</span>, [<span class="ruby-identifier">pubkey_hex</span>].<span class="ruby-identifier">pack</span>(<span class="ruby-string">&quot;H*&quot;</span>))
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- add_signature_pubkey_script-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- add_signature_pubkey_script-method -->
+
+    
+      <div id="method-i-coinbase-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">coinbase?</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>check if input is coinbase</p>
+          
+          
+
+          
+          <div class="method-source-code" id="coinbase-3F-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/protocol/txin.rb, line 100</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">coinbase?</span>
+  (<span class="ruby-ivar">@prev_out_index</span> <span class="ruby-operator">==</span> <span class="ruby-constant">COINBASE_INDEX</span>) <span class="ruby-operator">&amp;&amp;</span> (<span class="ruby-ivar">@prev_out</span> <span class="ruby-operator">==</span> <span class="ruby-constant">NULL_HASH</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- coinbase-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- coinbase-3F-method -->
+
+    
+      <div id="method-i-parse_data" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">parse_data</span><span
+            class="method-args">(data)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>parse raw binary data for transaction input</p>
+          
+          
+
+          
+          <div class="method-source-code" id="parse_data-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/protocol/txin.rb, line 47</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">parse_data</span>(<span class="ruby-identifier">data</span>)
+  <span class="ruby-identifier">buf</span> = <span class="ruby-identifier">data</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">String</span>) <span class="ruby-operator">?</span> <span class="ruby-constant">StringIO</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">data</span>) <span class="ruby-operator">:</span> <span class="ruby-identifier">data</span>
+  <span class="ruby-identifier">parse_data_from_io</span>(<span class="ruby-identifier">buf</span>)
+  <span class="ruby-identifier">buf</span>.<span class="ruby-identifier">pos</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- parse_data-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- parse_data-method -->
+
+    
+      <div id="method-i-parse_data_from_io" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">parse_data_from_io</span><span
+            class="method-args">(buf)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="parse_data_from_io-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/protocol/txin.rb, line 57</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">parse_data_from_io</span>(<span class="ruby-identifier">buf</span>)
+  <span class="ruby-ivar">@prev_out</span>, <span class="ruby-ivar">@prev_out_index</span> = <span class="ruby-identifier">buf</span>.<span class="ruby-identifier">read</span>(<span class="ruby-value">36</span>).<span class="ruby-identifier">unpack</span>(<span class="ruby-string">&quot;a32V&quot;</span>)
+  <span class="ruby-ivar">@script_sig_length</span> = <span class="ruby-constant">Protocol</span>.<span class="ruby-identifier">unpack_var_int_from_io</span>(<span class="ruby-identifier">buf</span>)
+  <span class="ruby-ivar">@script_sig</span> = <span class="ruby-identifier">buf</span>.<span class="ruby-identifier">read</span>(<span class="ruby-ivar">@script_sig_length</span>)
+  <span class="ruby-ivar">@sequence</span> = <span class="ruby-identifier">buf</span>.<span class="ruby-identifier">read</span>(<span class="ruby-value">4</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- parse_data_from_io-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- parse_data_from_io-method -->
+
+    
+      <div id="method-i-previous_output" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">previous_output</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>previous output in hex</p>
+          
+          
+
+          
+          <div class="method-source-code" id="previous_output-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/protocol/txin.rb, line 95</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">previous_output</span>
+  <span class="ruby-ivar">@prev_out</span>.<span class="ruby-identifier">reverse_hth</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- previous_output-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- previous_output-method -->
+
+    
+      <div id="method-i-script-3D" class="method-detail method-alias">
+        
+        <div class="method-heading">
+          <span class="method-name">script=</span><span
+            class="method-args">(script_sig)</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+        </div>
+
+        
+
+        
+        <div class="aliases">
+          Alias for: <a href="TxIn.html#method-i-script_sig-3D">script_sig=</a>
+        </div>
+        
+      </div><!-- script-3D-method -->
+
+    
+      <div id="method-i-script_sig-3D" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">script_sig=</span><span
+            class="method-args">(script_sig)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>set <a href="TxIn.html#attribute-i-script_sig">#script_sig</a> and <a
+href="TxIn.html#attribute-i-script_sig_length">#script_sig_length</a></p>
+          
+          
+
+          
+          <div class="method-source-code" id="script_sig-3D-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/protocol/txin.rb, line 105</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">script_sig=</span>(<span class="ruby-identifier">script_sig</span>)
+  <span class="ruby-ivar">@script_sig_length</span> = <span class="ruby-identifier">script_sig</span>.<span class="ruby-identifier">bytesize</span>
+  <span class="ruby-ivar">@script_sig</span> = <span class="ruby-identifier">script_sig</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- script_sig-3D-source -->
+          
+        </div>
+
+        
+        <div class="aliases">
+          Also aliased as: <a href="TxIn.html#method-i-script-3D">script=</a>
+        </div>
+        
+
+        
+      </div><!-- script_sig-3D-method -->
+
+    
+      <div id="method-i-to_hash" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">to_hash</span><span
+            class="method-args">(options = {})</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="to_hash-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/protocol/txin.rb, line 68</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">to_hash</span>(<span class="ruby-identifier">options</span> = {})
+  <span class="ruby-identifier">t</span> = { <span class="ruby-string">'prev_out'</span>  =<span class="ruby-operator">&gt;</span> { <span class="ruby-string">'hash'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@prev_out</span>.<span class="ruby-identifier">reverse_hth</span>, <span class="ruby-string">'n'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@prev_out_index</span> } }
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">coinbase?</span>
+    <span class="ruby-identifier">t</span>[<span class="ruby-string">'coinbase'</span>]  = <span class="ruby-ivar">@script_sig</span>.<span class="ruby-identifier">unpack</span>(<span class="ruby-string">&quot;H*&quot;</span>)[<span class="ruby-value">0</span>]
+  <span class="ruby-keyword">else</span> <span class="ruby-comment"># coinbase tx</span>
+    <span class="ruby-identifier">t</span>[<span class="ruby-string">'scriptSig'</span>] = <span class="ruby-constant">Bitcoin</span><span class="ruby-operator">::</span><span class="ruby-constant">Script</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@script_sig</span>).<span class="ruby-identifier">to_string</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">t</span>[<span class="ruby-string">'sequence'</span>]  = <span class="ruby-ivar">@sequence</span>.<span class="ruby-identifier">unpack</span>(<span class="ruby-string">&quot;V&quot;</span>)[<span class="ruby-value">0</span>] <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@sequence</span> <span class="ruby-operator">==</span> <span class="ruby-string">&quot;\xff\xff\xff\xff&quot;</span>
+  <span class="ruby-identifier">t</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- to_hash-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- to_hash-method -->
+
+    
+      <div id="method-i-to_payload" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">to_payload</span><span
+            class="method-args">(script=@script_sig, sequence=@sequence)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="to_payload-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/protocol/txin.rb, line 64</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">to_payload</span>(<span class="ruby-identifier">script</span>=<span class="ruby-ivar">@script_sig</span>, <span class="ruby-identifier">sequence</span>=<span class="ruby-ivar">@sequence</span>)
+  [<span class="ruby-ivar">@prev_out</span>, <span class="ruby-ivar">@prev_out_index</span>].<span class="ruby-identifier">pack</span>(<span class="ruby-string">&quot;a32V&quot;</span>) <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">Protocol</span>.<span class="ruby-identifier">pack_var_int</span>(<span class="ruby-identifier">script</span>.<span class="ruby-identifier">bytesize</span>) <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">script</span> <span class="ruby-operator">&lt;&lt;</span> (<span class="ruby-identifier">sequence</span> <span class="ruby-operator">||</span> <span class="ruby-constant">DEFAULT_SEQUENCE</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- to_payload-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- to_payload-method -->
+
+    
+    </section><!-- public-instance-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+</div><!-- documentation -->
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 4.0.1.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+

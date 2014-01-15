@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+<title>class Object - bitcoin-ruby RDoc</title>
+
+<link type="text/css" media="screen" href="./rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "./";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="./js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/darkfish.js"></script>
+
+
+<body id="top" class="class">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="./index.html">Home</a>
+    <a href="./table_of_contents.html#classes">Classes</a>
+    <a href="./table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>examples/balance.rb
+    <li>examples/bbe_verify_tx.rb
+    <li>examples/benchmark.rb~
+    <li>examples/forwarder.rb
+    <li>examples/generate_blocks.rb
+    <li>examples/generate_blocks.rb~
+    <li>examples/mine_testnet_box.rb~
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    
+    <nav id="parent-class-section" class="section">
+  <h3 class="section-header">Parent</h3>
+  
+  <p class="link">BasicObject
+  
+</nav>
+
+    <!-- Included Modules -->
+<nav id="includes-section" class="section">
+  <h3 class="section-header">Included Modules</h3>
+
+  <ul class="link-list">
+  
+  
+    <li><a class="include" href="Bitcoin/Builder.html">Bitcoin::Builder</a>
+  
+  
+  </ul>
+</nav>
+
+    
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li ><a href="#method-i-get_tx">#get_tx</a>
+    
+    <li ><a href="#method-i-reset">#reset</a>
+    
+    <li ><a href="#method-i-run">#run</a>
+    
+    <li ><a href="#method-i-str_val">#str_val</a>
+    
+  </ul>
+</nav>
+
+  </div>
+
+  <div id="project-metadata">
+    <nav id="fileindex-section" class="section project-section">
+  <h3 class="section-header">Pages</h3>
+
+  <ul>
+  
+    <li class="file"><a href="./COPYING.html">COPYING</a>
+  
+    <li class="file"><a href="./README_rdoc.html">README</a>
+  
+    <li class="file"><a href="./doc/CONFIG_rdoc.html">CONFIG</a>
+  
+    <li class="file"><a href="./doc/EXAMPLES_rdoc.html">EXAMPLES</a>
+  
+    <li class="file"><a href="./doc/NAMECOIN_rdoc.html">NAMECOIN</a>
+  
+    <li class="file"><a href="./doc/NODE_rdoc.html">NODE</a>
+  
+    <li class="file"><a href="./doc/STORAGE_rdoc.html">STORAGE</a>
+  
+    <li class="file"><a href="./doc/WALLET_rdoc.html">WALLET</a>
+  
+    <li class="file"><a href="./examples/graph_benchmark_results_rb~.html">graph_benchmark_results.rb~</a>
+  
+    <li class="file"><a href="./examples/import_rb~.html">import.rb~</a>
+  
+    <li class="file"><a href="./examples/run_bench_rb~.html">run_bench.rb~</a>
+  
+    <li class="file"><a href="./examples/run_benchmarks_rb~.html">run_benchmarks.rb~</a>
+  
+    <li class="file"><a href="./lib/bitcoin/gui/bitcoin-ruby_svg.html">bitcoin-ruby.svg</a>
+  
+    <li class="file"><a href="./lib/bitcoin/gui/gui_builder.html">gui.builder</a>
+  
+  </ul>
+</nav>
+
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="./Array.html">Array</a>
+  
+    <li><a href="./Bitcoin.html">Bitcoin</a>
+  
+    <li><a href="./Bitcoin/BinaryExtensions.html">Bitcoin::BinaryExtensions</a>
+  
+    <li><a href="./Bitcoin/Builder.html">Bitcoin::Builder</a>
+  
+    <li><a href="./Bitcoin/Builder/BlockBuilder.html">Bitcoin::Builder::BlockBuilder</a>
+  
+    <li><a href="./Bitcoin/Builder/ScriptBuilder.html">Bitcoin::Builder::ScriptBuilder</a>
+  
+    <li><a href="./Bitcoin/Builder/TxBuilder.html">Bitcoin::Builder::TxBuilder</a>
+  
+    <li><a href="./Bitcoin/Builder/TxInBuilder.html">Bitcoin::Builder::TxInBuilder</a>
+  
+    <li><a href="./Bitcoin/Builder/TxOutBuilder.html">Bitcoin::Builder::TxOutBuilder</a>
+  
+    <li><a href="./Bitcoin/Config.html">Bitcoin::Config</a>
+  
+    <li><a href="./Bitcoin/Connection.html">Bitcoin::Connection</a>
+  
+    <li><a href="./Bitcoin/ConnectionHandler.html">Bitcoin::ConnectionHandler</a>
+  
+    <li><a href="./Bitcoin/Gui.html">Bitcoin::Gui</a>
+  
+    <li><a href="./Bitcoin/Gui/AddrView.html">Bitcoin::Gui::AddrView</a>
+  
+    <li><a href="./Bitcoin/Gui/Bitcoin.html">Bitcoin::Gui::Bitcoin</a>
+  
+    <li><a href="./Bitcoin/Gui/Bitcoin/Gui.html">Bitcoin::Gui::Bitcoin::Gui</a>
+  
+    <li><a href="./Bitcoin/Gui/Bitcoin/Gui/Bitcoin.html">Bitcoin::Gui::Bitcoin::Gui::Bitcoin</a>
+  
+    <li><a href="./Bitcoin/Gui/Bitcoin/Gui/Bitcoin/Network.html">Bitcoin::Gui::Bitcoin::Gui::Bitcoin::Network</a>
+  
+    <li><a href="./Bitcoin/Gui/Bitcoin/Gui/Bitcoin/Network/CommandClient.html">Bitcoin::Gui::Bitcoin::Gui::Bitcoin::Network::CommandClient</a>
+  
+    <li><a href="./Bitcoin/Gui/ConnView.html">Bitcoin::Gui::ConnView</a>
+  
+    <li><a href="./Bitcoin/Gui/Connection.html">Bitcoin::Gui::Connection</a>
+  
+    <li><a href="./Bitcoin/Gui/Gui.html">Bitcoin::Gui::Gui</a>
+  
+    <li><a href="./Bitcoin/Gui/Helpers.html">Bitcoin::Gui::Helpers</a>
+  
+    <li><a href="./Bitcoin/Gui/TreeView.html">Bitcoin::Gui::TreeView</a>
+  
+    <li><a href="./Bitcoin/Gui/TxInView.html">Bitcoin::Gui::TxInView</a>
+  
+    <li><a href="./Bitcoin/Gui/TxView.html">Bitcoin::Gui::TxView</a>
+  
+    <li><a href="./Bitcoin/Key.html">Bitcoin::Key</a>
+  
+    <li><a href="./Bitcoin/Logger.html">Bitcoin::Logger</a>
+  
+    <li><a href="./Bitcoin/Logger/LogWrapper.html">Bitcoin::Logger::LogWrapper</a>
+  
+    <li><a href="./Bitcoin/Logger/Logger.html">Bitcoin::Logger::Logger</a>
+  
+    <li><a href="./Bitcoin/Logger/TimeLogger.html">Bitcoin::Logger::TimeLogger</a>
+  
+    <li><a href="./Bitcoin/Namecoin.html">Bitcoin::Namecoin</a>
+  
+    <li><a href="./Bitcoin/Namecoin/Script.html">Bitcoin::Namecoin::Script</a>
+  
+    <li><a href="./Bitcoin/Namecoin/Storage.html">Bitcoin::Namecoin::Storage</a>
+  
+    <li><a href="./Bitcoin/Namecoin/Storage/Backend.html">Bitcoin::Namecoin::Storage::Backend</a>
+  
+    <li><a href="./Bitcoin/Namecoin/Storage/Models.html">Bitcoin::Namecoin::Storage::Models</a>
+  
+    <li><a href="./Bitcoin/Namecoin/Storage/Models/Name.html">Bitcoin::Namecoin::Storage::Models::Name</a>
+  
+    <li><a href="./Bitcoin/Network.html">Bitcoin::Network</a>
+  
+    <li><a href="./Bitcoin/Network/CommandClient.html">Bitcoin::Network::CommandClient</a>
+  
+    <li><a href="./Bitcoin/Network/CommandHandler.html">Bitcoin::Network::CommandHandler</a>
+  
+    <li><a href="./Bitcoin/Network/ConnectionHandler.html">Bitcoin::Network::ConnectionHandler</a>
+  
+    <li><a href="./Bitcoin/Network/Node.html">Bitcoin::Network::Node</a>
+  
+    <li><a href="./Bitcoin/OpenSSL_EC.html">Bitcoin::OpenSSL_EC</a>
+  
+    <li><a href="./Bitcoin/OpenSSL_EC/FFI.html">Bitcoin::OpenSSL_EC::FFI</a>
+  
+    <li><a href="./Bitcoin/P.html">Bitcoin::P</a>
+  
+    <li><a href="./Bitcoin/Protocol.html">Bitcoin::Protocol</a>
+  
+    <li><a href="./Bitcoin/Protocol/Addr.html">Bitcoin::Protocol::Addr</a>
+  
+    <li><a href="./Bitcoin/Protocol/Alert.html">Bitcoin::Protocol::Alert</a>
+  
+    <li><a href="./Bitcoin/Protocol/AuxPow.html">Bitcoin::Protocol::AuxPow</a>
+  
+    <li><a href="./Bitcoin/Protocol/Block.html">Bitcoin::Protocol::Block</a>
+  
+    <li><a href="./Bitcoin/Protocol/Handler.html">Bitcoin::Protocol::Handler</a>
+  
+    <li><a href="./Bitcoin/Protocol/Parser.html">Bitcoin::Protocol::Parser</a>
+  
+    <li><a href="./Bitcoin/Protocol/Tx.html">Bitcoin::Protocol::Tx</a>
+  
+    <li><a href="./Bitcoin/Protocol/TxIn.html">Bitcoin::Protocol::TxIn</a>
+  
+    <li><a href="./Bitcoin/Protocol/TxOut.html">Bitcoin::Protocol::TxOut</a>
+  
+    <li><a href="./Bitcoin/Protocol/Version.html">Bitcoin::Protocol::Version</a>
+  
+    <li><a href="./Bitcoin/Script.html">Bitcoin::Script</a>
+  
+    <li><a href="./Bitcoin/Script/ScriptOpcodeError.html">Bitcoin::Script::ScriptOpcodeError</a>
+  
+    <li><a href="./Bitcoin/Storage.html">Bitcoin::Storage</a>
+  
+    <li><a href="./Bitcoin/Storage/Backends.html">Bitcoin::Storage::Backends</a>
+  
+    <li><a href="./Bitcoin/Storage/Backends/DummyStore.html">Bitcoin::Storage::Backends::DummyStore</a>
+  
+    <li><a href="./Bitcoin/Storage/Backends/SequelMigrations.html">Bitcoin::Storage::Backends::SequelMigrations</a>
+  
+    <li><a href="./Bitcoin/Storage/Backends/SequelStore.html">Bitcoin::Storage::Backends::SequelStore</a>
+  
+    <li><a href="./Bitcoin/Storage/Backends/StoreBase.html">Bitcoin::Storage::Backends::StoreBase</a>
+  
+    <li><a href="./Bitcoin/Storage/Backends/UtxoStore.html">Bitcoin::Storage::Backends::UtxoStore</a>
+  
+    <li><a href="./Bitcoin/Storage/Models.html">Bitcoin::Storage::Models</a>
+  
+    <li><a href="./Bitcoin/Storage/Models/Block.html">Bitcoin::Storage::Models::Block</a>
+  
+    <li><a href="./Bitcoin/Storage/Models/Tx.html">Bitcoin::Storage::Models::Tx</a>
+  
+    <li><a href="./Bitcoin/Storage/Models/TxIn.html">Bitcoin::Storage::Models::TxIn</a>
+  
+    <li><a href="./Bitcoin/Storage/Models/TxOut.html">Bitcoin::Storage::Models::TxOut</a>
+  
+    <li><a href="./Bitcoin/Util.html">Bitcoin::Util</a>
+  
+    <li><a href="./Bitcoin/Validation.html">Bitcoin::Validation</a>
+  
+    <li><a href="./Bitcoin/Validation/Block.html">Bitcoin::Validation::Block</a>
+  
+    <li><a href="./Bitcoin/Validation/Tx.html">Bitcoin::Validation::Tx</a>
+  
+    <li><a href="./Bitcoin/Validation/ValidationError.html">Bitcoin::Validation::ValidationError</a>
+  
+    <li><a href="./Bitcoin/Wallet.html">Bitcoin::Wallet</a>
+  
+    <li><a href="./Bitcoin/Wallet/DeterministicKeyStore.html">Bitcoin::Wallet::DeterministicKeyStore</a>
+  
+    <li><a href="./Bitcoin/Wallet/KeyGenerator.html">Bitcoin::Wallet::KeyGenerator</a>
+  
+    <li><a href="./Bitcoin/Wallet/SimpleCoinSelector.html">Bitcoin::Wallet::SimpleCoinSelector</a>
+  
+    <li><a href="./Bitcoin/Wallet/SimpleKeyStore.html">Bitcoin::Wallet::SimpleKeyStore</a>
+  
+    <li><a href="./Bitcoin/Wallet/TxDP.html">Bitcoin::Wallet::TxDP</a>
+  
+    <li><a href="./Bitcoin/Wallet/Wallet.html">Bitcoin::Wallet::Wallet</a>
+  
+    <li><a href="./EM.html">EM</a>
+  
+    <li><a href="./Gtk.html">Gtk</a>
+  
+    <li><a href="./Hash.html">Hash</a>
+  
+    <li><a href="./JSON.html">JSON</a>
+  
+    <li><a href="./Litecoin.html">Litecoin</a>
+  
+    <li><a href="./Litecoin/Scrypt.html">Litecoin::Scrypt</a>
+  
+    <li><a href="./Log4r.html">Log4r</a>
+  
+    <li><a href="./Log4r/Logger.html">Log4r::Logger</a>
+  
+    <li><a href="./Mnemonic.html">Mnemonic</a>
+  
+    <li><a href="./Object.html">Object</a>
+  
+    <li><a href="./OpenSSL.html">OpenSSL</a>
+  
+    <li><a href="./OpenSSL/BN.html">OpenSSL::BN</a>
+  
+    <li><a href="./OpenSSL/PKey.html">OpenSSL::PKey</a>
+  
+    <li><a href="./OpenSSL/PKey/EC.html">OpenSSL::PKey::EC</a>
+  
+    <li><a href="./OpenSSL/PKey/EC/Point.html">OpenSSL::PKey::EC::Point</a>
+  
+    <li><a href="./RawJSON_Connection.html">RawJSON_Connection</a>
+  
+    <li><a href="./SimpleNode.html">SimpleNode</a>
+  
+    <li><a href="./SimpleNode/Connection.html">SimpleNode::Connection</a>
+  
+    <li><a href="./String.html">String</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation">
+  <h1 class="class">class Object</h1>
+
+  <div id="description" class="description">
+    
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+    <!-- Constants -->
+    <section id="constants-list" class="section">
+      <h3 class="section-header">Constants</h3>
+      <dl>
+      
+        <dt id="CONFIRMATIONS">CONFIRMATIONS
+        
+        <dd class="description"><p>number of confirmations tx need before being forwarded</p>
+        
+      
+        <dt id="FORWARD">FORWARD
+        
+        <dd class="description"><p>address where received money is forwarded to</p>
+        
+      
+        <dt id="FORWARDED_TXS">FORWARDED_TXS
+        
+        <dd class="description"><p>list of already forwarded txs, to prevent duplicates</p>
+        
+      
+        <dt id="KEY">KEY
+        
+        <dd class="description"><p>key/address where people can send money</p>
+        
+      
+        <dt id="T">T
+        
+        <dd class="description">
+        
+      
+      </dl>
+    </section>
+    
+
+    
+
+    <!-- Methods -->
+    
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="method-i-get_tx" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">get_tx</span><span
+            class="method-args">(hash)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>fetch transaction from bbe as json and deserialize into <a
+href="Bitcoin/Protocol/Tx.html">Bitcoin::Protocol::Tx</a> object</p>
+          
+          
+
+          
+          <div class="method-source-code" id="get_tx-source">
+            <pre><span class="ruby-comment"># File examples/bbe_verify_tx.rb, line 18</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">get_tx</span>(<span class="ruby-identifier">hash</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">$use_coinbase_bbe</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span><span class="ruby-identifier">$testnet</span>
+    <span class="ruby-identifier">url</span> = <span class="ruby-string">&quot;https://coinbase.com/network/tx/%s.json&quot;</span> <span class="ruby-operator">%</span> [<span class="ruby-identifier">hash</span>]
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">url</span> = <span class="ruby-string">&quot;http://blockexplorer.com/%srawtx/%s&quot;</span> <span class="ruby-operator">%</span> [<span class="ruby-identifier">$testnet</span> <span class="ruby-operator">?</span> <span class="ruby-string">'testnet/'</span> <span class="ruby-operator">:</span> <span class="ruby-string">''</span>,  <span class="ruby-identifier">hash</span>]
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">json</span> = <span class="ruby-identifier">open</span>(<span class="ruby-identifier">url</span>).<span class="ruby-identifier">read</span>
+  <span class="ruby-constant">Bitcoin</span><span class="ruby-operator">::</span><span class="ruby-constant">Protocol</span><span class="ruby-operator">::</span><span class="ruby-constant">Tx</span>.<span class="ruby-identifier">from_json</span>(<span class="ruby-identifier">json</span>)
+<span class="ruby-keyword">rescue</span> <span class="ruby-constant">Exception</span>
+  <span class="ruby-keyword">nil</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- get_tx-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- get_tx-method -->
+
+    
+      <div id="method-i-reset" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">reset</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="reset-source">
+            <pre><span class="ruby-comment"># File examples/benchmark.rb~, line 13</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">reset</span>
+  <span class="ruby-value">%xrm -rf test.db`</span>
+  <span class="ruby-value">%xecho 'drop database bitcoin_test; create database bitcoin_test;' | psql`</span>
+  <span class="ruby-value">%xecho &quot;drop database bitcoin_test; create database bitcoin_test;&quot; | mysql -uroot -ppassword`</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- reset-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- reset-method -->
+
+    
+      <div id="method-i-run" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">run</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="run-source">
+            <pre><span class="ruby-comment"># File examples/benchmark.rb~, line 23</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">run</span>
+  <span class="ruby-keyword">begin</span>
+    <span class="ruby-constant">Timeout</span>.<span class="ruby-identifier">timeout</span>(<span class="ruby-constant">T</span>) <span class="ruby-keyword">do</span>
+      <span class="ruby-comment">#@store.import(&quot;#{ENV['HOME']}/.bitcoin/testnet3/blocks&quot;)</span>
+      <span class="ruby-ivar">@store</span>.<span class="ruby-identifier">import</span>(<span class="ruby-string">&quot;bench.dat&quot;</span>)
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">rescue</span> <span class="ruby-constant">Timeout</span><span class="ruby-operator">::</span><span class="ruby-constant">Error</span>
+    <span class="ruby-identifier">depth</span> = <span class="ruby-ivar">@store</span>.<span class="ruby-identifier">get_depth</span>
+    <span class="ruby-keyword">case</span> <span class="ruby-ivar">@store</span>.<span class="ruby-identifier">db</span>.<span class="ruby-identifier">adapter_scheme</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-value">:sqlite</span>
+      <span class="ruby-identifier">size</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">size</span>(<span class="ruby-string">&quot;test.db&quot;</span>)
+    <span class="ruby-keyword">when</span> <span class="ruby-value">:postgres</span>
+      <span class="ruby-identifier">size</span> = <span class="ruby-ivar">@store</span>.<span class="ruby-identifier">db</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-string">&quot;select pg_database_size('bitcoin_test')&quot;</span>).<span class="ruby-identifier">first</span>[<span class="ruby-value">:pg_database_size</span>]
+    <span class="ruby-keyword">when</span> <span class="ruby-value">:mysql</span>
+      <span class="ruby-identifier">size</span> = <span class="ruby-ivar">@store</span>.<span class="ruby-identifier">db</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-string">&quot;select sum(data_length+index_length) from information_schema.tables where table_schema = 'bitcoin_test';&quot;</span>).<span class="ruby-identifier">first</span>.<span class="ruby-identifier">to_a</span>[<span class="ruby-value">0</span>][<span class="ruby-value">1</span>].<span class="ruby-identifier">to_i</span>
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;#{size.to_s.rjust(10)} | #{depth.to_s.rjust(5)} |&quot;</span>
+    <span class="ruby-keyword">return</span> [<span class="ruby-identifier">depth</span>, <span class="ruby-identifier">size</span>]
+  <span class="ruby-keyword">rescue</span> <span class="ruby-constant">Exception</span>
+    <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;Error&quot;</span>
+    <span class="ruby-identifier">p</span> <span class="ruby-identifier">$!</span>
+    <span class="ruby-keyword">return</span> [<span class="ruby-value">0</span>, <span class="ruby-value">0</span>]
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- run-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- run-method -->
+
+    
+      <div id="method-i-str_val" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">str_val</span><span
+            class="method-args">(val, pre = "")</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>format value to be displayed</p>
+          
+          
+
+          
+          <div class="method-source-code" id="str_val-source">
+            <pre><span class="ruby-comment"># File examples/balance.rb, line 24</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">str_val</span>(<span class="ruby-identifier">val</span>, <span class="ruby-identifier">pre</span> = <span class="ruby-string">&quot;&quot;</span>)
+  (<span class="ruby-node">&quot;#{pre}#{&quot;%.8f&quot; % (val / 1e8)}&quot;</span>).<span class="ruby-identifier">rjust</span>(<span class="ruby-value">20</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- str_val-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- str_val-method -->
+
+    
+    </section><!-- public-instance-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+</div><!-- documentation -->
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 4.0.1.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+

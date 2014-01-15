@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+<title>README - bitcoin-ruby RDoc</title>
+
+<link type="text/css" media="screen" href="./rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "./";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="./js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/darkfish.js"></script>
+
+
+<body class="file">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="./index.html">Home</a>
+    <a href="./table_of_contents.html#classes">Classes</a>
+    <a href="./table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  
+<div id="table-of-contents">
+  <nav class="section">
+    <h3 class="section-header">Table of Contents</h3>
+    <ul>
+      <li><a href="#label-Bitcoin-ruby+%3Cimg+src%3D%22https%3A%2F%2Fapi.travis-ci.org%2Flian%2Fbitcoin-ruby.png%3Fbranch%3Dmaster%22+%2F%3E">Bitcoin-ruby <a href="http://travis-ci.org/lian/bitcoin-ruby"><img src="https://api.travis-ci.org/lian/bitcoin-ruby.png?branch=master" /></a></a>
+      <li><a href="#label-Compatible+with...">Compatible with…</a>
+      <li><a href="#label-Installation">Installation</a>
+      <li><a href="#label-Client">Client</a>
+      <li><a href="#label-Library+Usage">Library Usage</a>
+      <li><a href="#label-Keys%2FAddresses">Keys/Addresses</a>
+      <li><a href="#label-Blocks+%2F+Transactions+parsing">Blocks / Transactions parsing</a>
+      <li><a href="#label-Transaction+verification+%2F+Scripts">Transaction verification / Scripts</a>
+      <li><a href="#label-Scripts">Scripts</a>
+      <li><a href="#label-Create+Transactions">Create Transactions</a>
+      <li><a href="#label-Node+%2F+Network+connections">Node / Network connections</a>
+      <li><a href="#label-Storage+%2F+Database+backends">Storage / Database backends</a>
+      <li><a href="#label-Documentation">Documentation</a>
+      <li><a href="#label-Specs">Specs</a>
+      <li><a href="#label-Development">Development</a>
+    </ul>
+  </nav>
+</div>
+
+
+  <div id="project-metadata">
+    <nav id="fileindex-section" class="section project-section">
+  <h3 class="section-header">Pages</h3>
+
+  <ul>
+  
+    <li class="file"><a href="./COPYING.html">COPYING</a>
+  
+    <li class="file"><a href="./README_rdoc.html">README</a>
+  
+    <li class="file"><a href="./doc/CONFIG_rdoc.html">CONFIG</a>
+  
+    <li class="file"><a href="./doc/EXAMPLES_rdoc.html">EXAMPLES</a>
+  
+    <li class="file"><a href="./doc/NAMECOIN_rdoc.html">NAMECOIN</a>
+  
+    <li class="file"><a href="./doc/NODE_rdoc.html">NODE</a>
+  
+    <li class="file"><a href="./doc/STORAGE_rdoc.html">STORAGE</a>
+  
+    <li class="file"><a href="./doc/WALLET_rdoc.html">WALLET</a>
+  
+    <li class="file"><a href="./examples/graph_benchmark_results_rb~.html">graph_benchmark_results.rb~</a>
+  
+    <li class="file"><a href="./examples/import_rb~.html">import.rb~</a>
+  
+    <li class="file"><a href="./examples/run_bench_rb~.html">run_bench.rb~</a>
+  
+    <li class="file"><a href="./examples/run_benchmarks_rb~.html">run_benchmarks.rb~</a>
+  
+    <li class="file"><a href="./lib/bitcoin/gui/bitcoin-ruby_svg.html">bitcoin-ruby.svg</a>
+  
+    <li class="file"><a href="./lib/bitcoin/gui/gui_builder.html">gui.builder</a>
+  
+  </ul>
+</nav>
+
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="./Array.html">Array</a>
+  
+    <li><a href="./Bitcoin.html">Bitcoin</a>
+  
+    <li><a href="./Bitcoin/BinaryExtensions.html">Bitcoin::BinaryExtensions</a>
+  
+    <li><a href="./Bitcoin/Builder.html">Bitcoin::Builder</a>
+  
+    <li><a href="./Bitcoin/Builder/BlockBuilder.html">Bitcoin::Builder::BlockBuilder</a>
+  
+    <li><a href="./Bitcoin/Builder/ScriptBuilder.html">Bitcoin::Builder::ScriptBuilder</a>
+  
+    <li><a href="./Bitcoin/Builder/TxBuilder.html">Bitcoin::Builder::TxBuilder</a>
+  
+    <li><a href="./Bitcoin/Builder/TxInBuilder.html">Bitcoin::Builder::TxInBuilder</a>
+  
+    <li><a href="./Bitcoin/Builder/TxOutBuilder.html">Bitcoin::Builder::TxOutBuilder</a>
+  
+    <li><a href="./Bitcoin/Config.html">Bitcoin::Config</a>
+  
+    <li><a href="./Bitcoin/Connection.html">Bitcoin::Connection</a>
+  
+    <li><a href="./Bitcoin/ConnectionHandler.html">Bitcoin::ConnectionHandler</a>
+  
+    <li><a href="./Bitcoin/Gui.html">Bitcoin::Gui</a>
+  
+    <li><a href="./Bitcoin/Gui/AddrView.html">Bitcoin::Gui::AddrView</a>
+  
+    <li><a href="./Bitcoin/Gui/Bitcoin.html">Bitcoin::Gui::Bitcoin</a>
+  
+    <li><a href="./Bitcoin/Gui/Bitcoin/Gui.html">Bitcoin::Gui::Bitcoin::Gui</a>
+  
+    <li><a href="./Bitcoin/Gui/Bitcoin/Gui/Bitcoin.html">Bitcoin::Gui::Bitcoin::Gui::Bitcoin</a>
+  
+    <li><a href="./Bitcoin/Gui/Bitcoin/Gui/Bitcoin/Network.html">Bitcoin::Gui::Bitcoin::Gui::Bitcoin::Network</a>
+  
+    <li><a href="./Bitcoin/Gui/Bitcoin/Gui/Bitcoin/Network/CommandClient.html">Bitcoin::Gui::Bitcoin::Gui::Bitcoin::Network::CommandClient</a>
+  
+    <li><a href="./Bitcoin/Gui/ConnView.html">Bitcoin::Gui::ConnView</a>
+  
+    <li><a href="./Bitcoin/Gui/Connection.html">Bitcoin::Gui::Connection</a>
+  
+    <li><a href="./Bitcoin/Gui/Gui.html">Bitcoin::Gui::Gui</a>
+  
+    <li><a href="./Bitcoin/Gui/Helpers.html">Bitcoin::Gui::Helpers</a>
+  
+    <li><a href="./Bitcoin/Gui/TreeView.html">Bitcoin::Gui::TreeView</a>
+  
+    <li><a href="./Bitcoin/Gui/TxInView.html">Bitcoin::Gui::TxInView</a>
+  
+    <li><a href="./Bitcoin/Gui/TxView.html">Bitcoin::Gui::TxView</a>
+  
+    <li><a href="./Bitcoin/Key.html">Bitcoin::Key</a>
+  
+    <li><a href="./Bitcoin/Logger.html">Bitcoin::Logger</a>
+  
+    <li><a href="./Bitcoin/Logger/LogWrapper.html">Bitcoin::Logger::LogWrapper</a>
+  
+    <li><a href="./Bitcoin/Logger/Logger.html">Bitcoin::Logger::Logger</a>
+  
+    <li><a href="./Bitcoin/Logger/TimeLogger.html">Bitcoin::Logger::TimeLogger</a>
+  
+    <li><a href="./Bitcoin/Namecoin.html">Bitcoin::Namecoin</a>
+  
+    <li><a href="./Bitcoin/Namecoin/Script.html">Bitcoin::Namecoin::Script</a>
+  
+    <li><a href="./Bitcoin/Namecoin/Storage.html">Bitcoin::Namecoin::Storage</a>
+  
+    <li><a href="./Bitcoin/Namecoin/Storage/Backend.html">Bitcoin::Namecoin::Storage::Backend</a>
+  
+    <li><a href="./Bitcoin/Namecoin/Storage/Models.html">Bitcoin::Namecoin::Storage::Models</a>
+  
+    <li><a href="./Bitcoin/Namecoin/Storage/Models/Name.html">Bitcoin::Namecoin::Storage::Models::Name</a>
+  
+    <li><a href="./Bitcoin/Network.html">Bitcoin::Network</a>
+  
+    <li><a href="./Bitcoin/Network/CommandClient.html">Bitcoin::Network::CommandClient</a>
+  
+    <li><a href="./Bitcoin/Network/CommandHandler.html">Bitcoin::Network::CommandHandler</a>
+  
+    <li><a href="./Bitcoin/Network/ConnectionHandler.html">Bitcoin::Network::ConnectionHandler</a>
+  
+    <li><a href="./Bitcoin/Network/Node.html">Bitcoin::Network::Node</a>
+  
+    <li><a href="./Bitcoin/OpenSSL_EC.html">Bitcoin::OpenSSL_EC</a>
+  
+    <li><a href="./Bitcoin/OpenSSL_EC/FFI.html">Bitcoin::OpenSSL_EC::FFI</a>
+  
+    <li><a href="./Bitcoin/P.html">Bitcoin::P</a>
+  
+    <li><a href="./Bitcoin/Protocol.html">Bitcoin::Protocol</a>
+  
+    <li><a href="./Bitcoin/Protocol/Addr.html">Bitcoin::Protocol::Addr</a>
+  
+    <li><a href="./Bitcoin/Protocol/Alert.html">Bitcoin::Protocol::Alert</a>
+  
+    <li><a href="./Bitcoin/Protocol/AuxPow.html">Bitcoin::Protocol::AuxPow</a>
+  
+    <li><a href="./Bitcoin/Protocol/Block.html">Bitcoin::Protocol::Block</a>
+  
+    <li><a href="./Bitcoin/Protocol/Handler.html">Bitcoin::Protocol::Handler</a>
+  
+    <li><a href="./Bitcoin/Protocol/Parser.html">Bitcoin::Protocol::Parser</a>
+  
+    <li><a href="./Bitcoin/Protocol/Tx.html">Bitcoin::Protocol::Tx</a>
+  
+    <li><a href="./Bitcoin/Protocol/TxIn.html">Bitcoin::Protocol::TxIn</a>
+  
+    <li><a href="./Bitcoin/Protocol/TxOut.html">Bitcoin::Protocol::TxOut</a>
+  
+    <li><a href="./Bitcoin/Protocol/Version.html">Bitcoin::Protocol::Version</a>
+  
+    <li><a href="./Bitcoin/Script.html">Bitcoin::Script</a>
+  
+    <li><a href="./Bitcoin/Script/ScriptOpcodeError.html">Bitcoin::Script::ScriptOpcodeError</a>
+  
+    <li><a href="./Bitcoin/Storage.html">Bitcoin::Storage</a>
+  
+    <li><a href="./Bitcoin/Storage/Backends.html">Bitcoin::Storage::Backends</a>
+  
+    <li><a href="./Bitcoin/Storage/Backends/DummyStore.html">Bitcoin::Storage::Backends::DummyStore</a>
+  
+    <li><a href="./Bitcoin/Storage/Backends/SequelMigrations.html">Bitcoin::Storage::Backends::SequelMigrations</a>
+  
+    <li><a href="./Bitcoin/Storage/Backends/SequelStore.html">Bitcoin::Storage::Backends::SequelStore</a>
+  
+    <li><a href="./Bitcoin/Storage/Backends/StoreBase.html">Bitcoin::Storage::Backends::StoreBase</a>
+  
+    <li><a href="./Bitcoin/Storage/Backends/UtxoStore.html">Bitcoin::Storage::Backends::UtxoStore</a>
+  
+    <li><a href="./Bitcoin/Storage/Models.html">Bitcoin::Storage::Models</a>
+  
+    <li><a href="./Bitcoin/Storage/Models/Block.html">Bitcoin::Storage::Models::Block</a>
+  
+    <li><a href="./Bitcoin/Storage/Models/Tx.html">Bitcoin::Storage::Models::Tx</a>
+  
+    <li><a href="./Bitcoin/Storage/Models/TxIn.html">Bitcoin::Storage::Models::TxIn</a>
+  
+    <li><a href="./Bitcoin/Storage/Models/TxOut.html">Bitcoin::Storage::Models::TxOut</a>
+  
+    <li><a href="./Bitcoin/Util.html">Bitcoin::Util</a>
+  
+    <li><a href="./Bitcoin/Validation.html">Bitcoin::Validation</a>
+  
+    <li><a href="./Bitcoin/Validation/Block.html">Bitcoin::Validation::Block</a>
+  
+    <li><a href="./Bitcoin/Validation/Tx.html">Bitcoin::Validation::Tx</a>
+  
+    <li><a href="./Bitcoin/Validation/ValidationError.html">Bitcoin::Validation::ValidationError</a>
+  
+    <li><a href="./Bitcoin/Wallet.html">Bitcoin::Wallet</a>
+  
+    <li><a href="./Bitcoin/Wallet/DeterministicKeyStore.html">Bitcoin::Wallet::DeterministicKeyStore</a>
+  
+    <li><a href="./Bitcoin/Wallet/KeyGenerator.html">Bitcoin::Wallet::KeyGenerator</a>
+  
+    <li><a href="./Bitcoin/Wallet/SimpleCoinSelector.html">Bitcoin::Wallet::SimpleCoinSelector</a>
+  
+    <li><a href="./Bitcoin/Wallet/SimpleKeyStore.html">Bitcoin::Wallet::SimpleKeyStore</a>
+  
+    <li><a href="./Bitcoin/Wallet/TxDP.html">Bitcoin::Wallet::TxDP</a>
+  
+    <li><a href="./Bitcoin/Wallet/Wallet.html">Bitcoin::Wallet::Wallet</a>
+  
+    <li><a href="./EM.html">EM</a>
+  
+    <li><a href="./Gtk.html">Gtk</a>
+  
+    <li><a href="./Hash.html">Hash</a>
+  
+    <li><a href="./JSON.html">JSON</a>
+  
+    <li><a href="./Litecoin.html">Litecoin</a>
+  
+    <li><a href="./Litecoin/Scrypt.html">Litecoin::Scrypt</a>
+  
+    <li><a href="./Log4r.html">Log4r</a>
+  
+    <li><a href="./Log4r/Logger.html">Log4r::Logger</a>
+  
+    <li><a href="./Mnemonic.html">Mnemonic</a>
+  
+    <li><a href="./Object.html">Object</a>
+  
+    <li><a href="./OpenSSL.html">OpenSSL</a>
+  
+    <li><a href="./OpenSSL/BN.html">OpenSSL::BN</a>
+  
+    <li><a href="./OpenSSL/PKey.html">OpenSSL::PKey</a>
+  
+    <li><a href="./OpenSSL/PKey/EC.html">OpenSSL::PKey::EC</a>
+  
+    <li><a href="./OpenSSL/PKey/EC/Point.html">OpenSSL::PKey::EC::Point</a>
+  
+    <li><a href="./RawJSON_Connection.html">RawJSON_Connection</a>
+  
+    <li><a href="./SimpleNode.html">SimpleNode</a>
+  
+    <li><a href="./SimpleNode/Connection.html">SimpleNode::Connection</a>
+  
+    <li><a href="./String.html">String</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation" class="description">
+  
+<h1 id="label-Bitcoin-ruby+%3Cimg+src%3D%22https%3A%2F%2Fapi.travis-ci.org%2Flian%2Fbitcoin-ruby.png%3Fbranch%3Dmaster%22+%2F%3E">Bitcoin-ruby <a href="http://travis-ci.org/lian/bitcoin-ruby"><img src="https://api.travis-ci.org/lian/bitcoin-ruby.png?branch=master" /></a><span><a href="#label-Bitcoin-ruby+%3Cimg+src%3D%22https%3A%2F%2Fapi.travis-ci.org%2Flian%2Fbitcoin-ruby.png%3Fbranch%3Dmaster%22+%2F%3E">&para;</a> <a href="#documentation">&uarr;</a></span></h1>
+
+<p>This is a ruby library for interacting with the bitcoin protocol/network.</p>
+
+<p>Some of the main features are:</p>
+<ul><li>
+<p><a href="Bitcoin/Util.html">Bitcoin::Util</a> provides the basic bitcoin
+utility functions for base58, ECC, etc.</p>
+</li><li>
+<p><a href="Bitcoin/Protocol.html">Bitcoin::Protocol</a> can parse/create
+(almost?) all protocol messages</p>
+</li><li>
+<p><a href="Bitcoin/Network/Node.html">Bitcoin::Network::Node</a> connects to
+peers, fetches the blockchain and keeps it up to date (see <a
+href="doc/NODE_rdoc.html">NODE</a> for usage)</p>
+</li><li>
+<p><a href="Bitcoin/Validation.html">Bitcoin::Validation</a> validates block
+and transaction rules</p>
+</li><li>
+<p><a href="Bitcoin/Storage.html">Bitcoin::Storage</a> stores the blockchain
+and can be queried for transaction data</p>
+</li><li>
+<p><a href="Bitcoin/Script.html">Bitcoin::Script</a> implementation,
+create/run scripts and verify signatures</p>
+</li><li>
+<p><a href="Bitcoin/Key.html">Bitcoin::Key</a> provides a high-level API for
+creating and handling keys/addresses</p>
+</li><li>
+<p><a href="Bitcoin/Builder.html">Bitcoin::Builder</a> provides a high-level
+API for creating transactions (and blocks)</p>
+</li><li>
+<p><a href="Bitcoin/Wallet.html">Bitcoin::Wallet</a> is a draft implementation
+of a simple wallet</p>
+</li><li>
+<p><a href="Bitcoin/Namecoin.html">Bitcoin::Namecoin</a> implements all the
+namecoin-specific differences (see <a
+href="doc/NAMECOIN_rdoc.html">NAMECOIN</a>)</p>
+</li></ul>
+
+<h2 id="label-Compatible+with...">Compatible with…<span><a href="#label-Compatible+with...">&para;</a> <a href="#documentation">&uarr;</a></span></h2>
+<ul><li>
+<p>ruby 1.9.3</p>
+</li><li>
+<p>ruby 2.0.0</p>
+</li></ul>
+
+<h2 id="label-Installation">Installation<span><a href="#label-Installation">&para;</a> <a href="#documentation">&uarr;</a></span></h2>
+
+<p>We assume you already have a ruby 1.9 or 2.0 compatible interpreter and
+rubygems environment.</p>
+
+<pre>git clone https://github.com/lian/bitcoin-ruby.git; cd bitcoin-ruby
+ruby -Ilib bin/bitcoin_node</pre>
+
+<p>if you want to have it available system-wide, just build the gem and
+install it:</p>
+
+<pre>gem build bitcoin-ruby.gemspec &amp;&amp; gem install bitcoin-ruby-0.0.2.gem</pre>
+
+<p>now you can just call <code>bitcoin_node</code> from anywhere.</p>
+
+<p>Note that some aspects of the library (such as networking, storage, etc.)
+need additional dependencies which are not specified in the gemspec. The
+core requirements are intentionally kept to a minimum, so nobody has to
+install unneeded dependencies.</p>
+<ul><li>
+<p><code>eventmachine</code> to run a node / connect to peers</p>
+</li><li>
+<p><code>sequel</code>,
+<code>sqlite3</code>/<code>pg</code>/<code>mysql</code> to use a storage
+backend</p>
+</li><li>
+<p><code>em-dns</code> or <code>nslookup</code> to get peer addrs from DNS
+seeds</p>
+</li><li>
+<p><code>gir_ffi</code> for the gui</p>
+</li><li>
+<p><code>bacon</code> to run the specs</p>
+</li></ul>
+
+<p>If you would like to install using Bundler, put it in your Gemfile and run
+bundle install</p>
+
+<pre>gem 'bitcoin-ruby', git: 'https://github.com/lian/bitcoin-ruby', branch: 'master', require: 'bitcoin'</pre>
+
+<h2 id="label-Client">Client<span><a href="#label-Client">&para;</a> <a href="#documentation">&uarr;</a></span></h2>
+
+<p>There is a node which connects to the network and downloads the blockchain
+into a database. see <a href="doc/NODE_rdoc.html">NODE</a>, <a
+href="Bitcoin/Network/Node.html">Bitcoin::Network::Node</a>.</p>
+
+<p>It also opens an extra socket where local clients can query statistics,
+monitor blockchain data, and relay there transactions to the network. see
+<a href="doc/NODE_rdoc.html">NODE</a>, <a
+href="Bitcoin/Network/CommandHandler.html">Bitcoin::Network::CommandHandler</a>,
+<a
+href="Bitcoin/Network/CommandClient.html">Bitcoin::Network::CommandClient</a>.</p>
+
+<p>There is a <a href="doc/WALLET_rdoc.html">WALLET</a> implementation to
+manage a set of keys, list balances and create transactions. see <a
+href="doc/WALLET_rdoc.html">WALLET</a>, <a
+href="Bitcoin/Wallet.html">Bitcoin::Wallet</a>.</p>
+
+<h2 id="label-Library+Usage">Library Usage<span><a href="#label-Library+Usage">&para;</a> <a href="#documentation">&uarr;</a></span></h2>
+
+<p>There are different aspects to the library which can be used separately or
+in combination. Here are some ideas of what you could do. There are also
+some demo scripts in examples/, see <a
+href="doc/EXAMPLES_rdoc.html">EXAMPLES</a>.</p>
+
+<h3 id="label-Keys%2FAddresses">Keys/Addresses<span><a href="#label-Keys%2FAddresses">&para;</a> <a href="#documentation">&uarr;</a></span></h3>
+
+<p>Generate a <a href="Bitcoin/Key.html">Bitcoin::Key</a></p>
+
+<pre class="ruby"><span class="ruby-identifier">key</span> = <span class="ruby-constant">Bitcoin</span><span class="ruby-operator">::</span><span class="ruby-identifier">generate_key</span>
+<span class="ruby-identifier">key</span> <span class="ruby-comment">#=&gt; [&lt;privkey&gt;, &lt;pubkey&gt;]</span>
+</pre>
+
+<p>Get the address from a public key</p>
+
+<pre class="ruby"><span class="ruby-identifier">address</span> = <span class="ruby-constant">Bitcoin</span><span class="ruby-operator">::</span><span class="ruby-identifier">pubkey_to_address</span>(<span class="ruby-identifier">key</span>[<span class="ruby-value">1</span>])
+<span class="ruby-identifier">address</span> <span class="ruby-comment">#=&gt; &lt;bitcoin address&gt;</span>
+</pre>
+
+<p>Check if an address is valid</p>
+
+<pre class="ruby"><span class="ruby-constant">Bitcoin</span><span class="ruby-operator">::</span><span class="ruby-identifier">valid_address?</span>(<span class="ruby-identifier">address</span>) <span class="ruby-comment">#=&gt; true</span>
+</pre>
+
+<h3 id="label-Blocks+%2F+Transactions+parsing">Blocks / Transactions parsing<span><a href="#label-Blocks+%2F+Transactions+parsing">&para;</a> <a href="#documentation">&uarr;</a></span></h3>
+
+<p>Parse a <a href="Bitcoin/Protocol/Block.html">Bitcoin::Protocol::Block</a></p>
+
+<pre class="ruby"><span class="ruby-identifier">raw_block</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-string">'spec/bitcoin/fixtures/rawblock-0.bin'</span>, <span class="ruby-string">'rb'</span>) {<span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span> <span class="ruby-identifier">f</span>.<span class="ruby-identifier">read</span>}
+<span class="ruby-identifier">blk</span> = <span class="ruby-constant">Bitcoin</span><span class="ruby-operator">::</span><span class="ruby-constant">Protocol</span><span class="ruby-operator">::</span><span class="ruby-constant">Block</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">raw_block</span>)
+<span class="ruby-identifier">blk</span>.<span class="ruby-identifier">hash</span> <span class="ruby-comment">#=&gt; 00000000839a8e6886ab5951d76f411475428afc90947ee320161bbf18eb6048</span>
+<span class="ruby-identifier">blk</span>.<span class="ruby-identifier">tx</span>.<span class="ruby-identifier">count</span> <span class="ruby-comment">#=&gt; 1</span>
+<span class="ruby-identifier">blk</span>.<span class="ruby-identifier">to_hash</span> <span class="ruby-comment">#=&gt; ...</span>
+<span class="ruby-constant">Bitcoin</span><span class="ruby-operator">::</span><span class="ruby-constant">Protocol</span><span class="ruby-operator">::</span><span class="ruby-constant">Block</span>.<span class="ruby-identifier">from_json</span>( <span class="ruby-identifier">blk</span>.<span class="ruby-identifier">to_json</span> )
+</pre>
+
+<p>Parse a <a href="Bitcoin/Protocol/Tx.html">Bitcoin::Protocol::Tx</a></p>
+
+<pre class="ruby"><span class="ruby-identifier">raw_tx</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-string">'spec/bitcoin/fixtures/rawtx-01.bin'</span>, <span class="ruby-string">'rb'</span>) {<span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span> <span class="ruby-identifier">f</span>.<span class="ruby-identifier">read</span>}
+<span class="ruby-identifier">tx</span> = <span class="ruby-constant">Bitcoin</span><span class="ruby-operator">::</span><span class="ruby-constant">Protocol</span><span class="ruby-operator">::</span><span class="ruby-constant">Tx</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">raw_tx</span>)
+<span class="ruby-identifier">tx</span>.<span class="ruby-identifier">hash</span> <span class="ruby-comment">#=&gt; 6e9dd16625b62cfcd4bf02edb89ca1f5a8c30c4b1601507090fb28e59f2d02b4</span>
+<span class="ruby-identifier">tx</span>.<span class="ruby-identifier">in</span>.<span class="ruby-identifier">size</span> <span class="ruby-comment">#=&gt; 1</span>
+<span class="ruby-identifier">tx</span>.<span class="ruby-identifier">out</span>.<span class="ruby-identifier">size</span> <span class="ruby-comment">#=&gt; 2</span>
+<span class="ruby-identifier">tx</span>.<span class="ruby-identifier">to_hash</span> <span class="ruby-comment">#=&gt; ...</span>
+<span class="ruby-constant">Bitcoin</span><span class="ruby-operator">::</span><span class="ruby-constant">Protocol</span><span class="ruby-operator">::</span><span class="ruby-constant">Tx</span>.<span class="ruby-identifier">from_json</span>( <span class="ruby-identifier">tx</span>.<span class="ruby-identifier">to_json</span> )
+
+<span class="ruby-constant">Bitcoin</span><span class="ruby-operator">::</span><span class="ruby-constant">Script</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">tx</span>.<span class="ruby-identifier">out</span>[<span class="ruby-value">0</span>].<span class="ruby-identifier">pk_script</span>).<span class="ruby-identifier">to_string</span>
+<span class="ruby-comment">#=&gt; &quot;OP_DUP OP_HASH160 b2e21c1db922e3bdc529de7b38b4c401399e9afd OP_EQUALVERIFY OP_CHECKSIG&quot;</span>
+</pre>
+
+<h3 id="label-Transaction+verification+%2F+Scripts">Transaction verification / Scripts<span><a href="#label-Transaction+verification+%2F+Scripts">&para;</a> <a href="#documentation">&uarr;</a></span></h3>
+
+<p>Get the matching transactions (in this example tx1 is the spending
+transaction)</p>
+
+<pre class="ruby"><span class="ruby-identifier">rawtx1</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-string">&quot;spec/bitcoin/fixtures/rawtx-f4184fc596403b9d638783cf57adfe4c75c605f6356fbc91338530e9831e9e16.bin&quot;</span>, <span class="ruby-string">'rb'</span>) {<span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span> <span class="ruby-identifier">f</span>.<span class="ruby-identifier">read</span>}
+<span class="ruby-identifier">rawtx2</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-string">&quot;spec/bitcoin/fixtures/rawtx-0437cd7f8525ceed2324359c2d0ba26006d92d856a9c20fa0241106ee5a597c9.bin&quot;</span>, <span class="ruby-string">'rb'</span>) {<span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span> <span class="ruby-identifier">f</span>.<span class="ruby-identifier">read</span>}
+<span class="ruby-identifier">tx1</span> = <span class="ruby-constant">Bitcoin</span><span class="ruby-operator">::</span><span class="ruby-constant">Protocol</span><span class="ruby-operator">::</span><span class="ruby-constant">Tx</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">rawtx1</span>)
+<span class="ruby-identifier">tx2</span> = <span class="ruby-constant">Bitcoin</span><span class="ruby-operator">::</span><span class="ruby-constant">Protocol</span><span class="ruby-operator">::</span><span class="ruby-constant">Tx</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">rawtx2</span>)
+</pre>
+
+<p>Then simply ask the transaction to verify an input</p>
+
+<pre class="ruby"><span class="ruby-identifier">tx1</span>.<span class="ruby-identifier">verify_input_signature</span>(<span class="ruby-value">0</span>, <span class="ruby-identifier">tx2</span>) <span class="ruby-comment">#=&gt; true</span>
+</pre>
+
+<h3 id="label-Scripts">Scripts<span><a href="#label-Scripts">&para;</a> <a href="#documentation">&uarr;</a></span></h3>
+
+<p>If you want to control the <a
+href="Bitcoin/Script.html">Bitcoin::Script</a> yourself, you can do so</p>
+
+<pre class="ruby"><span class="ruby-identifier">txin</span> = <span class="ruby-identifier">tx1</span>.<span class="ruby-identifier">in</span>.<span class="ruby-identifier">first</span>
+<span class="ruby-identifier">txout</span> = <span class="ruby-identifier">tx2</span>.<span class="ruby-identifier">out</span>[<span class="ruby-identifier">txin</span>.<span class="ruby-identifier">prev_out_index</span>]
+<span class="ruby-identifier">script</span> = <span class="ruby-constant">Bitcoin</span><span class="ruby-operator">::</span><span class="ruby-constant">Script</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">txin</span>.<span class="ruby-identifier">script_sig</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">txout</span>.<span class="ruby-identifier">pk_script</span>)
+
+<span class="ruby-identifier">result</span> = <span class="ruby-identifier">script</span>.<span class="ruby-identifier">run</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">pubkey</span>, <span class="ruby-identifier">sig</span>, <span class="ruby-identifier">hash_type</span><span class="ruby-operator">|</span>
+  <span class="ruby-identifier">hash</span> = <span class="ruby-identifier">tx1</span>.<span class="ruby-identifier">signature_hash_for_input</span>(<span class="ruby-value">0</span>, <span class="ruby-keyword">nil</span>, <span class="ruby-identifier">txout</span>.<span class="ruby-identifier">pk_script</span>)
+  <span class="ruby-constant">Bitcoin</span>.<span class="ruby-identifier">verify_signature</span>(<span class="ruby-identifier">hash</span>, <span class="ruby-identifier">sig</span>, <span class="ruby-identifier">pubkey</span>.<span class="ruby-identifier">unpack</span>(<span class="ruby-string">&quot;H*&quot;</span>)[<span class="ruby-value">0</span>])
+<span class="ruby-keyword">end</span>
+<span class="ruby-identifier">result</span> <span class="ruby-comment">#=&gt; true</span>
+</pre>
+
+<h3 id="label-Create+Transactions">Create Transactions<span><a href="#label-Create+Transactions">&para;</a> <a href="#documentation">&uarr;</a></span></h3>
+
+<p>You need to know the previous output you want to spend (tx hash and output
+index), as well as the private key for the address required to sign for it.</p>
+
+<pre class="ruby"><span class="ruby-comment"># use testnet so you don't acidentially your whole money!</span>
+<span class="ruby-constant">Bitcoin</span>.<span class="ruby-identifier">network</span> = :<span class="ruby-identifier">testnet3</span>
+
+<span class="ruby-comment"># make the DSL methods available in your scope</span>
+<span class="ruby-identifier">include</span> <span class="ruby-constant">Bitcoin</span><span class="ruby-operator">::</span><span class="ruby-constant">Builder</span>
+
+<span class="ruby-comment"># the previous transaction that has an output to your address</span>
+<span class="ruby-identifier">prev_hash</span> = <span class="ruby-string">&quot;6c44b284c20fa22bd69c57a9dbff91fb71deddc8c54fb2f5aa41fc78c96c1ad1&quot;</span>
+
+<span class="ruby-comment"># the number of the output you want to use</span>
+<span class="ruby-identifier">prev_out_index</span> = <span class="ruby-value">0</span>
+
+<span class="ruby-comment"># fetch the tx from whereever you like and parse it</span>
+<span class="ruby-identifier">prev_tx</span> = <span class="ruby-constant">Bitcoin</span><span class="ruby-operator">::</span><span class="ruby-constant">P</span><span class="ruby-operator">::</span><span class="ruby-constant">Tx</span>.<span class="ruby-identifier">from_json</span>(<span class="ruby-identifier">open</span>(<span class="ruby-node">&quot;http://test.webbtc.com/tx/#{prev_hash}.json&quot;</span>))
+
+<span class="ruby-comment"># the key needed to sign an input that spends the previous output</span>
+<span class="ruby-identifier">key</span> = <span class="ruby-constant">Bitcoin</span><span class="ruby-operator">::</span><span class="ruby-constant">Key</span>.<span class="ruby-identifier">from_base58</span>(<span class="ruby-string">&quot;92ZRu28m2GHSKaaF2W7RswJ2iJYpTzVhBaN6ZLs7TENCs4b7ML8&quot;</span>)
+
+<span class="ruby-comment"># create a new transaction (and sign the inputs)</span>
+<span class="ruby-identifier">new_tx</span> = <span class="ruby-identifier">build_tx</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">t</span><span class="ruby-operator">|</span>
+
+  <span class="ruby-comment"># add the input you picked out earlier</span>
+  <span class="ruby-identifier">t</span>.<span class="ruby-identifier">input</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">i</span>.<span class="ruby-identifier">prev_out</span> <span class="ruby-identifier">prev_tx</span>
+    <span class="ruby-identifier">i</span>.<span class="ruby-identifier">prev_out_index</span> <span class="ruby-identifier">prev_out_index</span>
+    <span class="ruby-identifier">i</span>.<span class="ruby-identifier">signature_key</span> <span class="ruby-identifier">key</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-comment"># add an output that sends some bitcoins to another address</span>
+  <span class="ruby-identifier">t</span>.<span class="ruby-identifier">output</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">o</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">o</span>.<span class="ruby-identifier">value</span> <span class="ruby-value">50000000</span> <span class="ruby-comment"># 0.5 BTC in satoshis</span>
+    <span class="ruby-identifier">o</span>.<span class="ruby-identifier">script</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">s</span><span class="ruby-operator">|</span> <span class="ruby-identifier">s</span>.<span class="ruby-identifier">recipient</span> <span class="ruby-string">&quot;mugwYJ1sKyr8EDDgXtoh8sdDQuNWKYNf88&quot;</span> }
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-comment"># add another output spending the remaining amount back to yourself</span>
+  <span class="ruby-comment"># if you want to pay a tx fee, reduce the value of this output accordingly</span>
+  <span class="ruby-comment"># if you want to keep your financial history private, use a different address</span>
+  <span class="ruby-identifier">t</span>.<span class="ruby-identifier">output</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">o</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">o</span>.<span class="ruby-identifier">value</span> <span class="ruby-value">49000000</span> <span class="ruby-comment"># 0.49 BTC, leave 0.01 BTC as fee</span>
+    <span class="ruby-identifier">o</span>.<span class="ruby-identifier">script</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">s</span><span class="ruby-operator">|</span> <span class="ruby-identifier">s</span>.<span class="ruby-identifier">recipient</span> <span class="ruby-identifier">key</span>.<span class="ruby-identifier">addr</span> }
+  <span class="ruby-keyword">end</span>
+
+<span class="ruby-keyword">end</span>
+
+<span class="ruby-comment"># examine your transaction. you can relay it through http://webbtc.com/relay_tx</span>
+<span class="ruby-comment"># that will also give you a hint on the error if something goes wrong</span>
+<span class="ruby-identifier">puts</span> <span class="ruby-identifier">new_tx</span>.<span class="ruby-identifier">to_json</span>
+</pre>
+
+<h3 id="label-Node+%2F+Network+connections">Node / Network connections<span><a href="#label-Node+%2F+Network+connections">&para;</a> <a href="#documentation">&uarr;</a></span></h3>
+
+<p>The <a href="Bitcoin/Network/Node.html">Bitcoin::Network::Node</a> can
+connect to peers and download the blockchain into a <a
+href="Bitcoin/Storage.html">Bitcoin::Storage</a> backend. For now it works
+completely self-contained:</p>
+
+<pre class="ruby"><span class="ruby-identifier">node</span> = <span class="ruby-constant">Bitcoin</span><span class="ruby-operator">::</span><span class="ruby-constant">Network</span><span class="ruby-operator">::</span><span class="ruby-constant">Node</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">options</span>) <span class="ruby-comment"># options = {:network =&gt; :bitcoin, ...}</span>
+<span class="ruby-identifier">node</span>.<span class="ruby-identifier">run</span>
+</pre>
+
+<p>In the future you will be able to register callbacks to the node and
+control many aspects of its operation yourself. Also see <a
+href="doc/NODE_rdoc.html">NODE</a>.</p>
+
+<p>If you want to implement your own node, see lib/bitcoin/connection.rb or
+lib/bitcoin/network/node.rb for examples.</p>
+
+<h3 id="label-Storage+%2F+Database+backends">Storage / Database backends<span><a href="#label-Storage+%2F+Database+backends">&para;</a> <a href="#documentation">&uarr;</a></span></h3>
+
+<p>There is support for different storage backends. Each backend can be used
+with sqlite, postgres or mysql. All backends implement the interface
+defined in <a
+href="Bitcoin/Storage/Backends/StoreBase.html">Bitcoin::Storage::Backends::StoreBase</a>
+and return <a
+href="Bitcoin/Storage/Models.html">Bitcoin::Storage::Models</a>.</p>
+
+<pre class="ruby"><span class="ruby-identifier">store</span> = <span class="ruby-constant">Bitcoin</span><span class="ruby-operator">::</span><span class="ruby-constant">Storage</span>.<span class="ruby-identifier">sequel</span>(:<span class="ruby-identifier">db</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;sqlite://bitcoin.db&quot;</span>) <span class="ruby-comment"># in-memory db</span>
+<span class="ruby-identifier">store</span>.<span class="ruby-identifier">get_head</span> <span class="ruby-comment">#=&gt; block</span>
+<span class="ruby-identifier">txouts</span> = <span class="ruby-identifier">store</span>.<span class="ruby-identifier">get_txouts_for_address</span>(<span class="ruby-string">&quot;15yN7NPEpu82sHhB6TzCW5z5aXoamiKeGy&quot;</span>)
+<span class="ruby-identifier">txouts</span>.<span class="ruby-identifier">first</span>.<span class="ruby-identifier">value</span> <span class="ruby-comment">#=&gt; 5000000000</span>
+<span class="ruby-identifier">txouts</span>.<span class="ruby-identifier">first</span>.<span class="ruby-identifier">type</span> <span class="ruby-comment">#=&gt; :pubkey</span>
+<span class="ruby-identifier">txouts</span>.<span class="ruby-identifier">first</span>.<span class="ruby-identifier">get_address</span> <span class="ruby-comment">#=&gt; &quot;15yN7NPEpu82sHhB6TzCW5z5aXoamiKeGy&quot;</span>
+</pre>
+
+<p>See also <a href="doc/STORAGE_rdoc.html">STORAGE</a>, <a
+href="Bitcoin/Storage/Backends/UtxoStore.html">Bitcoin::Storage::Backends::UtxoStore</a>,
+<a
+href="Bitcoin/Storage/Backends/SequelStore.html">Bitcoin::Storage::Backends::SequelStore</a>
+and <a
+href="Bitcoin/Storage/Backends/DummyStore.html">Bitcoin::Storage::Backends::DummyStore</a>
+for details.</p>
+
+<h2 id="label-Documentation">Documentation<span><a href="#label-Documentation">&para;</a> <a href="#documentation">&uarr;</a></span></h2>
+
+<p>Always trying to improve, any help appreciated! If anything is unclear to
+you, let us know!</p>
+
+<p>Documentation is generated using RDoc</p>
+
+<pre>rake rdoc</pre>
+
+<p>The specs are also a good place to see how something works.</p>
+
+<h2 id="label-Specs">Specs<span><a href="#label-Specs">&para;</a> <a href="#documentation">&uarr;</a></span></h2>
+
+<p>The specs can be run with</p>
+
+<pre>rake bacon</pre>
+
+<p>or, if you want to run a single spec</p>
+
+<pre>ruby spec/bitcoin/bitcoin_spec.rb</pre>
+
+<p>To test the postgres/mysql storage backend, create a database and set it as
+an environment variable:</p>
+
+<pre>echo &quot;create database bitcoin_test&quot; | psql
+TEST_DB_POSTGRES=&quot;postgres:/bitcoin_test&quot; rake bacon</pre>
+
+<p>If you make changes to the code or add functionality, please also add
+specs.</p>
+
+<h2 id="label-Development">Development<span><a href="#label-Development">&para;</a> <a href="#documentation">&uarr;</a></span></h2>
+
+<p>Any help or feedback is greatly appreciated! From getting knee-deep into
+elliptic-curve acrobatics, to cleaning up high-level naming conventions,
+there is something for everyone to do. Even if you are completely lost,
+just pointing out what is unclear helps a lot!</p>
+
+<p>If you are curious or like to participate in development, drop by
+#bitcoin-ruby on irc.freenode.net!</p>
+
+</div>
+
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 4.0.1.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+

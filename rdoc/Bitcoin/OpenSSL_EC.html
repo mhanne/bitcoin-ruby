@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+<title>module Bitcoin::OpenSSL_EC - bitcoin-ruby RDoc</title>
+
+<link type="text/css" media="screen" href="../rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "../";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/darkfish.js"></script>
+
+
+<body id="top" class="module">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="../index.html">Home</a>
+    <a href="../table_of_contents.html#classes">Classes</a>
+    <a href="../table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>lib/bitcoin/ffi/openssl.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    
+    
+    
+    <!-- Extension Modules -->
+<nav id="extends-section" class="section">
+  <h3 class="section-header">Extended With Modules</h3>
+
+  <ul class="link-list">
+    
+  
+    <li><span class="extend">FFI::Library</span>
+  
+  
+  </ul>
+</nav>
+
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li ><a href="#method-c-BN_num_bytes">::BN_num_bytes</a>
+    
+    <li ><a href="#method-c-der_to_private_key">::der_to_private_key</a>
+    
+    <li ><a href="#method-c-init_ffi_ssl">::init_ffi_ssl</a>
+    
+    <li ><a href="#method-c-recover_compact">::recover_compact</a>
+    
+    <li ><a href="#method-c-recover_public_key_from_signature">::recover_public_key_from_signature</a>
+    
+    <li ><a href="#method-c-regenerate_key">::regenerate_key</a>
+    
+    <li ><a href="#method-c-sign_compact">::sign_compact</a>
+    
+  </ul>
+</nav>
+
+  </div>
+
+  <div id="project-metadata">
+    <nav id="fileindex-section" class="section project-section">
+  <h3 class="section-header">Pages</h3>
+
+  <ul>
+  
+    <li class="file"><a href="../COPYING.html">COPYING</a>
+  
+    <li class="file"><a href="../README_rdoc.html">README</a>
+  
+    <li class="file"><a href="../doc/CONFIG_rdoc.html">CONFIG</a>
+  
+    <li class="file"><a href="../doc/EXAMPLES_rdoc.html">EXAMPLES</a>
+  
+    <li class="file"><a href="../doc/NAMECOIN_rdoc.html">NAMECOIN</a>
+  
+    <li class="file"><a href="../doc/NODE_rdoc.html">NODE</a>
+  
+    <li class="file"><a href="../doc/STORAGE_rdoc.html">STORAGE</a>
+  
+    <li class="file"><a href="../doc/WALLET_rdoc.html">WALLET</a>
+  
+    <li class="file"><a href="../examples/graph_benchmark_results_rb~.html">graph_benchmark_results.rb~</a>
+  
+    <li class="file"><a href="../examples/import_rb~.html">import.rb~</a>
+  
+    <li class="file"><a href="../examples/run_bench_rb~.html">run_bench.rb~</a>
+  
+    <li class="file"><a href="../examples/run_benchmarks_rb~.html">run_benchmarks.rb~</a>
+  
+    <li class="file"><a href="../lib/bitcoin/gui/bitcoin-ruby_svg.html">bitcoin-ruby.svg</a>
+  
+    <li class="file"><a href="../lib/bitcoin/gui/gui_builder.html">gui.builder</a>
+  
+  </ul>
+</nav>
+
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="../Array.html">Array</a>
+  
+    <li><a href="../Bitcoin.html">Bitcoin</a>
+  
+    <li><a href="../Bitcoin/BinaryExtensions.html">Bitcoin::BinaryExtensions</a>
+  
+    <li><a href="../Bitcoin/Builder.html">Bitcoin::Builder</a>
+  
+    <li><a href="../Bitcoin/Builder/BlockBuilder.html">Bitcoin::Builder::BlockBuilder</a>
+  
+    <li><a href="../Bitcoin/Builder/ScriptBuilder.html">Bitcoin::Builder::ScriptBuilder</a>
+  
+    <li><a href="../Bitcoin/Builder/TxBuilder.html">Bitcoin::Builder::TxBuilder</a>
+  
+    <li><a href="../Bitcoin/Builder/TxInBuilder.html">Bitcoin::Builder::TxInBuilder</a>
+  
+    <li><a href="../Bitcoin/Builder/TxOutBuilder.html">Bitcoin::Builder::TxOutBuilder</a>
+  
+    <li><a href="../Bitcoin/Config.html">Bitcoin::Config</a>
+  
+    <li><a href="../Bitcoin/Connection.html">Bitcoin::Connection</a>
+  
+    <li><a href="../Bitcoin/ConnectionHandler.html">Bitcoin::ConnectionHandler</a>
+  
+    <li><a href="../Bitcoin/Gui.html">Bitcoin::Gui</a>
+  
+    <li><a href="../Bitcoin/Gui/AddrView.html">Bitcoin::Gui::AddrView</a>
+  
+    <li><a href="../Bitcoin/Gui/Bitcoin.html">Bitcoin::Gui::Bitcoin</a>
+  
+    <li><a href="../Bitcoin/Gui/Bitcoin/Gui.html">Bitcoin::Gui::Bitcoin::Gui</a>
+  
+    <li><a href="../Bitcoin/Gui/Bitcoin/Gui/Bitcoin.html">Bitcoin::Gui::Bitcoin::Gui::Bitcoin</a>
+  
+    <li><a href="../Bitcoin/Gui/Bitcoin/Gui/Bitcoin/Network.html">Bitcoin::Gui::Bitcoin::Gui::Bitcoin::Network</a>
+  
+    <li><a href="../Bitcoin/Gui/Bitcoin/Gui/Bitcoin/Network/CommandClient.html">Bitcoin::Gui::Bitcoin::Gui::Bitcoin::Network::CommandClient</a>
+  
+    <li><a href="../Bitcoin/Gui/ConnView.html">Bitcoin::Gui::ConnView</a>
+  
+    <li><a href="../Bitcoin/Gui/Connection.html">Bitcoin::Gui::Connection</a>
+  
+    <li><a href="../Bitcoin/Gui/Gui.html">Bitcoin::Gui::Gui</a>
+  
+    <li><a href="../Bitcoin/Gui/Helpers.html">Bitcoin::Gui::Helpers</a>
+  
+    <li><a href="../Bitcoin/Gui/TreeView.html">Bitcoin::Gui::TreeView</a>
+  
+    <li><a href="../Bitcoin/Gui/TxInView.html">Bitcoin::Gui::TxInView</a>
+  
+    <li><a href="../Bitcoin/Gui/TxView.html">Bitcoin::Gui::TxView</a>
+  
+    <li><a href="../Bitcoin/Key.html">Bitcoin::Key</a>
+  
+    <li><a href="../Bitcoin/Logger.html">Bitcoin::Logger</a>
+  
+    <li><a href="../Bitcoin/Logger/LogWrapper.html">Bitcoin::Logger::LogWrapper</a>
+  
+    <li><a href="../Bitcoin/Logger/Logger.html">Bitcoin::Logger::Logger</a>
+  
+    <li><a href="../Bitcoin/Logger/TimeLogger.html">Bitcoin::Logger::TimeLogger</a>
+  
+    <li><a href="../Bitcoin/Namecoin.html">Bitcoin::Namecoin</a>
+  
+    <li><a href="../Bitcoin/Namecoin/Script.html">Bitcoin::Namecoin::Script</a>
+  
+    <li><a href="../Bitcoin/Namecoin/Storage.html">Bitcoin::Namecoin::Storage</a>
+  
+    <li><a href="../Bitcoin/Namecoin/Storage/Backend.html">Bitcoin::Namecoin::Storage::Backend</a>
+  
+    <li><a href="../Bitcoin/Namecoin/Storage/Models.html">Bitcoin::Namecoin::Storage::Models</a>
+  
+    <li><a href="../Bitcoin/Namecoin/Storage/Models/Name.html">Bitcoin::Namecoin::Storage::Models::Name</a>
+  
+    <li><a href="../Bitcoin/Network.html">Bitcoin::Network</a>
+  
+    <li><a href="../Bitcoin/Network/CommandClient.html">Bitcoin::Network::CommandClient</a>
+  
+    <li><a href="../Bitcoin/Network/CommandHandler.html">Bitcoin::Network::CommandHandler</a>
+  
+    <li><a href="../Bitcoin/Network/ConnectionHandler.html">Bitcoin::Network::ConnectionHandler</a>
+  
+    <li><a href="../Bitcoin/Network/Node.html">Bitcoin::Network::Node</a>
+  
+    <li><a href="../Bitcoin/OpenSSL_EC.html">Bitcoin::OpenSSL_EC</a>
+  
+    <li><a href="../Bitcoin/OpenSSL_EC/FFI.html">Bitcoin::OpenSSL_EC::FFI</a>
+  
+    <li><a href="../Bitcoin/P.html">Bitcoin::P</a>
+  
+    <li><a href="../Bitcoin/Protocol.html">Bitcoin::Protocol</a>
+  
+    <li><a href="../Bitcoin/Protocol/Addr.html">Bitcoin::Protocol::Addr</a>
+  
+    <li><a href="../Bitcoin/Protocol/Alert.html">Bitcoin::Protocol::Alert</a>
+  
+    <li><a href="../Bitcoin/Protocol/AuxPow.html">Bitcoin::Protocol::AuxPow</a>
+  
+    <li><a href="../Bitcoin/Protocol/Block.html">Bitcoin::Protocol::Block</a>
+  
+    <li><a href="../Bitcoin/Protocol/Handler.html">Bitcoin::Protocol::Handler</a>
+  
+    <li><a href="../Bitcoin/Protocol/Parser.html">Bitcoin::Protocol::Parser</a>
+  
+    <li><a href="../Bitcoin/Protocol/Tx.html">Bitcoin::Protocol::Tx</a>
+  
+    <li><a href="../Bitcoin/Protocol/TxIn.html">Bitcoin::Protocol::TxIn</a>
+  
+    <li><a href="../Bitcoin/Protocol/TxOut.html">Bitcoin::Protocol::TxOut</a>
+  
+    <li><a href="../Bitcoin/Protocol/Version.html">Bitcoin::Protocol::Version</a>
+  
+    <li><a href="../Bitcoin/Script.html">Bitcoin::Script</a>
+  
+    <li><a href="../Bitcoin/Script/ScriptOpcodeError.html">Bitcoin::Script::ScriptOpcodeError</a>
+  
+    <li><a href="../Bitcoin/Storage.html">Bitcoin::Storage</a>
+  
+    <li><a href="../Bitcoin/Storage/Backends.html">Bitcoin::Storage::Backends</a>
+  
+    <li><a href="../Bitcoin/Storage/Backends/DummyStore.html">Bitcoin::Storage::Backends::DummyStore</a>
+  
+    <li><a href="../Bitcoin/Storage/Backends/SequelMigrations.html">Bitcoin::Storage::Backends::SequelMigrations</a>
+  
+    <li><a href="../Bitcoin/Storage/Backends/SequelStore.html">Bitcoin::Storage::Backends::SequelStore</a>
+  
+    <li><a href="../Bitcoin/Storage/Backends/StoreBase.html">Bitcoin::Storage::Backends::StoreBase</a>
+  
+    <li><a href="../Bitcoin/Storage/Backends/UtxoStore.html">Bitcoin::Storage::Backends::UtxoStore</a>
+  
+    <li><a href="../Bitcoin/Storage/Models.html">Bitcoin::Storage::Models</a>
+  
+    <li><a href="../Bitcoin/Storage/Models/Block.html">Bitcoin::Storage::Models::Block</a>
+  
+    <li><a href="../Bitcoin/Storage/Models/Tx.html">Bitcoin::Storage::Models::Tx</a>
+  
+    <li><a href="../Bitcoin/Storage/Models/TxIn.html">Bitcoin::Storage::Models::TxIn</a>
+  
+    <li><a href="../Bitcoin/Storage/Models/TxOut.html">Bitcoin::Storage::Models::TxOut</a>
+  
+    <li><a href="../Bitcoin/Util.html">Bitcoin::Util</a>
+  
+    <li><a href="../Bitcoin/Validation.html">Bitcoin::Validation</a>
+  
+    <li><a href="../Bitcoin/Validation/Block.html">Bitcoin::Validation::Block</a>
+  
+    <li><a href="../Bitcoin/Validation/Tx.html">Bitcoin::Validation::Tx</a>
+  
+    <li><a href="../Bitcoin/Validation/ValidationError.html">Bitcoin::Validation::ValidationError</a>
+  
+    <li><a href="../Bitcoin/Wallet.html">Bitcoin::Wallet</a>
+  
+    <li><a href="../Bitcoin/Wallet/DeterministicKeyStore.html">Bitcoin::Wallet::DeterministicKeyStore</a>
+  
+    <li><a href="../Bitcoin/Wallet/KeyGenerator.html">Bitcoin::Wallet::KeyGenerator</a>
+  
+    <li><a href="../Bitcoin/Wallet/SimpleCoinSelector.html">Bitcoin::Wallet::SimpleCoinSelector</a>
+  
+    <li><a href="../Bitcoin/Wallet/SimpleKeyStore.html">Bitcoin::Wallet::SimpleKeyStore</a>
+  
+    <li><a href="../Bitcoin/Wallet/TxDP.html">Bitcoin::Wallet::TxDP</a>
+  
+    <li><a href="../Bitcoin/Wallet/Wallet.html">Bitcoin::Wallet::Wallet</a>
+  
+    <li><a href="../EM.html">EM</a>
+  
+    <li><a href="../Gtk.html">Gtk</a>
+  
+    <li><a href="../Hash.html">Hash</a>
+  
+    <li><a href="../JSON.html">JSON</a>
+  
+    <li><a href="../Litecoin.html">Litecoin</a>
+  
+    <li><a href="../Litecoin/Scrypt.html">Litecoin::Scrypt</a>
+  
+    <li><a href="../Log4r.html">Log4r</a>
+  
+    <li><a href="../Log4r/Logger.html">Log4r::Logger</a>
+  
+    <li><a href="../Mnemonic.html">Mnemonic</a>
+  
+    <li><a href="../Object.html">Object</a>
+  
+    <li><a href="../OpenSSL.html">OpenSSL</a>
+  
+    <li><a href="../OpenSSL/BN.html">OpenSSL::BN</a>
+  
+    <li><a href="../OpenSSL/PKey.html">OpenSSL::PKey</a>
+  
+    <li><a href="../OpenSSL/PKey/EC.html">OpenSSL::PKey::EC</a>
+  
+    <li><a href="../OpenSSL/PKey/EC/Point.html">OpenSSL::PKey::EC::Point</a>
+  
+    <li><a href="../RawJSON_Connection.html">RawJSON_Connection</a>
+  
+    <li><a href="../SimpleNode.html">SimpleNode</a>
+  
+    <li><a href="../SimpleNode/Connection.html">SimpleNode::Connection</a>
+  
+    <li><a href="../String.html">String</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation">
+  <h1 class="module">module Bitcoin::OpenSSL_EC</h1>
+
+  <div id="description" class="description">
+    
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+    <!-- Constants -->
+    <section id="constants-list" class="section">
+      <h3 class="section-header">Constants</h3>
+      <dl>
+      
+        <dt id="NID_secp256k1">NID_secp256k1
+        
+        <dd class="description">
+        
+      
+        <dt id="POINT_CONVERSION_COMPRESSED">POINT_CONVERSION_COMPRESSED
+        
+        <dd class="description">
+        
+      
+        <dt id="POINT_CONVERSION_UNCOMPRESSED">POINT_CONVERSION_UNCOMPRESSED
+        
+        <dd class="description">
+        
+      
+      </dl>
+    </section>
+    
+
+    
+
+    <!-- Methods -->
+    
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Class Methods</h3>
+
+    
+      <div id="method-c-BN_num_bytes" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">BN_num_bytes</span><span
+            class="method-args">(ptr)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="BN_num_bytes-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/ffi/openssl.rb, line 64</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-constant">BN_num_bytes</span>(<span class="ruby-identifier">ptr</span>); (<span class="ruby-constant">BN_num_bits</span>(<span class="ruby-identifier">ptr</span>) <span class="ruby-operator">+</span> <span class="ruby-value">7</span>) <span class="ruby-operator">/</span> <span class="ruby-value">8</span>; <span class="ruby-keyword">end</span></pre>
+          </div><!-- BN_num_bytes-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- BN_num_bytes-method -->
+
+    
+      <div id="method-c-der_to_private_key" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">der_to_private_key</span><span
+            class="method-args">(der_hex)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>extract private key from uncompressed DER format</p>
+          
+          
+
+          
+          <div class="method-source-code" id="der_to_private_key-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/ffi/openssl.rb, line 124</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">der_to_private_key</span>(<span class="ruby-identifier">der_hex</span>)
+  <span class="ruby-identifier">init_ffi_ssl</span>
+  <span class="ruby-comment">#k  = EC_KEY_new_by_curve_name(NID_secp256k1)</span>
+  <span class="ruby-comment">#kp = FFI::MemoryPointer.new(:pointer).put_pointer(0, eckey)</span>
+
+  <span class="ruby-identifier">buf</span> = <span class="ruby-constant">FFI</span><span class="ruby-operator">::</span><span class="ruby-constant">MemoryPointer</span>.<span class="ruby-identifier">from_string</span>([<span class="ruby-identifier">der_hex</span>].<span class="ruby-identifier">pack</span>(<span class="ruby-string">&quot;H*&quot;</span>))
+  <span class="ruby-identifier">ptr</span> = <span class="ruby-constant">FFI</span><span class="ruby-operator">::</span><span class="ruby-constant">MemoryPointer</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">:pointer</span>).<span class="ruby-identifier">put_pointer</span>(<span class="ruby-value">0</span>, <span class="ruby-identifier">buf</span>)
+
+  <span class="ruby-comment">#ec_key = d2i_ECPrivateKey(kp, ptr, buf.size-1)</span>
+  <span class="ruby-identifier">ec_key</span> = <span class="ruby-identifier">d2i_ECPrivateKey</span>(<span class="ruby-keyword">nil</span>, <span class="ruby-identifier">ptr</span>, <span class="ruby-identifier">buf</span>.<span class="ruby-identifier">size</span><span class="ruby-operator">-</span><span class="ruby-value">1</span>)
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">nil</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">ec_key</span>.<span class="ruby-identifier">null?</span>
+  <span class="ruby-identifier">bn</span> = <span class="ruby-constant">EC_KEY_get0_private_key</span>(<span class="ruby-identifier">ec_key</span>)
+  <span class="ruby-constant">BN_bn2bin</span>(<span class="ruby-identifier">bn</span>, <span class="ruby-identifier">buf</span>)
+  <span class="ruby-identifier">buf</span>.<span class="ruby-identifier">read_string</span>(<span class="ruby-value">32</span>).<span class="ruby-identifier">unpack</span>(<span class="ruby-string">&quot;H*&quot;</span>)[<span class="ruby-value">0</span>]
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- der_to_private_key-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- der_to_private_key-method -->
+
+    
+      <div id="method-c-init_ffi_ssl" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">init_ffi_ssl</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="init_ffi_ssl-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/ffi/openssl.rb, line 281</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">init_ffi_ssl</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@ssl_loaded</span>
+  <span class="ruby-constant">SSL_library_init</span>()
+  <span class="ruby-constant">ERR_load_crypto_strings</span>()
+  <span class="ruby-constant">SSL_load_error_strings</span>()
+  <span class="ruby-constant">RAND_poll</span>()
+  <span class="ruby-ivar">@ssl_loaded</span> = <span class="ruby-keyword">true</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- init_ffi_ssl-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- init_ffi_ssl-method -->
+
+    
+      <div id="method-c-recover_compact" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">recover_compact</span><span
+            class="method-args">(hash, signature)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="recover_compact-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/ffi/openssl.rb, line 269</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">recover_compact</span>(<span class="ruby-identifier">hash</span>, <span class="ruby-identifier">signature</span>)
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">signature</span>.<span class="ruby-identifier">bytesize</span> <span class="ruby-operator">!=</span> <span class="ruby-value">65</span>
+  <span class="ruby-comment">#i = signature.unpack(&quot;C&quot;)[0] - 27</span>
+  <span class="ruby-comment">#pubkey = recover_public_key_from_signature(hash, signature, (i &amp; ~4), i &gt;= 4)</span>
+
+  <span class="ruby-identifier">version</span> = <span class="ruby-identifier">signature</span>.<span class="ruby-identifier">unpack</span>(<span class="ruby-string">'C'</span>)[<span class="ruby-value">0</span>]
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">version</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value">27</span> <span class="ruby-keyword">or</span> <span class="ruby-identifier">version</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">34</span>
+
+  <span class="ruby-identifier">compressed</span> = (<span class="ruby-identifier">version</span> <span class="ruby-operator">&gt;=</span> <span class="ruby-value">31</span>) <span class="ruby-operator">?</span> (<span class="ruby-identifier">version</span> <span class="ruby-operator">-=</span> <span class="ruby-value">4</span>; <span class="ruby-keyword">true</span>) <span class="ruby-operator">:</span> <span class="ruby-keyword">false</span>
+  <span class="ruby-identifier">pubkey</span> = <span class="ruby-identifier">recover_public_key_from_signature</span>(<span class="ruby-identifier">hash</span>, <span class="ruby-identifier">signature</span>, <span class="ruby-identifier">version</span><span class="ruby-operator">-</span><span class="ruby-value">27</span>, <span class="ruby-identifier">compressed</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- recover_compact-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- recover_compact-method -->
+
+    
+      <div id="method-c-recover_public_key_from_signature" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">recover_public_key_from_signature</span><span
+            class="method-args">(message_hash, signature, rec_id, is_compressed)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Given the components of a signature and a selector value, recover and
+return the public key that generated the signature according to the
+algorithm in SEC1v2 section 4.1.6.</p>
+
+<p>rec_id is an index from 0 to 3 that indicates which of the 4 possible keys
+is the correct one. Because the key recovery operation yields multiple
+potential keys, the correct key must either be stored alongside the
+signature, or you must be willing to try each rec_id in turn until you find
+one that outputs the key you are expecting.</p>
+
+<p>If this method returns nil, it means recovery was not possible and rec_id
+should be iterated.</p>
+
+<p>Given the above two points, a correct usage of this method is inside a for
+loop from 0 to 3, and if the output is nil OR a key that is not the one you
+expect, you try again with the next rec_id.</p>
+
+<pre>message_hash = hash of the signed message.
+signature = the R and S components of the signature, wrapped.
+rec_id = which possible key to recover.
+is_compressed = whether or not the original pubkey was compressed.</pre>
+          
+          
+
+          
+          <div class="method-source-code" id="recover_public_key_from_signature-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/ffi/openssl.rb, line 161</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">recover_public_key_from_signature</span>(<span class="ruby-identifier">message_hash</span>, <span class="ruby-identifier">signature</span>, <span class="ruby-identifier">rec_id</span>, <span class="ruby-identifier">is_compressed</span>)
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">nil</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">rec_id</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value">0</span> <span class="ruby-keyword">or</span> <span class="ruby-identifier">signature</span>.<span class="ruby-identifier">bytesize</span> <span class="ruby-operator">!=</span> <span class="ruby-value">65</span>
+  <span class="ruby-identifier">init_ffi_ssl</span>
+
+  <span class="ruby-identifier">signature</span> = <span class="ruby-constant">FFI</span><span class="ruby-operator">::</span><span class="ruby-constant">MemoryPointer</span>.<span class="ruby-identifier">from_string</span>(<span class="ruby-identifier">signature</span>)
+  <span class="ruby-comment">#signature_bn = BN_bin2bn(signature, 65, BN_new())</span>
+  <span class="ruby-identifier">r</span> = <span class="ruby-constant">BN_bin2bn</span>(<span class="ruby-identifier">signature</span>[<span class="ruby-value">1</span>], <span class="ruby-value">32</span>, <span class="ruby-constant">BN_new</span>())
+  <span class="ruby-identifier">s</span> = <span class="ruby-constant">BN_bin2bn</span>(<span class="ruby-identifier">signature</span>[<span class="ruby-value">33</span>], <span class="ruby-value">32</span>, <span class="ruby-constant">BN_new</span>())
+
+  <span class="ruby-identifier">n</span>, <span class="ruby-identifier">i</span> = <span class="ruby-value">0</span>, <span class="ruby-identifier">rec_id</span> <span class="ruby-operator">/</span> <span class="ruby-value">2</span>
+  <span class="ruby-identifier">eckey</span> = <span class="ruby-constant">EC_KEY_new_by_curve_name</span>(<span class="ruby-constant">NID_secp256k1</span>)
+
+  <span class="ruby-constant">EC_KEY_set_conv_form</span>(<span class="ruby-identifier">eckey</span>, <span class="ruby-constant">POINT_CONVERSION_COMPRESSED</span>) <span class="ruby-keyword">if</span> <span class="ruby-identifier">is_compressed</span>
+
+  <span class="ruby-identifier">group</span> = <span class="ruby-constant">EC_KEY_get0_group</span>(<span class="ruby-identifier">eckey</span>)
+  <span class="ruby-identifier">order</span> = <span class="ruby-constant">BN_new</span>()
+  <span class="ruby-constant">EC_GROUP_get_order</span>(<span class="ruby-identifier">group</span>, <span class="ruby-identifier">order</span>, <span class="ruby-keyword">nil</span>)
+  <span class="ruby-identifier">x</span> = <span class="ruby-constant">BN_dup</span>(<span class="ruby-identifier">order</span>)
+  <span class="ruby-constant">BN_mul_word</span>(<span class="ruby-identifier">x</span>, <span class="ruby-identifier">i</span>)
+  <span class="ruby-constant">BN_add</span>(<span class="ruby-identifier">x</span>, <span class="ruby-identifier">x</span>, <span class="ruby-identifier">r</span>)
+
+  <span class="ruby-identifier">field</span> = <span class="ruby-constant">BN_new</span>()
+  <span class="ruby-constant">EC_GROUP_get_curve_GFp</span>(<span class="ruby-identifier">group</span>, <span class="ruby-identifier">field</span>, <span class="ruby-keyword">nil</span>, <span class="ruby-keyword">nil</span>, <span class="ruby-keyword">nil</span>)
+
+  <span class="ruby-keyword">if</span> <span class="ruby-constant">BN_cmp</span>(<span class="ruby-identifier">x</span>, <span class="ruby-identifier">field</span>) <span class="ruby-operator">&gt;=</span> <span class="ruby-value">0</span>
+    [<span class="ruby-identifier">r</span>, <span class="ruby-identifier">s</span>, <span class="ruby-identifier">order</span>, <span class="ruby-identifier">x</span>, <span class="ruby-identifier">field</span>].<span class="ruby-identifier">each</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span> <span class="ruby-constant">BN_free</span>(<span class="ruby-identifier">i</span>) }
+    <span class="ruby-constant">EC_KEY_free</span>(<span class="ruby-identifier">eckey</span>)
+    <span class="ruby-keyword">return</span> <span class="ruby-keyword">nil</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">big_r</span> = <span class="ruby-constant">EC_POINT_new</span>(<span class="ruby-identifier">group</span>)
+  <span class="ruby-constant">EC_POINT_set_compressed_coordinates_GFp</span>(<span class="ruby-identifier">group</span>, <span class="ruby-identifier">big_r</span>, <span class="ruby-identifier">x</span>, <span class="ruby-identifier">rec_id</span> <span class="ruby-operator">%</span> <span class="ruby-value">2</span>, <span class="ruby-keyword">nil</span>)
+
+  <span class="ruby-identifier">big_q</span> = <span class="ruby-constant">EC_POINT_new</span>(<span class="ruby-identifier">group</span>)
+  <span class="ruby-identifier">n</span> = <span class="ruby-constant">EC_GROUP_get_degree</span>(<span class="ruby-identifier">group</span>)
+  <span class="ruby-identifier">e</span> = <span class="ruby-constant">BN_bin2bn</span>(<span class="ruby-identifier">message_hash</span>, <span class="ruby-identifier">message_hash</span>.<span class="ruby-identifier">bytesize</span>, <span class="ruby-constant">BN_new</span>())
+  <span class="ruby-constant">BN_rshift</span>(<span class="ruby-identifier">e</span>, <span class="ruby-identifier">e</span>, <span class="ruby-value">8</span> <span class="ruby-operator">-</span> (<span class="ruby-identifier">n</span> <span class="ruby-operator">&amp;</span> <span class="ruby-value">7</span>)) <span class="ruby-keyword">if</span> <span class="ruby-value">8</span> <span class="ruby-operator">*</span> <span class="ruby-identifier">message_hash</span>.<span class="ruby-identifier">bytesize</span> <span class="ruby-operator">&gt;</span> <span class="ruby-identifier">n</span>
+
+  <span class="ruby-identifier">ctx</span> = <span class="ruby-constant">BN_CTX_new</span>()
+  <span class="ruby-identifier">zero</span>, <span class="ruby-identifier">rr</span>, <span class="ruby-identifier">sor</span>, <span class="ruby-identifier">eor</span> = <span class="ruby-constant">BN_new</span>(), <span class="ruby-constant">BN_new</span>(), <span class="ruby-constant">BN_new</span>(), <span class="ruby-constant">BN_new</span>()
+  <span class="ruby-constant">BN_set_word</span>(<span class="ruby-identifier">zero</span>, <span class="ruby-value">0</span>)
+  <span class="ruby-constant">BN_mod_sub</span>(<span class="ruby-identifier">e</span>, <span class="ruby-identifier">zero</span>, <span class="ruby-identifier">e</span>, <span class="ruby-identifier">order</span>, <span class="ruby-identifier">ctx</span>)
+  <span class="ruby-constant">BN_mod_inverse</span>(<span class="ruby-identifier">rr</span>, <span class="ruby-identifier">r</span>, <span class="ruby-identifier">order</span>, <span class="ruby-identifier">ctx</span>)
+  <span class="ruby-constant">BN_mod_mul</span>(<span class="ruby-identifier">sor</span>, <span class="ruby-identifier">s</span>, <span class="ruby-identifier">rr</span>, <span class="ruby-identifier">order</span>, <span class="ruby-identifier">ctx</span>)
+  <span class="ruby-constant">BN_mod_mul</span>(<span class="ruby-identifier">eor</span>, <span class="ruby-identifier">e</span>, <span class="ruby-identifier">rr</span>, <span class="ruby-identifier">order</span>, <span class="ruby-identifier">ctx</span>)
+  <span class="ruby-constant">EC_POINT_mul</span>(<span class="ruby-identifier">group</span>, <span class="ruby-identifier">big_q</span>, <span class="ruby-identifier">eor</span>, <span class="ruby-identifier">big_r</span>, <span class="ruby-identifier">sor</span>, <span class="ruby-identifier">ctx</span>)
+  <span class="ruby-constant">EC_KEY_set_public_key</span>(<span class="ruby-identifier">eckey</span>, <span class="ruby-identifier">big_q</span>)
+  <span class="ruby-constant">BN_CTX_free</span>(<span class="ruby-identifier">ctx</span>)
+
+  [<span class="ruby-identifier">r</span>, <span class="ruby-identifier">s</span>, <span class="ruby-identifier">order</span>, <span class="ruby-identifier">x</span>, <span class="ruby-identifier">field</span>, <span class="ruby-identifier">e</span>, <span class="ruby-identifier">zero</span>, <span class="ruby-identifier">rr</span>, <span class="ruby-identifier">sor</span>, <span class="ruby-identifier">eor</span>].<span class="ruby-identifier">each</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span> <span class="ruby-constant">BN_free</span>(<span class="ruby-identifier">i</span>) }
+  [<span class="ruby-identifier">big_r</span>, <span class="ruby-identifier">big_q</span>].<span class="ruby-identifier">each</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span> <span class="ruby-constant">EC_POINT_free</span>(<span class="ruby-identifier">i</span>) }
+
+  <span class="ruby-identifier">length</span> = <span class="ruby-identifier">i2o_ECPublicKey</span>(<span class="ruby-identifier">eckey</span>, <span class="ruby-keyword">nil</span>)
+  <span class="ruby-identifier">buf</span> = <span class="ruby-constant">FFI</span><span class="ruby-operator">::</span><span class="ruby-constant">MemoryPointer</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">:uint8</span>, <span class="ruby-identifier">length</span>)
+  <span class="ruby-identifier">ptr</span> = <span class="ruby-constant">FFI</span><span class="ruby-operator">::</span><span class="ruby-constant">MemoryPointer</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">:pointer</span>).<span class="ruby-identifier">put_pointer</span>(<span class="ruby-value">0</span>, <span class="ruby-identifier">buf</span>)
+  <span class="ruby-identifier">pub_hex</span> = <span class="ruby-keyword">if</span> <span class="ruby-identifier">i2o_ECPublicKey</span>(<span class="ruby-identifier">eckey</span>, <span class="ruby-identifier">ptr</span>) <span class="ruby-operator">==</span> <span class="ruby-identifier">length</span>
+    <span class="ruby-identifier">buf</span>.<span class="ruby-identifier">read_string</span>(<span class="ruby-identifier">length</span>).<span class="ruby-identifier">unpack</span>(<span class="ruby-string">&quot;H*&quot;</span>)[<span class="ruby-value">0</span>]
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-constant">EC_KEY_free</span>(<span class="ruby-identifier">eckey</span>)
+
+  <span class="ruby-identifier">pub_hex</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- recover_public_key_from_signature-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- recover_public_key_from_signature-method -->
+
+    
+      <div id="method-c-regenerate_key" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">regenerate_key</span><span
+            class="method-args">(private_key)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>resolve public from private key, using ffi and libssl.so example:</p>
+
+<pre>keypair = Bitcoin.generate_key; Bitcoin::OpenSSL_EC.regenerate_key(keypair.first) == keypair</pre>
+          
+          
+
+          
+          <div class="method-source-code" id="regenerate_key-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/ffi/openssl.rb, line 70</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">regenerate_key</span>(<span class="ruby-identifier">private_key</span>)
+  <span class="ruby-identifier">private_key</span> = [<span class="ruby-identifier">private_key</span>].<span class="ruby-identifier">pack</span>(<span class="ruby-string">&quot;H*&quot;</span>) <span class="ruby-keyword">if</span> <span class="ruby-identifier">private_key</span>.<span class="ruby-identifier">bytesize</span> <span class="ruby-operator">&gt;=</span> (<span class="ruby-value">32</span><span class="ruby-operator">*</span><span class="ruby-value">2</span>)
+  <span class="ruby-identifier">private_key_hex</span> = <span class="ruby-identifier">private_key</span>.<span class="ruby-identifier">unpack</span>(<span class="ruby-string">&quot;H*&quot;</span>)[<span class="ruby-value">0</span>]
+
+  <span class="ruby-comment">#private_key = FFI::MemoryPointer.new(:uint8, private_key.bytesize)</span>
+  <span class="ruby-comment">#                .put_bytes(0, private_key, 0, private_key.bytesize)</span>
+  <span class="ruby-identifier">private_key</span> = <span class="ruby-constant">FFI</span><span class="ruby-operator">::</span><span class="ruby-constant">MemoryPointer</span>.<span class="ruby-identifier">from_string</span>(<span class="ruby-identifier">private_key</span>)
+
+  <span class="ruby-identifier">init_ffi_ssl</span>
+  <span class="ruby-identifier">eckey</span> = <span class="ruby-constant">EC_KEY_new_by_curve_name</span>(<span class="ruby-constant">NID_secp256k1</span>)
+  <span class="ruby-comment">#priv_key = BN_bin2bn(private_key, private_key.size, BN_new())</span>
+  <span class="ruby-identifier">priv_key</span> = <span class="ruby-constant">BN_bin2bn</span>(<span class="ruby-identifier">private_key</span>, <span class="ruby-identifier">private_key</span>.<span class="ruby-identifier">size</span><span class="ruby-operator">-</span><span class="ruby-value">1</span>, <span class="ruby-constant">BN_new</span>())
+
+  <span class="ruby-identifier">group</span>, <span class="ruby-identifier">order</span>, <span class="ruby-identifier">ctx</span> = <span class="ruby-constant">EC_KEY_get0_group</span>(<span class="ruby-identifier">eckey</span>), <span class="ruby-constant">BN_new</span>(), <span class="ruby-constant">BN_CTX_new</span>()
+  <span class="ruby-constant">EC_GROUP_get_order</span>(<span class="ruby-identifier">group</span>, <span class="ruby-identifier">order</span>, <span class="ruby-identifier">ctx</span>)
+
+  <span class="ruby-identifier">pub_key</span> = <span class="ruby-constant">EC_POINT_new</span>(<span class="ruby-identifier">group</span>)
+  <span class="ruby-constant">EC_POINT_mul</span>(<span class="ruby-identifier">group</span>, <span class="ruby-identifier">pub_key</span>, <span class="ruby-identifier">priv_key</span>, <span class="ruby-keyword">nil</span>, <span class="ruby-keyword">nil</span>, <span class="ruby-identifier">ctx</span>)
+  <span class="ruby-constant">EC_KEY_set_private_key</span>(<span class="ruby-identifier">eckey</span>, <span class="ruby-identifier">priv_key</span>)
+  <span class="ruby-constant">EC_KEY_set_public_key</span>(<span class="ruby-identifier">eckey</span>, <span class="ruby-identifier">pub_key</span>)
+
+  <span class="ruby-constant">BN_free</span>(<span class="ruby-identifier">order</span>)
+  <span class="ruby-constant">BN_CTX_free</span>(<span class="ruby-identifier">ctx</span>)
+  <span class="ruby-constant">EC_POINT_free</span>(<span class="ruby-identifier">pub_key</span>)
+  <span class="ruby-constant">BN_free</span>(<span class="ruby-identifier">priv_key</span>)
+
+
+  <span class="ruby-identifier">length</span> = <span class="ruby-identifier">i2d_ECPrivateKey</span>(<span class="ruby-identifier">eckey</span>, <span class="ruby-keyword">nil</span>)
+  <span class="ruby-identifier">buf</span> = <span class="ruby-constant">FFI</span><span class="ruby-operator">::</span><span class="ruby-constant">MemoryPointer</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">:uint8</span>, <span class="ruby-identifier">length</span>)
+  <span class="ruby-identifier">ptr</span> = <span class="ruby-constant">FFI</span><span class="ruby-operator">::</span><span class="ruby-constant">MemoryPointer</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">:pointer</span>).<span class="ruby-identifier">put_pointer</span>(<span class="ruby-value">0</span>, <span class="ruby-identifier">buf</span>)
+  <span class="ruby-identifier">priv_hex</span> = <span class="ruby-keyword">if</span> <span class="ruby-identifier">i2d_ECPrivateKey</span>(<span class="ruby-identifier">eckey</span>, <span class="ruby-identifier">ptr</span>) <span class="ruby-operator">==</span> <span class="ruby-identifier">length</span>
+    <span class="ruby-identifier">size</span> = <span class="ruby-identifier">buf</span>.<span class="ruby-identifier">get_array_of_uint8</span>(<span class="ruby-value">8</span>, <span class="ruby-value">1</span>)[<span class="ruby-value">0</span>]
+    <span class="ruby-identifier">buf</span>.<span class="ruby-identifier">get_array_of_uint8</span>(<span class="ruby-value">9</span>, <span class="ruby-identifier">size</span>).<span class="ruby-identifier">pack</span>(<span class="ruby-string">&quot;C*&quot;</span>).<span class="ruby-identifier">rjust</span>(<span class="ruby-value">32</span>, <span class="ruby-string">&quot;\x00&quot;</span>).<span class="ruby-identifier">unpack</span>(<span class="ruby-string">&quot;H*&quot;</span>)[<span class="ruby-value">0</span>]
+    <span class="ruby-comment">#der_to_private_key( ptr.read_pointer.read_string(length).unpack(&quot;H*&quot;)[0] )</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">priv_hex</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">private_key_hex</span>
+    <span class="ruby-identifier">raise</span> <span class="ruby-string">&quot;regenerated wrong private_key, raise here before generating a faulty public_key too!&quot;</span>
+  <span class="ruby-keyword">end</span>
+
+
+  <span class="ruby-identifier">length</span> = <span class="ruby-identifier">i2o_ECPublicKey</span>(<span class="ruby-identifier">eckey</span>, <span class="ruby-keyword">nil</span>)
+  <span class="ruby-identifier">buf</span> = <span class="ruby-constant">FFI</span><span class="ruby-operator">::</span><span class="ruby-constant">MemoryPointer</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">:uint8</span>, <span class="ruby-identifier">length</span>)
+  <span class="ruby-identifier">ptr</span> = <span class="ruby-constant">FFI</span><span class="ruby-operator">::</span><span class="ruby-constant">MemoryPointer</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">:pointer</span>).<span class="ruby-identifier">put_pointer</span>(<span class="ruby-value">0</span>, <span class="ruby-identifier">buf</span>)
+  <span class="ruby-identifier">pub_hex</span> = <span class="ruby-keyword">if</span> <span class="ruby-identifier">i2o_ECPublicKey</span>(<span class="ruby-identifier">eckey</span>, <span class="ruby-identifier">ptr</span>) <span class="ruby-operator">==</span> <span class="ruby-identifier">length</span>
+    <span class="ruby-identifier">buf</span>.<span class="ruby-identifier">read_string</span>(<span class="ruby-identifier">length</span>).<span class="ruby-identifier">unpack</span>(<span class="ruby-string">&quot;H*&quot;</span>)[<span class="ruby-value">0</span>]
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-constant">EC_KEY_free</span>(<span class="ruby-identifier">eckey</span>)
+
+  [ <span class="ruby-identifier">priv_hex</span>, <span class="ruby-identifier">pub_hex</span> ]
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- regenerate_key-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- regenerate_key-method -->
+
+    
+      <div id="method-c-sign_compact" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">sign_compact</span><span
+            class="method-args">(hash, private_key, public_key_hex = nil, pubkey_compressed = nil)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="sign_compact-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/ffi/openssl.rb, line 225</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">sign_compact</span>(<span class="ruby-identifier">hash</span>, <span class="ruby-identifier">private_key</span>, <span class="ruby-identifier">public_key_hex</span> = <span class="ruby-keyword">nil</span>, <span class="ruby-identifier">pubkey_compressed</span> = <span class="ruby-keyword">nil</span>)
+  <span class="ruby-identifier">private_key</span> = [<span class="ruby-identifier">private_key</span>].<span class="ruby-identifier">pack</span>(<span class="ruby-string">&quot;H*&quot;</span>) <span class="ruby-keyword">if</span> <span class="ruby-identifier">private_key</span>.<span class="ruby-identifier">bytesize</span> <span class="ruby-operator">&gt;=</span> <span class="ruby-value">64</span>
+  <span class="ruby-identifier">private_key_hex</span> = <span class="ruby-identifier">private_key</span>.<span class="ruby-identifier">unpack</span>(<span class="ruby-string">&quot;H*&quot;</span>)[<span class="ruby-value">0</span>]
+
+  <span class="ruby-identifier">public_key_hex</span> = <span class="ruby-identifier">regenerate_key</span>(<span class="ruby-identifier">private_key_hex</span>).<span class="ruby-identifier">last</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">public_key_hex</span>
+  <span class="ruby-identifier">pubkey_compressed</span> = (<span class="ruby-identifier">public_key_hex</span>[<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">1</span>] <span class="ruby-operator">==</span> <span class="ruby-string">&quot;04&quot;</span> <span class="ruby-operator">?</span> <span class="ruby-keyword">false</span> <span class="ruby-operator">:</span> <span class="ruby-keyword">true</span>) <span class="ruby-keyword">unless</span> <span class="ruby-identifier">pubkey_compressed</span>
+
+  <span class="ruby-identifier">init_ffi_ssl</span>
+  <span class="ruby-identifier">eckey</span> = <span class="ruby-constant">EC_KEY_new_by_curve_name</span>(<span class="ruby-constant">NID_secp256k1</span>)
+  <span class="ruby-identifier">priv_key</span> = <span class="ruby-constant">BN_bin2bn</span>(<span class="ruby-identifier">private_key</span>, <span class="ruby-identifier">private_key</span>.<span class="ruby-identifier">bytesize</span>, <span class="ruby-constant">BN_new</span>())
+
+  <span class="ruby-identifier">group</span>, <span class="ruby-identifier">order</span>, <span class="ruby-identifier">ctx</span> = <span class="ruby-constant">EC_KEY_get0_group</span>(<span class="ruby-identifier">eckey</span>), <span class="ruby-constant">BN_new</span>(), <span class="ruby-constant">BN_CTX_new</span>()
+  <span class="ruby-constant">EC_GROUP_get_order</span>(<span class="ruby-identifier">group</span>, <span class="ruby-identifier">order</span>, <span class="ruby-identifier">ctx</span>)
+
+  <span class="ruby-identifier">pub_key</span> = <span class="ruby-constant">EC_POINT_new</span>(<span class="ruby-identifier">group</span>)
+  <span class="ruby-constant">EC_POINT_mul</span>(<span class="ruby-identifier">group</span>, <span class="ruby-identifier">pub_key</span>, <span class="ruby-identifier">priv_key</span>, <span class="ruby-keyword">nil</span>, <span class="ruby-keyword">nil</span>, <span class="ruby-identifier">ctx</span>)
+  <span class="ruby-constant">EC_KEY_set_private_key</span>(<span class="ruby-identifier">eckey</span>, <span class="ruby-identifier">priv_key</span>)
+  <span class="ruby-constant">EC_KEY_set_public_key</span>(<span class="ruby-identifier">eckey</span>, <span class="ruby-identifier">pub_key</span>)
+
+  <span class="ruby-identifier">signature</span> = <span class="ruby-constant">ECDSA_do_sign</span>(<span class="ruby-identifier">hash</span>, <span class="ruby-identifier">hash</span>.<span class="ruby-identifier">bytesize</span>, <span class="ruby-identifier">eckey</span>)
+
+  <span class="ruby-constant">BN_free</span>(<span class="ruby-identifier">order</span>)
+  <span class="ruby-constant">BN_CTX_free</span>(<span class="ruby-identifier">ctx</span>)
+  <span class="ruby-constant">EC_POINT_free</span>(<span class="ruby-identifier">pub_key</span>)
+  <span class="ruby-constant">BN_free</span>(<span class="ruby-identifier">priv_key</span>)
+  <span class="ruby-constant">EC_KEY_free</span>(<span class="ruby-identifier">eckey</span>)
+
+  <span class="ruby-identifier">buf</span>, <span class="ruby-identifier">rec_id</span>, <span class="ruby-identifier">head</span> = <span class="ruby-constant">FFI</span><span class="ruby-operator">::</span><span class="ruby-constant">MemoryPointer</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">:uint8</span>, <span class="ruby-value">32</span>), <span class="ruby-keyword">nil</span>, <span class="ruby-keyword">nil</span>
+  <span class="ruby-identifier">r</span>, <span class="ruby-identifier">s</span> = <span class="ruby-identifier">signature</span>.<span class="ruby-identifier">get_array_of_pointer</span>(<span class="ruby-value">0</span>, <span class="ruby-value">2</span>).<span class="ruby-identifier">map</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span> <span class="ruby-constant">BN_bn2bin</span>(<span class="ruby-identifier">i</span>, <span class="ruby-identifier">buf</span>); <span class="ruby-identifier">buf</span>.<span class="ruby-identifier">read_string</span>(<span class="ruby-constant">BN_num_bytes</span>(<span class="ruby-identifier">i</span>)).<span class="ruby-identifier">rjust</span>(<span class="ruby-value">32</span>, <span class="ruby-string">&quot;\x00&quot;</span>) }
+
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">signature</span>.<span class="ruby-identifier">get_array_of_pointer</span>(<span class="ruby-value">0</span>, <span class="ruby-value">2</span>).<span class="ruby-identifier">all?</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span> <span class="ruby-constant">BN_num_bits</span>(<span class="ruby-identifier">i</span>) <span class="ruby-operator">&lt;=</span> <span class="ruby-value">256</span> }
+    <span class="ruby-value">4</span>.<span class="ruby-identifier">times</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">head</span> = [ <span class="ruby-value">27</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">i</span> <span class="ruby-operator">+</span> (<span class="ruby-identifier">pubkey_compressed</span> <span class="ruby-operator">?</span> <span class="ruby-value">4</span> <span class="ruby-operator">:</span> <span class="ruby-value">0</span>) ].<span class="ruby-identifier">pack</span>(<span class="ruby-string">&quot;C&quot;</span>)
+      <span class="ruby-keyword">if</span> <span class="ruby-identifier">public_key_hex</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">recover_public_key_from_signature</span>(<span class="ruby-identifier">hash</span>, [<span class="ruby-identifier">head</span>, <span class="ruby-identifier">r</span>, <span class="ruby-identifier">s</span>].<span class="ruby-identifier">join</span>, <span class="ruby-identifier">i</span>, <span class="ruby-identifier">pubkey_compressed</span>)
+        <span class="ruby-identifier">rec_id</span> = <span class="ruby-identifier">i</span>; <span class="ruby-keyword">break</span>
+      <span class="ruby-keyword">end</span>
+    }
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-constant">ECDSA_SIG_free</span>(<span class="ruby-identifier">signature</span>)
+
+  [ <span class="ruby-identifier">head</span>, [<span class="ruby-identifier">r</span>,<span class="ruby-identifier">s</span>] ].<span class="ruby-identifier">join</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">rec_id</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- sign_compact-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- sign_compact-method -->
+
+    
+    </section><!-- public-class-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+</div><!-- documentation -->
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 4.0.1.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+

@@ -1,0 +1,1293 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+<title>class Bitcoin::Wallet::Wallet - bitcoin-ruby RDoc</title>
+
+<link type="text/css" media="screen" href="../../rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "../../";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="../../js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../js/darkfish.js"></script>
+
+
+<body id="top" class="class">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="../../index.html">Home</a>
+    <a href="../../table_of_contents.html#classes">Classes</a>
+    <a href="../../table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>lib/bitcoin/wallet/wallet.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    
+    <nav id="parent-class-section" class="section">
+  <h3 class="section-header">Parent</h3>
+  
+  <p class="link"><a href="../../Object.html">Object</a>
+  
+</nav>
+
+    <!-- Included Modules -->
+<nav id="includes-section" class="section">
+  <h3 class="section-header">Included Modules</h3>
+
+  <ul class="link-list">
+  
+  
+    <li><a class="include" href="../../Bitcoin.html">Bitcoin</a>
+  
+  
+  
+    <li><a class="include" href="../Builder.html">Bitcoin::Builder</a>
+  
+  
+  </ul>
+</nav>
+
+    
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li ><a href="#method-c-new">::new</a>
+    
+    <li ><a href="#method-i-add_key">#add_key</a>
+    
+    <li ><a href="#method-i-addrs">#addrs</a>
+    
+    <li ><a href="#method-i-callback">#callback</a>
+    
+    <li ><a href="#method-i-check_tx">#check_tx</a>
+    
+    <li ><a href="#method-i-connect_node">#connect_node</a>
+    
+    <li ><a href="#method-i-flag">#flag</a>
+    
+    <li ><a href="#method-i-get_balance">#get_balance</a>
+    
+    <li ><a href="#method-i-get_change_addr">#get_change_addr</a>
+    
+    <li ><a href="#method-i-get_new_addr">#get_new_addr</a>
+    
+    <li ><a href="#method-i-get_selector">#get_selector</a>
+    
+    <li ><a href="#method-i-get_txouts">#get_txouts</a>
+    
+    <li ><a href="#method-i-import_key">#import_key</a>
+    
+    <li ><a href="#method-i-label">#label</a>
+    
+    <li ><a href="#method-i-list">#list</a>
+    
+    <li ><a href="#method-i-log">#log</a>
+    
+    <li class="calls-super" ><a href="#method-i-method_missing">#method_missing</a>
+    
+    <li ><a href="#method-i-new_tx">#new_tx</a>
+    
+    <li ><a href="#method-i-rescan">#rescan</a>
+    
+  </ul>
+</nav>
+
+  </div>
+
+  <div id="project-metadata">
+    <nav id="fileindex-section" class="section project-section">
+  <h3 class="section-header">Pages</h3>
+
+  <ul>
+  
+    <li class="file"><a href="../../COPYING.html">COPYING</a>
+  
+    <li class="file"><a href="../../README_rdoc.html">README</a>
+  
+    <li class="file"><a href="../../doc/CONFIG_rdoc.html">CONFIG</a>
+  
+    <li class="file"><a href="../../doc/EXAMPLES_rdoc.html">EXAMPLES</a>
+  
+    <li class="file"><a href="../../doc/NAMECOIN_rdoc.html">NAMECOIN</a>
+  
+    <li class="file"><a href="../../doc/NODE_rdoc.html">NODE</a>
+  
+    <li class="file"><a href="../../doc/STORAGE_rdoc.html">STORAGE</a>
+  
+    <li class="file"><a href="../../doc/WALLET_rdoc.html">WALLET</a>
+  
+    <li class="file"><a href="../../examples/graph_benchmark_results_rb~.html">graph_benchmark_results.rb~</a>
+  
+    <li class="file"><a href="../../examples/import_rb~.html">import.rb~</a>
+  
+    <li class="file"><a href="../../examples/run_bench_rb~.html">run_bench.rb~</a>
+  
+    <li class="file"><a href="../../examples/run_benchmarks_rb~.html">run_benchmarks.rb~</a>
+  
+    <li class="file"><a href="../../lib/bitcoin/gui/bitcoin-ruby_svg.html">bitcoin-ruby.svg</a>
+  
+    <li class="file"><a href="../../lib/bitcoin/gui/gui_builder.html">gui.builder</a>
+  
+  </ul>
+</nav>
+
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="../../Array.html">Array</a>
+  
+    <li><a href="../../Bitcoin.html">Bitcoin</a>
+  
+    <li><a href="../../Bitcoin/BinaryExtensions.html">Bitcoin::BinaryExtensions</a>
+  
+    <li><a href="../../Bitcoin/Builder.html">Bitcoin::Builder</a>
+  
+    <li><a href="../../Bitcoin/Builder/BlockBuilder.html">Bitcoin::Builder::BlockBuilder</a>
+  
+    <li><a href="../../Bitcoin/Builder/ScriptBuilder.html">Bitcoin::Builder::ScriptBuilder</a>
+  
+    <li><a href="../../Bitcoin/Builder/TxBuilder.html">Bitcoin::Builder::TxBuilder</a>
+  
+    <li><a href="../../Bitcoin/Builder/TxInBuilder.html">Bitcoin::Builder::TxInBuilder</a>
+  
+    <li><a href="../../Bitcoin/Builder/TxOutBuilder.html">Bitcoin::Builder::TxOutBuilder</a>
+  
+    <li><a href="../../Bitcoin/Config.html">Bitcoin::Config</a>
+  
+    <li><a href="../../Bitcoin/Connection.html">Bitcoin::Connection</a>
+  
+    <li><a href="../../Bitcoin/ConnectionHandler.html">Bitcoin::ConnectionHandler</a>
+  
+    <li><a href="../../Bitcoin/Gui.html">Bitcoin::Gui</a>
+  
+    <li><a href="../../Bitcoin/Gui/AddrView.html">Bitcoin::Gui::AddrView</a>
+  
+    <li><a href="../../Bitcoin/Gui/Bitcoin.html">Bitcoin::Gui::Bitcoin</a>
+  
+    <li><a href="../../Bitcoin/Gui/Bitcoin/Gui.html">Bitcoin::Gui::Bitcoin::Gui</a>
+  
+    <li><a href="../../Bitcoin/Gui/Bitcoin/Gui/Bitcoin.html">Bitcoin::Gui::Bitcoin::Gui::Bitcoin</a>
+  
+    <li><a href="../../Bitcoin/Gui/Bitcoin/Gui/Bitcoin/Network.html">Bitcoin::Gui::Bitcoin::Gui::Bitcoin::Network</a>
+  
+    <li><a href="../../Bitcoin/Gui/Bitcoin/Gui/Bitcoin/Network/CommandClient.html">Bitcoin::Gui::Bitcoin::Gui::Bitcoin::Network::CommandClient</a>
+  
+    <li><a href="../../Bitcoin/Gui/ConnView.html">Bitcoin::Gui::ConnView</a>
+  
+    <li><a href="../../Bitcoin/Gui/Connection.html">Bitcoin::Gui::Connection</a>
+  
+    <li><a href="../../Bitcoin/Gui/Gui.html">Bitcoin::Gui::Gui</a>
+  
+    <li><a href="../../Bitcoin/Gui/Helpers.html">Bitcoin::Gui::Helpers</a>
+  
+    <li><a href="../../Bitcoin/Gui/TreeView.html">Bitcoin::Gui::TreeView</a>
+  
+    <li><a href="../../Bitcoin/Gui/TxInView.html">Bitcoin::Gui::TxInView</a>
+  
+    <li><a href="../../Bitcoin/Gui/TxView.html">Bitcoin::Gui::TxView</a>
+  
+    <li><a href="../../Bitcoin/Key.html">Bitcoin::Key</a>
+  
+    <li><a href="../../Bitcoin/Logger.html">Bitcoin::Logger</a>
+  
+    <li><a href="../../Bitcoin/Logger/LogWrapper.html">Bitcoin::Logger::LogWrapper</a>
+  
+    <li><a href="../../Bitcoin/Logger/Logger.html">Bitcoin::Logger::Logger</a>
+  
+    <li><a href="../../Bitcoin/Logger/TimeLogger.html">Bitcoin::Logger::TimeLogger</a>
+  
+    <li><a href="../../Bitcoin/Namecoin.html">Bitcoin::Namecoin</a>
+  
+    <li><a href="../../Bitcoin/Namecoin/Script.html">Bitcoin::Namecoin::Script</a>
+  
+    <li><a href="../../Bitcoin/Namecoin/Storage.html">Bitcoin::Namecoin::Storage</a>
+  
+    <li><a href="../../Bitcoin/Namecoin/Storage/Backend.html">Bitcoin::Namecoin::Storage::Backend</a>
+  
+    <li><a href="../../Bitcoin/Namecoin/Storage/Models.html">Bitcoin::Namecoin::Storage::Models</a>
+  
+    <li><a href="../../Bitcoin/Namecoin/Storage/Models/Name.html">Bitcoin::Namecoin::Storage::Models::Name</a>
+  
+    <li><a href="../../Bitcoin/Network.html">Bitcoin::Network</a>
+  
+    <li><a href="../../Bitcoin/Network/CommandClient.html">Bitcoin::Network::CommandClient</a>
+  
+    <li><a href="../../Bitcoin/Network/CommandHandler.html">Bitcoin::Network::CommandHandler</a>
+  
+    <li><a href="../../Bitcoin/Network/ConnectionHandler.html">Bitcoin::Network::ConnectionHandler</a>
+  
+    <li><a href="../../Bitcoin/Network/Node.html">Bitcoin::Network::Node</a>
+  
+    <li><a href="../../Bitcoin/OpenSSL_EC.html">Bitcoin::OpenSSL_EC</a>
+  
+    <li><a href="../../Bitcoin/OpenSSL_EC/FFI.html">Bitcoin::OpenSSL_EC::FFI</a>
+  
+    <li><a href="../../Bitcoin/P.html">Bitcoin::P</a>
+  
+    <li><a href="../../Bitcoin/Protocol.html">Bitcoin::Protocol</a>
+  
+    <li><a href="../../Bitcoin/Protocol/Addr.html">Bitcoin::Protocol::Addr</a>
+  
+    <li><a href="../../Bitcoin/Protocol/Alert.html">Bitcoin::Protocol::Alert</a>
+  
+    <li><a href="../../Bitcoin/Protocol/AuxPow.html">Bitcoin::Protocol::AuxPow</a>
+  
+    <li><a href="../../Bitcoin/Protocol/Block.html">Bitcoin::Protocol::Block</a>
+  
+    <li><a href="../../Bitcoin/Protocol/Handler.html">Bitcoin::Protocol::Handler</a>
+  
+    <li><a href="../../Bitcoin/Protocol/Parser.html">Bitcoin::Protocol::Parser</a>
+  
+    <li><a href="../../Bitcoin/Protocol/Tx.html">Bitcoin::Protocol::Tx</a>
+  
+    <li><a href="../../Bitcoin/Protocol/TxIn.html">Bitcoin::Protocol::TxIn</a>
+  
+    <li><a href="../../Bitcoin/Protocol/TxOut.html">Bitcoin::Protocol::TxOut</a>
+  
+    <li><a href="../../Bitcoin/Protocol/Version.html">Bitcoin::Protocol::Version</a>
+  
+    <li><a href="../../Bitcoin/Script.html">Bitcoin::Script</a>
+  
+    <li><a href="../../Bitcoin/Script/ScriptOpcodeError.html">Bitcoin::Script::ScriptOpcodeError</a>
+  
+    <li><a href="../../Bitcoin/Storage.html">Bitcoin::Storage</a>
+  
+    <li><a href="../../Bitcoin/Storage/Backends.html">Bitcoin::Storage::Backends</a>
+  
+    <li><a href="../../Bitcoin/Storage/Backends/DummyStore.html">Bitcoin::Storage::Backends::DummyStore</a>
+  
+    <li><a href="../../Bitcoin/Storage/Backends/SequelMigrations.html">Bitcoin::Storage::Backends::SequelMigrations</a>
+  
+    <li><a href="../../Bitcoin/Storage/Backends/SequelStore.html">Bitcoin::Storage::Backends::SequelStore</a>
+  
+    <li><a href="../../Bitcoin/Storage/Backends/StoreBase.html">Bitcoin::Storage::Backends::StoreBase</a>
+  
+    <li><a href="../../Bitcoin/Storage/Backends/UtxoStore.html">Bitcoin::Storage::Backends::UtxoStore</a>
+  
+    <li><a href="../../Bitcoin/Storage/Models.html">Bitcoin::Storage::Models</a>
+  
+    <li><a href="../../Bitcoin/Storage/Models/Block.html">Bitcoin::Storage::Models::Block</a>
+  
+    <li><a href="../../Bitcoin/Storage/Models/Tx.html">Bitcoin::Storage::Models::Tx</a>
+  
+    <li><a href="../../Bitcoin/Storage/Models/TxIn.html">Bitcoin::Storage::Models::TxIn</a>
+  
+    <li><a href="../../Bitcoin/Storage/Models/TxOut.html">Bitcoin::Storage::Models::TxOut</a>
+  
+    <li><a href="../../Bitcoin/Util.html">Bitcoin::Util</a>
+  
+    <li><a href="../../Bitcoin/Validation.html">Bitcoin::Validation</a>
+  
+    <li><a href="../../Bitcoin/Validation/Block.html">Bitcoin::Validation::Block</a>
+  
+    <li><a href="../../Bitcoin/Validation/Tx.html">Bitcoin::Validation::Tx</a>
+  
+    <li><a href="../../Bitcoin/Validation/ValidationError.html">Bitcoin::Validation::ValidationError</a>
+  
+    <li><a href="../../Bitcoin/Wallet.html">Bitcoin::Wallet</a>
+  
+    <li><a href="../../Bitcoin/Wallet/DeterministicKeyStore.html">Bitcoin::Wallet::DeterministicKeyStore</a>
+  
+    <li><a href="../../Bitcoin/Wallet/KeyGenerator.html">Bitcoin::Wallet::KeyGenerator</a>
+  
+    <li><a href="../../Bitcoin/Wallet/SimpleCoinSelector.html">Bitcoin::Wallet::SimpleCoinSelector</a>
+  
+    <li><a href="../../Bitcoin/Wallet/SimpleKeyStore.html">Bitcoin::Wallet::SimpleKeyStore</a>
+  
+    <li><a href="../../Bitcoin/Wallet/TxDP.html">Bitcoin::Wallet::TxDP</a>
+  
+    <li><a href="../../Bitcoin/Wallet/Wallet.html">Bitcoin::Wallet::Wallet</a>
+  
+    <li><a href="../../EM.html">EM</a>
+  
+    <li><a href="../../Gtk.html">Gtk</a>
+  
+    <li><a href="../../Hash.html">Hash</a>
+  
+    <li><a href="../../JSON.html">JSON</a>
+  
+    <li><a href="../../Litecoin.html">Litecoin</a>
+  
+    <li><a href="../../Litecoin/Scrypt.html">Litecoin::Scrypt</a>
+  
+    <li><a href="../../Log4r.html">Log4r</a>
+  
+    <li><a href="../../Log4r/Logger.html">Log4r::Logger</a>
+  
+    <li><a href="../../Mnemonic.html">Mnemonic</a>
+  
+    <li><a href="../../Object.html">Object</a>
+  
+    <li><a href="../../OpenSSL.html">OpenSSL</a>
+  
+    <li><a href="../../OpenSSL/BN.html">OpenSSL::BN</a>
+  
+    <li><a href="../../OpenSSL/PKey.html">OpenSSL::PKey</a>
+  
+    <li><a href="../../OpenSSL/PKey/EC.html">OpenSSL::PKey::EC</a>
+  
+    <li><a href="../../OpenSSL/PKey/EC/Point.html">OpenSSL::PKey::EC::Point</a>
+  
+    <li><a href="../../RawJSON_Connection.html">RawJSON_Connection</a>
+  
+    <li><a href="../../SimpleNode.html">SimpleNode</a>
+  
+    <li><a href="../../SimpleNode/Connection.html">SimpleNode::Connection</a>
+  
+    <li><a href="../../String.html">String</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation">
+  <h1 class="class">class Bitcoin::Wallet::Wallet</h1>
+
+  <div id="description" class="description">
+    
+<p>A wallet manages a set of keys (through a <code>keystore</code>), can <a
+href="Wallet.html#method-i-list">#list</a> transactions/balances for those
+keys (using a <a href="../Storage.html">Storage</a> backend for blockchain
+data). It can also create transactions with various kinds of outputs and
+connect with a CommandClient to relay those transactions through a node.</p>
+
+<p>TODO: <a href="Wallet.html#method-c-new">::new</a> tx notification,
+keygenerators, <a href="Wallet.html#attribute-i-keystore">#keystore</a>
+cleanup</p>
+
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+
+    
+    <!-- Attributes -->
+    <section id="attribute-method-details" class="method-section section">
+      <h3 class="section-header">Attributes</h3>
+
+      
+      <div id="attribute-i-keystore" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">keystore</span><span
+            class="attribute-access-type">[R]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>the <a href="Wallet.html#attribute-i-keystore">#keystore</a>
+(SimpleKeyStore) managing keys/addresses/labels</p>
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-storage" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">storage</span><span
+            class="attribute-access-type">[R]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>the <a href="../Storage.html">Storage</a> which holds the blockchain</p>
+        
+        </div>
+      </div>
+      
+    </section><!-- attribute-method-details -->
+    
+
+    <!-- Methods -->
+    
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Class Methods</h3>
+
+    
+      <div id="method-c-new" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">new</span><span
+            class="method-args">(storage, keystore, selector = SimpleCoinSelector)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>open wallet with given <code>storage</code> <a
+href="../Storage.html">Storage</a> backend, <code>keystore</code> <a
+href="SimpleKeyStore.html">SimpleKeyStore</a> and <code>selector</code> <a
+href="SimpleCoinSelector.html">SimpleCoinSelector</a></p>
+          
+          
+
+          
+          <div class="method-source-code" id="new-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/wallet/wallet.rb, line 30</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span> <span class="ruby-identifier">storage</span>, <span class="ruby-identifier">keystore</span>, <span class="ruby-identifier">selector</span> = <span class="ruby-constant">SimpleCoinSelector</span>
+  <span class="ruby-ivar">@storage</span> = <span class="ruby-identifier">storage</span>
+  <span class="ruby-ivar">@keystore</span> = <span class="ruby-identifier">keystore</span>
+  <span class="ruby-ivar">@selector</span> = <span class="ruby-identifier">selector</span>
+  <span class="ruby-ivar">@callbacks</span> = {}
+
+  <span class="ruby-ivar">@keystore</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">each</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">key</span><span class="ruby-operator">|</span> <span class="ruby-ivar">@storage</span>.<span class="ruby-identifier">add_watched_address</span>(<span class="ruby-identifier">key</span>[<span class="ruby-value">:addr</span>]) }
+  <span class="ruby-comment"># connect_node  if defined?(EM)</span>
+
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- new-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- new-method -->
+
+    
+    </section><!-- public-class-method-details -->
+  
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="method-i-add_key" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">add_key</span><span
+            class="method-args">(key)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>add <code>key</code> to wallet</p>
+          
+          
+
+          
+          <div class="method-source-code" id="add_key-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/wallet/wallet.rb, line 128</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">add_key</span> <span class="ruby-identifier">key</span>
+  <span class="ruby-ivar">@keystore</span>.<span class="ruby-identifier">add_key</span>(<span class="ruby-identifier">key</span>)
+  <span class="ruby-ivar">@storage</span>.<span class="ruby-identifier">add_watched_address</span>(<span class="ruby-identifier">key</span>[<span class="ruby-value">:addr</span>])
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- add_key-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- add_key-method -->
+
+    
+      <div id="method-i-addrs" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">addrs</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p><a href="Wallet.html#method-i-list">#list</a> all addresses in this wallet</p>
+          
+          
+
+          
+          <div class="method-source-code" id="addrs-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/wallet/wallet.rb, line 123</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">addrs</span>
+  <span class="ruby-ivar">@keystore</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">map</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">k</span><span class="ruby-operator">|</span> <span class="ruby-identifier">k</span>[<span class="ruby-value">:addr</span>]}
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- addrs-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- addrs-method -->
+
+    
+      <div id="method-i-callback" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">callback</span><span
+            class="method-args">(name, *args)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>call the <a href="Wallet.html#method-i-callback">#callback</a> specified by
+<code>name</code> passing in <code>args</code></p>
+          
+          
+
+          
+          <div class="method-source-code" id="callback-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/wallet/wallet.rb, line 92</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">callback</span> <span class="ruby-identifier">name</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>
+  <span class="ruby-identifier">cb</span> = <span class="ruby-ivar">@callbacks</span>[<span class="ruby-identifier">name</span>.<span class="ruby-identifier">to_sym</span>]
+  <span class="ruby-keyword">return</span>  <span class="ruby-keyword">unless</span> <span class="ruby-identifier">cb</span>
+  <span class="ruby-identifier">log</span>.<span class="ruby-identifier">debug</span> { <span class="ruby-node">&quot;callback: #{name}&quot;</span> }
+  <span class="ruby-identifier">cb</span>.<span class="ruby-identifier">call</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- callback-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- callback-method -->
+
+    
+      <div id="method-i-check_tx" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">check_tx</span><span
+            class="method-args">(tx_hash)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="check_tx-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/wallet/wallet.rb, line 64</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">check_tx</span> <span class="ruby-identifier">tx_hash</span>
+  <span class="ruby-identifier">relevant</span> = <span class="ruby-keyword">false</span>
+  <span class="ruby-identifier">addrs</span> = <span class="ruby-identifier">addrs</span>
+  <span class="ruby-identifier">tx</span> = <span class="ruby-ivar">@storage</span>.<span class="ruby-identifier">get_tx</span>(<span class="ruby-identifier">tx_hash</span>)
+  <span class="ruby-keyword">unless</span> <span class="ruby-identifier">tx</span>
+    <span class="ruby-identifier">log</span>.<span class="ruby-identifier">warn</span> { <span class="ruby-node">&quot;Received tx #{response['hash']} but not found in storage&quot;</span> }
+    <span class="ruby-identifier">binding</span>.<span class="ruby-identifier">pry</span>
+    <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">addrs</span> = <span class="ruby-ivar">@keystore</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">map</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">k</span><span class="ruby-operator">|</span> <span class="ruby-identifier">k</span>[<span class="ruby-value">:addr</span>] }
+  <span class="ruby-identifier">tx</span>.<span class="ruby-identifier">out</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">txout</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">return</span> <span class="ruby-value">:incoming</span>, <span class="ruby-identifier">tx</span>  <span class="ruby-keyword">if</span> (<span class="ruby-identifier">txout</span>.<span class="ruby-identifier">get_addresses</span> <span class="ruby-operator">&amp;</span> <span class="ruby-identifier">addrs</span>).<span class="ruby-identifier">any?</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">tx</span>.<span class="ruby-identifier">in</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">txin</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">next</span> <span class="ruby-keyword">unless</span>  <span class="ruby-identifier">prev_out</span> = <span class="ruby-identifier">txin</span>.<span class="ruby-identifier">get_prev_out</span>
+    <span class="ruby-keyword">return</span> <span class="ruby-value">:outgoing</span>, <span class="ruby-identifier">tx</span>  <span class="ruby-keyword">if</span> (<span class="ruby-identifier">prev_out</span>.<span class="ruby-identifier">get_addresses</span> <span class="ruby-operator">&amp;</span> <span class="ruby-identifier">addrs</span>).<span class="ruby-identifier">any?</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- check_tx-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- check_tx-method -->
+
+    
+      <div id="method-i-connect_node" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">connect_node</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="connect_node-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/wallet/wallet.rb, line 41</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">connect_node</span>
+  <span class="ruby-keyword">return</span>  <span class="ruby-keyword">unless</span> <span class="ruby-constant">EM</span>.<span class="ruby-identifier">reactor_running?</span>
+  <span class="ruby-identifier">host</span>, <span class="ruby-identifier">port</span> = <span class="ruby-string">&quot;127.0.0.1&quot;</span>, <span class="ruby-value">9999</span>
+  <span class="ruby-ivar">@node</span> = <span class="ruby-constant">Network</span><span class="ruby-operator">::</span><span class="ruby-constant">CommandClient</span>.<span class="ruby-identifier">connect</span>(<span class="ruby-identifier">host</span>, <span class="ruby-identifier">port</span>, <span class="ruby-keyword">self</span>, <span class="ruby-ivar">@storage</span>) <span class="ruby-keyword">do</span>
+    <span class="ruby-identifier">on_connected</span> { <span class="ruby-identifier">request</span> <span class="ruby-value">:monitor</span>, <span class="ruby-string">&quot;block&quot;</span>, <span class="ruby-string">&quot;tx&quot;</span> }
+    <span class="ruby-identifier">on_block</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">block</span>, <span class="ruby-identifier">depth</span><span class="ruby-operator">|</span>
+      <span class="ruby-constant">EM</span>.<span class="ruby-identifier">defer</span> <span class="ruby-keyword">do</span>
+        <span class="ruby-identifier">block</span>[<span class="ruby-string">'tx'</span>].<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">tx</span><span class="ruby-operator">|</span>
+          <span class="ruby-identifier">relevant</span>, <span class="ruby-identifier">tx</span> = <span class="ruby-ivar">@args</span>[<span class="ruby-value">0</span>].<span class="ruby-identifier">check_tx</span>(<span class="ruby-identifier">tx</span>[<span class="ruby-string">'hash'</span>])
+          <span class="ruby-ivar">@args</span>[<span class="ruby-value">0</span>].<span class="ruby-identifier">callback</span>(<span class="ruby-value">:tx</span>, <span class="ruby-value">:confirmed</span>, <span class="ruby-identifier">tx</span>)  <span class="ruby-keyword">if</span> <span class="ruby-identifier">relevant</span>
+        <span class="ruby-keyword">end</span>
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-identifier">on_tx</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">response</span><span class="ruby-operator">|</span>
+      <span class="ruby-constant">EM</span>.<span class="ruby-identifier">defer</span> <span class="ruby-keyword">do</span>
+        <span class="ruby-identifier">relevant</span>, <span class="ruby-identifier">tx</span> = <span class="ruby-ivar">@args</span>[<span class="ruby-value">0</span>].<span class="ruby-identifier">check_tx</span>(<span class="ruby-identifier">response</span>[<span class="ruby-string">'hash'</span>])
+        <span class="ruby-ivar">@args</span>[<span class="ruby-value">0</span>].<span class="ruby-identifier">callback</span>(<span class="ruby-value">:tx</span>, <span class="ruby-identifier">relevant</span>, <span class="ruby-identifier">tx</span>)  <span class="ruby-keyword">if</span> <span class="ruby-identifier">relevant</span>
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- connect_node-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- connect_node-method -->
+
+    
+      <div id="method-i-flag" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">flag</span><span
+            class="method-args">(name, flag, value)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>set <code>flag</code> for key <code>name</code> to <code>value</code></p>
+          
+          
+
+          
+          <div class="method-source-code" id="flag-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/wallet/wallet.rb, line 139</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">flag</span> <span class="ruby-identifier">name</span>, <span class="ruby-identifier">flag</span>, <span class="ruby-identifier">value</span>
+  <span class="ruby-ivar">@keystore</span>.<span class="ruby-identifier">flag_key</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">flag</span>, <span class="ruby-identifier">value</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- flag-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- flag-method -->
+
+    
+      <div id="method-i-get_balance" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">get_balance</span><span
+            class="method-args">(unconfirmed = false)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>get total balance for all addresses in this wallet</p>
+          
+          
+
+          
+          <div class="method-source-code" id="get_balance-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/wallet/wallet.rb, line 117</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">get_balance</span>(<span class="ruby-identifier">unconfirmed</span> = <span class="ruby-keyword">false</span>)
+  <span class="ruby-identifier">values</span> = <span class="ruby-identifier">get_txouts</span>(<span class="ruby-identifier">unconfirmed</span>).<span class="ruby-identifier">select</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">o</span><span class="ruby-operator">|</span> <span class="ruby-operator">!</span><span class="ruby-identifier">o</span>.<span class="ruby-identifier">get_next_in</span>}.<span class="ruby-identifier">map</span>(<span class="ruby-operator">&amp;</span><span class="ruby-value">:value</span>)
+  ([<span class="ruby-value">0</span>] <span class="ruby-operator">+</span> <span class="ruby-identifier">values</span>).<span class="ruby-identifier">inject</span>(<span class="ruby-value">:+</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- get_balance-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- get_balance-method -->
+
+    
+      <div id="method-i-get_new_addr" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">get_new_addr</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>create <a href="Wallet.html#method-c-new">::new</a> key and return its
+address</p>
+          
+          
+
+          
+          <div class="method-source-code" id="get_new_addr-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/wallet/wallet.rb, line 151</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">get_new_addr</span>
+  <span class="ruby-identifier">key</span> = <span class="ruby-ivar">@keystore</span>.<span class="ruby-identifier">new_key</span>
+  <span class="ruby-ivar">@storage</span>.<span class="ruby-identifier">add_watched_address</span>(<span class="ruby-identifier">key</span>.<span class="ruby-identifier">addr</span>)
+  <span class="ruby-identifier">key</span>.<span class="ruby-identifier">addr</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- get_new_addr-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- get_new_addr-method -->
+
+    
+      <div id="method-i-get_selector" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">get_selector</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>get <a href="SimpleCoinSelector.html">SimpleCoinSelector</a> with txouts
+for this wallet</p>
+          
+          
+
+          
+          <div class="method-source-code" id="get_selector-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/wallet/wallet.rb, line 168</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">get_selector</span>
+  <span class="ruby-ivar">@selector</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">get_txouts</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- get_selector-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- get_selector-method -->
+
+    
+      <div id="method-i-get_txouts" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">get_txouts</span><span
+            class="method-args">(unconfirmed = false)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>get all <a href="../Storage/Models/TxOut.html">Storage::Models::TxOut</a>
+concerning any address from this wallet</p>
+          
+          
+
+          
+          <div class="method-source-code" id="get_txouts-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/wallet/wallet.rb, line 110</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">get_txouts</span>(<span class="ruby-identifier">unconfirmed</span> = <span class="ruby-keyword">false</span>)
+  <span class="ruby-identifier">txouts</span> = <span class="ruby-ivar">@keystore</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">map</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">k</span><span class="ruby-operator">|</span>
+    <span class="ruby-ivar">@storage</span>.<span class="ruby-identifier">get_txouts_for_address</span>(<span class="ruby-identifier">k</span>[<span class="ruby-value">:addr</span>])}.<span class="ruby-identifier">flatten</span>.<span class="ruby-identifier">uniq</span>
+  (<span class="ruby-identifier">unconfirmed</span> <span class="ruby-operator">||</span> <span class="ruby-ivar">@storage</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">name</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp">/Utxo/</span>) <span class="ruby-operator">?</span> <span class="ruby-identifier">txouts</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">txouts</span>.<span class="ruby-identifier">select</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">o</span><span class="ruby-operator">|</span> <span class="ruby-operator">!</span><span class="ruby-operator">!</span><span class="ruby-identifier">o</span>.<span class="ruby-identifier">get_tx</span>.<span class="ruby-identifier">get_block</span>}
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- get_txouts-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- get_txouts-method -->
+
+    
+      <div id="method-i-import_key" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">import_key</span><span
+            class="method-args">(base58, label = nil)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="import_key-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/wallet/wallet.rb, line 157</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">import_key</span> <span class="ruby-identifier">base58</span>, <span class="ruby-identifier">label</span> = <span class="ruby-keyword">nil</span>
+  <span class="ruby-identifier">key</span> = <span class="ruby-ivar">@keystore</span>.<span class="ruby-identifier">import</span>(<span class="ruby-identifier">base58</span>, <span class="ruby-identifier">label</span>)
+  <span class="ruby-ivar">@storage</span>.<span class="ruby-identifier">add_watched_address</span>(<span class="ruby-identifier">key</span>.<span class="ruby-identifier">addr</span>)
+  <span class="ruby-identifier">key</span>.<span class="ruby-identifier">addr</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- import_key-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- import_key-method -->
+
+    
+      <div id="method-i-label" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">label</span><span
+            class="method-args">(old, new)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>set <a href="Wallet.html#method-i-label">#label</a> for key
+<code>old</code> to <code>new</code></p>
+          
+          
+
+          
+          <div class="method-source-code" id="label-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/wallet/wallet.rb, line 134</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">label</span> <span class="ruby-identifier">old</span>, <span class="ruby-identifier">new</span>
+  <span class="ruby-ivar">@keystore</span>.<span class="ruby-identifier">label_key</span>(<span class="ruby-identifier">old</span>, <span class="ruby-identifier">new</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- label-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- label-method -->
+
+    
+      <div id="method-i-list" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">list</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p><a href="Wallet.html#method-i-list">#list</a> all keys along with their
+balances</p>
+          
+          
+
+          
+          <div class="method-source-code" id="list-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/wallet/wallet.rb, line 144</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">list</span>
+  <span class="ruby-ivar">@keystore</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">map</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">key</span><span class="ruby-operator">|</span>
+    [<span class="ruby-identifier">key</span>, <span class="ruby-ivar">@storage</span>.<span class="ruby-identifier">get_balance</span>(<span class="ruby-constant">Bitcoin</span>.<span class="ruby-identifier">hash160_from_address</span>(<span class="ruby-identifier">key</span>[<span class="ruby-value">:addr</span>]))]
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- list-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- list-method -->
+
+    
+      <div id="method-i-log" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">log</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="log-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/wallet/wallet.rb, line 84</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">log</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-ivar">@log</span>  <span class="ruby-keyword">if</span> <span class="ruby-ivar">@log</span>
+  <span class="ruby-ivar">@log</span> = <span class="ruby-constant">Logger</span>.<span class="ruby-identifier">create</span>(<span class="ruby-string">&quot;wallet&quot;</span>)
+  <span class="ruby-ivar">@log</span>.<span class="ruby-identifier">level</span> = <span class="ruby-value">:debug</span>
+  <span class="ruby-ivar">@log</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- log-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- log-method -->
+
+    
+      <div id="method-i-method_missing" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">method_missing</span><span
+            class="method-args">(name, *args, &block)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>register <a href="Wallet.html#method-i-callback">#callback</a> methods</p>
+          
+          
+            <div class="method-calls-super">
+              Calls superclass method
+              
+            </div>
+          
+
+          
+          <div class="method-source-code" id="method_missing-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/wallet/wallet.rb, line 100</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">method_missing</span>(<span class="ruby-identifier">name</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">name</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp">/^on_/</span>
+    <span class="ruby-ivar">@callbacks</span>[<span class="ruby-identifier">name</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot;on_&quot;</span>)[<span class="ruby-value">1</span>].<span class="ruby-identifier">to_sym</span>] = <span class="ruby-identifier">block</span>
+    <span class="ruby-identifier">log</span>.<span class="ruby-identifier">debug</span> { <span class="ruby-node">&quot;callback #{name} registered&quot;</span> }
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-keyword">super</span>(<span class="ruby-identifier">name</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- method_missing-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- method_missing-method -->
+
+    
+      <div id="method-i-new_tx" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">new_tx</span><span
+            class="method-args">(outputs, fee = 0, change_policy = :back)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>create a transaction with given <code>outputs</code>, <code>fee</code> and
+<code>change_policy</code>.</p>
+
+<p>outputs are of the form</p>
+
+<pre>[&lt;type&gt;, &lt;recipients&gt;, &lt;value&gt;]</pre>
+
+<p>examples:</p>
+
+<pre>[:address, &lt;addr&gt;, &lt;value&gt;]
+[:multisig, 2, 3, &lt;addr&gt;, &lt;addr&gt;, &lt;addr&gt;, &lt;value&gt;]</pre>
+
+<p>inputs are selected automatically by the <a
+href="SimpleCoinSelector.html">SimpleCoinSelector</a>.</p>
+
+<p>change_policy controls where the change_output is spent to. see
+#get_change_addr</p>
+          
+          
+
+          
+          <div class="method-source-code" id="new_tx-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/wallet/wallet.rb, line 184</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">new_tx</span> <span class="ruby-identifier">outputs</span>, <span class="ruby-identifier">fee</span> = <span class="ruby-value">0</span>, <span class="ruby-identifier">change_policy</span> = <span class="ruby-value">:back</span>
+  <span class="ruby-identifier">output_value</span> = <span class="ruby-identifier">outputs</span>.<span class="ruby-identifier">map</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">o</span><span class="ruby-operator">|</span> <span class="ruby-identifier">o</span>[<span class="ruby-value">-1</span>] }.<span class="ruby-identifier">inject</span>(<span class="ruby-value">:+</span>)
+
+  <span class="ruby-identifier">prev_outs</span> = <span class="ruby-identifier">get_selector</span>.<span class="ruby-identifier">select</span>(<span class="ruby-identifier">output_value</span>)
+  <span class="ruby-identifier">raise</span> <span class="ruby-string">&quot;Insufficient funds.&quot;</span>  <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">prev_outs</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-constant">Bitcoin</span>.<span class="ruby-identifier">namecoin?</span>
+    <span class="ruby-identifier">prev_out</span> = <span class="ruby-keyword">nil</span>
+    <span class="ruby-identifier">outputs</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">out</span><span class="ruby-operator">|</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-identifier">out</span>[<span class="ruby-value">0</span>] <span class="ruby-operator">==</span> <span class="ruby-value">:name_firstupdate</span>
+        <span class="ruby-identifier">name_hash</span> = <span class="ruby-constant">Bitcoin</span>.<span class="ruby-identifier">hash160</span>(<span class="ruby-identifier">out</span>[<span class="ruby-value">2</span>] <span class="ruby-operator">+</span> <span class="ruby-identifier">out</span>[<span class="ruby-value">1</span>].<span class="ruby-identifier">hth</span>)
+        <span class="ruby-keyword">break</span>  <span class="ruby-keyword">if</span> <span class="ruby-identifier">prev_out</span> = <span class="ruby-identifier">get_txouts</span>.<span class="ruby-identifier">find</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">o</span><span class="ruby-operator">|</span>
+          <span class="ruby-identifier">o</span>.<span class="ruby-identifier">type</span> <span class="ruby-operator">==</span> <span class="ruby-value">:name_new</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">o</span>.<span class="ruby-identifier">script</span>.<span class="ruby-identifier">get_namecoin_hash</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">name_hash</span> }
+      <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">out</span>[<span class="ruby-value">0</span>] <span class="ruby-operator">==</span> <span class="ruby-value">:name_update</span>
+        <span class="ruby-keyword">break</span>  <span class="ruby-keyword">if</span> <span class="ruby-identifier">prev_out</span> = <span class="ruby-identifier">storage</span>.<span class="ruby-identifier">name_show</span>(<span class="ruby-identifier">out</span>[<span class="ruby-value">1</span>]).<span class="ruby-identifier">get_txout</span> <span class="ruby-keyword">rescue</span> <span class="ruby-keyword">nil</span>
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">outputs</span>.<span class="ruby-identifier">find</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">o</span><span class="ruby-operator">|</span> [<span class="ruby-value">:name_firstupdate</span>, <span class="ruby-value">:name_update</span>].<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">o</span>[<span class="ruby-value">0</span>]) }
+      <span class="ruby-identifier">raise</span> <span class="ruby-string">&quot;previous name tx not found in wallet.&quot;</span>  <span class="ruby-keyword">unless</span> <span class="ruby-identifier">prev_out</span>
+      <span class="ruby-identifier">prev_outs</span> <span class="ruby-operator">+=</span> [<span class="ruby-identifier">prev_out</span>]
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">input_value</span> = <span class="ruby-identifier">prev_outs</span>.<span class="ruby-identifier">map</span>(<span class="ruby-operator">&amp;</span><span class="ruby-value">:value</span>).<span class="ruby-identifier">inject</span>(<span class="ruby-value">:+</span>)
+  <span class="ruby-identifier">raise</span> <span class="ruby-string">&quot;Insufficient funds.&quot;</span>  <span class="ruby-keyword">unless</span> <span class="ruby-identifier">input_value</span> <span class="ruby-operator">&gt;=</span> (<span class="ruby-identifier">output_value</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">fee</span>)
+
+  <span class="ruby-identifier">tx</span> = <span class="ruby-identifier">build_tx</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">t</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">t</span>.<span class="ruby-identifier">version</span> <span class="ruby-value">0x7100</span>  <span class="ruby-keyword">if</span> <span class="ruby-constant">Bitcoin</span>.<span class="ruby-identifier">namecoin?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">outputs</span>.<span class="ruby-identifier">find</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">o</span><span class="ruby-operator">|</span> <span class="ruby-identifier">o</span>[<span class="ruby-value">0</span>].<span class="ruby-identifier">to_s</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp">/^name_/</span> }
+    <span class="ruby-identifier">outputs</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">type</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">addrs</span>, <span class="ruby-identifier">value</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">t</span>.<span class="ruby-identifier">output</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">o</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">o</span>.<span class="ruby-identifier">value</span> <span class="ruby-identifier">value</span>
+        <span class="ruby-identifier">o</span>.<span class="ruby-identifier">script</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">s</span><span class="ruby-operator">|</span>
+          <span class="ruby-identifier">s</span>.<span class="ruby-identifier">type</span> <span class="ruby-identifier">type</span>
+          <span class="ruby-identifier">s</span>.<span class="ruby-identifier">recipient</span> <span class="ruby-operator">*</span><span class="ruby-identifier">addrs</span>
+        <span class="ruby-keyword">end</span>
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-identifier">change_value</span> = <span class="ruby-identifier">input_value</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">output_value</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">fee</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">change_value</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
+      <span class="ruby-identifier">change_addr</span> = <span class="ruby-identifier">get_change_addr</span>(<span class="ruby-identifier">change_policy</span>, <span class="ruby-identifier">prev_outs</span>.<span class="ruby-identifier">sample</span>.<span class="ruby-identifier">get_address</span>)
+      <span class="ruby-identifier">t</span>.<span class="ruby-identifier">output</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">o</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">o</span>.<span class="ruby-identifier">value</span> <span class="ruby-identifier">change_value</span>
+        <span class="ruby-identifier">o</span>.<span class="ruby-identifier">script</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">s</span><span class="ruby-operator">|</span>
+          <span class="ruby-identifier">s</span>.<span class="ruby-identifier">type</span> <span class="ruby-value">:address</span>
+          <span class="ruby-identifier">s</span>.<span class="ruby-identifier">recipient</span> <span class="ruby-identifier">change_addr</span>
+        <span class="ruby-keyword">end</span>
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-identifier">prev_outs</span>.<span class="ruby-identifier">each_with_index</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">prev_out</span>, <span class="ruby-identifier">idx</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">t</span>.<span class="ruby-identifier">input</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">prev_tx</span> = <span class="ruby-identifier">prev_out</span>.<span class="ruby-identifier">get_tx</span>
+        <span class="ruby-identifier">i</span>.<span class="ruby-identifier">prev_out</span> <span class="ruby-identifier">prev_tx</span>
+        <span class="ruby-identifier">i</span>.<span class="ruby-identifier">prev_out_index</span> <span class="ruby-identifier">prev_tx</span>.<span class="ruby-identifier">out</span>.<span class="ruby-identifier">index</span>(<span class="ruby-identifier">prev_out</span>)
+        <span class="ruby-identifier">pk_script</span> = <span class="ruby-constant">Script</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">prev_out</span>.<span class="ruby-identifier">pk_script</span>)
+        <span class="ruby-keyword">if</span> <span class="ruby-identifier">pk_script</span>.<span class="ruby-identifier">is_pubkey?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">pk_script</span>.<span class="ruby-identifier">is_hash160?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">pk_script</span>.<span class="ruby-identifier">is_namecoin?</span>
+          <span class="ruby-identifier">i</span>.<span class="ruby-identifier">signature_key</span> <span class="ruby-ivar">@keystore</span>.<span class="ruby-identifier">key</span>(<span class="ruby-identifier">prev_out</span>.<span class="ruby-identifier">get_address</span>)[<span class="ruby-value">:key</span>]
+        <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">pk_script</span>.<span class="ruby-identifier">is_multisig?</span>
+          <span class="ruby-identifier">raise</span> <span class="ruby-string">&quot;multisig not implemented&quot;</span>
+        <span class="ruby-keyword">end</span>
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-comment"># TODO: spend multisig outputs again</span>
+  <span class="ruby-comment"># TODO: verify signatures</span>
+  <span class="ruby-identifier">raise</span> <span class="ruby-string">&quot;Payload Error&quot;</span>  <span class="ruby-keyword">unless</span> <span class="ruby-constant">P</span><span class="ruby-operator">::</span><span class="ruby-constant">Tx</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">tx</span>.<span class="ruby-identifier">to_payload</span>).<span class="ruby-identifier">to_payload</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">tx</span>.<span class="ruby-identifier">to_payload</span>
+
+  <span class="ruby-identifier">tx</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- new_tx-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- new_tx-method -->
+
+    
+      <div id="method-i-rescan" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">rescan</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="rescan-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/wallet/wallet.rb, line 163</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">rescan</span>
+  <span class="ruby-ivar">@storage</span>.<span class="ruby-identifier">rescan</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- rescan-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- rescan-method -->
+
+    
+    </section><!-- public-instance-method-details -->
+  
+     <section id="protected-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Protected Instance Methods</h3>
+
+    
+      <div id="method-i-get_change_addr" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">get_change_addr</span><span
+            class="method-args">(policy, in_addr)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>get address to send change output to. <code>policy</code> controls which
+address is chosen:</p>
+<dl class="rdoc-list note-list"><dt>first
+<dd>
+<p>send to the first key in the wallets <a
+href="Wallet.html#attribute-i-keystore">#keystore</a></p>
+</dd><dt>random
+<dd>
+<p>send to a random key from the wallets <a
+href="Wallet.html#attribute-i-keystore">#keystore</a></p>
+</dd><dt><a href="Wallet.html#method-c-new">::new</a>
+<dd>
+<p>send to a <a href="Wallet.html#method-c-new">::new</a> key generated in the
+wallets <a href="Wallet.html#attribute-i-keystore">#keystore</a></p>
+</dd><dt>back
+<dd>
+<p>send to the address given as <code>in_addr</code></p>
+</dd></dl>
+          
+          
+
+          
+          <div class="method-source-code" id="get_change_addr-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/wallet/wallet.rb, line 263</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">get_change_addr</span>(<span class="ruby-identifier">policy</span>, <span class="ruby-identifier">in_addr</span>)
+  <span class="ruby-keyword">case</span> <span class="ruby-identifier">policy</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-value">:first</span>
+    <span class="ruby-ivar">@keystore</span>.<span class="ruby-identifier">keys</span>[<span class="ruby-value">0</span>].<span class="ruby-identifier">addr</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-value">:random</span>
+    <span class="ruby-ivar">@keystore</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">sample</span>.<span class="ruby-identifier">addr</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-value">:new</span>
+    <span class="ruby-ivar">@keystore</span>.<span class="ruby-identifier">new_key</span>.<span class="ruby-identifier">addr</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-value">:back</span>
+    <span class="ruby-identifier">in_addr</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">policy</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- get_change_addr-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- get_change_addr-method -->
+
+    
+    </section><!-- protected-instance-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+</div><!-- documentation -->
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 4.0.1.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+

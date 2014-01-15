@@ -7,7 +7,6 @@ pkg/*
 *.DS_Store
 tmp/
 log/
-rdoc/
 coverage/
 *.conf
 *.db

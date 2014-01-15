@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+<title>NODE - bitcoin-ruby RDoc</title>
+
+<link type="text/css" media="screen" href="../rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "../";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/darkfish.js"></script>
+
+
+<body class="file">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="../index.html">Home</a>
+    <a href="../table_of_contents.html#classes">Classes</a>
+    <a href="../table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  
+<div id="table-of-contents">
+  <nav class="section">
+    <h3 class="section-header">Table of Contents</h3>
+    <ul>
+      <li><a href="#label-NODE">NODE</a>
+      <li><a href="#label-Usage">Usage</a>
+      <li><a href="#label-Command+socket">Command socket</a>
+      <li><a href="#label-CLI+interface">CLI interface</a>
+      <li><a href="#label-CommandClient">CommandClient</a>
+      <li><a href="#label-Raw+socket">Raw socket</a>
+      <li><a href="#label-Commands">Commands</a>
+      <li><a href="#label-info">info</a>
+      <li><a href="#label-config">config</a>
+      <li><a href="#label-connections">connections</a>
+      <li><a href="#label-connect">connect</a>
+      <li><a href="#label-disconnect">disconnect</a>
+      <li><a href="#label-getblocks">getblocks</a>
+      <li><a href="#label-getaddr">getaddr</a>
+      <li><a href="#label-addrs">addrs</a>
+      <li><a href="#label-tslb">tslb</a>
+      <li><a href="#label-create_tx">create_tx</a>
+      <li><a href="#label-assemble_tx">assemble_tx</a>
+      <li><a href="#label-relay_tx">relay_tx</a>
+      <li><a href="#label-store_block">store_block</a>
+      <li><a href="#label-store_tx">store_tx</a>
+      <li><a href="#label-stop">stop</a>
+      <li><a href="#label-help">help</a>
+    </ul>
+  </nav>
+</div>
+
+
+  <div id="project-metadata">
+    <nav id="fileindex-section" class="section project-section">
+  <h3 class="section-header">Pages</h3>
+
+  <ul>
+  
+    <li class="file"><a href="../COPYING.html">COPYING</a>
+  
+    <li class="file"><a href="../README_rdoc.html">README</a>
+  
+    <li class="file"><a href="../doc/CONFIG_rdoc.html">CONFIG</a>
+  
+    <li class="file"><a href="../doc/EXAMPLES_rdoc.html">EXAMPLES</a>
+  
+    <li class="file"><a href="../doc/NAMECOIN_rdoc.html">NAMECOIN</a>
+  
+    <li class="file"><a href="../doc/NODE_rdoc.html">NODE</a>
+  
+    <li class="file"><a href="../doc/STORAGE_rdoc.html">STORAGE</a>
+  
+    <li class="file"><a href="../doc/WALLET_rdoc.html">WALLET</a>
+  
+    <li class="file"><a href="../examples/graph_benchmark_results_rb~.html">graph_benchmark_results.rb~</a>
+  
+    <li class="file"><a href="../examples/import_rb~.html">import.rb~</a>
+  
+    <li class="file"><a href="../examples/run_bench_rb~.html">run_bench.rb~</a>
+  
+    <li class="file"><a href="../examples/run_benchmarks_rb~.html">run_benchmarks.rb~</a>
+  
+    <li class="file"><a href="../lib/bitcoin/gui/bitcoin-ruby_svg.html">bitcoin-ruby.svg</a>
+  
+    <li class="file"><a href="../lib/bitcoin/gui/gui_builder.html">gui.builder</a>
+  
+  </ul>
+</nav>
+
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="../Array.html">Array</a>
+  
+    <li><a href="../Bitcoin.html">Bitcoin</a>
+  
+    <li><a href="../Bitcoin/BinaryExtensions.html">Bitcoin::BinaryExtensions</a>
+  
+    <li><a href="../Bitcoin/Builder.html">Bitcoin::Builder</a>
+  
+    <li><a href="../Bitcoin/Builder/BlockBuilder.html">Bitcoin::Builder::BlockBuilder</a>
+  
+    <li><a href="../Bitcoin/Builder/ScriptBuilder.html">Bitcoin::Builder::ScriptBuilder</a>
+  
+    <li><a href="../Bitcoin/Builder/TxBuilder.html">Bitcoin::Builder::TxBuilder</a>
+  
+    <li><a href="../Bitcoin/Builder/TxInBuilder.html">Bitcoin::Builder::TxInBuilder</a>
+  
+    <li><a href="../Bitcoin/Builder/TxOutBuilder.html">Bitcoin::Builder::TxOutBuilder</a>
+  
+    <li><a href="../Bitcoin/Config.html">Bitcoin::Config</a>
+  
+    <li><a href="../Bitcoin/Connection.html">Bitcoin::Connection</a>
+  
+    <li><a href="../Bitcoin/ConnectionHandler.html">Bitcoin::ConnectionHandler</a>
+  
+    <li><a href="../Bitcoin/Gui.html">Bitcoin::Gui</a>
+  
+    <li><a href="../Bitcoin/Gui/AddrView.html">Bitcoin::Gui::AddrView</a>
+  
+    <li><a href="../Bitcoin/Gui/Bitcoin.html">Bitcoin::Gui::Bitcoin</a>
+  
+    <li><a href="../Bitcoin/Gui/Bitcoin/Gui.html">Bitcoin::Gui::Bitcoin::Gui</a>
+  
+    <li><a href="../Bitcoin/Gui/Bitcoin/Gui/Bitcoin.html">Bitcoin::Gui::Bitcoin::Gui::Bitcoin</a>
+  
+    <li><a href="../Bitcoin/Gui/Bitcoin/Gui/Bitcoin/Network.html">Bitcoin::Gui::Bitcoin::Gui::Bitcoin::Network</a>
+  
+    <li><a href="../Bitcoin/Gui/Bitcoin/Gui/Bitcoin/Network/CommandClient.html">Bitcoin::Gui::Bitcoin::Gui::Bitcoin::Network::CommandClient</a>
+  
+    <li><a href="../Bitcoin/Gui/ConnView.html">Bitcoin::Gui::ConnView</a>
+  
+    <li><a href="../Bitcoin/Gui/Connection.html">Bitcoin::Gui::Connection</a>
+  
+    <li><a href="../Bitcoin/Gui/Gui.html">Bitcoin::Gui::Gui</a>
+  
+    <li><a href="../Bitcoin/Gui/Helpers.html">Bitcoin::Gui::Helpers</a>
+  
+    <li><a href="../Bitcoin/Gui/TreeView.html">Bitcoin::Gui::TreeView</a>
+  
+    <li><a href="../Bitcoin/Gui/TxInView.html">Bitcoin::Gui::TxInView</a>
+  
+    <li><a href="../Bitcoin/Gui/TxView.html">Bitcoin::Gui::TxView</a>
+  
+    <li><a href="../Bitcoin/Key.html">Bitcoin::Key</a>
+  
+    <li><a href="../Bitcoin/Logger.html">Bitcoin::Logger</a>
+  
+    <li><a href="../Bitcoin/Logger/LogWrapper.html">Bitcoin::Logger::LogWrapper</a>
+  
+    <li><a href="../Bitcoin/Logger/Logger.html">Bitcoin::Logger::Logger</a>
+  
+    <li><a href="../Bitcoin/Logger/TimeLogger.html">Bitcoin::Logger::TimeLogger</a>
+  
+    <li><a href="../Bitcoin/Namecoin.html">Bitcoin::Namecoin</a>
+  
+    <li><a href="../Bitcoin/Namecoin/Script.html">Bitcoin::Namecoin::Script</a>
+  
+    <li><a href="../Bitcoin/Namecoin/Storage.html">Bitcoin::Namecoin::Storage</a>
+  
+    <li><a href="../Bitcoin/Namecoin/Storage/Backend.html">Bitcoin::Namecoin::Storage::Backend</a>
+  
+    <li><a href="../Bitcoin/Namecoin/Storage/Models.html">Bitcoin::Namecoin::Storage::Models</a>
+  
+    <li><a href="../Bitcoin/Namecoin/Storage/Models/Name.html">Bitcoin::Namecoin::Storage::Models::Name</a>
+  
+    <li><a href="../Bitcoin/Network.html">Bitcoin::Network</a>
+  
+    <li><a href="../Bitcoin/Network/CommandClient.html">Bitcoin::Network::CommandClient</a>
+  
+    <li><a href="../Bitcoin/Network/CommandHandler.html">Bitcoin::Network::CommandHandler</a>
+  
+    <li><a href="../Bitcoin/Network/ConnectionHandler.html">Bitcoin::Network::ConnectionHandler</a>
+  
+    <li><a href="../Bitcoin/Network/Node.html">Bitcoin::Network::Node</a>
+  
+    <li><a href="../Bitcoin/OpenSSL_EC.html">Bitcoin::OpenSSL_EC</a>
+  
+    <li><a href="../Bitcoin/OpenSSL_EC/FFI.html">Bitcoin::OpenSSL_EC::FFI</a>
+  
+    <li><a href="../Bitcoin/P.html">Bitcoin::P</a>
+  
+    <li><a href="../Bitcoin/Protocol.html">Bitcoin::Protocol</a>
+  
+    <li><a href="../Bitcoin/Protocol/Addr.html">Bitcoin::Protocol::Addr</a>
+  
+    <li><a href="../Bitcoin/Protocol/Alert.html">Bitcoin::Protocol::Alert</a>
+  
+    <li><a href="../Bitcoin/Protocol/AuxPow.html">Bitcoin::Protocol::AuxPow</a>
+  
+    <li><a href="../Bitcoin/Protocol/Block.html">Bitcoin::Protocol::Block</a>
+  
+    <li><a href="../Bitcoin/Protocol/Handler.html">Bitcoin::Protocol::Handler</a>
+  
+    <li><a href="../Bitcoin/Protocol/Parser.html">Bitcoin::Protocol::Parser</a>
+  
+    <li><a href="../Bitcoin/Protocol/Tx.html">Bitcoin::Protocol::Tx</a>
+  
+    <li><a href="../Bitcoin/Protocol/TxIn.html">Bitcoin::Protocol::TxIn</a>
+  
+    <li><a href="../Bitcoin/Protocol/TxOut.html">Bitcoin::Protocol::TxOut</a>
+  
+    <li><a href="../Bitcoin/Protocol/Version.html">Bitcoin::Protocol::Version</a>
+  
+    <li><a href="../Bitcoin/Script.html">Bitcoin::Script</a>
+  
+    <li><a href="../Bitcoin/Script/ScriptOpcodeError.html">Bitcoin::Script::ScriptOpcodeError</a>
+  
+    <li><a href="../Bitcoin/Storage.html">Bitcoin::Storage</a>
+  
+    <li><a href="../Bitcoin/Storage/Backends.html">Bitcoin::Storage::Backends</a>
+  
+    <li><a href="../Bitcoin/Storage/Backends/DummyStore.html">Bitcoin::Storage::Backends::DummyStore</a>
+  
+    <li><a href="../Bitcoin/Storage/Backends/SequelMigrations.html">Bitcoin::Storage::Backends::SequelMigrations</a>
+  
+    <li><a href="../Bitcoin/Storage/Backends/SequelStore.html">Bitcoin::Storage::Backends::SequelStore</a>
+  
+    <li><a href="../Bitcoin/Storage/Backends/StoreBase.html">Bitcoin::Storage::Backends::StoreBase</a>
+  
+    <li><a href="../Bitcoin/Storage/Backends/UtxoStore.html">Bitcoin::Storage::Backends::UtxoStore</a>
+  
+    <li><a href="../Bitcoin/Storage/Models.html">Bitcoin::Storage::Models</a>
+  
+    <li><a href="../Bitcoin/Storage/Models/Block.html">Bitcoin::Storage::Models::Block</a>
+  
+    <li><a href="../Bitcoin/Storage/Models/Tx.html">Bitcoin::Storage::Models::Tx</a>
+  
+    <li><a href="../Bitcoin/Storage/Models/TxIn.html">Bitcoin::Storage::Models::TxIn</a>
+  
+    <li><a href="../Bitcoin/Storage/Models/TxOut.html">Bitcoin::Storage::Models::TxOut</a>
+  
+    <li><a href="../Bitcoin/Util.html">Bitcoin::Util</a>
+  
+    <li><a href="../Bitcoin/Validation.html">Bitcoin::Validation</a>
+  
+    <li><a href="../Bitcoin/Validation/Block.html">Bitcoin::Validation::Block</a>
+  
+    <li><a href="../Bitcoin/Validation/Tx.html">Bitcoin::Validation::Tx</a>
+  
+    <li><a href="../Bitcoin/Validation/ValidationError.html">Bitcoin::Validation::ValidationError</a>
+  
+    <li><a href="../Bitcoin/Wallet.html">Bitcoin::Wallet</a>
+  
+    <li><a href="../Bitcoin/Wallet/DeterministicKeyStore.html">Bitcoin::Wallet::DeterministicKeyStore</a>
+  
+    <li><a href="../Bitcoin/Wallet/KeyGenerator.html">Bitcoin::Wallet::KeyGenerator</a>
+  
+    <li><a href="../Bitcoin/Wallet/SimpleCoinSelector.html">Bitcoin::Wallet::SimpleCoinSelector</a>
+  
+    <li><a href="../Bitcoin/Wallet/SimpleKeyStore.html">Bitcoin::Wallet::SimpleKeyStore</a>
+  
+    <li><a href="../Bitcoin/Wallet/TxDP.html">Bitcoin::Wallet::TxDP</a>
+  
+    <li><a href="../Bitcoin/Wallet/Wallet.html">Bitcoin::Wallet::Wallet</a>
+  
+    <li><a href="../EM.html">EM</a>
+  
+    <li><a href="../Gtk.html">Gtk</a>
+  
+    <li><a href="../Hash.html">Hash</a>
+  
+    <li><a href="../JSON.html">JSON</a>
+  
+    <li><a href="../Litecoin.html">Litecoin</a>
+  
+    <li><a href="../Litecoin/Scrypt.html">Litecoin::Scrypt</a>
+  
+    <li><a href="../Log4r.html">Log4r</a>
+  
+    <li><a href="../Log4r/Logger.html">Log4r::Logger</a>
+  
+    <li><a href="../Mnemonic.html">Mnemonic</a>
+  
+    <li><a href="../Object.html">Object</a>
+  
+    <li><a href="../OpenSSL.html">OpenSSL</a>
+  
+    <li><a href="../OpenSSL/BN.html">OpenSSL::BN</a>
+  
+    <li><a href="../OpenSSL/PKey.html">OpenSSL::PKey</a>
+  
+    <li><a href="../OpenSSL/PKey/EC.html">OpenSSL::PKey::EC</a>
+  
+    <li><a href="../OpenSSL/PKey/EC/Point.html">OpenSSL::PKey::EC::Point</a>
+  
+    <li><a href="../RawJSON_Connection.html">RawJSON_Connection</a>
+  
+    <li><a href="../SimpleNode.html">SimpleNode</a>
+  
+    <li><a href="../SimpleNode/Connection.html">SimpleNode::Connection</a>
+  
+    <li><a href="../String.html">String</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation" class="description">
+  
+<h1 id="label-NODE"><a href="NODE_rdoc.html">NODE</a><span><a href="#label-NODE">&para;</a> <a href="#documentation">&uarr;</a></span></h1>
+
+<p><a href="../Bitcoin.html">Bitcoin</a> Node. Connects to the network and
+downloads the blockchain into local storage.</p>
+
+<h2 id="label-Usage">Usage<span><a href="#label-Usage">&para;</a> <a href="#documentation">&uarr;</a></span></h2>
+
+<p>To run the node with the default options (download the blockchain into
+./bitcoin.db using the sequel::sqlite3 <a
+href="STORAGE_rdoc.html">STORAGE</a> backend):</p>
+
+<pre>bitcoin_node</pre>
+
+<p>You can specify options (see <code>--help</code>) or pass a config file
+with <code>--config</code> (see <a href="CONFIG_rdoc.html">CONFIG</a>).</p>
+
+<p>Some common options you might want to use:</p>
+<dl class="rdoc-list note-list"><dt><code>-n --network</code> <em>&lt;name&gt;</em>
+<dd>
+<p>Network to use. Usually <code>bitcoin</code>. Support for
+<code>namecoin</code> is also quite good. Use <code>testnet</code> for
+development.</p>
+</dd><dt><code>-c --config</code> <em>&lt;file&gt;</em>
+<dd>
+<p>Read options from config file. See also <a
+href="CONFIG_rdoc.html">CONFIG</a>.</p>
+</dd><dt><code>--connect</code> <em>&lt;ip:port&gt;</em>
+<dd>
+<p>List of peers to connect to.</p>
+</dd><dt><code>-s --storage</code> <em>&lt;backend-string&gt;</em>
+<dd>
+<p>Storage backend to use. See also <a href="STORAGE_rdoc.html">STORAGE</a>.</p>
+</dd><dt><code>--import</code> <em>&lt;blockchain dir&gt;</em>
+<dd>
+<p>Import blockchain in bitcoind/qt format from given directory.</p>
+</dd><dt><code>--skip-validation</code>
+<dd>
+<p>Skip validation of received blockchain data. Can be used to speed up
+import/sync when blockchain data is received from a trusted source.</p>
+</dd><dt>&lt;tt&gt;–check-blocks <em>&lt;count&gt;</em>
+<dd>
+<p>Check consistency of the <code>count</code> most recent blocks. Pass -1 to
+check all blocks.</p>
+</dd><dt><code>-v --verbose</code>
+<dd>
+<p>Display debug output.</p>
+</dd><dt><code>-h --help</code>
+<dd>
+<p>Display all available options.</p>
+</dd></dl>
+
+<p>It will take a long time to download/store the entire blockchain at first,
+so be patient ;)</p>
+
+<h2 id="label-Command+socket">Command socket<span><a href="#label-Command+socket">&para;</a> <a href="#documentation">&uarr;</a></span></h2>
+
+<p>The node opens a separate command socket which you can connect to and query
+statistics or get notified about new blocks/tx, etc. See below for a list
+of available commands.</p>
+
+<h3 id="label-CLI+interface">CLI interface<span><a href="#label-CLI+interface">&para;</a> <a href="#documentation">&uarr;</a></span></h3>
+
+<p>The easiest way is to just call `bitcoin_node` again in the same way you
+started it, but with an extra command argument:</p>
+
+<pre>bitcoin_node info
+bitcoin_node -c config.yml info
+bitcoin_node monitor &quot;block tx&quot;</pre>
+
+<h3 id="label-CommandClient">CommandClient<span><a href="#label-CommandClient">&para;</a> <a href="#documentation">&uarr;</a></span></h3>
+
+<p>If you are programming in an EventMachine context, you might find the <a
+href="../Bitcoin/Network/CommandClient.html">Bitcoin::Network::CommandClient</a>
+convenient.</p>
+
+<h3 id="label-Raw+socket">Raw socket<span><a href="#label-Raw+socket">&para;</a> <a href="#documentation">&uarr;</a></span></h3>
+
+<p>Of course you can also connect to the socket by any other means you like,
+just send [&lt;command&gt;, &lt;params&gt;] pairs and receive
+[&lt;command&gt;, &lt;response&gt;] pairs back (both encoded in <a
+href="../JSON.html">JSON</a>):</p>
+
+<pre>$ echo -e '[&quot;tslb&quot;, []]\0' | nc 127.0.0.1 9999
+[&quot;tslb&quot;,{&quot;tslb&quot;:2700}]</pre>
+
+<h3 id="label-Commands">Commands<span><a href="#label-Commands">&para;</a> <a href="#documentation">&uarr;</a></span></h3>
+
+<h4 id="label-info">info<span><a href="#label-info">&para;</a> <a href="#documentation">&uarr;</a></span></h4>
+
+<p>Get various statistics.</p>
+
+<pre>bitcoin_node info</pre>
+
+<h4 id="label-config">config<span><a href="#label-config">&para;</a> <a href="#documentation">&uarr;</a></span></h4>
+
+<p>Get the currently active configuration.</p>
+
+<pre>bitcoin_node config</pre>
+
+<h4 id="label-connections">connections<span><a href="#label-connections">&para;</a> <a href="#documentation">&uarr;</a></span></h4>
+
+<p>Get currently connected peers.</p>
+
+<pre>bitcoin_node connections</pre>
+
+<h4 id="label-connect">connect<span><a href="#label-connect">&para;</a> <a href="#documentation">&uarr;</a></span></h4>
+
+<p>Connect to given peer(s).</p>
+
+<pre>bitcoin_node connect &lt;ip&gt;:&lt;port&gt;[,&lt;ip&gt;:&lt;port&gt;]</pre>
+
+<h4 id="label-disconnect">disconnect<span><a href="#label-disconnect">&para;</a> <a href="#documentation">&uarr;</a></span></h4>
+
+<p>Disconnect given peer(s).</p>
+
+<pre>bitcoin_node disconnect &lt;ip&gt;:&lt;port&gt;[,&lt;ip&gt;,&lt;port&gt;]</pre>
+
+<h4 id="label-getblocks">getblocks<span><a href="#label-getblocks">&para;</a> <a href="#documentation">&uarr;</a></span></h4>
+
+<p>Trigger the node to ask its peers for new blocks.</p>
+
+<pre>bitcoin_node getblocks</pre>
+
+<h4 id="label-getaddr">getaddr<span><a href="#label-getaddr">&para;</a> <a href="#documentation">&uarr;</a></span></h4>
+
+<p>Trigger the node to ask its for new peer addresses.</p>
+
+<pre>bitcoin_node getaddr</pre>
+
+<h4 id="label-addrs">addrs<span><a href="#label-addrs">&para;</a> <a href="#documentation">&uarr;</a></span></h4>
+
+<p>Get known peer addresses (used by bin/bitcoin_dns_seed)</p>
+
+<pre>bitcoin_node addrs [count]</pre>
+
+<h4 id="label-tslb">tslb<span><a href="#label-tslb">&para;</a> <a href="#documentation">&uarr;</a></span></h4>
+
+<p>Get Time Since Last Block.</p>
+
+<pre>bitcoin_node tslb</pre>
+
+<h4 id="label-create_tx">create_tx<span><a href="#label-create_tx">&para;</a> <a href="#documentation">&uarr;</a></span></h4>
+
+<p>TODO</p>
+
+<h4 id="label-assemble_tx">assemble_tx<span><a href="#label-assemble_tx">&para;</a> <a href="#documentation">&uarr;</a></span></h4>
+
+<p>TODO</p>
+
+<h4 id="label-relay_tx">relay_tx<span><a href="#label-relay_tx">&para;</a> <a href="#documentation">&uarr;</a></span></h4>
+
+<p>Relay given transaction (in hex).</p>
+
+<pre>bitcoin_node relay_tx &lt;tx in hex&gt;</pre>
+
+<h4 id="label-store_block">store_block<span><a href="#label-store_block">&para;</a> <a href="#documentation">&uarr;</a></span></h4>
+
+<p>Validate and store given block (in hex) as if it was received by a peer.</p>
+
+<pre>bitcoin_node store_block &lt;block in hex&gt;</pre>
+
+<h4 id="label-store_tx">store_tx<span><a href="#label-store_tx">&para;</a> <a href="#documentation">&uarr;</a></span></h4>
+
+<p>Store given transaction (in hex) as if it was received by a peer.</p>
+
+<pre>bitcoin_node store_tx &lt;tx in hex&gt;</pre>
+
+<h4 id="label-stop">stop<span><a href="#label-stop">&para;</a> <a href="#documentation">&uarr;</a></span></h4>
+
+<p>Stop the bitcoin node.</p>
+
+<pre>bitcoin_node stop</pre>
+
+<h4 id="label-help">help<span><a href="#label-help">&para;</a> <a href="#documentation">&uarr;</a></span></h4>
+
+<p>List all available commands.</p>
+
+<pre>bitcoin_node help</pre>
+
+</div>
+
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 4.0.1.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+

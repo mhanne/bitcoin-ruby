@@ -1,0 +1,1999 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+<title>class Bitcoin::Network::ConnectionHandler - bitcoin-ruby RDoc</title>
+
+<link type="text/css" media="screen" href="../../rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "../../";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="../../js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../js/darkfish.js"></script>
+
+
+<body id="top" class="class">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="../../index.html">Home</a>
+    <a href="../../table_of_contents.html#classes">Classes</a>
+    <a href="../../table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>lib/bitcoin/network/connection_handler.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    
+    <nav id="parent-class-section" class="section">
+  <h3 class="section-header">Parent</h3>
+  
+  <p class="link">EM::Connection
+  
+</nav>
+
+    <!-- Included Modules -->
+<nav id="includes-section" class="section">
+  <h3 class="section-header">Included Modules</h3>
+
+  <ul class="link-list">
+  
+  
+    <li><a class="include" href="../../Bitcoin.html">Bitcoin</a>
+  
+  
+  
+    <li><a class="include" href="../Storage.html">Bitcoin::Storage</a>
+  
+  
+  </ul>
+</nav>
+
+    
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li ><a href="#method-c-new">::new</a>
+    
+    <li ><a href="#method-i-addr">#addr</a>
+    
+    <li ><a href="#method-i-begin_handshake">#begin_handshake</a>
+    
+    <li ><a href="#method-i-complete_handshake">#complete_handshake</a>
+    
+    <li ><a href="#method-i-connection_completed">#connection_completed</a>
+    
+    <li ><a href="#method-i-get_genesis_block">#get_genesis_block</a>
+    
+    <li ><a href="#method-i-incoming-3F">#incoming?</a>
+    
+    <li ><a href="#method-i-info">#info</a>
+    
+    <li ><a href="#method-i-log">#log</a>
+    
+    <li ><a href="#method-i-on_addr">#on_addr</a>
+    
+    <li ><a href="#method-i-on_alert">#on_alert</a>
+    
+    <li ><a href="#method-i-on_block">#on_block</a>
+    
+    <li ><a href="#method-i-on_get_block">#on_get_block</a>
+    
+    <li ><a href="#method-i-on_get_transaction">#on_get_transaction</a>
+    
+    <li ><a href="#method-i-on_getaddr">#on_getaddr</a>
+    
+    <li ><a href="#method-i-on_getblocks">#on_getblocks</a>
+    
+    <li ><a href="#method-i-on_handshake_begin">#on_handshake_begin</a>
+    
+    <li ><a href="#method-i-on_headers">#on_headers</a>
+    
+    <li ><a href="#method-i-on_inv_block">#on_inv_block</a>
+    
+    <li ><a href="#method-i-on_inv_transaction">#on_inv_transaction</a>
+    
+    <li ><a href="#method-i-on_ping">#on_ping</a>
+    
+    <li ><a href="#method-i-on_pong">#on_pong</a>
+    
+    <li ><a href="#method-i-on_tx">#on_tx</a>
+    
+    <li ><a href="#method-i-on_verack">#on_verack</a>
+    
+    <li ><a href="#method-i-on_version">#on_version</a>
+    
+    <li ><a href="#method-i-outgoing-3F">#outgoing?</a>
+    
+    <li ><a href="#method-i-post_init">#post_init</a>
+    
+    <li ><a href="#method-i-receive_data">#receive_data</a>
+    
+    <li ><a href="#method-i-send_getaddr">#send_getaddr</a>
+    
+    <li ><a href="#method-i-send_getblocks">#send_getblocks</a>
+    
+    <li ><a href="#method-i-send_getdata_block">#send_getdata_block</a>
+    
+    <li ><a href="#method-i-send_getdata_tx">#send_getdata_tx</a>
+    
+    <li ><a href="#method-i-send_getheaders">#send_getheaders</a>
+    
+    <li ><a href="#method-i-send_inv">#send_inv</a>
+    
+    <li ><a href="#method-i-send_ping">#send_ping</a>
+    
+    <li ><a href="#method-i-send_version">#send_version</a>
+    
+    <li ><a href="#method-i-unbind">#unbind</a>
+    
+    <li ><a href="#method-i-uptime">#uptime</a>
+    
+  </ul>
+</nav>
+
+  </div>
+
+  <div id="project-metadata">
+    <nav id="fileindex-section" class="section project-section">
+  <h3 class="section-header">Pages</h3>
+
+  <ul>
+  
+    <li class="file"><a href="../../COPYING.html">COPYING</a>
+  
+    <li class="file"><a href="../../README_rdoc.html">README</a>
+  
+    <li class="file"><a href="../../doc/CONFIG_rdoc.html">CONFIG</a>
+  
+    <li class="file"><a href="../../doc/EXAMPLES_rdoc.html">EXAMPLES</a>
+  
+    <li class="file"><a href="../../doc/NAMECOIN_rdoc.html">NAMECOIN</a>
+  
+    <li class="file"><a href="../../doc/NODE_rdoc.html">NODE</a>
+  
+    <li class="file"><a href="../../doc/STORAGE_rdoc.html">STORAGE</a>
+  
+    <li class="file"><a href="../../doc/WALLET_rdoc.html">WALLET</a>
+  
+    <li class="file"><a href="../../examples/graph_benchmark_results_rb~.html">graph_benchmark_results.rb~</a>
+  
+    <li class="file"><a href="../../examples/import_rb~.html">import.rb~</a>
+  
+    <li class="file"><a href="../../examples/run_bench_rb~.html">run_bench.rb~</a>
+  
+    <li class="file"><a href="../../examples/run_benchmarks_rb~.html">run_benchmarks.rb~</a>
+  
+    <li class="file"><a href="../../lib/bitcoin/gui/bitcoin-ruby_svg.html">bitcoin-ruby.svg</a>
+  
+    <li class="file"><a href="../../lib/bitcoin/gui/gui_builder.html">gui.builder</a>
+  
+  </ul>
+</nav>
+
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="../../Array.html">Array</a>
+  
+    <li><a href="../../Bitcoin.html">Bitcoin</a>
+  
+    <li><a href="../../Bitcoin/BinaryExtensions.html">Bitcoin::BinaryExtensions</a>
+  
+    <li><a href="../../Bitcoin/Builder.html">Bitcoin::Builder</a>
+  
+    <li><a href="../../Bitcoin/Builder/BlockBuilder.html">Bitcoin::Builder::BlockBuilder</a>
+  
+    <li><a href="../../Bitcoin/Builder/ScriptBuilder.html">Bitcoin::Builder::ScriptBuilder</a>
+  
+    <li><a href="../../Bitcoin/Builder/TxBuilder.html">Bitcoin::Builder::TxBuilder</a>
+  
+    <li><a href="../../Bitcoin/Builder/TxInBuilder.html">Bitcoin::Builder::TxInBuilder</a>
+  
+    <li><a href="../../Bitcoin/Builder/TxOutBuilder.html">Bitcoin::Builder::TxOutBuilder</a>
+  
+    <li><a href="../../Bitcoin/Config.html">Bitcoin::Config</a>
+  
+    <li><a href="../../Bitcoin/Connection.html">Bitcoin::Connection</a>
+  
+    <li><a href="../../Bitcoin/ConnectionHandler.html">Bitcoin::ConnectionHandler</a>
+  
+    <li><a href="../../Bitcoin/Gui.html">Bitcoin::Gui</a>
+  
+    <li><a href="../../Bitcoin/Gui/AddrView.html">Bitcoin::Gui::AddrView</a>
+  
+    <li><a href="../../Bitcoin/Gui/Bitcoin.html">Bitcoin::Gui::Bitcoin</a>
+  
+    <li><a href="../../Bitcoin/Gui/Bitcoin/Gui.html">Bitcoin::Gui::Bitcoin::Gui</a>
+  
+    <li><a href="../../Bitcoin/Gui/Bitcoin/Gui/Bitcoin.html">Bitcoin::Gui::Bitcoin::Gui::Bitcoin</a>
+  
+    <li><a href="../../Bitcoin/Gui/Bitcoin/Gui/Bitcoin/Network.html">Bitcoin::Gui::Bitcoin::Gui::Bitcoin::Network</a>
+  
+    <li><a href="../../Bitcoin/Gui/Bitcoin/Gui/Bitcoin/Network/CommandClient.html">Bitcoin::Gui::Bitcoin::Gui::Bitcoin::Network::CommandClient</a>
+  
+    <li><a href="../../Bitcoin/Gui/ConnView.html">Bitcoin::Gui::ConnView</a>
+  
+    <li><a href="../../Bitcoin/Gui/Connection.html">Bitcoin::Gui::Connection</a>
+  
+    <li><a href="../../Bitcoin/Gui/Gui.html">Bitcoin::Gui::Gui</a>
+  
+    <li><a href="../../Bitcoin/Gui/Helpers.html">Bitcoin::Gui::Helpers</a>
+  
+    <li><a href="../../Bitcoin/Gui/TreeView.html">Bitcoin::Gui::TreeView</a>
+  
+    <li><a href="../../Bitcoin/Gui/TxInView.html">Bitcoin::Gui::TxInView</a>
+  
+    <li><a href="../../Bitcoin/Gui/TxView.html">Bitcoin::Gui::TxView</a>
+  
+    <li><a href="../../Bitcoin/Key.html">Bitcoin::Key</a>
+  
+    <li><a href="../../Bitcoin/Logger.html">Bitcoin::Logger</a>
+  
+    <li><a href="../../Bitcoin/Logger/LogWrapper.html">Bitcoin::Logger::LogWrapper</a>
+  
+    <li><a href="../../Bitcoin/Logger/Logger.html">Bitcoin::Logger::Logger</a>
+  
+    <li><a href="../../Bitcoin/Logger/TimeLogger.html">Bitcoin::Logger::TimeLogger</a>
+  
+    <li><a href="../../Bitcoin/Namecoin.html">Bitcoin::Namecoin</a>
+  
+    <li><a href="../../Bitcoin/Namecoin/Script.html">Bitcoin::Namecoin::Script</a>
+  
+    <li><a href="../../Bitcoin/Namecoin/Storage.html">Bitcoin::Namecoin::Storage</a>
+  
+    <li><a href="../../Bitcoin/Namecoin/Storage/Backend.html">Bitcoin::Namecoin::Storage::Backend</a>
+  
+    <li><a href="../../Bitcoin/Namecoin/Storage/Models.html">Bitcoin::Namecoin::Storage::Models</a>
+  
+    <li><a href="../../Bitcoin/Namecoin/Storage/Models/Name.html">Bitcoin::Namecoin::Storage::Models::Name</a>
+  
+    <li><a href="../../Bitcoin/Network.html">Bitcoin::Network</a>
+  
+    <li><a href="../../Bitcoin/Network/CommandClient.html">Bitcoin::Network::CommandClient</a>
+  
+    <li><a href="../../Bitcoin/Network/CommandHandler.html">Bitcoin::Network::CommandHandler</a>
+  
+    <li><a href="../../Bitcoin/Network/ConnectionHandler.html">Bitcoin::Network::ConnectionHandler</a>
+  
+    <li><a href="../../Bitcoin/Network/Node.html">Bitcoin::Network::Node</a>
+  
+    <li><a href="../../Bitcoin/OpenSSL_EC.html">Bitcoin::OpenSSL_EC</a>
+  
+    <li><a href="../../Bitcoin/OpenSSL_EC/FFI.html">Bitcoin::OpenSSL_EC::FFI</a>
+  
+    <li><a href="../../Bitcoin/P.html">Bitcoin::P</a>
+  
+    <li><a href="../../Bitcoin/Protocol.html">Bitcoin::Protocol</a>
+  
+    <li><a href="../../Bitcoin/Protocol/Addr.html">Bitcoin::Protocol::Addr</a>
+  
+    <li><a href="../../Bitcoin/Protocol/Alert.html">Bitcoin::Protocol::Alert</a>
+  
+    <li><a href="../../Bitcoin/Protocol/AuxPow.html">Bitcoin::Protocol::AuxPow</a>
+  
+    <li><a href="../../Bitcoin/Protocol/Block.html">Bitcoin::Protocol::Block</a>
+  
+    <li><a href="../../Bitcoin/Protocol/Handler.html">Bitcoin::Protocol::Handler</a>
+  
+    <li><a href="../../Bitcoin/Protocol/Parser.html">Bitcoin::Protocol::Parser</a>
+  
+    <li><a href="../../Bitcoin/Protocol/Tx.html">Bitcoin::Protocol::Tx</a>
+  
+    <li><a href="../../Bitcoin/Protocol/TxIn.html">Bitcoin::Protocol::TxIn</a>
+  
+    <li><a href="../../Bitcoin/Protocol/TxOut.html">Bitcoin::Protocol::TxOut</a>
+  
+    <li><a href="../../Bitcoin/Protocol/Version.html">Bitcoin::Protocol::Version</a>
+  
+    <li><a href="../../Bitcoin/Script.html">Bitcoin::Script</a>
+  
+    <li><a href="../../Bitcoin/Script/ScriptOpcodeError.html">Bitcoin::Script::ScriptOpcodeError</a>
+  
+    <li><a href="../../Bitcoin/Storage.html">Bitcoin::Storage</a>
+  
+    <li><a href="../../Bitcoin/Storage/Backends.html">Bitcoin::Storage::Backends</a>
+  
+    <li><a href="../../Bitcoin/Storage/Backends/DummyStore.html">Bitcoin::Storage::Backends::DummyStore</a>
+  
+    <li><a href="../../Bitcoin/Storage/Backends/SequelMigrations.html">Bitcoin::Storage::Backends::SequelMigrations</a>
+  
+    <li><a href="../../Bitcoin/Storage/Backends/SequelStore.html">Bitcoin::Storage::Backends::SequelStore</a>
+  
+    <li><a href="../../Bitcoin/Storage/Backends/StoreBase.html">Bitcoin::Storage::Backends::StoreBase</a>
+  
+    <li><a href="../../Bitcoin/Storage/Backends/UtxoStore.html">Bitcoin::Storage::Backends::UtxoStore</a>
+  
+    <li><a href="../../Bitcoin/Storage/Models.html">Bitcoin::Storage::Models</a>
+  
+    <li><a href="../../Bitcoin/Storage/Models/Block.html">Bitcoin::Storage::Models::Block</a>
+  
+    <li><a href="../../Bitcoin/Storage/Models/Tx.html">Bitcoin::Storage::Models::Tx</a>
+  
+    <li><a href="../../Bitcoin/Storage/Models/TxIn.html">Bitcoin::Storage::Models::TxIn</a>
+  
+    <li><a href="../../Bitcoin/Storage/Models/TxOut.html">Bitcoin::Storage::Models::TxOut</a>
+  
+    <li><a href="../../Bitcoin/Util.html">Bitcoin::Util</a>
+  
+    <li><a href="../../Bitcoin/Validation.html">Bitcoin::Validation</a>
+  
+    <li><a href="../../Bitcoin/Validation/Block.html">Bitcoin::Validation::Block</a>
+  
+    <li><a href="../../Bitcoin/Validation/Tx.html">Bitcoin::Validation::Tx</a>
+  
+    <li><a href="../../Bitcoin/Validation/ValidationError.html">Bitcoin::Validation::ValidationError</a>
+  
+    <li><a href="../../Bitcoin/Wallet.html">Bitcoin::Wallet</a>
+  
+    <li><a href="../../Bitcoin/Wallet/DeterministicKeyStore.html">Bitcoin::Wallet::DeterministicKeyStore</a>
+  
+    <li><a href="../../Bitcoin/Wallet/KeyGenerator.html">Bitcoin::Wallet::KeyGenerator</a>
+  
+    <li><a href="../../Bitcoin/Wallet/SimpleCoinSelector.html">Bitcoin::Wallet::SimpleCoinSelector</a>
+  
+    <li><a href="../../Bitcoin/Wallet/SimpleKeyStore.html">Bitcoin::Wallet::SimpleKeyStore</a>
+  
+    <li><a href="../../Bitcoin/Wallet/TxDP.html">Bitcoin::Wallet::TxDP</a>
+  
+    <li><a href="../../Bitcoin/Wallet/Wallet.html">Bitcoin::Wallet::Wallet</a>
+  
+    <li><a href="../../EM.html">EM</a>
+  
+    <li><a href="../../Gtk.html">Gtk</a>
+  
+    <li><a href="../../Hash.html">Hash</a>
+  
+    <li><a href="../../JSON.html">JSON</a>
+  
+    <li><a href="../../Litecoin.html">Litecoin</a>
+  
+    <li><a href="../../Litecoin/Scrypt.html">Litecoin::Scrypt</a>
+  
+    <li><a href="../../Log4r.html">Log4r</a>
+  
+    <li><a href="../../Log4r/Logger.html">Log4r::Logger</a>
+  
+    <li><a href="../../Mnemonic.html">Mnemonic</a>
+  
+    <li><a href="../../Object.html">Object</a>
+  
+    <li><a href="../../OpenSSL.html">OpenSSL</a>
+  
+    <li><a href="../../OpenSSL/BN.html">OpenSSL::BN</a>
+  
+    <li><a href="../../OpenSSL/PKey.html">OpenSSL::PKey</a>
+  
+    <li><a href="../../OpenSSL/PKey/EC.html">OpenSSL::PKey::EC</a>
+  
+    <li><a href="../../OpenSSL/PKey/EC/Point.html">OpenSSL::PKey::EC::Point</a>
+  
+    <li><a href="../../RawJSON_Connection.html">RawJSON_Connection</a>
+  
+    <li><a href="../../SimpleNode.html">SimpleNode</a>
+  
+    <li><a href="../../SimpleNode/Connection.html">SimpleNode::Connection</a>
+  
+    <li><a href="../../String.html">String</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation">
+  <h1 class="class">class Bitcoin::Network::ConnectionHandler</h1>
+
+  <div id="description" class="description">
+    
+<p><a href="Node.html">Node</a> network connection to a peer. Handles all the
+communication with a specific peer.</p>
+
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+    <!-- Constants -->
+    <section id="constants-list" class="section">
+      <h3 class="section-header">Constants</h3>
+      <dl>
+      
+        <dt id="LATENCY_MAX">LATENCY_MAX
+        
+        <dd class="description">
+        
+      
+      </dl>
+    </section>
+    
+
+    
+    <!-- Attributes -->
+    <section id="attribute-method-details" class="method-section section">
+      <h3 class="section-header">Attributes</h3>
+
+      
+      <div id="attribute-i-direction" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">direction</span><span
+            class="attribute-access-type">[R]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-host" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">host</span><span
+            class="attribute-access-type">[R]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-latency_ms" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">latency_ms</span><span
+            class="attribute-access-type">[R]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>latency of this connection based on last ping/pong</p>
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-port" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">port</span><span
+            class="attribute-access-type">[R]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-state" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">state</span><span
+            class="attribute-access-type">[R]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>:new, :handshake, :connected, :disconnected</p>
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-version" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">version</span><span
+            class="attribute-access-type">[R]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+    </section><!-- attribute-method-details -->
+    
+
+    <!-- Methods -->
+    
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Class Methods</h3>
+
+    
+      <div id="method-c-new" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">new</span><span
+            class="method-args">(node, host, port, direction)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>create connection to <code>host</code>:<code>port</code> for given
+<code>node</code></p>
+          
+          
+
+          
+          <div class="method-source-code" id="new-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/network/connection_handler.rb, line 32</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span> <span class="ruby-identifier">node</span>, <span class="ruby-identifier">host</span>, <span class="ruby-identifier">port</span>, <span class="ruby-identifier">direction</span>
+  <span class="ruby-ivar">@node</span>, <span class="ruby-ivar">@host</span>, <span class="ruby-ivar">@port</span>, <span class="ruby-ivar">@direction</span> = <span class="ruby-identifier">node</span>, <span class="ruby-identifier">host</span>, <span class="ruby-identifier">port</span>, <span class="ruby-identifier">direction</span>
+  <span class="ruby-ivar">@parser</span> = <span class="ruby-constant">Bitcoin</span><span class="ruby-operator">::</span><span class="ruby-constant">Protocol</span><span class="ruby-operator">::</span><span class="ruby-constant">Parser</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword">self</span>)
+  <span class="ruby-ivar">@state</span> = <span class="ruby-value">:new</span>
+  <span class="ruby-ivar">@version</span> = <span class="ruby-keyword">nil</span>
+  <span class="ruby-ivar">@started</span> = <span class="ruby-keyword">nil</span>
+  <span class="ruby-ivar">@port</span>, <span class="ruby-ivar">@host</span> = <span class="ruby-operator">*</span><span class="ruby-constant">Socket</span>.<span class="ruby-identifier">unpack_sockaddr_in</span>(<span class="ruby-identifier">get_peername</span>)  <span class="ruby-keyword">if</span> <span class="ruby-identifier">get_peername</span>
+  <span class="ruby-ivar">@ping_nonce</span> = <span class="ruby-keyword">nil</span>
+  <span class="ruby-ivar">@latency_ms</span> = <span class="ruby-keyword">nil</span>
+  <span class="ruby-ivar">@lock</span> = <span class="ruby-constant">Monitor</span>.<span class="ruby-identifier">new</span>
+  <span class="ruby-ivar">@last_getblocks</span> = []  <span class="ruby-comment"># the last few getblocks messages received</span>
+<span class="ruby-keyword">rescue</span> <span class="ruby-constant">Exception</span>
+  <span class="ruby-identifier">log</span>.<span class="ruby-identifier">fatal</span> { <span class="ruby-node">&quot;Error in #initialize&quot;</span> }
+  <span class="ruby-identifier">p</span> <span class="ruby-identifier">$!</span>; <span class="ruby-identifier">puts</span> <span class="ruby-identifier">$@</span>; <span class="ruby-identifier">exit</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- new-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- new-method -->
+
+    
+    </section><!-- public-class-method-details -->
+  
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="method-i-addr" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">addr</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>get Addr object for this connection</p>
+          
+          
+
+          
+          <div class="method-source-code" id="addr-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/network/connection_handler.rb, line 359</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">addr</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-ivar">@addr</span>  <span class="ruby-keyword">if</span> <span class="ruby-ivar">@addr</span>
+  <span class="ruby-ivar">@addr</span> = <span class="ruby-constant">P</span><span class="ruby-operator">::</span><span class="ruby-constant">Addr</span>.<span class="ruby-identifier">new</span>
+  <span class="ruby-ivar">@addr</span>.<span class="ruby-identifier">time</span>, <span class="ruby-ivar">@addr</span>.<span class="ruby-identifier">service</span>, <span class="ruby-ivar">@addr</span>.<span class="ruby-identifier">ip</span>, <span class="ruby-ivar">@addr</span>.<span class="ruby-identifier">port</span> =
+    <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>.<span class="ruby-identifier">tv_sec</span>, <span class="ruby-ivar">@version</span>.<span class="ruby-identifier">services</span>, <span class="ruby-ivar">@host</span>, <span class="ruby-ivar">@port</span>
+  <span class="ruby-ivar">@addr</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- addr-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- addr-method -->
+
+    
+      <div id="method-i-begin_handshake" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">begin_handshake</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>begin handshake TODO: disconnect if we don’t complete within a reasonable
+time</p>
+          
+          
+
+          
+          <div class="method-source-code" id="begin_handshake-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/network/connection_handler.rb, line 85</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">begin_handshake</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">incoming?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span><span class="ruby-ivar">@node</span>.<span class="ruby-identifier">accept_connections?</span>
+    <span class="ruby-keyword">return</span> <span class="ruby-identifier">close_connection</span>  <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@node</span>.<span class="ruby-identifier">config</span>[<span class="ruby-value">:connect</span>].<span class="ruby-identifier">include?</span>([<span class="ruby-ivar">@host</span>, <span class="ruby-ivar">@port</span>.<span class="ruby-identifier">to_s</span>])
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">log</span>.<span class="ruby-identifier">info</span> { <span class="ruby-node">&quot;Established #{@direction} connection&quot;</span> }
+  <span class="ruby-ivar">@node</span>.<span class="ruby-identifier">connections</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-keyword">self</span>
+  <span class="ruby-ivar">@state</span> = <span class="ruby-value">:handshake</span>
+  <span class="ruby-comment"># incoming connections wait to receive a version</span>
+  <span class="ruby-identifier">send_version</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">outgoing?</span>
+<span class="ruby-keyword">rescue</span> <span class="ruby-constant">Exception</span>
+  <span class="ruby-identifier">log</span>.<span class="ruby-identifier">fatal</span> { <span class="ruby-node">&quot;Error in #begin_handshake&quot;</span> }
+  <span class="ruby-identifier">p</span> <span class="ruby-identifier">$!</span>; <span class="ruby-identifier">puts</span> <span class="ruby-operator">*</span><span class="ruby-identifier">$@</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- begin_handshake-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- begin_handshake-method -->
+
+    
+      <div id="method-i-complete_handshake" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">complete_handshake</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>complete handshake; set <a
+href="ConnectionHandler.html#attribute-i-state">#state</a>, started time,
+notify listeners and add address to <a href="Node.html">Node</a></p>
+          
+          
+
+          
+          <div class="method-source-code" id="complete_handshake-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/network/connection_handler.rb, line 100</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">complete_handshake</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-ivar">@state</span> <span class="ruby-operator">==</span> <span class="ruby-value">:handshake</span>
+    <span class="ruby-identifier">log</span>.<span class="ruby-identifier">debug</span> { <span class="ruby-string">'Handshake completed'</span> }
+    <span class="ruby-ivar">@state</span> = <span class="ruby-value">:connected</span>
+    <span class="ruby-ivar">@started</span> = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>
+    <span class="ruby-ivar">@node</span>.<span class="ruby-identifier">push_notification</span>(<span class="ruby-value">:connection</span>, [<span class="ruby-value">:connected</span>, <span class="ruby-identifier">info</span>])
+    <span class="ruby-ivar">@node</span>.<span class="ruby-identifier">addrs</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">addr</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- complete_handshake-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- complete_handshake-method -->
+
+    
+      <div id="method-i-connection_completed" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">connection_completed</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>only called for outgoing connection</p>
+          
+          
+
+          
+          <div class="method-source-code" id="connection_completed-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/network/connection_handler.rb, line 59</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">connection_completed</span>
+  <span class="ruby-identifier">begin_handshake</span>
+<span class="ruby-keyword">rescue</span> <span class="ruby-constant">Exception</span>
+  <span class="ruby-identifier">log</span>.<span class="ruby-identifier">fatal</span> { <span class="ruby-node">&quot;Error in #connection_completed&quot;</span> }
+  <span class="ruby-identifier">p</span> <span class="ruby-identifier">$!</span>; <span class="ruby-identifier">puts</span> <span class="ruby-operator">*</span><span class="ruby-identifier">$@</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- connection_completed-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- connection_completed-method -->
+
+    
+      <div id="method-i-get_genesis_block" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">get_genesis_block</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>ask for the genesis block</p>
+          
+          
+
+          
+          <div class="method-source-code" id="get_genesis_block-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/network/connection_handler.rb, line 320</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">get_genesis_block</span>
+  <span class="ruby-identifier">log</span>.<span class="ruby-identifier">info</span> { <span class="ruby-string">&quot;Asking for genesis block&quot;</span> }
+  <span class="ruby-identifier">pkt</span> = <span class="ruby-constant">Protocol</span>.<span class="ruby-identifier">getdata_pkt</span>(<span class="ruby-value">:block</span>, [<span class="ruby-constant">Bitcoin</span><span class="ruby-operator">::</span><span class="ruby-identifier">network</span>[<span class="ruby-value">:genesis_hash</span>].<span class="ruby-identifier">htb</span>])
+  <span class="ruby-identifier">send_data</span>(<span class="ruby-identifier">pkt</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- get_genesis_block-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- get_genesis_block-method -->
+
+    
+      <div id="method-i-incoming-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">incoming?</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="incoming-3F-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/network/connection_handler.rb, line 380</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">incoming?</span>; <span class="ruby-ivar">@direction</span> <span class="ruby-operator">==</span> <span class="ruby-value">:in</span>; <span class="ruby-keyword">end</span></pre>
+          </div><!-- incoming-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- incoming-3F-method -->
+
+    
+      <div id="method-i-info" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">info</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>get <a href="ConnectionHandler.html#method-i-info">#info</a> hash</p>
+          
+          
+
+          
+          <div class="method-source-code" id="info-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/network/connection_handler.rb, line 372</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">info</span>
+  {
+    <span class="ruby-value">:host</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@host</span>, <span class="ruby-value">:port</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@port</span>, <span class="ruby-value">:state</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@state</span>,
+    <span class="ruby-value">:version</span> =<span class="ruby-operator">&gt;</span> (<span class="ruby-ivar">@version</span>.<span class="ruby-identifier">version</span> <span class="ruby-keyword">rescue</span> <span class="ruby-value">0</span>), <span class="ruby-value">:block</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@version</span>.<span class="ruby-identifier">last_block</span>,
+    <span class="ruby-value">:started</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@started</span>.<span class="ruby-identifier">to_i</span>, <span class="ruby-value">:user_agent</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@version</span>.<span class="ruby-identifier">user_agent</span>
+  }
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- info-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- info-method -->
+
+    
+      <div id="method-i-log" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">log</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="log-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/network/connection_handler.rb, line 22</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">log</span>
+  <span class="ruby-ivar">@log</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">Logger</span><span class="ruby-operator">::</span><span class="ruby-constant">LogWrapper</span>.<span class="ruby-identifier">new</span>(<span class="ruby-node">&quot;#@host:#@port&quot;</span>, <span class="ruby-ivar">@node</span>.<span class="ruby-identifier">log</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- log-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- log-method -->
+
+    
+      <div id="method-i-on_addr" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">on_addr</span><span
+            class="method-args">(addr)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>received <code>addr</code> message for given <code>addr</code>. store <a
+href="ConnectionHandler.html#method-i-addr">#addr</a> in node and notify
+listeners</p>
+          
+          
+
+          
+          <div class="method-source-code" id="on_addr-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/network/connection_handler.rb, line 154</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">on_addr</span>(<span class="ruby-identifier">addr</span>)
+  <span class="ruby-identifier">log</span>.<span class="ruby-identifier">debug</span> { <span class="ruby-node">&quot;&gt;&gt; addr: #{addr.ip}:#{addr.port} alive: #{addr.alive?}, service: #{addr.service}&quot;</span> }
+  <span class="ruby-ivar">@node</span>.<span class="ruby-identifier">addrs</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">addr</span>
+  <span class="ruby-ivar">@node</span>.<span class="ruby-identifier">push_notification</span>(<span class="ruby-value">:addr</span>, <span class="ruby-identifier">addr</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- on_addr-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- on_addr-method -->
+
+    
+      <div id="method-i-on_alert" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">on_alert</span><span
+            class="method-args">(alert)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>received <code>alert</code> message for given <code>alert</code>. TODO:
+implement alert logic, store, display, relay</p>
+          
+          
+
+          
+          <div class="method-source-code" id="on_alert-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/network/connection_handler.rb, line 205</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">on_alert</span>(<span class="ruby-identifier">alert</span>)
+  <span class="ruby-identifier">log</span>.<span class="ruby-identifier">warn</span> { <span class="ruby-node">&quot;&gt;&gt; alert: #{alert.inspect}&quot;</span> }
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- on_alert-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- on_alert-method -->
+
+    
+      <div id="method-i-on_block" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">on_block</span><span
+            class="method-args">(blk)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>received <code>block</code> message for given <code>blk</code>. push block
+to storage queue</p>
+          
+          
+
+          
+          <div class="method-source-code" id="on_block-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/network/connection_handler.rb, line 169</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">on_block</span>(<span class="ruby-identifier">blk</span>)
+  <span class="ruby-identifier">log</span>.<span class="ruby-identifier">debug</span> { <span class="ruby-node">&quot;&gt;&gt; block: #{blk.hash} (#{blk.payload.size} bytes)&quot;</span> }
+  <span class="ruby-ivar">@node</span>.<span class="ruby-identifier">queue</span>.<span class="ruby-identifier">push</span>([<span class="ruby-value">:block</span>, <span class="ruby-identifier">blk</span>])
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- on_block-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- on_block-method -->
+
+    
+      <div id="method-i-on_get_block" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">on_get_block</span><span
+            class="method-args">(hash)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>received <code>get_block</code> message for given <code>hash</code>. send
+specified block if we have it</p>
+          
+          
+
+          
+          <div class="method-source-code" id="on_get_block-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/network/connection_handler.rb, line 143</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">on_get_block</span>(<span class="ruby-identifier">hash</span>)
+  <span class="ruby-identifier">log</span>.<span class="ruby-identifier">debug</span> { <span class="ruby-node">&quot;&gt;&gt; get block: #{hash.hth}&quot;</span> }
+  <span class="ruby-identifier">blk</span> = <span class="ruby-ivar">@node</span>.<span class="ruby-identifier">store</span>.<span class="ruby-identifier">get_block</span>(<span class="ruby-identifier">hash</span>.<span class="ruby-identifier">hth</span>)
+  <span class="ruby-keyword">return</span>  <span class="ruby-keyword">unless</span> <span class="ruby-identifier">blk</span>
+  <span class="ruby-identifier">pkt</span> = <span class="ruby-constant">Bitcoin</span><span class="ruby-operator">::</span><span class="ruby-constant">Protocol</span>.<span class="ruby-identifier">pkt</span>(<span class="ruby-string">&quot;block&quot;</span>, <span class="ruby-identifier">blk</span>.<span class="ruby-identifier">to_payload</span>)
+  <span class="ruby-identifier">log</span>.<span class="ruby-identifier">debug</span> { <span class="ruby-node">&quot;&lt;&lt; block: #{blk.hash}&quot;</span> }
+  <span class="ruby-identifier">send_data</span> <span class="ruby-identifier">pkt</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- on_get_block-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- on_get_block-method -->
+
+    
+      <div id="method-i-on_get_transaction" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">on_get_transaction</span><span
+            class="method-args">(hash)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>received <code>get_tx</code> message for given <code>hash</code>. send
+specified tx if we have it</p>
+          
+          
+
+          
+          <div class="method-source-code" id="on_get_transaction-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/network/connection_handler.rb, line 131</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">on_get_transaction</span>(<span class="ruby-identifier">hash</span>)
+  <span class="ruby-identifier">log</span>.<span class="ruby-identifier">debug</span> { <span class="ruby-node">&quot;&gt;&gt; get transaction: #{hash.hth}&quot;</span> }
+  <span class="ruby-identifier">tx</span> = <span class="ruby-ivar">@node</span>.<span class="ruby-identifier">store</span>.<span class="ruby-identifier">get_tx</span>(<span class="ruby-identifier">hash</span>.<span class="ruby-identifier">hth</span>)
+  <span class="ruby-identifier">tx</span> <span class="ruby-operator">||=</span> <span class="ruby-ivar">@node</span>.<span class="ruby-identifier">relay_tx</span>[<span class="ruby-identifier">hash</span>.<span class="ruby-identifier">hth</span>]
+  <span class="ruby-keyword">return</span>  <span class="ruby-keyword">unless</span> <span class="ruby-identifier">tx</span>
+  <span class="ruby-identifier">pkt</span> = <span class="ruby-constant">Bitcoin</span><span class="ruby-operator">::</span><span class="ruby-constant">Protocol</span>.<span class="ruby-identifier">pkt</span>(<span class="ruby-string">&quot;tx&quot;</span>, <span class="ruby-identifier">tx</span>.<span class="ruby-identifier">to_payload</span>)
+  <span class="ruby-identifier">log</span>.<span class="ruby-identifier">debug</span> { <span class="ruby-node">&quot;&lt;&lt; tx: #{tx.hash}&quot;</span> }
+  <span class="ruby-identifier">send_data</span> <span class="ruby-identifier">pkt</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- on_get_transaction-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- on_get_transaction-method -->
+
+    
+      <div id="method-i-on_getaddr" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">on_getaddr</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>received <code>getaddr</code> message. send <code>addr</code> message with
+peer addresses back.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="on_getaddr-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/network/connection_handler.rb, line 232</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">on_getaddr</span>
+  <span class="ruby-identifier">addrs</span> = <span class="ruby-ivar">@node</span>.<span class="ruby-identifier">addrs</span>.<span class="ruby-identifier">select</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">a</span><span class="ruby-operator">|</span> <span class="ruby-identifier">a</span>.<span class="ruby-identifier">time</span> <span class="ruby-operator">&gt;</span> <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>.<span class="ruby-identifier">to_i</span> <span class="ruby-operator">-</span> <span class="ruby-value">10800</span> }.<span class="ruby-identifier">shuffle</span>[<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">250</span>]
+  <span class="ruby-identifier">log</span>.<span class="ruby-identifier">debug</span> { <span class="ruby-node">&quot;&lt;&lt; addr (#{addrs.size})&quot;</span> }
+  <span class="ruby-identifier">send_data</span> <span class="ruby-constant">P</span><span class="ruby-operator">::</span><span class="ruby-constant">Addr</span>.<span class="ruby-identifier">pkt</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">addrs</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- on_getaddr-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- on_getaddr-method -->
+
+    
+      <div id="method-i-on_getblocks" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">on_getblocks</span><span
+            class="method-args">(version, hashes, stop_hash)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>received <code>getblocks</code> message. TODO: locator fallback</p>
+          
+          
+
+          
+          <div class="method-source-code" id="on_getblocks-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/network/connection_handler.rb, line 211</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">on_getblocks</span>(<span class="ruby-identifier">version</span>, <span class="ruby-identifier">hashes</span>, <span class="ruby-identifier">stop_hash</span>)
+  <span class="ruby-comment"># remember the last few received getblocks messages and ignore duplicate ones</span>
+  <span class="ruby-comment"># fixes unexplained issue where remote node is bombarding us with the same getblocks</span>
+  <span class="ruby-comment"># message over and over (probably related to missing locator fallback handling)</span>
+  <span class="ruby-keyword">return</span>  <span class="ruby-keyword">if</span> <span class="ruby-ivar">@last_getblocks</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-ivar">@last_getblocks</span>.<span class="ruby-identifier">include?</span>([<span class="ruby-identifier">version</span>, <span class="ruby-identifier">hashes</span>, <span class="ruby-identifier">stop_hash</span>])
+  <span class="ruby-ivar">@last_getblocks</span> <span class="ruby-operator">&lt;&lt;</span> [<span class="ruby-identifier">version</span>, <span class="ruby-identifier">hashes</span>, <span class="ruby-identifier">stop_hash</span>]
+  <span class="ruby-ivar">@last_getblocks</span>.<span class="ruby-identifier">shift</span>  <span class="ruby-keyword">if</span> <span class="ruby-ivar">@last_getblocks</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">3</span>
+
+  <span class="ruby-identifier">blk</span> = <span class="ruby-ivar">@node</span>.<span class="ruby-identifier">store</span>.<span class="ruby-identifier">db</span>[<span class="ruby-value">:blk</span>][<span class="ruby-identifier">hash</span><span class="ruby-operator">:</span> <span class="ruby-identifier">hashes</span>[<span class="ruby-value">0</span>].<span class="ruby-identifier">htb</span>.<span class="ruby-identifier">blob</span>]
+  <span class="ruby-identifier">depth</span> = <span class="ruby-identifier">blk</span>[<span class="ruby-value">:depth</span>]  <span class="ruby-keyword">if</span> <span class="ruby-identifier">blk</span>
+  <span class="ruby-identifier">log</span>.<span class="ruby-identifier">info</span> { <span class="ruby-node">&quot;&gt;&gt; getblocks #{hashes[0]} (#{depth || 'unknown'})&quot;</span> }
+
+  <span class="ruby-keyword">return</span>  <span class="ruby-keyword">unless</span> <span class="ruby-identifier">depth</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">depth</span> <span class="ruby-operator">&lt;=</span> <span class="ruby-ivar">@node</span>.<span class="ruby-identifier">store</span>.<span class="ruby-identifier">get_depth</span>
+  <span class="ruby-identifier">range</span> = (<span class="ruby-identifier">depth</span><span class="ruby-operator">+</span><span class="ruby-value">1</span><span class="ruby-operator">..</span><span class="ruby-identifier">depth</span><span class="ruby-operator">+</span><span class="ruby-value">500</span>)
+  <span class="ruby-identifier">blocks</span> = <span class="ruby-ivar">@node</span>.<span class="ruby-identifier">store</span>.<span class="ruby-identifier">db</span>[<span class="ruby-value">:blk</span>].<span class="ruby-identifier">where</span>(<span class="ruby-identifier">chain</span><span class="ruby-operator">:</span> <span class="ruby-value">0</span>, <span class="ruby-identifier">depth</span><span class="ruby-operator">:</span> <span class="ruby-identifier">range</span>).<span class="ruby-identifier">select</span>(<span class="ruby-value">:hash</span>).<span class="ruby-identifier">all</span> <span class="ruby-operator">+</span>
+    [<span class="ruby-ivar">@node</span>.<span class="ruby-identifier">store</span>.<span class="ruby-identifier">db</span>[<span class="ruby-value">:blk</span>].<span class="ruby-identifier">select</span>(<span class="ruby-value">:hash</span>)[<span class="ruby-identifier">chain</span><span class="ruby-operator">:</span> <span class="ruby-value">0</span>, <span class="ruby-identifier">depth</span><span class="ruby-operator">:</span> <span class="ruby-identifier">depth</span><span class="ruby-operator">+</span><span class="ruby-value">502</span>]]
+  <span class="ruby-identifier">send_inv</span>(<span class="ruby-value">:block</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">blocks</span>.<span class="ruby-identifier">map</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">b</span><span class="ruby-operator">|</span> <span class="ruby-identifier">b</span>[<span class="ruby-value">:hash</span>].<span class="ruby-identifier">hth</span> })
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- on_getblocks-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- on_getblocks-method -->
+
+    
+      <div id="method-i-on_handshake_begin" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">on_handshake_begin</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>begin handshake; send <code>version</code> message</p>
+          
+          
+
+          
+          <div class="method-source-code" id="on_handshake_begin-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/network/connection_handler.rb, line 343</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">on_handshake_begin</span>
+  <span class="ruby-ivar">@state</span> = <span class="ruby-value">:handshake</span>
+  <span class="ruby-identifier">from</span> = <span class="ruby-node">&quot;#{@node.external_ip}:#{@node.config[:listen][1]}&quot;</span>
+  <span class="ruby-identifier">version</span> = <span class="ruby-constant">Bitcoin</span><span class="ruby-operator">::</span><span class="ruby-constant">Protocol</span><span class="ruby-operator">::</span><span class="ruby-constant">Version</span>.<span class="ruby-identifier">new</span>({
+    <span class="ruby-value">:version</span>    =<span class="ruby-operator">&gt;</span> <span class="ruby-value">70001</span>,
+    <span class="ruby-value">:last_block</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@node</span>.<span class="ruby-identifier">store</span>.<span class="ruby-identifier">get_depth</span>,
+    <span class="ruby-value">:from</span>       =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">from</span>,
+    <span class="ruby-value">:to</span>         =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@host</span>,
+    <span class="ruby-value">:user_agent</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;/bitcoin-ruby:#{Bitcoin::VERSION}/&quot;</span>,
+    <span class="ruby-comment">#:user_agent =&gt; &quot;/Satoshi:0.8.1/&quot;,</span>
+  })
+  <span class="ruby-identifier">send_data</span>(<span class="ruby-identifier">version</span>.<span class="ruby-identifier">to_pkt</span>)
+  <span class="ruby-identifier">log</span>.<span class="ruby-identifier">debug</span> { <span class="ruby-node">&quot;&lt;&lt; version (#{Bitcoin.network[:protocol_version]})&quot;</span> }
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- on_handshake_begin-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- on_handshake_begin-method -->
+
+    
+      <div id="method-i-on_headers" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">on_headers</span><span
+            class="method-args">(headers)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>received <code>headers</code> message for given <code>headers</code>. push
+each header to storage queue</p>
+          
+          
+
+          
+          <div class="method-source-code" id="on_headers-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/network/connection_handler.rb, line 176</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">on_headers</span>(<span class="ruby-identifier">headers</span>)
+  <span class="ruby-identifier">log</span>.<span class="ruby-identifier">info</span> { <span class="ruby-node">&quot;&gt;&gt; headers (#{headers.size})&quot;</span> }
+  <span class="ruby-identifier">headers</span>.<span class="ruby-identifier">each</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">h</span><span class="ruby-operator">|</span> <span class="ruby-ivar">@node</span>.<span class="ruby-identifier">queue</span>.<span class="ruby-identifier">push</span>([<span class="ruby-value">:block</span>, <span class="ruby-identifier">h</span>])}
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- on_headers-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- on_headers-method -->
+
+    
+      <div id="method-i-on_inv_block" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">on_inv_block</span><span
+            class="method-args">(hash)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>received <code>inv_block</code> message for given <code>hash</code>. add to
+inv_queue, unless maximum is reached</p>
+          
+          
+
+          
+          <div class="method-source-code" id="on_inv_block-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/network/connection_handler.rb, line 123</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">on_inv_block</span>(<span class="ruby-identifier">hash</span>)
+  <span class="ruby-identifier">log</span>.<span class="ruby-identifier">debug</span> { <span class="ruby-node">&quot;&gt;&gt; inv block: #{hash.hth}&quot;</span> }
+  <span class="ruby-keyword">return</span>  <span class="ruby-keyword">if</span> <span class="ruby-ivar">@node</span>.<span class="ruby-identifier">inv_queue</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">&gt;=</span> <span class="ruby-ivar">@node</span>.<span class="ruby-identifier">config</span>[<span class="ruby-value">:max</span>][<span class="ruby-value">:inv</span>]
+  <span class="ruby-ivar">@node</span>.<span class="ruby-identifier">queue_inv</span>([<span class="ruby-value">:block</span>, <span class="ruby-identifier">hash</span>, <span class="ruby-keyword">self</span>])
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- on_inv_block-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- on_inv_block-method -->
+
+    
+      <div id="method-i-on_inv_transaction" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">on_inv_transaction</span><span
+            class="method-args">(hash)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>received <code>inv_tx</code> message for given <code>hash</code>. add to
+inv_queue, unlesss maximum is reached</p>
+          
+          
+
+          
+          <div class="method-source-code" id="on_inv_transaction-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/network/connection_handler.rb, line 112</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">on_inv_transaction</span>(<span class="ruby-identifier">hash</span>)
+  <span class="ruby-identifier">log</span>.<span class="ruby-identifier">debug</span> { <span class="ruby-node">&quot;&gt;&gt; inv transaction: #{hash.hth}&quot;</span> }
+  <span class="ruby-keyword">if</span> <span class="ruby-ivar">@node</span>.<span class="ruby-identifier">relay_propagation</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">hash</span>.<span class="ruby-identifier">hth</span>)
+    <span class="ruby-ivar">@node</span>.<span class="ruby-identifier">relay_propagation</span>[<span class="ruby-identifier">hash</span>.<span class="ruby-identifier">hth</span>] <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">return</span>  <span class="ruby-keyword">if</span> <span class="ruby-ivar">@node</span>.<span class="ruby-identifier">inv_queue</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">&gt;=</span> <span class="ruby-ivar">@node</span>.<span class="ruby-identifier">config</span>[<span class="ruby-value">:max</span>][<span class="ruby-value">:inv</span>]
+  <span class="ruby-ivar">@node</span>.<span class="ruby-identifier">queue_inv</span>([<span class="ruby-value">:tx</span>, <span class="ruby-identifier">hash</span>, <span class="ruby-keyword">self</span>])
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- on_inv_transaction-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- on_inv_transaction-method -->
+
+    
+      <div id="method-i-on_ping" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">on_ping</span><span
+            class="method-args">(nonce)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>received <code>ping</code> message with given <code>nonce</code>. send
+<code>pong</code> message back, if <code>nonce</code> is set. network
+versions &lt;=60000 don’t set the nonce and don’t expect a pong.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="on_ping-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/network/connection_handler.rb, line 329</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">on_ping</span> <span class="ruby-identifier">nonce</span>
+  <span class="ruby-identifier">log</span>.<span class="ruby-identifier">debug</span> { <span class="ruby-node">&quot;&gt;&gt; ping (#{nonce})&quot;</span> }
+  <span class="ruby-identifier">send_data</span>(<span class="ruby-constant">Protocol</span>.<span class="ruby-identifier">pong_pkt</span>(<span class="ruby-identifier">nonce</span>))  <span class="ruby-keyword">if</span> <span class="ruby-identifier">nonce</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- on_ping-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- on_ping-method -->
+
+    
+      <div id="method-i-on_pong" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">on_pong</span><span
+            class="method-args">(nonce)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>received <code>pong</code> message with given <code>nonce</code>.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="on_pong-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/network/connection_handler.rb, line 335</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">on_pong</span> <span class="ruby-identifier">nonce</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-ivar">@ping_nonce</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">nonce</span>
+    <span class="ruby-ivar">@latency_ms</span> = (<span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span> <span class="ruby-operator">-</span> <span class="ruby-ivar">@ping_time</span>) <span class="ruby-operator">*</span> <span class="ruby-value">1000.0</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">log</span>.<span class="ruby-identifier">debug</span> { <span class="ruby-node">&quot;&gt;&gt; pong (#{nonce}), latency: #{@latency_ms.to_i}ms&quot;</span> }
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- on_pong-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- on_pong-method -->
+
+    
+      <div id="method-i-on_tx" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">on_tx</span><span
+            class="method-args">(tx)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>received <code>tx</code> message for given <code>tx</code>. push tx to
+storage queue</p>
+          
+          
+
+          
+          <div class="method-source-code" id="on_tx-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/network/connection_handler.rb, line 162</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">on_tx</span>(<span class="ruby-identifier">tx</span>)
+  <span class="ruby-identifier">log</span>.<span class="ruby-identifier">debug</span> { <span class="ruby-node">&quot;&gt;&gt; tx: #{tx.hash} (#{tx.payload.size} bytes)&quot;</span> }
+  <span class="ruby-ivar">@node</span>.<span class="ruby-identifier">queue</span>.<span class="ruby-identifier">push</span>([<span class="ruby-value">:tx</span>, <span class="ruby-identifier">tx</span>])
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- on_tx-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- on_tx-method -->
+
+    
+      <div id="method-i-on_verack" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">on_verack</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>received <code>verack</code> message. complete handshake if it isn’t
+completed already</p>
+          
+          
+
+          
+          <div class="method-source-code" id="on_verack-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/network/connection_handler.rb, line 198</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">on_verack</span>
+  <span class="ruby-identifier">log</span>.<span class="ruby-identifier">debug</span> { <span class="ruby-string">&quot;&gt;&gt; verack&quot;</span> }
+  <span class="ruby-identifier">complete_handshake</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">outgoing?</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- on_verack-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- on_verack-method -->
+
+    
+      <div id="method-i-on_version" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">on_version</span><span
+            class="method-args">(version)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>received <code>version</code> message for given <code>version</code>. send
+<code>verack</code> message and complete handshake</p>
+          
+          
+
+          
+          <div class="method-source-code" id="on_version-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/network/connection_handler.rb, line 183</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">on_version</span>(<span class="ruby-identifier">version</span>)
+  <span class="ruby-identifier">log</span>.<span class="ruby-identifier">debug</span> { <span class="ruby-node">&quot;&gt;&gt; version: #{version.version}&quot;</span> }
+  <span class="ruby-ivar">@node</span>.<span class="ruby-identifier">external_ips</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">version</span>.<span class="ruby-identifier">to</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot;:&quot;</span>)[<span class="ruby-value">0</span>]
+  <span class="ruby-ivar">@version</span> = <span class="ruby-identifier">version</span>
+  <span class="ruby-identifier">log</span>.<span class="ruby-identifier">debug</span> { <span class="ruby-string">&quot;&lt;&lt; verack&quot;</span> }
+  <span class="ruby-identifier">send_data</span>( <span class="ruby-constant">Protocol</span>.<span class="ruby-identifier">verack_pkt</span> )
+
+  <span class="ruby-comment"># sometimes other nodes don't bother to send a verack back,</span>
+  <span class="ruby-comment"># but we can consider the handshake complete once we sent ours.</span>
+  <span class="ruby-comment"># apparently it can happen on incoming and outgoing connections alike</span>
+  <span class="ruby-identifier">complete_handshake</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- on_version-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- on_version-method -->
+
+    
+      <div id="method-i-outgoing-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">outgoing?</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="outgoing-3F-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/network/connection_handler.rb, line 381</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">outgoing?</span>; <span class="ruby-ivar">@direction</span> <span class="ruby-operator">==</span> <span class="ruby-value">:out</span>; <span class="ruby-keyword">end</span></pre>
+          </div><!-- outgoing-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- outgoing-3F-method -->
+
+    
+      <div id="method-i-post_init" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">post_init</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>check if connection is wanted, begin handshake if it is, disconnect if not</p>
+          
+          
+
+          
+          <div class="method-source-code" id="post_init-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/network/connection_handler.rb, line 49</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">post_init</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">incoming?</span>
+    <span class="ruby-identifier">begin_handshake</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">rescue</span> <span class="ruby-constant">Exception</span>
+  <span class="ruby-identifier">log</span>.<span class="ruby-identifier">fatal</span> { <span class="ruby-node">&quot;Error in #post_init&quot;</span> }
+  <span class="ruby-identifier">p</span> <span class="ruby-identifier">$!</span>; <span class="ruby-identifier">puts</span> <span class="ruby-operator">*</span><span class="ruby-identifier">$@</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- post_init-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- post_init-method -->
+
+    
+      <div id="method-i-receive_data" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">receive_data</span><span
+            class="method-args">(data)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>receive data from peer and invoke <a
+href="../Protocol/Parser.html">Protocol::Parser</a></p>
+          
+          
+
+          
+          <div class="method-source-code" id="receive_data-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/network/connection_handler.rb, line 67</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">receive_data</span> <span class="ruby-identifier">data</span>
+  <span class="ruby-comment">#log.debug { &quot;Receiving data (#{data.size} bytes)&quot; }</span>
+  <span class="ruby-ivar">@lock</span>.<span class="ruby-identifier">synchronize</span> { <span class="ruby-ivar">@parser</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">data</span>) }
+<span class="ruby-keyword">rescue</span>
+  <span class="ruby-identifier">log</span>.<span class="ruby-identifier">warn</span> { <span class="ruby-node">&quot;Error handling data: #{data.hth}&quot;</span> }
+  <span class="ruby-identifier">p</span> <span class="ruby-identifier">$!</span>; <span class="ruby-identifier">puts</span> <span class="ruby-operator">*</span><span class="ruby-identifier">$@</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- receive_data-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- receive_data-method -->
+
+    
+      <div id="method-i-send_getaddr" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">send_getaddr</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>send <code>getaddr</code> message</p>
+          
+          
+
+          
+          <div class="method-source-code" id="send_getaddr-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/network/connection_handler.rb, line 297</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">send_getaddr</span>
+  <span class="ruby-identifier">log</span>.<span class="ruby-identifier">debug</span> { <span class="ruby-string">&quot;&lt;&lt; getaddr&quot;</span> }
+  <span class="ruby-identifier">send_data</span>(<span class="ruby-constant">Protocol</span>.<span class="ruby-identifier">pkt</span>(<span class="ruby-string">&quot;getaddr&quot;</span>, <span class="ruby-string">&quot;&quot;</span>))
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- send_getaddr-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- send_getaddr-method -->
+
+    
+      <div id="method-i-send_getblocks" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">send_getblocks</span><span
+            class="method-args">(locator = @node.store.get_locator)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>send <code>getblocks</code> message</p>
+          
+          
+
+          
+          <div class="method-source-code" id="send_getblocks-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/network/connection_handler.rb, line 277</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">send_getblocks</span> <span class="ruby-identifier">locator</span> = <span class="ruby-ivar">@node</span>.<span class="ruby-identifier">store</span>.<span class="ruby-identifier">get_locator</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-ivar">@node</span>.<span class="ruby-identifier">store</span>.<span class="ruby-identifier">get_depth</span> <span class="ruby-operator">==</span> <span class="ruby-value">-1</span>
+    <span class="ruby-constant">EM</span>.<span class="ruby-identifier">add_timer</span>(<span class="ruby-value">3</span>) { <span class="ruby-identifier">send_getblocks</span> }
+    <span class="ruby-keyword">return</span> <span class="ruby-identifier">get_genesis_block</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">pkt</span> = <span class="ruby-constant">Protocol</span>.<span class="ruby-identifier">getblocks_pkt</span>(<span class="ruby-ivar">@version</span>.<span class="ruby-identifier">version</span>, <span class="ruby-identifier">locator</span>)
+  <span class="ruby-identifier">log</span>.<span class="ruby-identifier">info</span> { <span class="ruby-node">&quot;&lt;&lt; getblocks: #{locator.first}&quot;</span> }
+  <span class="ruby-identifier">send_data</span>(<span class="ruby-identifier">pkt</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- send_getblocks-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- send_getblocks-method -->
+
+    
+      <div id="method-i-send_getdata_block" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">send_getdata_block</span><span
+            class="method-args">(hash)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>send +getdata block+ message for given block <code>hash</code></p>
+          
+          
+
+          
+          <div class="method-source-code" id="send_getdata_block-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/network/connection_handler.rb, line 270</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">send_getdata_block</span>(<span class="ruby-identifier">hash</span>)
+  <span class="ruby-identifier">pkt</span> = <span class="ruby-constant">Protocol</span>.<span class="ruby-identifier">getdata_pkt</span>(<span class="ruby-value">:block</span>, [<span class="ruby-identifier">hash</span>])
+  <span class="ruby-identifier">log</span>.<span class="ruby-identifier">debug</span> { <span class="ruby-node">&quot;&lt;&lt; getdata block: #{hash.hth}&quot;</span> }
+  <span class="ruby-identifier">send_data</span>(<span class="ruby-identifier">pkt</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- send_getdata_block-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- send_getdata_block-method -->
+
+    
+      <div id="method-i-send_getdata_tx" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">send_getdata_tx</span><span
+            class="method-args">(hash)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>send +getdata tx+ message for given tx <code>hash</code></p>
+          
+          
+
+          
+          <div class="method-source-code" id="send_getdata_tx-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/network/connection_handler.rb, line 263</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">send_getdata_tx</span>(<span class="ruby-identifier">hash</span>)
+  <span class="ruby-identifier">pkt</span> = <span class="ruby-constant">Protocol</span>.<span class="ruby-identifier">getdata_pkt</span>(<span class="ruby-value">:tx</span>, [<span class="ruby-identifier">hash</span>])
+  <span class="ruby-identifier">log</span>.<span class="ruby-identifier">debug</span> { <span class="ruby-node">&quot;&lt;&lt; getdata tx: #{hash.hth}&quot;</span> }
+  <span class="ruby-identifier">send_data</span>(<span class="ruby-identifier">pkt</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- send_getdata_tx-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- send_getdata_tx-method -->
+
+    
+      <div id="method-i-send_getheaders" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">send_getheaders</span><span
+            class="method-args">(locator = @node.store.get_locator)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>send <code>getheaders</code> message</p>
+          
+          
+
+          
+          <div class="method-source-code" id="send_getheaders-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/network/connection_handler.rb, line 288</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">send_getheaders</span> <span class="ruby-identifier">locator</span> = <span class="ruby-ivar">@node</span>.<span class="ruby-identifier">store</span>.<span class="ruby-identifier">get_locator</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">get_genesis_block</span>  <span class="ruby-keyword">if</span> <span class="ruby-ivar">@node</span>.<span class="ruby-identifier">store</span>.<span class="ruby-identifier">get_depth</span> <span class="ruby-operator">==</span> <span class="ruby-value">-1</span>
+  <span class="ruby-identifier">pkt</span> = <span class="ruby-constant">Protocol</span>.<span class="ruby-identifier">pkt</span>(<span class="ruby-string">&quot;getheaders&quot;</span>, [<span class="ruby-constant">Bitcoin</span><span class="ruby-operator">::</span><span class="ruby-identifier">network</span>[<span class="ruby-value">:magic_head</span>],
+      <span class="ruby-identifier">locator</span>.<span class="ruby-identifier">size</span>.<span class="ruby-identifier">chr</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">locator</span>.<span class="ruby-identifier">map</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">l</span><span class="ruby-operator">|</span> <span class="ruby-identifier">l</span>.<span class="ruby-identifier">htb_reverse</span>}, <span class="ruby-string">&quot;\x00&quot;</span><span class="ruby-operator">*</span><span class="ruby-value">32</span>].<span class="ruby-identifier">join</span>)
+  <span class="ruby-identifier">log</span>.<span class="ruby-identifier">debug</span> { <span class="ruby-node">&quot;&lt;&lt; getheaders: #{locator.first}&quot;</span> }
+  <span class="ruby-identifier">send_data</span>(<span class="ruby-identifier">pkt</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- send_getheaders-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- send_getheaders-method -->
+
+    
+      <div id="method-i-send_inv" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">send_inv</span><span
+            class="method-args">(type, *hashes)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>send <code>inv</code> message with given <code>type</code> for given
+<code>obj</code></p>
+          
+          
+
+          
+          <div class="method-source-code" id="send_inv-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/network/connection_handler.rb, line 254</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">send_inv</span> <span class="ruby-identifier">type</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">hashes</span>
+  <span class="ruby-identifier">hashes</span>.<span class="ruby-identifier">each_slice</span>(<span class="ruby-value">251</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">slice</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">pkt</span> = <span class="ruby-constant">Protocol</span>.<span class="ruby-identifier">inv_pkt</span>(<span class="ruby-identifier">type</span>, <span class="ruby-identifier">slice</span>.<span class="ruby-identifier">map</span>(<span class="ruby-operator">&amp;</span><span class="ruby-value">:htb</span>))
+    <span class="ruby-identifier">log</span>.<span class="ruby-identifier">debug</span> { <span class="ruby-node">&quot;&lt;&lt; inv #{type}: #{slice[0][0..16]}&quot;</span> <span class="ruby-operator">+</span> (<span class="ruby-identifier">slice</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">1</span> <span class="ruby-operator">?</span> <span class="ruby-node">&quot;..#{slice[-1][0..16]}&quot;</span> <span class="ruby-operator">:</span> <span class="ruby-string">&quot;&quot;</span>) }
+    <span class="ruby-identifier">send_data</span>(<span class="ruby-identifier">pkt</span>)
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- send_inv-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- send_inv-method -->
+
+    
+      <div id="method-i-send_ping" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">send_ping</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>send <code>ping</code> message TODO: wait for pong and disconnect if it
+doesn’t arrive (and <a
+href="ConnectionHandler.html#attribute-i-version">#version</a> is <a
+href="ConnectionHandler.html#method-c-new">::new</a> enough)</p>
+          
+          
+
+          
+          <div class="method-source-code" id="send_ping-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/network/connection_handler.rb, line 304</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">send_ping</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-ivar">@version</span>.<span class="ruby-identifier">version</span> <span class="ruby-operator">&gt;</span> <span class="ruby-constant">Bitcoin</span><span class="ruby-operator">::</span><span class="ruby-constant">Protocol</span><span class="ruby-operator">::</span><span class="ruby-constant">BIP0031_VERSION</span>
+    <span class="ruby-ivar">@latency_ms</span> = <span class="ruby-constant">LATENCY_MAX</span>
+    <span class="ruby-ivar">@ping_nonce</span> = <span class="ruby-identifier">rand</span>(<span class="ruby-value">0xffffffff</span>)
+    <span class="ruby-ivar">@ping_time</span> = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>
+    <span class="ruby-identifier">log</span>.<span class="ruby-identifier">debug</span> { <span class="ruby-node">&quot;&lt;&lt; ping (#{@ping_nonce})&quot;</span> }
+    <span class="ruby-identifier">send_data</span>(<span class="ruby-constant">Protocol</span>.<span class="ruby-identifier">ping_pkt</span>(<span class="ruby-ivar">@ping_nonce</span>))
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-comment"># set latency to 5 seconds, terrible but this version should be obsolete now</span>
+    <span class="ruby-ivar">@latency_ms</span> = (<span class="ruby-value">5</span><span class="ruby-operator">*</span><span class="ruby-value">1000</span>) 
+    <span class="ruby-identifier">log</span>.<span class="ruby-identifier">debug</span> { <span class="ruby-string">&quot;&lt;&lt; ping&quot;</span> }
+    <span class="ruby-identifier">send_data</span>(<span class="ruby-constant">Protocol</span>.<span class="ruby-identifier">ping_pkt</span>)
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- send_ping-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- send_ping-method -->
+
+    
+      <div id="method-i-send_version" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">send_version</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>begin handshake; send <code>version</code> message</p>
+          
+          
+
+          
+          <div class="method-source-code" id="send_version-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/network/connection_handler.rb, line 239</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">send_version</span>
+  <span class="ruby-identifier">from</span> = <span class="ruby-node">&quot;#{@node.external_ip}:#{@node.config[:listen][1]}&quot;</span>
+  <span class="ruby-identifier">version</span> = <span class="ruby-constant">Bitcoin</span><span class="ruby-operator">::</span><span class="ruby-constant">Protocol</span><span class="ruby-operator">::</span><span class="ruby-constant">Version</span>.<span class="ruby-identifier">new</span>({
+    <span class="ruby-value">:version</span>    =<span class="ruby-operator">&gt;</span> <span class="ruby-value">70001</span>,
+    <span class="ruby-value">:last_block</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@node</span>.<span class="ruby-identifier">store</span>.<span class="ruby-identifier">get_depth</span>,
+    <span class="ruby-value">:from</span>       =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">from</span>,
+    <span class="ruby-value">:to</span>         =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@host</span>,
+    <span class="ruby-value">:user_agent</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;/bitcoin-ruby:#{Bitcoin::VERSION}/&quot;</span>,
+    <span class="ruby-comment">#:user_agent =&gt; &quot;/Satoshi:0.8.3/&quot;,</span>
+  })
+  <span class="ruby-identifier">send_data</span>(<span class="ruby-identifier">version</span>.<span class="ruby-identifier">to_pkt</span>)
+  <span class="ruby-identifier">log</span>.<span class="ruby-identifier">debug</span> { <span class="ruby-node">&quot;&lt;&lt; version: #{Bitcoin.network[:protocol_version]}&quot;</span> }
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- send_version-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- send_version-method -->
+
+    
+      <div id="method-i-unbind" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">unbind</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>connection closed; notify listeners and cleanup connection from node</p>
+          
+          
+
+          
+          <div class="method-source-code" id="unbind-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/network/connection_handler.rb, line 76</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">unbind</span>
+  <span class="ruby-identifier">log</span>.<span class="ruby-identifier">info</span> { <span class="ruby-string">&quot;Disconnected&quot;</span> }
+  <span class="ruby-ivar">@node</span>.<span class="ruby-identifier">push_notification</span>(<span class="ruby-value">:connection</span>, [<span class="ruby-value">:disconnected</span>, [<span class="ruby-ivar">@host</span>, <span class="ruby-ivar">@port</span>]])
+  <span class="ruby-ivar">@state</span> = <span class="ruby-value">:disconnected</span>
+  <span class="ruby-ivar">@node</span>.<span class="ruby-identifier">connections</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-keyword">self</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- unbind-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- unbind-method -->
+
+    
+      <div id="method-i-uptime" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">uptime</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>how long has this connection been open?</p>
+          
+          
+
+          
+          <div class="method-source-code" id="uptime-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/network/connection_handler.rb, line 27</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">uptime</span>
+  <span class="ruby-ivar">@started</span> <span class="ruby-operator">?</span> (<span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span> <span class="ruby-operator">-</span> <span class="ruby-ivar">@started</span>).<span class="ruby-identifier">to_i</span> <span class="ruby-operator">:</span> <span class="ruby-value">0</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- uptime-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- uptime-method -->
+
+    
+    </section><!-- public-instance-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+</div><!-- documentation -->
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 4.0.1.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+

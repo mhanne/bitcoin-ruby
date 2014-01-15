@@ -1,0 +1,1199 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+<title>module Bitcoin::Protocol - bitcoin-ruby RDoc</title>
+
+<link type="text/css" media="screen" href="../rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "../";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/darkfish.js"></script>
+
+
+<body id="top" class="module">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="../index.html">Home</a>
+    <a href="../table_of_contents.html#classes">Classes</a>
+    <a href="../table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>examples/generate_tx.rb
+    <li>examples/simple_network_monitor_and_util.rb
+    <li>lib/bitcoin/connection.rb
+    <li>lib/bitcoin/network/connection_handler.rb
+    <li>lib/bitcoin/protocol.rb
+    <li>lib/bitcoin/protocol/address.rb
+    <li>lib/bitcoin/protocol/alert.rb
+    <li>lib/bitcoin/protocol/aux_pow.rb
+    <li>lib/bitcoin/protocol/block.rb
+    <li>lib/bitcoin/protocol/handler.rb
+    <li>lib/bitcoin/protocol/parser.rb
+    <li>lib/bitcoin/protocol/tx.rb
+    <li>lib/bitcoin/protocol/txin.rb
+    <li>lib/bitcoin/protocol/txout.rb
+    <li>lib/bitcoin/protocol/version.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    
+    
+    
+    
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li ><a href="#method-c-getblocks_pkt">::getblocks_pkt</a>
+    
+    <li ><a href="#method-c-getdata_pkt">::getdata_pkt</a>
+    
+    <li ><a href="#method-c-getheaders_pkt">::getheaders_pkt</a>
+    
+    <li ><a href="#method-c-inv_pkt">::inv_pkt</a>
+    
+    <li ><a href="#method-c-locator_payload">::locator_payload</a>
+    
+    <li ><a href="#method-c-pack_boolean">::pack_boolean</a>
+    
+    <li ><a href="#method-c-pack_var_int">::pack_var_int</a>
+    
+    <li ><a href="#method-c-pack_var_string">::pack_var_string</a>
+    
+    <li ><a href="#method-c-ping_pkt">::ping_pkt</a>
+    
+    <li ><a href="#method-c-pkt">::pkt</a>
+    
+    <li ><a href="#method-c-pong_pkt">::pong_pkt</a>
+    
+    <li ><a href="#method-c-read_binary_file">::read_binary_file</a>
+    
+    <li ><a href="#method-c-unpack_boolean">::unpack_boolean</a>
+    
+    <li ><a href="#method-c-unpack_var_int">::unpack_var_int</a>
+    
+    <li ><a href="#method-c-unpack_var_int_array">::unpack_var_int_array</a>
+    
+    <li ><a href="#method-c-unpack_var_int_from_io">::unpack_var_int_from_io</a>
+    
+    <li ><a href="#method-c-unpack_var_string">::unpack_var_string</a>
+    
+    <li ><a href="#method-c-unpack_var_string_array">::unpack_var_string_array</a>
+    
+    <li ><a href="#method-c-unpack_var_string_from_io">::unpack_var_string_from_io</a>
+    
+    <li ><a href="#method-c-verack_pkt">::verack_pkt</a>
+    
+    <li ><a href="#method-c-version_pkt">::version_pkt</a>
+    
+  </ul>
+</nav>
+
+  </div>
+
+  <div id="project-metadata">
+    <nav id="fileindex-section" class="section project-section">
+  <h3 class="section-header">Pages</h3>
+
+  <ul>
+  
+    <li class="file"><a href="../COPYING.html">COPYING</a>
+  
+    <li class="file"><a href="../README_rdoc.html">README</a>
+  
+    <li class="file"><a href="../doc/CONFIG_rdoc.html">CONFIG</a>
+  
+    <li class="file"><a href="../doc/EXAMPLES_rdoc.html">EXAMPLES</a>
+  
+    <li class="file"><a href="../doc/NAMECOIN_rdoc.html">NAMECOIN</a>
+  
+    <li class="file"><a href="../doc/NODE_rdoc.html">NODE</a>
+  
+    <li class="file"><a href="../doc/STORAGE_rdoc.html">STORAGE</a>
+  
+    <li class="file"><a href="../doc/WALLET_rdoc.html">WALLET</a>
+  
+    <li class="file"><a href="../examples/graph_benchmark_results_rb~.html">graph_benchmark_results.rb~</a>
+  
+    <li class="file"><a href="../examples/import_rb~.html">import.rb~</a>
+  
+    <li class="file"><a href="../examples/run_bench_rb~.html">run_bench.rb~</a>
+  
+    <li class="file"><a href="../examples/run_benchmarks_rb~.html">run_benchmarks.rb~</a>
+  
+    <li class="file"><a href="../lib/bitcoin/gui/bitcoin-ruby_svg.html">bitcoin-ruby.svg</a>
+  
+    <li class="file"><a href="../lib/bitcoin/gui/gui_builder.html">gui.builder</a>
+  
+  </ul>
+</nav>
+
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="../Array.html">Array</a>
+  
+    <li><a href="../Bitcoin.html">Bitcoin</a>
+  
+    <li><a href="../Bitcoin/BinaryExtensions.html">Bitcoin::BinaryExtensions</a>
+  
+    <li><a href="../Bitcoin/Builder.html">Bitcoin::Builder</a>
+  
+    <li><a href="../Bitcoin/Builder/BlockBuilder.html">Bitcoin::Builder::BlockBuilder</a>
+  
+    <li><a href="../Bitcoin/Builder/ScriptBuilder.html">Bitcoin::Builder::ScriptBuilder</a>
+  
+    <li><a href="../Bitcoin/Builder/TxBuilder.html">Bitcoin::Builder::TxBuilder</a>
+  
+    <li><a href="../Bitcoin/Builder/TxInBuilder.html">Bitcoin::Builder::TxInBuilder</a>
+  
+    <li><a href="../Bitcoin/Builder/TxOutBuilder.html">Bitcoin::Builder::TxOutBuilder</a>
+  
+    <li><a href="../Bitcoin/Config.html">Bitcoin::Config</a>
+  
+    <li><a href="../Bitcoin/Connection.html">Bitcoin::Connection</a>
+  
+    <li><a href="../Bitcoin/ConnectionHandler.html">Bitcoin::ConnectionHandler</a>
+  
+    <li><a href="../Bitcoin/Gui.html">Bitcoin::Gui</a>
+  
+    <li><a href="../Bitcoin/Gui/AddrView.html">Bitcoin::Gui::AddrView</a>
+  
+    <li><a href="../Bitcoin/Gui/Bitcoin.html">Bitcoin::Gui::Bitcoin</a>
+  
+    <li><a href="../Bitcoin/Gui/Bitcoin/Gui.html">Bitcoin::Gui::Bitcoin::Gui</a>
+  
+    <li><a href="../Bitcoin/Gui/Bitcoin/Gui/Bitcoin.html">Bitcoin::Gui::Bitcoin::Gui::Bitcoin</a>
+  
+    <li><a href="../Bitcoin/Gui/Bitcoin/Gui/Bitcoin/Network.html">Bitcoin::Gui::Bitcoin::Gui::Bitcoin::Network</a>
+  
+    <li><a href="../Bitcoin/Gui/Bitcoin/Gui/Bitcoin/Network/CommandClient.html">Bitcoin::Gui::Bitcoin::Gui::Bitcoin::Network::CommandClient</a>
+  
+    <li><a href="../Bitcoin/Gui/ConnView.html">Bitcoin::Gui::ConnView</a>
+  
+    <li><a href="../Bitcoin/Gui/Connection.html">Bitcoin::Gui::Connection</a>
+  
+    <li><a href="../Bitcoin/Gui/Gui.html">Bitcoin::Gui::Gui</a>
+  
+    <li><a href="../Bitcoin/Gui/Helpers.html">Bitcoin::Gui::Helpers</a>
+  
+    <li><a href="../Bitcoin/Gui/TreeView.html">Bitcoin::Gui::TreeView</a>
+  
+    <li><a href="../Bitcoin/Gui/TxInView.html">Bitcoin::Gui::TxInView</a>
+  
+    <li><a href="../Bitcoin/Gui/TxView.html">Bitcoin::Gui::TxView</a>
+  
+    <li><a href="../Bitcoin/Key.html">Bitcoin::Key</a>
+  
+    <li><a href="../Bitcoin/Logger.html">Bitcoin::Logger</a>
+  
+    <li><a href="../Bitcoin/Logger/LogWrapper.html">Bitcoin::Logger::LogWrapper</a>
+  
+    <li><a href="../Bitcoin/Logger/Logger.html">Bitcoin::Logger::Logger</a>
+  
+    <li><a href="../Bitcoin/Logger/TimeLogger.html">Bitcoin::Logger::TimeLogger</a>
+  
+    <li><a href="../Bitcoin/Namecoin.html">Bitcoin::Namecoin</a>
+  
+    <li><a href="../Bitcoin/Namecoin/Script.html">Bitcoin::Namecoin::Script</a>
+  
+    <li><a href="../Bitcoin/Namecoin/Storage.html">Bitcoin::Namecoin::Storage</a>
+  
+    <li><a href="../Bitcoin/Namecoin/Storage/Backend.html">Bitcoin::Namecoin::Storage::Backend</a>
+  
+    <li><a href="../Bitcoin/Namecoin/Storage/Models.html">Bitcoin::Namecoin::Storage::Models</a>
+  
+    <li><a href="../Bitcoin/Namecoin/Storage/Models/Name.html">Bitcoin::Namecoin::Storage::Models::Name</a>
+  
+    <li><a href="../Bitcoin/Network.html">Bitcoin::Network</a>
+  
+    <li><a href="../Bitcoin/Network/CommandClient.html">Bitcoin::Network::CommandClient</a>
+  
+    <li><a href="../Bitcoin/Network/CommandHandler.html">Bitcoin::Network::CommandHandler</a>
+  
+    <li><a href="../Bitcoin/Network/ConnectionHandler.html">Bitcoin::Network::ConnectionHandler</a>
+  
+    <li><a href="../Bitcoin/Network/Node.html">Bitcoin::Network::Node</a>
+  
+    <li><a href="../Bitcoin/OpenSSL_EC.html">Bitcoin::OpenSSL_EC</a>
+  
+    <li><a href="../Bitcoin/OpenSSL_EC/FFI.html">Bitcoin::OpenSSL_EC::FFI</a>
+  
+    <li><a href="../Bitcoin/P.html">Bitcoin::P</a>
+  
+    <li><a href="../Bitcoin/Protocol.html">Bitcoin::Protocol</a>
+  
+    <li><a href="../Bitcoin/Protocol/Addr.html">Bitcoin::Protocol::Addr</a>
+  
+    <li><a href="../Bitcoin/Protocol/Alert.html">Bitcoin::Protocol::Alert</a>
+  
+    <li><a href="../Bitcoin/Protocol/AuxPow.html">Bitcoin::Protocol::AuxPow</a>
+  
+    <li><a href="../Bitcoin/Protocol/Block.html">Bitcoin::Protocol::Block</a>
+  
+    <li><a href="../Bitcoin/Protocol/Handler.html">Bitcoin::Protocol::Handler</a>
+  
+    <li><a href="../Bitcoin/Protocol/Parser.html">Bitcoin::Protocol::Parser</a>
+  
+    <li><a href="../Bitcoin/Protocol/Tx.html">Bitcoin::Protocol::Tx</a>
+  
+    <li><a href="../Bitcoin/Protocol/TxIn.html">Bitcoin::Protocol::TxIn</a>
+  
+    <li><a href="../Bitcoin/Protocol/TxOut.html">Bitcoin::Protocol::TxOut</a>
+  
+    <li><a href="../Bitcoin/Protocol/Version.html">Bitcoin::Protocol::Version</a>
+  
+    <li><a href="../Bitcoin/Script.html">Bitcoin::Script</a>
+  
+    <li><a href="../Bitcoin/Script/ScriptOpcodeError.html">Bitcoin::Script::ScriptOpcodeError</a>
+  
+    <li><a href="../Bitcoin/Storage.html">Bitcoin::Storage</a>
+  
+    <li><a href="../Bitcoin/Storage/Backends.html">Bitcoin::Storage::Backends</a>
+  
+    <li><a href="../Bitcoin/Storage/Backends/DummyStore.html">Bitcoin::Storage::Backends::DummyStore</a>
+  
+    <li><a href="../Bitcoin/Storage/Backends/SequelMigrations.html">Bitcoin::Storage::Backends::SequelMigrations</a>
+  
+    <li><a href="../Bitcoin/Storage/Backends/SequelStore.html">Bitcoin::Storage::Backends::SequelStore</a>
+  
+    <li><a href="../Bitcoin/Storage/Backends/StoreBase.html">Bitcoin::Storage::Backends::StoreBase</a>
+  
+    <li><a href="../Bitcoin/Storage/Backends/UtxoStore.html">Bitcoin::Storage::Backends::UtxoStore</a>
+  
+    <li><a href="../Bitcoin/Storage/Models.html">Bitcoin::Storage::Models</a>
+  
+    <li><a href="../Bitcoin/Storage/Models/Block.html">Bitcoin::Storage::Models::Block</a>
+  
+    <li><a href="../Bitcoin/Storage/Models/Tx.html">Bitcoin::Storage::Models::Tx</a>
+  
+    <li><a href="../Bitcoin/Storage/Models/TxIn.html">Bitcoin::Storage::Models::TxIn</a>
+  
+    <li><a href="../Bitcoin/Storage/Models/TxOut.html">Bitcoin::Storage::Models::TxOut</a>
+  
+    <li><a href="../Bitcoin/Util.html">Bitcoin::Util</a>
+  
+    <li><a href="../Bitcoin/Validation.html">Bitcoin::Validation</a>
+  
+    <li><a href="../Bitcoin/Validation/Block.html">Bitcoin::Validation::Block</a>
+  
+    <li><a href="../Bitcoin/Validation/Tx.html">Bitcoin::Validation::Tx</a>
+  
+    <li><a href="../Bitcoin/Validation/ValidationError.html">Bitcoin::Validation::ValidationError</a>
+  
+    <li><a href="../Bitcoin/Wallet.html">Bitcoin::Wallet</a>
+  
+    <li><a href="../Bitcoin/Wallet/DeterministicKeyStore.html">Bitcoin::Wallet::DeterministicKeyStore</a>
+  
+    <li><a href="../Bitcoin/Wallet/KeyGenerator.html">Bitcoin::Wallet::KeyGenerator</a>
+  
+    <li><a href="../Bitcoin/Wallet/SimpleCoinSelector.html">Bitcoin::Wallet::SimpleCoinSelector</a>
+  
+    <li><a href="../Bitcoin/Wallet/SimpleKeyStore.html">Bitcoin::Wallet::SimpleKeyStore</a>
+  
+    <li><a href="../Bitcoin/Wallet/TxDP.html">Bitcoin::Wallet::TxDP</a>
+  
+    <li><a href="../Bitcoin/Wallet/Wallet.html">Bitcoin::Wallet::Wallet</a>
+  
+    <li><a href="../EM.html">EM</a>
+  
+    <li><a href="../Gtk.html">Gtk</a>
+  
+    <li><a href="../Hash.html">Hash</a>
+  
+    <li><a href="../JSON.html">JSON</a>
+  
+    <li><a href="../Litecoin.html">Litecoin</a>
+  
+    <li><a href="../Litecoin/Scrypt.html">Litecoin::Scrypt</a>
+  
+    <li><a href="../Log4r.html">Log4r</a>
+  
+    <li><a href="../Log4r/Logger.html">Log4r::Logger</a>
+  
+    <li><a href="../Mnemonic.html">Mnemonic</a>
+  
+    <li><a href="../Object.html">Object</a>
+  
+    <li><a href="../OpenSSL.html">OpenSSL</a>
+  
+    <li><a href="../OpenSSL/BN.html">OpenSSL::BN</a>
+  
+    <li><a href="../OpenSSL/PKey.html">OpenSSL::PKey</a>
+  
+    <li><a href="../OpenSSL/PKey/EC.html">OpenSSL::PKey::EC</a>
+  
+    <li><a href="../OpenSSL/PKey/EC/Point.html">OpenSSL::PKey::EC::Point</a>
+  
+    <li><a href="../RawJSON_Connection.html">RawJSON_Connection</a>
+  
+    <li><a href="../SimpleNode.html">SimpleNode</a>
+  
+    <li><a href="../SimpleNode/Connection.html">SimpleNode::Connection</a>
+  
+    <li><a href="../String.html">String</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation">
+  <h1 class="module">module Bitcoin::Protocol</h1>
+
+  <div id="description" class="description">
+    
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+    <!-- Constants -->
+    <section id="constants-list" class="section">
+      <h3 class="section-header">Constants</h3>
+      <dl>
+      
+        <dt id="BINARY">BINARY
+        
+        <dd class="description">
+        
+      
+        <dt id="BIP0031_VERSION">BIP0031_VERSION
+        
+        <dd class="description"><p>BIP 0031, pong message, is enabled for all versions AFTER this one</p>
+        
+      
+        <dt id="DEFAULT_STOP_HASH">DEFAULT_STOP_HASH
+        
+        <dd class="description">
+        
+      
+        <dt id="MAX_INV_SZ">MAX_INV_SZ
+        
+        <dd class="description"><p>bitcoin/src/main.h</p>
+        
+      
+        <dt id="TypeLookup">TypeLookup
+        
+        <dd class="description">
+        
+      
+        <dt id="Uniq">Uniq
+        
+        <dd class="description">
+        
+      
+      </dl>
+    </section>
+    
+
+    
+
+    <!-- Methods -->
+    
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Class Methods</h3>
+
+    
+      <div id="method-c-getblocks_pkt" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">getblocks_pkt</span><span
+            class="method-args">(version, locator_hashes, stop_hash=DEFAULT_STOP_HASH)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="getblocks_pkt-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/protocol.rb, line 155</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">getblocks_pkt</span>(<span class="ruby-identifier">version</span>, <span class="ruby-identifier">locator_hashes</span>, <span class="ruby-identifier">stop_hash</span>=<span class="ruby-constant">DEFAULT_STOP_HASH</span>)
+  <span class="ruby-identifier">pkt</span> <span class="ruby-string">&quot;getblocks&quot;</span>,  <span class="ruby-identifier">locator_payload</span>(<span class="ruby-identifier">version</span>, <span class="ruby-identifier">locator_hashes</span>, <span class="ruby-identifier">stop_hash</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- getblocks_pkt-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- getblocks_pkt-method -->
+
+    
+      <div id="method-c-getdata_pkt" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">getdata_pkt</span><span
+            class="method-args">(type, hashes)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="getdata_pkt-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/protocol.rb, line 132</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">getdata_pkt</span>(<span class="ruby-identifier">type</span>, <span class="ruby-identifier">hashes</span>)
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">hashes</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">&gt;</span> <span class="ruby-constant">MAX_INV_SZ</span>
+  <span class="ruby-identifier">t</span> = [ <span class="ruby-constant">TypeLookup</span>[<span class="ruby-identifier">type</span>] ].<span class="ruby-identifier">pack</span>(<span class="ruby-string">&quot;V&quot;</span>)
+  <span class="ruby-identifier">pkt</span>(<span class="ruby-string">&quot;getdata&quot;</span>, <span class="ruby-identifier">pack_var_int</span>(<span class="ruby-identifier">hashes</span>.<span class="ruby-identifier">size</span>) <span class="ruby-operator">+</span> <span class="ruby-identifier">hashes</span>.<span class="ruby-identifier">map</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">hash</span><span class="ruby-operator">|</span> <span class="ruby-identifier">t</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">hash</span>[<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">32</span>].<span class="ruby-identifier">reverse</span> }.<span class="ruby-identifier">join</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- getdata_pkt-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- getdata_pkt-method -->
+
+    
+      <div id="method-c-getheaders_pkt" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">getheaders_pkt</span><span
+            class="method-args">(version, locator_hashes, stop_hash=DEFAULT_STOP_HASH)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="getheaders_pkt-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/protocol.rb, line 159</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">getheaders_pkt</span>(<span class="ruby-identifier">version</span>, <span class="ruby-identifier">locator_hashes</span>, <span class="ruby-identifier">stop_hash</span>=<span class="ruby-constant">DEFAULT_STOP_HASH</span>)
+  <span class="ruby-identifier">pkt</span> <span class="ruby-string">&quot;getheaders&quot;</span>, <span class="ruby-identifier">locator_payload</span>(<span class="ruby-identifier">version</span>, <span class="ruby-identifier">locator_hashes</span>, <span class="ruby-identifier">stop_hash</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- getheaders_pkt-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- getheaders_pkt-method -->
+
+    
+      <div id="method-c-inv_pkt" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">inv_pkt</span><span
+            class="method-args">(type, hashes)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="inv_pkt-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/protocol.rb, line 138</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">inv_pkt</span>(<span class="ruby-identifier">type</span>, <span class="ruby-identifier">hashes</span>)
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">hashes</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">&gt;</span> <span class="ruby-constant">MAX_INV_SZ</span>
+  <span class="ruby-identifier">t</span> = [ <span class="ruby-constant">TypeLookup</span>[<span class="ruby-identifier">type</span>] ].<span class="ruby-identifier">pack</span>(<span class="ruby-string">&quot;V&quot;</span>)
+  <span class="ruby-identifier">pkt</span>(<span class="ruby-string">&quot;inv&quot;</span>, <span class="ruby-identifier">pack_var_int</span>(<span class="ruby-identifier">hashes</span>.<span class="ruby-identifier">size</span>) <span class="ruby-operator">+</span> <span class="ruby-identifier">hashes</span>.<span class="ruby-identifier">map</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">hash</span><span class="ruby-operator">|</span> <span class="ruby-identifier">t</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">hash</span>[<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">32</span>].<span class="ruby-identifier">reverse</span> }.<span class="ruby-identifier">join</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- inv_pkt-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- inv_pkt-method -->
+
+    
+      <div id="method-c-locator_payload" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">locator_payload</span><span
+            class="method-args">(version, locator_hashes, stop_hash)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="locator_payload-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/protocol.rb, line 146</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">locator_payload</span>(<span class="ruby-identifier">version</span>, <span class="ruby-identifier">locator_hashes</span>, <span class="ruby-identifier">stop_hash</span>)
+  <span class="ruby-identifier">payload</span> = [
+    [<span class="ruby-identifier">version</span>].<span class="ruby-identifier">pack</span>(<span class="ruby-string">&quot;V&quot;</span>),
+    <span class="ruby-identifier">pack_var_int</span>(<span class="ruby-identifier">locator_hashes</span>.<span class="ruby-identifier">size</span>),
+    <span class="ruby-identifier">locator_hashes</span>.<span class="ruby-identifier">map</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">l</span><span class="ruby-operator">|</span> <span class="ruby-identifier">l</span>.<span class="ruby-identifier">htb_reverse</span> }.<span class="ruby-identifier">join</span>,
+    <span class="ruby-identifier">stop_hash</span>.<span class="ruby-identifier">htb_reverse</span>
+  ].<span class="ruby-identifier">join</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- locator_payload-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- locator_payload-method -->
+
+    
+      <div id="method-c-pack_boolean" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">pack_boolean</span><span
+            class="method-args">(b)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="pack_boolean-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/protocol.rb, line 90</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">pack_boolean</span>(<span class="ruby-identifier">b</span>)
+  (<span class="ruby-identifier">b</span> <span class="ruby-operator">==</span> <span class="ruby-keyword">true</span>) <span class="ruby-operator">?</span> [<span class="ruby-value">0xFF</span>].<span class="ruby-identifier">pack</span>(<span class="ruby-string">&quot;C&quot;</span>) <span class="ruby-operator">:</span> [<span class="ruby-value">0x00</span>].<span class="ruby-identifier">pack</span>(<span class="ruby-string">&quot;C&quot;</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- pack_boolean-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- pack_boolean-method -->
+
+    
+      <div id="method-c-pack_var_int" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">pack_var_int</span><span
+            class="method-args">(i)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="pack_var_int-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/protocol.rb, line 50</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">pack_var_int</span>(<span class="ruby-identifier">i</span>)
+  <span class="ruby-keyword">if</span>    <span class="ruby-identifier">i</span> <span class="ruby-operator">&lt;</span>  <span class="ruby-value">0xfd</span>;                [      <span class="ruby-identifier">i</span>].<span class="ruby-identifier">pack</span>(<span class="ruby-string">&quot;C&quot;</span>)
+  <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">i</span> <span class="ruby-operator">&lt;=</span> <span class="ruby-value">0xffff</span>;              [<span class="ruby-value">0xfd</span>, <span class="ruby-identifier">i</span>].<span class="ruby-identifier">pack</span>(<span class="ruby-string">&quot;Cv&quot;</span>)
+  <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">i</span> <span class="ruby-operator">&lt;=</span> <span class="ruby-value">0xffffffff</span>;          [<span class="ruby-value">0xfe</span>, <span class="ruby-identifier">i</span>].<span class="ruby-identifier">pack</span>(<span class="ruby-string">&quot;CV&quot;</span>)
+  <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">i</span> <span class="ruby-operator">&lt;=</span> <span class="ruby-value">0xffffffffffffffff</span>;  [<span class="ruby-value">0xff</span>, <span class="ruby-identifier">i</span>].<span class="ruby-identifier">pack</span>(<span class="ruby-string">&quot;CQ&quot;</span>)
+  <span class="ruby-keyword">else</span> <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;int(#{i}) too large!&quot;</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- pack_var_int-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- pack_var_int-method -->
+
+    
+      <div id="method-c-pack_var_string" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">pack_var_string</span><span
+            class="method-args">(payload)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="pack_var_string-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/protocol.rb, line 69</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">pack_var_string</span>(<span class="ruby-identifier">payload</span>)
+  <span class="ruby-identifier">pack_var_int</span>(<span class="ruby-identifier">payload</span>.<span class="ruby-identifier">bytesize</span>) <span class="ruby-operator">+</span> <span class="ruby-identifier">payload</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- pack_var_string-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- pack_var_string-method -->
+
+    
+      <div id="method-c-ping_pkt" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">ping_pkt</span><span
+            class="method-args">(nonce = rand(0xffffffff))</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="ping_pkt-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/protocol.rb, line 118</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">ping_pkt</span>(<span class="ruby-identifier">nonce</span> = <span class="ruby-identifier">rand</span>(<span class="ruby-value">0xffffffff</span>))
+  <span class="ruby-identifier">pkt</span>(<span class="ruby-string">&quot;ping&quot;</span>, [<span class="ruby-identifier">nonce</span>].<span class="ruby-identifier">pack</span>(<span class="ruby-string">&quot;Q&quot;</span>))
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- ping_pkt-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- ping_pkt-method -->
+
+    
+      <div id="method-c-pkt" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">pkt</span><span
+            class="method-args">(command, payload)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="pkt-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/protocol.rb, line 96</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">pkt</span>(<span class="ruby-identifier">command</span>, <span class="ruby-identifier">payload</span>)
+  <span class="ruby-identifier">cmd</span>      = <span class="ruby-identifier">command</span>.<span class="ruby-identifier">ljust</span>(<span class="ruby-value">12</span>, <span class="ruby-string">&quot;\x00&quot;</span>)[<span class="ruby-value">0</span><span class="ruby-operator">...</span><span class="ruby-value">12</span>]
+  <span class="ruby-identifier">length</span>   = [<span class="ruby-identifier">payload</span>.<span class="ruby-identifier">bytesize</span>].<span class="ruby-identifier">pack</span>(<span class="ruby-string">&quot;V&quot;</span>)
+  <span class="ruby-identifier">checksum</span> = <span class="ruby-constant">Digest</span><span class="ruby-operator">::</span><span class="ruby-constant">SHA256</span>.<span class="ruby-identifier">digest</span>(<span class="ruby-constant">Digest</span><span class="ruby-operator">::</span><span class="ruby-constant">SHA256</span>.<span class="ruby-identifier">digest</span>(<span class="ruby-identifier">payload</span>))[<span class="ruby-value">0</span><span class="ruby-operator">...</span><span class="ruby-value">4</span>]
+  <span class="ruby-identifier">pkt</span>      = <span class="ruby-string">&quot;&quot;</span>.<span class="ruby-identifier">force_encoding</span>(<span class="ruby-constant">BINARY</span>)
+  <span class="ruby-identifier">pkt</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">Bitcoin</span>.<span class="ruby-identifier">network</span>[<span class="ruby-value">:magic_head</span>].<span class="ruby-identifier">force_encoding</span>(<span class="ruby-constant">BINARY</span>) <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">cmd</span>.<span class="ruby-identifier">force_encoding</span>(<span class="ruby-constant">BINARY</span>) <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">length</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">checksum</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">payload</span>.<span class="ruby-identifier">force_encoding</span>(<span class="ruby-constant">BINARY</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- pkt-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- pkt-method -->
+
+    
+      <div id="method-c-pong_pkt" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">pong_pkt</span><span
+            class="method-args">(nonce)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="pong_pkt-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/protocol.rb, line 122</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">pong_pkt</span>(<span class="ruby-identifier">nonce</span>)
+  <span class="ruby-identifier">pkt</span>(<span class="ruby-string">&quot;pong&quot;</span>, [<span class="ruby-identifier">nonce</span>].<span class="ruby-identifier">pack</span>(<span class="ruby-string">&quot;Q&quot;</span>))
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- pong_pkt-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- pong_pkt-method -->
+
+    
+      <div id="method-c-read_binary_file" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">read_binary_file</span><span
+            class="method-args">(path)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="read_binary_file-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/protocol.rb, line 163</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">read_binary_file</span>(<span class="ruby-identifier">path</span>)
+  <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-identifier">path</span>, <span class="ruby-string">'rb'</span>){<span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span> <span class="ruby-identifier">f</span>.<span class="ruby-identifier">read</span> }
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- read_binary_file-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- read_binary_file-method -->
+
+    
+      <div id="method-c-unpack_boolean" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">unpack_boolean</span><span
+            class="method-args">(payload)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="unpack_boolean-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/protocol.rb, line 85</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">unpack_boolean</span>(<span class="ruby-identifier">payload</span>)
+  <span class="ruby-identifier">bdata</span>, <span class="ruby-identifier">payload</span> = <span class="ruby-identifier">payload</span>.<span class="ruby-identifier">unpack</span>(<span class="ruby-string">&quot;Ca*&quot;</span>)
+  [ (<span class="ruby-identifier">bdata</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span> <span class="ruby-operator">?</span> <span class="ruby-keyword">false</span> <span class="ruby-operator">:</span> <span class="ruby-keyword">true</span>), <span class="ruby-identifier">payload</span> ]
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- unpack_boolean-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- unpack_boolean-method -->
+
+    
+      <div id="method-c-unpack_var_int" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">unpack_var_int</span><span
+            class="method-args">(payload)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>var_int refers to <a
+href="https://en.bitcoin.it/wiki/Protocol_specification#Variable_length_integer">en.bitcoin.it/wiki/Protocol_specification#Variable_length_integer</a>
+and is what Satoshi called “CompactSize” BitcoinQT has later added even
+more compact format called CVarInt to use in its local block storage.
+CVarInt is not implemented here.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="unpack_var_int-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/protocol.rb, line 31</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">unpack_var_int</span>(<span class="ruby-identifier">payload</span>)
+  <span class="ruby-keyword">case</span> <span class="ruby-identifier">payload</span>.<span class="ruby-identifier">unpack</span>(<span class="ruby-string">&quot;C&quot;</span>)[<span class="ruby-value">0</span>] <span class="ruby-comment"># TODO add test cases</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-value">0xfd</span>; <span class="ruby-identifier">payload</span>.<span class="ruby-identifier">unpack</span>(<span class="ruby-string">&quot;xva*&quot;</span>)
+  <span class="ruby-keyword">when</span> <span class="ruby-value">0xfe</span>; <span class="ruby-identifier">payload</span>.<span class="ruby-identifier">unpack</span>(<span class="ruby-string">&quot;xVa*&quot;</span>)
+  <span class="ruby-keyword">when</span> <span class="ruby-value">0xff</span>; <span class="ruby-identifier">payload</span>.<span class="ruby-identifier">unpack</span>(<span class="ruby-string">&quot;xQa*&quot;</span>) <span class="ruby-comment"># TODO add little-endian version of Q</span>
+  <span class="ruby-keyword">else</span>;      <span class="ruby-identifier">payload</span>.<span class="ruby-identifier">unpack</span>(<span class="ruby-string">&quot;Ca*&quot;</span>)
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- unpack_var_int-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- unpack_var_int-method -->
+
+    
+      <div id="method-c-unpack_var_int_array" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">unpack_var_int_array</span><span
+            class="method-args">(payload)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="unpack_var_int_array-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/protocol.rb, line 79</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">unpack_var_int_array</span>(<span class="ruby-identifier">payload</span>) <span class="ruby-comment"># unpacks set&lt;int&gt;</span>
+  <span class="ruby-identifier">size</span>, <span class="ruby-identifier">payload</span> = <span class="ruby-identifier">unpack_var_int</span>(<span class="ruby-identifier">payload</span>)
+  <span class="ruby-keyword">return</span> [<span class="ruby-keyword">nil</span>, <span class="ruby-identifier">payload</span>] <span class="ruby-keyword">if</span> <span class="ruby-identifier">size</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>
+  [(<span class="ruby-value">0</span><span class="ruby-operator">...</span><span class="ruby-identifier">size</span>).<span class="ruby-identifier">map</span>{ <span class="ruby-identifier">i</span>, <span class="ruby-identifier">payload</span> = <span class="ruby-identifier">unpack_var_int</span>(<span class="ruby-identifier">payload</span>); <span class="ruby-identifier">i</span> }, <span class="ruby-identifier">payload</span>]
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- unpack_var_int_array-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- unpack_var_int_array-method -->
+
+    
+      <div id="method-c-unpack_var_int_from_io" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">unpack_var_int_from_io</span><span
+            class="method-args">(io)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="unpack_var_int_from_io-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/protocol.rb, line 40</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">unpack_var_int_from_io</span>(<span class="ruby-identifier">io</span>)
+  <span class="ruby-identifier">uchar</span> = <span class="ruby-identifier">io</span>.<span class="ruby-identifier">read</span>(<span class="ruby-value">1</span>).<span class="ruby-identifier">unpack</span>(<span class="ruby-string">&quot;C&quot;</span>)[<span class="ruby-value">0</span>]
+  <span class="ruby-keyword">case</span> <span class="ruby-identifier">uchar</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-value">0xfd</span>; <span class="ruby-identifier">io</span>.<span class="ruby-identifier">read</span>(<span class="ruby-value">2</span>).<span class="ruby-identifier">unpack</span>(<span class="ruby-string">&quot;v&quot;</span>)[<span class="ruby-value">0</span>]
+  <span class="ruby-keyword">when</span> <span class="ruby-value">0xfe</span>; <span class="ruby-identifier">io</span>.<span class="ruby-identifier">read</span>(<span class="ruby-value">4</span>).<span class="ruby-identifier">unpack</span>(<span class="ruby-string">&quot;V&quot;</span>)[<span class="ruby-value">0</span>]
+  <span class="ruby-keyword">when</span> <span class="ruby-value">0xff</span>; <span class="ruby-identifier">io</span>.<span class="ruby-identifier">read</span>(<span class="ruby-value">8</span>).<span class="ruby-identifier">unpack</span>(<span class="ruby-string">&quot;Q&quot;</span>)[<span class="ruby-value">0</span>]
+  <span class="ruby-keyword">else</span>;      <span class="ruby-identifier">uchar</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- unpack_var_int_from_io-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- unpack_var_int_from_io-method -->
+
+    
+      <div id="method-c-unpack_var_string" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">unpack_var_string</span><span
+            class="method-args">(payload)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="unpack_var_string-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/protocol.rb, line 59</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">unpack_var_string</span>(<span class="ruby-identifier">payload</span>)
+  <span class="ruby-identifier">size</span>, <span class="ruby-identifier">payload</span> = <span class="ruby-identifier">unpack_var_int</span>(<span class="ruby-identifier">payload</span>)
+  <span class="ruby-identifier">size</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span> <span class="ruby-operator">?</span> (<span class="ruby-identifier">string</span>, <span class="ruby-identifier">payload</span> = <span class="ruby-identifier">payload</span>.<span class="ruby-identifier">unpack</span>(<span class="ruby-node">&quot;a#{size}a*&quot;</span>)) <span class="ruby-operator">:</span> [<span class="ruby-keyword">nil</span>, <span class="ruby-identifier">payload</span>]
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- unpack_var_string-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- unpack_var_string-method -->
+
+    
+      <div id="method-c-unpack_var_string_array" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">unpack_var_string_array</span><span
+            class="method-args">(payload)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="unpack_var_string_array-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/protocol.rb, line 73</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">unpack_var_string_array</span>(<span class="ruby-identifier">payload</span>) <span class="ruby-comment"># unpacks set&lt;string&gt;</span>
+  <span class="ruby-identifier">size</span>, <span class="ruby-identifier">payload</span> = <span class="ruby-identifier">unpack_var_int</span>(<span class="ruby-identifier">payload</span>)
+  <span class="ruby-keyword">return</span> [<span class="ruby-keyword">nil</span>, <span class="ruby-identifier">payload</span>] <span class="ruby-keyword">if</span> <span class="ruby-identifier">size</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>
+  [(<span class="ruby-value">0</span><span class="ruby-operator">...</span><span class="ruby-identifier">size</span>).<span class="ruby-identifier">map</span>{ <span class="ruby-identifier">s</span>, <span class="ruby-identifier">payload</span> = <span class="ruby-identifier">unpack_var_string</span>(<span class="ruby-identifier">payload</span>); <span class="ruby-identifier">s</span> }, <span class="ruby-identifier">payload</span>]
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- unpack_var_string_array-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- unpack_var_string_array-method -->
+
+    
+      <div id="method-c-unpack_var_string_from_io" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">unpack_var_string_from_io</span><span
+            class="method-args">(buf)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="unpack_var_string_from_io-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/protocol.rb, line 64</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">unpack_var_string_from_io</span>(<span class="ruby-identifier">buf</span>)
+  <span class="ruby-identifier">size</span> = <span class="ruby-identifier">unpack_var_int_from_io</span>(<span class="ruby-identifier">buf</span>)
+  <span class="ruby-identifier">size</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span> <span class="ruby-operator">?</span> <span class="ruby-identifier">buf</span>.<span class="ruby-identifier">read</span>(<span class="ruby-identifier">size</span>) <span class="ruby-operator">:</span> <span class="ruby-keyword">nil</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- unpack_var_string_from_io-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- unpack_var_string_from_io-method -->
+
+    
+      <div id="method-c-verack_pkt" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">verack_pkt</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="verack_pkt-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/protocol.rb, line 126</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">verack_pkt</span>
+  <span class="ruby-identifier">pkt</span>(<span class="ruby-string">&quot;verack&quot;</span>, <span class="ruby-string">&quot;&quot;</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- verack_pkt-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- verack_pkt-method -->
+
+    
+      <div id="method-c-version_pkt" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">version_pkt</span><span
+            class="method-args">(from_id, from=nil, to=nil, last_block=nil, time=nil, user_agent=nil, version=nil)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="version_pkt-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/protocol.rb, line 104</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">version_pkt</span>(<span class="ruby-identifier">from_id</span>, <span class="ruby-identifier">from</span>=<span class="ruby-keyword">nil</span>, <span class="ruby-identifier">to</span>=<span class="ruby-keyword">nil</span>, <span class="ruby-identifier">last_block</span>=<span class="ruby-keyword">nil</span>, <span class="ruby-identifier">time</span>=<span class="ruby-keyword">nil</span>, <span class="ruby-identifier">user_agent</span>=<span class="ruby-keyword">nil</span>, <span class="ruby-identifier">version</span>=<span class="ruby-keyword">nil</span>)
+  <span class="ruby-identifier">opts</span> = <span class="ruby-keyword">if</span> <span class="ruby-identifier">from_id</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Hash</span>)
+    <span class="ruby-identifier">from_id</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-constant">STDERR</span>.<span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;Bitcoin::Protocol.version_pkt - API deprecated. please change it soon..&quot;</span>
+    {
+      <span class="ruby-value">:nonce</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">from_id</span>, <span class="ruby-value">:from</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">from</span>, <span class="ruby-value">:to</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">to</span>, <span class="ruby-value">:last_block</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">last_block</span>,
+      <span class="ruby-value">:time</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">time</span>, <span class="ruby-value">:user_agent</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">user_agent</span>, <span class="ruby-value">:version</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">version</span>
+    }
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">version</span> = <span class="ruby-constant">Protocol</span><span class="ruby-operator">::</span><span class="ruby-constant">Version</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">opts</span>)
+  <span class="ruby-identifier">version</span>.<span class="ruby-identifier">to_pkt</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- version_pkt-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- version_pkt-method -->
+
+    
+    </section><!-- public-class-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+</div><!-- documentation -->
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 4.0.1.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+

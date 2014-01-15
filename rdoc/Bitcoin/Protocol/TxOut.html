@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+<title>class Bitcoin::Protocol::TxOut - bitcoin-ruby RDoc</title>
+
+<link type="text/css" media="screen" href="../../rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "../../";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="../../js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../js/darkfish.js"></script>
+
+
+<body id="top" class="class">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="../../index.html">Home</a>
+    <a href="../../table_of_contents.html#classes">Classes</a>
+    <a href="../../table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>lib/bitcoin/protocol/txout.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    
+    <nav id="parent-class-section" class="section">
+  <h3 class="section-header">Parent</h3>
+  
+  <p class="link"><a href="../../Object.html">Object</a>
+  
+</nav>
+
+    
+    
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li ><a href="#method-c-from_hash">::from_hash</a>
+    
+    <li ><a href="#method-c-from_io">::from_io</a>
+    
+    <li ><a href="#method-c-new">::new</a>
+    
+    <li ><a href="#method-c-value_to_address">::value_to_address</a>
+    
+    <li ><a href="#method-i-3D-3D">#==</a>
+    
+    <li ><a href="#method-i-get_script">#get_script</a>
+    
+    <li ><a href="#method-i-parse_data">#parse_data</a>
+    
+    <li ><a href="#method-i-parse_data_from_io">#parse_data_from_io</a>
+    
+    <li ><a href="#method-i-parse_payload">#parse_payload</a>
+    
+    <li ><a href="#method-i-pk_script-3D">#pk_script=</a>
+    
+    <li ><a href="#method-i-script-3D">#script=</a>
+    
+    <li ><a href="#method-i-to_hash">#to_hash</a>
+    
+    <li ><a href="#method-i-to_null_payload">#to_null_payload</a>
+    
+    <li ><a href="#method-i-to_payload">#to_payload</a>
+    
+  </ul>
+</nav>
+
+  </div>
+
+  <div id="project-metadata">
+    <nav id="fileindex-section" class="section project-section">
+  <h3 class="section-header">Pages</h3>
+
+  <ul>
+  
+    <li class="file"><a href="../../COPYING.html">COPYING</a>
+  
+    <li class="file"><a href="../../README_rdoc.html">README</a>
+  
+    <li class="file"><a href="../../doc/CONFIG_rdoc.html">CONFIG</a>
+  
+    <li class="file"><a href="../../doc/EXAMPLES_rdoc.html">EXAMPLES</a>
+  
+    <li class="file"><a href="../../doc/NAMECOIN_rdoc.html">NAMECOIN</a>
+  
+    <li class="file"><a href="../../doc/NODE_rdoc.html">NODE</a>
+  
+    <li class="file"><a href="../../doc/STORAGE_rdoc.html">STORAGE</a>
+  
+    <li class="file"><a href="../../doc/WALLET_rdoc.html">WALLET</a>
+  
+    <li class="file"><a href="../../examples/graph_benchmark_results_rb~.html">graph_benchmark_results.rb~</a>
+  
+    <li class="file"><a href="../../examples/import_rb~.html">import.rb~</a>
+  
+    <li class="file"><a href="../../examples/run_bench_rb~.html">run_bench.rb~</a>
+  
+    <li class="file"><a href="../../examples/run_benchmarks_rb~.html">run_benchmarks.rb~</a>
+  
+    <li class="file"><a href="../../lib/bitcoin/gui/bitcoin-ruby_svg.html">bitcoin-ruby.svg</a>
+  
+    <li class="file"><a href="../../lib/bitcoin/gui/gui_builder.html">gui.builder</a>
+  
+  </ul>
+</nav>
+
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="../../Array.html">Array</a>
+  
+    <li><a href="../../Bitcoin.html">Bitcoin</a>
+  
+    <li><a href="../../Bitcoin/BinaryExtensions.html">Bitcoin::BinaryExtensions</a>
+  
+    <li><a href="../../Bitcoin/Builder.html">Bitcoin::Builder</a>
+  
+    <li><a href="../../Bitcoin/Builder/BlockBuilder.html">Bitcoin::Builder::BlockBuilder</a>
+  
+    <li><a href="../../Bitcoin/Builder/ScriptBuilder.html">Bitcoin::Builder::ScriptBuilder</a>
+  
+    <li><a href="../../Bitcoin/Builder/TxBuilder.html">Bitcoin::Builder::TxBuilder</a>
+  
+    <li><a href="../../Bitcoin/Builder/TxInBuilder.html">Bitcoin::Builder::TxInBuilder</a>
+  
+    <li><a href="../../Bitcoin/Builder/TxOutBuilder.html">Bitcoin::Builder::TxOutBuilder</a>
+  
+    <li><a href="../../Bitcoin/Config.html">Bitcoin::Config</a>
+  
+    <li><a href="../../Bitcoin/Connection.html">Bitcoin::Connection</a>
+  
+    <li><a href="../../Bitcoin/ConnectionHandler.html">Bitcoin::ConnectionHandler</a>
+  
+    <li><a href="../../Bitcoin/Gui.html">Bitcoin::Gui</a>
+  
+    <li><a href="../../Bitcoin/Gui/AddrView.html">Bitcoin::Gui::AddrView</a>
+  
+    <li><a href="../../Bitcoin/Gui/Bitcoin.html">Bitcoin::Gui::Bitcoin</a>
+  
+    <li><a href="../../Bitcoin/Gui/Bitcoin/Gui.html">Bitcoin::Gui::Bitcoin::Gui</a>
+  
+    <li><a href="../../Bitcoin/Gui/Bitcoin/Gui/Bitcoin.html">Bitcoin::Gui::Bitcoin::Gui::Bitcoin</a>
+  
+    <li><a href="../../Bitcoin/Gui/Bitcoin/Gui/Bitcoin/Network.html">Bitcoin::Gui::Bitcoin::Gui::Bitcoin::Network</a>
+  
+    <li><a href="../../Bitcoin/Gui/Bitcoin/Gui/Bitcoin/Network/CommandClient.html">Bitcoin::Gui::Bitcoin::Gui::Bitcoin::Network::CommandClient</a>
+  
+    <li><a href="../../Bitcoin/Gui/ConnView.html">Bitcoin::Gui::ConnView</a>
+  
+    <li><a href="../../Bitcoin/Gui/Connection.html">Bitcoin::Gui::Connection</a>
+  
+    <li><a href="../../Bitcoin/Gui/Gui.html">Bitcoin::Gui::Gui</a>
+  
+    <li><a href="../../Bitcoin/Gui/Helpers.html">Bitcoin::Gui::Helpers</a>
+  
+    <li><a href="../../Bitcoin/Gui/TreeView.html">Bitcoin::Gui::TreeView</a>
+  
+    <li><a href="../../Bitcoin/Gui/TxInView.html">Bitcoin::Gui::TxInView</a>
+  
+    <li><a href="../../Bitcoin/Gui/TxView.html">Bitcoin::Gui::TxView</a>
+  
+    <li><a href="../../Bitcoin/Key.html">Bitcoin::Key</a>
+  
+    <li><a href="../../Bitcoin/Logger.html">Bitcoin::Logger</a>
+  
+    <li><a href="../../Bitcoin/Logger/LogWrapper.html">Bitcoin::Logger::LogWrapper</a>
+  
+    <li><a href="../../Bitcoin/Logger/Logger.html">Bitcoin::Logger::Logger</a>
+  
+    <li><a href="../../Bitcoin/Logger/TimeLogger.html">Bitcoin::Logger::TimeLogger</a>
+  
+    <li><a href="../../Bitcoin/Namecoin.html">Bitcoin::Namecoin</a>
+  
+    <li><a href="../../Bitcoin/Namecoin/Script.html">Bitcoin::Namecoin::Script</a>
+  
+    <li><a href="../../Bitcoin/Namecoin/Storage.html">Bitcoin::Namecoin::Storage</a>
+  
+    <li><a href="../../Bitcoin/Namecoin/Storage/Backend.html">Bitcoin::Namecoin::Storage::Backend</a>
+  
+    <li><a href="../../Bitcoin/Namecoin/Storage/Models.html">Bitcoin::Namecoin::Storage::Models</a>
+  
+    <li><a href="../../Bitcoin/Namecoin/Storage/Models/Name.html">Bitcoin::Namecoin::Storage::Models::Name</a>
+  
+    <li><a href="../../Bitcoin/Network.html">Bitcoin::Network</a>
+  
+    <li><a href="../../Bitcoin/Network/CommandClient.html">Bitcoin::Network::CommandClient</a>
+  
+    <li><a href="../../Bitcoin/Network/CommandHandler.html">Bitcoin::Network::CommandHandler</a>
+  
+    <li><a href="../../Bitcoin/Network/ConnectionHandler.html">Bitcoin::Network::ConnectionHandler</a>
+  
+    <li><a href="../../Bitcoin/Network/Node.html">Bitcoin::Network::Node</a>
+  
+    <li><a href="../../Bitcoin/OpenSSL_EC.html">Bitcoin::OpenSSL_EC</a>
+  
+    <li><a href="../../Bitcoin/OpenSSL_EC/FFI.html">Bitcoin::OpenSSL_EC::FFI</a>
+  
+    <li><a href="../../Bitcoin/P.html">Bitcoin::P</a>
+  
+    <li><a href="../../Bitcoin/Protocol.html">Bitcoin::Protocol</a>
+  
+    <li><a href="../../Bitcoin/Protocol/Addr.html">Bitcoin::Protocol::Addr</a>
+  
+    <li><a href="../../Bitcoin/Protocol/Alert.html">Bitcoin::Protocol::Alert</a>
+  
+    <li><a href="../../Bitcoin/Protocol/AuxPow.html">Bitcoin::Protocol::AuxPow</a>
+  
+    <li><a href="../../Bitcoin/Protocol/Block.html">Bitcoin::Protocol::Block</a>
+  
+    <li><a href="../../Bitcoin/Protocol/Handler.html">Bitcoin::Protocol::Handler</a>
+  
+    <li><a href="../../Bitcoin/Protocol/Parser.html">Bitcoin::Protocol::Parser</a>
+  
+    <li><a href="../../Bitcoin/Protocol/Tx.html">Bitcoin::Protocol::Tx</a>
+  
+    <li><a href="../../Bitcoin/Protocol/TxIn.html">Bitcoin::Protocol::TxIn</a>
+  
+    <li><a href="../../Bitcoin/Protocol/TxOut.html">Bitcoin::Protocol::TxOut</a>
+  
+    <li><a href="../../Bitcoin/Protocol/Version.html">Bitcoin::Protocol::Version</a>
+  
+    <li><a href="../../Bitcoin/Script.html">Bitcoin::Script</a>
+  
+    <li><a href="../../Bitcoin/Script/ScriptOpcodeError.html">Bitcoin::Script::ScriptOpcodeError</a>
+  
+    <li><a href="../../Bitcoin/Storage.html">Bitcoin::Storage</a>
+  
+    <li><a href="../../Bitcoin/Storage/Backends.html">Bitcoin::Storage::Backends</a>
+  
+    <li><a href="../../Bitcoin/Storage/Backends/DummyStore.html">Bitcoin::Storage::Backends::DummyStore</a>
+  
+    <li><a href="../../Bitcoin/Storage/Backends/SequelMigrations.html">Bitcoin::Storage::Backends::SequelMigrations</a>
+  
+    <li><a href="../../Bitcoin/Storage/Backends/SequelStore.html">Bitcoin::Storage::Backends::SequelStore</a>
+  
+    <li><a href="../../Bitcoin/Storage/Backends/StoreBase.html">Bitcoin::Storage::Backends::StoreBase</a>
+  
+    <li><a href="../../Bitcoin/Storage/Backends/UtxoStore.html">Bitcoin::Storage::Backends::UtxoStore</a>
+  
+    <li><a href="../../Bitcoin/Storage/Models.html">Bitcoin::Storage::Models</a>
+  
+    <li><a href="../../Bitcoin/Storage/Models/Block.html">Bitcoin::Storage::Models::Block</a>
+  
+    <li><a href="../../Bitcoin/Storage/Models/Tx.html">Bitcoin::Storage::Models::Tx</a>
+  
+    <li><a href="../../Bitcoin/Storage/Models/TxIn.html">Bitcoin::Storage::Models::TxIn</a>
+  
+    <li><a href="../../Bitcoin/Storage/Models/TxOut.html">Bitcoin::Storage::Models::TxOut</a>
+  
+    <li><a href="../../Bitcoin/Util.html">Bitcoin::Util</a>
+  
+    <li><a href="../../Bitcoin/Validation.html">Bitcoin::Validation</a>
+  
+    <li><a href="../../Bitcoin/Validation/Block.html">Bitcoin::Validation::Block</a>
+  
+    <li><a href="../../Bitcoin/Validation/Tx.html">Bitcoin::Validation::Tx</a>
+  
+    <li><a href="../../Bitcoin/Validation/ValidationError.html">Bitcoin::Validation::ValidationError</a>
+  
+    <li><a href="../../Bitcoin/Wallet.html">Bitcoin::Wallet</a>
+  
+    <li><a href="../../Bitcoin/Wallet/DeterministicKeyStore.html">Bitcoin::Wallet::DeterministicKeyStore</a>
+  
+    <li><a href="../../Bitcoin/Wallet/KeyGenerator.html">Bitcoin::Wallet::KeyGenerator</a>
+  
+    <li><a href="../../Bitcoin/Wallet/SimpleCoinSelector.html">Bitcoin::Wallet::SimpleCoinSelector</a>
+  
+    <li><a href="../../Bitcoin/Wallet/SimpleKeyStore.html">Bitcoin::Wallet::SimpleKeyStore</a>
+  
+    <li><a href="../../Bitcoin/Wallet/TxDP.html">Bitcoin::Wallet::TxDP</a>
+  
+    <li><a href="../../Bitcoin/Wallet/Wallet.html">Bitcoin::Wallet::Wallet</a>
+  
+    <li><a href="../../EM.html">EM</a>
+  
+    <li><a href="../../Gtk.html">Gtk</a>
+  
+    <li><a href="../../Hash.html">Hash</a>
+  
+    <li><a href="../../JSON.html">JSON</a>
+  
+    <li><a href="../../Litecoin.html">Litecoin</a>
+  
+    <li><a href="../../Litecoin/Scrypt.html">Litecoin::Scrypt</a>
+  
+    <li><a href="../../Log4r.html">Log4r</a>
+  
+    <li><a href="../../Log4r/Logger.html">Log4r::Logger</a>
+  
+    <li><a href="../../Mnemonic.html">Mnemonic</a>
+  
+    <li><a href="../../Object.html">Object</a>
+  
+    <li><a href="../../OpenSSL.html">OpenSSL</a>
+  
+    <li><a href="../../OpenSSL/BN.html">OpenSSL::BN</a>
+  
+    <li><a href="../../OpenSSL/PKey.html">OpenSSL::PKey</a>
+  
+    <li><a href="../../OpenSSL/PKey/EC.html">OpenSSL::PKey::EC</a>
+  
+    <li><a href="../../OpenSSL/PKey/EC/Point.html">OpenSSL::PKey::EC::Point</a>
+  
+    <li><a href="../../RawJSON_Connection.html">RawJSON_Connection</a>
+  
+    <li><a href="../../SimpleNode.html">SimpleNode</a>
+  
+    <li><a href="../../SimpleNode/Connection.html">SimpleNode::Connection</a>
+  
+    <li><a href="../../String.html">String</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation">
+  <h1 class="class">class Bitcoin::Protocol::TxOut</h1>
+
+  <div id="description" class="description">
+    
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+
+    
+    <!-- Attributes -->
+    <section id="attribute-method-details" class="method-section section">
+      <h3 class="section-header">Attributes</h3>
+
+      
+      <div id="attribute-i-amount" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">amount</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>output <a href="TxOut.html#attribute-i-value">#value</a> (in base units;
+“satoshi”)</p>
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-amount-3D" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">amount=</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>output <a href="TxOut.html#attribute-i-value">#value</a> (in base units;
+“satoshi”)</p>
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-pk_script" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">pk_script</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p><a href="TxOut.html#attribute-i-pk_script">#pk_script</a> output <a
+href="../Script.html">Script</a></p>
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-pk_script_length" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">pk_script_length</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p><a href="TxOut.html#attribute-i-pk_script">#pk_script</a> output <a
+href="../Script.html">Script</a></p>
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-script" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">script</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p><a href="TxOut.html#attribute-i-pk_script">#pk_script</a> output <a
+href="../Script.html">Script</a></p>
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-value" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">value</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>output <a href="TxOut.html#attribute-i-value">#value</a> (in base units;
+“satoshi”)</p>
+        
+        </div>
+      </div>
+      
+    </section><!-- attribute-method-details -->
+    
+
+    <!-- Methods -->
+    
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Class Methods</h3>
+
+    
+      <div id="method-c-from_hash" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">from_hash</span><span
+            class="method-args">(output)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="from_hash-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/protocol/txout.rb, line 65</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">from_hash</span>(<span class="ruby-identifier">output</span>)
+  <span class="ruby-identifier">amount</span> = <span class="ruby-identifier">output</span>[<span class="ruby-string">'value'</span>].<span class="ruby-identifier">gsub</span>(<span class="ruby-string">'.'</span>,<span class="ruby-string">''</span>).<span class="ruby-identifier">to_i</span>
+  <span class="ruby-identifier">script</span> = <span class="ruby-constant">Script</span>.<span class="ruby-identifier">binary_from_string</span>(<span class="ruby-identifier">output</span>[<span class="ruby-string">'scriptPubKey'</span>])
+  <span class="ruby-identifier">new</span>(<span class="ruby-identifier">amount</span>, <span class="ruby-identifier">script</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- from_hash-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- from_hash-method -->
+
+    
+      <div id="method-c-from_io" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">from_io</span><span
+            class="method-args">(buf)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="from_io-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/protocol/txout.rb, line 32</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">from_io</span>(<span class="ruby-identifier">buf</span>)
+  <span class="ruby-identifier">txout</span> = <span class="ruby-identifier">new</span>; <span class="ruby-identifier">txout</span>.<span class="ruby-identifier">parse_data_from_io</span>(<span class="ruby-identifier">buf</span>); <span class="ruby-identifier">txout</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- from_io-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- from_io-method -->
+
+    
+      <div id="method-c-new" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">new</span><span
+            class="method-args">(*args)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="new-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/protocol/txout.rb, line 13</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span> <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">==</span> <span class="ruby-value">2</span>
+    <span class="ruby-ivar">@value</span>, <span class="ruby-ivar">@pk_script_length</span>, <span class="ruby-ivar">@pk_script</span> = <span class="ruby-identifier">args</span>[<span class="ruby-value">0</span>], <span class="ruby-identifier">args</span>[<span class="ruby-value">1</span>].<span class="ruby-identifier">bytesize</span>, <span class="ruby-identifier">args</span>[<span class="ruby-value">1</span>]
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-ivar">@value</span>, <span class="ruby-ivar">@pk_script_length</span>, <span class="ruby-ivar">@pk_script</span> = <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- new-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- new-method -->
+
+    
+      <div id="method-c-value_to_address" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">value_to_address</span><span
+            class="method-args">(value, address)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>create output spending <code>value</code> btc (base units) to
+<code>address</code></p>
+          
+          
+
+          
+          <div class="method-source-code" id="value_to_address-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/protocol/txout.rb, line 82</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">value_to_address</span>(<span class="ruby-identifier">value</span>, <span class="ruby-identifier">address</span>)
+  <span class="ruby-identifier">pk_script</span> = <span class="ruby-constant">Bitcoin</span><span class="ruby-operator">::</span><span class="ruby-constant">Script</span>.<span class="ruby-identifier">to_address_script</span>(<span class="ruby-identifier">address</span>)
+  <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;Script#pk_script nil with address #{address}&quot;</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">pk_script</span>
+  <span class="ruby-identifier">new</span>(<span class="ruby-identifier">value</span>, <span class="ruby-identifier">pk_script</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- value_to_address-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- value_to_address-method -->
+
+    
+    </section><!-- public-class-method-details -->
+  
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="method-i-3D-3D" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">==</span><span
+            class="method-args">(other)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="3D-3D-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/protocol/txout.rb, line 21</span>
+<span class="ruby-keyword">def</span> <span class="ruby-operator">==</span>(<span class="ruby-identifier">other</span>)
+  <span class="ruby-ivar">@value</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">other</span>.<span class="ruby-identifier">value</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-ivar">@pk_script</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">other</span>.<span class="ruby-identifier">pk_script</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- 3D-3D-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- 3D-3D-method -->
+
+    
+      <div id="method-i-get_script" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">get_script</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="get_script-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/protocol/txout.rb, line 45</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">get_script</span>
+  <span class="ruby-ivar">@script_cache</span> <span class="ruby-operator">||</span> <span class="ruby-constant">Bitcoin</span><span class="ruby-operator">::</span><span class="ruby-constant">Script</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@pk_script</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- get_script-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- get_script-method -->
+
+    
+      <div id="method-i-parse_data" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">parse_data</span><span
+            class="method-args">(data)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>parse raw binary data for transaction output</p>
+          
+          
+
+          
+          <div class="method-source-code" id="parse_data-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/protocol/txout.rb, line 26</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">parse_data</span>(<span class="ruby-identifier">data</span>)
+  <span class="ruby-identifier">buf</span> = <span class="ruby-identifier">data</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">String</span>) <span class="ruby-operator">?</span> <span class="ruby-constant">StringIO</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">data</span>) <span class="ruby-operator">:</span> <span class="ruby-identifier">data</span>
+  <span class="ruby-identifier">parse_data_from_io</span>(<span class="ruby-identifier">buf</span>)
+  <span class="ruby-identifier">buf</span>.<span class="ruby-identifier">pos</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- parse_data-source -->
+          
+        </div>
+
+        
+        <div class="aliases">
+          Also aliased as: <a href="TxOut.html#method-i-parse_payload">parse_payload</a>
+        </div>
+        
+
+        
+      </div><!-- parse_data-method -->
+
+    
+      <div id="method-i-parse_data_from_io" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">parse_data_from_io</span><span
+            class="method-args">(buf)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>parse raw binary data for transaction output</p>
+          
+          
+
+          
+          <div class="method-source-code" id="parse_data_from_io-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/protocol/txout.rb, line 37</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">parse_data_from_io</span>(<span class="ruby-identifier">buf</span>)
+  <span class="ruby-ivar">@value</span> = <span class="ruby-identifier">buf</span>.<span class="ruby-identifier">read</span>(<span class="ruby-value">8</span>).<span class="ruby-identifier">unpack</span>(<span class="ruby-string">&quot;Q&quot;</span>)[<span class="ruby-value">0</span>]
+  <span class="ruby-ivar">@pk_script_length</span> = <span class="ruby-constant">Protocol</span>.<span class="ruby-identifier">unpack_var_int_from_io</span>(<span class="ruby-identifier">buf</span>)
+  <span class="ruby-ivar">@pk_script</span> = <span class="ruby-identifier">buf</span>.<span class="ruby-identifier">read</span>(<span class="ruby-ivar">@pk_script_length</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- parse_data_from_io-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- parse_data_from_io-method -->
+
+    
+      <div id="method-i-parse_payload" class="method-detail method-alias">
+        
+        <div class="method-heading">
+          <span class="method-name">parse_payload</span><span
+            class="method-args">(data)</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+        </div>
+
+        
+
+        
+        <div class="aliases">
+          Alias for: <a href="TxOut.html#method-i-parse_data">parse_data</a>
+        </div>
+        
+      </div><!-- parse_payload-method -->
+
+    
+      <div id="method-i-pk_script-3D" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">pk_script=</span><span
+            class="method-args">(script)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>set <a href="TxOut.html#attribute-i-pk_script">#pk_script</a> and <a
+href="TxOut.html#attribute-i-pk_script_length">#pk_script_length</a></p>
+          
+          
+
+          
+          <div class="method-source-code" id="pk_script-3D-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/protocol/txout.rb, line 71</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">pk_script=</span>(<span class="ruby-identifier">script</span>)
+  <span class="ruby-ivar">@pk_script_length</span>, <span class="ruby-ivar">@pk_script</span> = <span class="ruby-identifier">script</span>.<span class="ruby-identifier">bytesize</span>, <span class="ruby-identifier">script</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- pk_script-3D-source -->
+          
+        </div>
+
+        
+        <div class="aliases">
+          Also aliased as: <a href="TxOut.html#method-i-script-3D">script=</a>
+        </div>
+        
+
+        
+      </div><!-- pk_script-3D-method -->
+
+    
+      <div id="method-i-script-3D" class="method-detail method-alias">
+        
+        <div class="method-heading">
+          <span class="method-name">script=</span><span
+            class="method-args">(script)</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+        </div>
+
+        
+
+        
+        <div class="aliases">
+          Alias for: <a href="TxOut.html#method-i-pk_script-3D">pk_script=</a>
+        </div>
+        
+      </div><!-- script-3D-method -->
+
+    
+      <div id="method-i-to_hash" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">to_hash</span><span
+            class="method-args">(options = {})</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="to_hash-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/protocol/txout.rb, line 57</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">to_hash</span>(<span class="ruby-identifier">options</span> = {})
+  <span class="ruby-identifier">script</span> = <span class="ruby-identifier">get_script</span>
+  <span class="ruby-identifier">h</span> = { <span class="ruby-string">'value'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;%.8f&quot;</span> <span class="ruby-operator">%</span> (<span class="ruby-ivar">@value</span> <span class="ruby-operator">/</span> <span class="ruby-value">100000000.0</span>),
+    <span class="ruby-string">'scriptPubKey'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">script</span>.<span class="ruby-identifier">to_string</span> }
+  <span class="ruby-identifier">h</span>[<span class="ruby-string">&quot;address&quot;</span>] = <span class="ruby-identifier">script</span>.<span class="ruby-identifier">get_address</span>  <span class="ruby-keyword">if</span> <span class="ruby-identifier">script</span>.<span class="ruby-identifier">is_hash160?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">options</span>[<span class="ruby-value">:with_address</span>]
+  <span class="ruby-identifier">h</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- to_hash-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- to_hash-method -->
+
+    
+      <div id="method-i-to_null_payload" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">to_null_payload</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="to_null_payload-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/protocol/txout.rb, line 53</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">to_null_payload</span>
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">-1</span>, <span class="ruby-string">''</span>).<span class="ruby-identifier">to_payload</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- to_null_payload-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- to_null_payload-method -->
+
+    
+      <div id="method-i-to_payload" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">to_payload</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="to_payload-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/protocol/txout.rb, line 49</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">to_payload</span>
+  [<span class="ruby-ivar">@value</span>].<span class="ruby-identifier">pack</span>(<span class="ruby-string">&quot;Q&quot;</span>) <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">Protocol</span>.<span class="ruby-identifier">pack_var_int</span>(<span class="ruby-ivar">@pk_script_length</span>) <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-ivar">@pk_script</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- to_payload-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- to_payload-method -->
+
+    
+    </section><!-- public-instance-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+</div><!-- documentation -->
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 4.0.1.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+

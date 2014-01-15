@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+<title>module Bitcoin::Namecoin::Script - bitcoin-ruby RDoc</title>
+
+<link type="text/css" media="screen" href="../../rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "../../";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="../../js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../js/darkfish.js"></script>
+
+
+<body id="top" class="module">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="../../index.html">Home</a>
+    <a href="../../table_of_contents.html#classes">Classes</a>
+    <a href="../../table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>lib/bitcoin/namecoin.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    
+    
+    
+    
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li ><a href="#method-c-included">::included</a>
+    
+    <li ><a href="#method-c-to_name_firstupdate_script">::to_name_firstupdate_script</a>
+    
+    <li ><a href="#method-c-to_name_new_script">::to_name_new_script</a>
+    
+    <li ><a href="#method-c-to_name_update_script">::to_name_update_script</a>
+    
+    <li ><a href="#method-i-get_addresses">#get_addresses</a>
+    
+    <li ><a href="#method-i-get_hash160">#get_hash160</a>
+    
+    <li ><a href="#method-i-get_namecoin_hash">#get_namecoin_hash</a>
+    
+    <li ><a href="#method-i-get_namecoin_name">#get_namecoin_name</a>
+    
+    <li ><a href="#method-i-get_namecoin_value">#get_namecoin_value</a>
+    
+    <li ><a href="#method-i-is_name_firstupdate-3F">#is_name_firstupdate?</a>
+    
+    <li ><a href="#method-i-is_name_new-3F">#is_name_new?</a>
+    
+    <li ><a href="#method-i-is_name_update-3F">#is_name_update?</a>
+    
+    <li ><a href="#method-i-is_namecoin-3F">#is_namecoin?</a>
+    
+    <li ><a href="#method-i-type">#type</a>
+    
+  </ul>
+</nav>
+
+  </div>
+
+  <div id="project-metadata">
+    <nav id="fileindex-section" class="section project-section">
+  <h3 class="section-header">Pages</h3>
+
+  <ul>
+  
+    <li class="file"><a href="../../COPYING.html">COPYING</a>
+  
+    <li class="file"><a href="../../README_rdoc.html">README</a>
+  
+    <li class="file"><a href="../../doc/CONFIG_rdoc.html">CONFIG</a>
+  
+    <li class="file"><a href="../../doc/EXAMPLES_rdoc.html">EXAMPLES</a>
+  
+    <li class="file"><a href="../../doc/NAMECOIN_rdoc.html">NAMECOIN</a>
+  
+    <li class="file"><a href="../../doc/NODE_rdoc.html">NODE</a>
+  
+    <li class="file"><a href="../../doc/STORAGE_rdoc.html">STORAGE</a>
+  
+    <li class="file"><a href="../../doc/WALLET_rdoc.html">WALLET</a>
+  
+    <li class="file"><a href="../../examples/graph_benchmark_results_rb~.html">graph_benchmark_results.rb~</a>
+  
+    <li class="file"><a href="../../examples/import_rb~.html">import.rb~</a>
+  
+    <li class="file"><a href="../../examples/run_bench_rb~.html">run_bench.rb~</a>
+  
+    <li class="file"><a href="../../examples/run_benchmarks_rb~.html">run_benchmarks.rb~</a>
+  
+    <li class="file"><a href="../../lib/bitcoin/gui/bitcoin-ruby_svg.html">bitcoin-ruby.svg</a>
+  
+    <li class="file"><a href="../../lib/bitcoin/gui/gui_builder.html">gui.builder</a>
+  
+  </ul>
+</nav>
+
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="../../Array.html">Array</a>
+  
+    <li><a href="../../Bitcoin.html">Bitcoin</a>
+  
+    <li><a href="../../Bitcoin/BinaryExtensions.html">Bitcoin::BinaryExtensions</a>
+  
+    <li><a href="../../Bitcoin/Builder.html">Bitcoin::Builder</a>
+  
+    <li><a href="../../Bitcoin/Builder/BlockBuilder.html">Bitcoin::Builder::BlockBuilder</a>
+  
+    <li><a href="../../Bitcoin/Builder/ScriptBuilder.html">Bitcoin::Builder::ScriptBuilder</a>
+  
+    <li><a href="../../Bitcoin/Builder/TxBuilder.html">Bitcoin::Builder::TxBuilder</a>
+  
+    <li><a href="../../Bitcoin/Builder/TxInBuilder.html">Bitcoin::Builder::TxInBuilder</a>
+  
+    <li><a href="../../Bitcoin/Builder/TxOutBuilder.html">Bitcoin::Builder::TxOutBuilder</a>
+  
+    <li><a href="../../Bitcoin/Config.html">Bitcoin::Config</a>
+  
+    <li><a href="../../Bitcoin/Connection.html">Bitcoin::Connection</a>
+  
+    <li><a href="../../Bitcoin/ConnectionHandler.html">Bitcoin::ConnectionHandler</a>
+  
+    <li><a href="../../Bitcoin/Gui.html">Bitcoin::Gui</a>
+  
+    <li><a href="../../Bitcoin/Gui/AddrView.html">Bitcoin::Gui::AddrView</a>
+  
+    <li><a href="../../Bitcoin/Gui/Bitcoin.html">Bitcoin::Gui::Bitcoin</a>
+  
+    <li><a href="../../Bitcoin/Gui/Bitcoin/Gui.html">Bitcoin::Gui::Bitcoin::Gui</a>
+  
+    <li><a href="../../Bitcoin/Gui/Bitcoin/Gui/Bitcoin.html">Bitcoin::Gui::Bitcoin::Gui::Bitcoin</a>
+  
+    <li><a href="../../Bitcoin/Gui/Bitcoin/Gui/Bitcoin/Network.html">Bitcoin::Gui::Bitcoin::Gui::Bitcoin::Network</a>
+  
+    <li><a href="../../Bitcoin/Gui/Bitcoin/Gui/Bitcoin/Network/CommandClient.html">Bitcoin::Gui::Bitcoin::Gui::Bitcoin::Network::CommandClient</a>
+  
+    <li><a href="../../Bitcoin/Gui/ConnView.html">Bitcoin::Gui::ConnView</a>
+  
+    <li><a href="../../Bitcoin/Gui/Connection.html">Bitcoin::Gui::Connection</a>
+  
+    <li><a href="../../Bitcoin/Gui/Gui.html">Bitcoin::Gui::Gui</a>
+  
+    <li><a href="../../Bitcoin/Gui/Helpers.html">Bitcoin::Gui::Helpers</a>
+  
+    <li><a href="../../Bitcoin/Gui/TreeView.html">Bitcoin::Gui::TreeView</a>
+  
+    <li><a href="../../Bitcoin/Gui/TxInView.html">Bitcoin::Gui::TxInView</a>
+  
+    <li><a href="../../Bitcoin/Gui/TxView.html">Bitcoin::Gui::TxView</a>
+  
+    <li><a href="../../Bitcoin/Key.html">Bitcoin::Key</a>
+  
+    <li><a href="../../Bitcoin/Logger.html">Bitcoin::Logger</a>
+  
+    <li><a href="../../Bitcoin/Logger/LogWrapper.html">Bitcoin::Logger::LogWrapper</a>
+  
+    <li><a href="../../Bitcoin/Logger/Logger.html">Bitcoin::Logger::Logger</a>
+  
+    <li><a href="../../Bitcoin/Logger/TimeLogger.html">Bitcoin::Logger::TimeLogger</a>
+  
+    <li><a href="../../Bitcoin/Namecoin.html">Bitcoin::Namecoin</a>
+  
+    <li><a href="../../Bitcoin/Namecoin/Script.html">Bitcoin::Namecoin::Script</a>
+  
+    <li><a href="../../Bitcoin/Namecoin/Storage.html">Bitcoin::Namecoin::Storage</a>
+  
+    <li><a href="../../Bitcoin/Namecoin/Storage/Backend.html">Bitcoin::Namecoin::Storage::Backend</a>
+  
+    <li><a href="../../Bitcoin/Namecoin/Storage/Models.html">Bitcoin::Namecoin::Storage::Models</a>
+  
+    <li><a href="../../Bitcoin/Namecoin/Storage/Models/Name.html">Bitcoin::Namecoin::Storage::Models::Name</a>
+  
+    <li><a href="../../Bitcoin/Network.html">Bitcoin::Network</a>
+  
+    <li><a href="../../Bitcoin/Network/CommandClient.html">Bitcoin::Network::CommandClient</a>
+  
+    <li><a href="../../Bitcoin/Network/CommandHandler.html">Bitcoin::Network::CommandHandler</a>
+  
+    <li><a href="../../Bitcoin/Network/ConnectionHandler.html">Bitcoin::Network::ConnectionHandler</a>
+  
+    <li><a href="../../Bitcoin/Network/Node.html">Bitcoin::Network::Node</a>
+  
+    <li><a href="../../Bitcoin/OpenSSL_EC.html">Bitcoin::OpenSSL_EC</a>
+  
+    <li><a href="../../Bitcoin/OpenSSL_EC/FFI.html">Bitcoin::OpenSSL_EC::FFI</a>
+  
+    <li><a href="../../Bitcoin/P.html">Bitcoin::P</a>
+  
+    <li><a href="../../Bitcoin/Protocol.html">Bitcoin::Protocol</a>
+  
+    <li><a href="../../Bitcoin/Protocol/Addr.html">Bitcoin::Protocol::Addr</a>
+  
+    <li><a href="../../Bitcoin/Protocol/Alert.html">Bitcoin::Protocol::Alert</a>
+  
+    <li><a href="../../Bitcoin/Protocol/AuxPow.html">Bitcoin::Protocol::AuxPow</a>
+  
+    <li><a href="../../Bitcoin/Protocol/Block.html">Bitcoin::Protocol::Block</a>
+  
+    <li><a href="../../Bitcoin/Protocol/Handler.html">Bitcoin::Protocol::Handler</a>
+  
+    <li><a href="../../Bitcoin/Protocol/Parser.html">Bitcoin::Protocol::Parser</a>
+  
+    <li><a href="../../Bitcoin/Protocol/Tx.html">Bitcoin::Protocol::Tx</a>
+  
+    <li><a href="../../Bitcoin/Protocol/TxIn.html">Bitcoin::Protocol::TxIn</a>
+  
+    <li><a href="../../Bitcoin/Protocol/TxOut.html">Bitcoin::Protocol::TxOut</a>
+  
+    <li><a href="../../Bitcoin/Protocol/Version.html">Bitcoin::Protocol::Version</a>
+  
+    <li><a href="../../Bitcoin/Script.html">Bitcoin::Script</a>
+  
+    <li><a href="../../Bitcoin/Script/ScriptOpcodeError.html">Bitcoin::Script::ScriptOpcodeError</a>
+  
+    <li><a href="../../Bitcoin/Storage.html">Bitcoin::Storage</a>
+  
+    <li><a href="../../Bitcoin/Storage/Backends.html">Bitcoin::Storage::Backends</a>
+  
+    <li><a href="../../Bitcoin/Storage/Backends/DummyStore.html">Bitcoin::Storage::Backends::DummyStore</a>
+  
+    <li><a href="../../Bitcoin/Storage/Backends/SequelMigrations.html">Bitcoin::Storage::Backends::SequelMigrations</a>
+  
+    <li><a href="../../Bitcoin/Storage/Backends/SequelStore.html">Bitcoin::Storage::Backends::SequelStore</a>
+  
+    <li><a href="../../Bitcoin/Storage/Backends/StoreBase.html">Bitcoin::Storage::Backends::StoreBase</a>
+  
+    <li><a href="../../Bitcoin/Storage/Backends/UtxoStore.html">Bitcoin::Storage::Backends::UtxoStore</a>
+  
+    <li><a href="../../Bitcoin/Storage/Models.html">Bitcoin::Storage::Models</a>
+  
+    <li><a href="../../Bitcoin/Storage/Models/Block.html">Bitcoin::Storage::Models::Block</a>
+  
+    <li><a href="../../Bitcoin/Storage/Models/Tx.html">Bitcoin::Storage::Models::Tx</a>
+  
+    <li><a href="../../Bitcoin/Storage/Models/TxIn.html">Bitcoin::Storage::Models::TxIn</a>
+  
+    <li><a href="../../Bitcoin/Storage/Models/TxOut.html">Bitcoin::Storage::Models::TxOut</a>
+  
+    <li><a href="../../Bitcoin/Util.html">Bitcoin::Util</a>
+  
+    <li><a href="../../Bitcoin/Validation.html">Bitcoin::Validation</a>
+  
+    <li><a href="../../Bitcoin/Validation/Block.html">Bitcoin::Validation::Block</a>
+  
+    <li><a href="../../Bitcoin/Validation/Tx.html">Bitcoin::Validation::Tx</a>
+  
+    <li><a href="../../Bitcoin/Validation/ValidationError.html">Bitcoin::Validation::ValidationError</a>
+  
+    <li><a href="../../Bitcoin/Wallet.html">Bitcoin::Wallet</a>
+  
+    <li><a href="../../Bitcoin/Wallet/DeterministicKeyStore.html">Bitcoin::Wallet::DeterministicKeyStore</a>
+  
+    <li><a href="../../Bitcoin/Wallet/KeyGenerator.html">Bitcoin::Wallet::KeyGenerator</a>
+  
+    <li><a href="../../Bitcoin/Wallet/SimpleCoinSelector.html">Bitcoin::Wallet::SimpleCoinSelector</a>
+  
+    <li><a href="../../Bitcoin/Wallet/SimpleKeyStore.html">Bitcoin::Wallet::SimpleKeyStore</a>
+  
+    <li><a href="../../Bitcoin/Wallet/TxDP.html">Bitcoin::Wallet::TxDP</a>
+  
+    <li><a href="../../Bitcoin/Wallet/Wallet.html">Bitcoin::Wallet::Wallet</a>
+  
+    <li><a href="../../EM.html">EM</a>
+  
+    <li><a href="../../Gtk.html">Gtk</a>
+  
+    <li><a href="../../Hash.html">Hash</a>
+  
+    <li><a href="../../JSON.html">JSON</a>
+  
+    <li><a href="../../Litecoin.html">Litecoin</a>
+  
+    <li><a href="../../Litecoin/Scrypt.html">Litecoin::Scrypt</a>
+  
+    <li><a href="../../Log4r.html">Log4r</a>
+  
+    <li><a href="../../Log4r/Logger.html">Log4r::Logger</a>
+  
+    <li><a href="../../Mnemonic.html">Mnemonic</a>
+  
+    <li><a href="../../Object.html">Object</a>
+  
+    <li><a href="../../OpenSSL.html">OpenSSL</a>
+  
+    <li><a href="../../OpenSSL/BN.html">OpenSSL::BN</a>
+  
+    <li><a href="../../OpenSSL/PKey.html">OpenSSL::PKey</a>
+  
+    <li><a href="../../OpenSSL/PKey/EC.html">OpenSSL::PKey::EC</a>
+  
+    <li><a href="../../OpenSSL/PKey/EC/Point.html">OpenSSL::PKey::EC::Point</a>
+  
+    <li><a href="../../RawJSON_Connection.html">RawJSON_Connection</a>
+  
+    <li><a href="../../SimpleNode.html">SimpleNode</a>
+  
+    <li><a href="../../SimpleNode/Connection.html">SimpleNode::Connection</a>
+  
+    <li><a href="../../String.html">String</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation">
+  <h1 class="module">module Bitcoin::Namecoin::Script</h1>
+
+  <div id="description" class="description">
+    
+<p>Namecoin-specific <a href="Script.html">Script</a> methods for parsing and
+creating of namecoin scripts, as well as methods to extract address,
+name_hash, name and value.</p>
+
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+
+    
+
+    <!-- Methods -->
+    
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Class Methods</h3>
+
+    
+      <div id="method-c-included" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">included</span><span
+            class="method-args">(base)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="included-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/namecoin.rb, line 26</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">included</span>(<span class="ruby-identifier">base</span>)
+  <span class="ruby-identifier">base</span>.<span class="ruby-identifier">constants</span>.<span class="ruby-identifier">each</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">c</span><span class="ruby-operator">|</span> <span class="ruby-identifier">const_set</span>(<span class="ruby-identifier">c</span>, <span class="ruby-identifier">base</span>.<span class="ruby-identifier">const_get</span>(<span class="ruby-identifier">c</span>)) <span class="ruby-keyword">unless</span> <span class="ruby-identifier">constants</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">c</span>) }
+  <span class="ruby-identifier">base</span>.<span class="ruby-identifier">class_eval</span> <span class="ruby-keyword">do</span>
+
+    <span class="ruby-comment"># get the hash160 for this hash160, namecoin or pubkey script</span>
+    <span class="ruby-keyword">def</span> <span class="ruby-identifier">get_hash160</span>
+      <span class="ruby-keyword">return</span> <span class="ruby-ivar">@chunks</span>[<span class="ruby-value">2</span><span class="ruby-operator">..</span><span class="ruby-value">-3</span>][<span class="ruby-value">0</span>].<span class="ruby-identifier">unpack</span>(<span class="ruby-string">&quot;H*&quot;</span>)[<span class="ruby-value">0</span>]  <span class="ruby-keyword">if</span> <span class="ruby-identifier">is_hash160?</span>
+      <span class="ruby-keyword">return</span> <span class="ruby-ivar">@chunks</span>[<span class="ruby-value">-3</span>].<span class="ruby-identifier">unpack</span>(<span class="ruby-string">&quot;H*&quot;</span>)[<span class="ruby-value">0</span>]        <span class="ruby-keyword">if</span> <span class="ruby-identifier">is_namecoin?</span>
+      <span class="ruby-keyword">return</span> <span class="ruby-constant">Bitcoin</span>.<span class="ruby-identifier">hash160</span>(<span class="ruby-identifier">get_pubkey</span>)        <span class="ruby-keyword">if</span> <span class="ruby-identifier">is_pubkey?</span>
+    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-comment"># get all addresses this script corresponds to (if possible)</span>
+    <span class="ruby-keyword">def</span> <span class="ruby-identifier">get_addresses</span>
+      <span class="ruby-keyword">return</span> [<span class="ruby-identifier">get_pubkey_address</span>]    <span class="ruby-keyword">if</span> <span class="ruby-identifier">is_pubkey?</span>
+      <span class="ruby-keyword">return</span> [<span class="ruby-identifier">get_hash160_address</span>]   <span class="ruby-keyword">if</span> <span class="ruby-identifier">is_hash160?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">is_namecoin?</span>
+      <span class="ruby-keyword">return</span> <span class="ruby-identifier">get_multisig_addresses</span>  <span class="ruby-keyword">if</span> <span class="ruby-identifier">is_multisig?</span>
+    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-comment"># get type of this tx</span>
+    <span class="ruby-keyword">def</span> <span class="ruby-identifier">type</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-identifier">is_name_new?</span>;            <span class="ruby-value">:name_new</span>
+      <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">is_name_firstupdate?</span>; <span class="ruby-value">:name_firstupdate</span>
+      <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">is_name_update?</span>;      <span class="ruby-value">:name_update</span>
+      <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">is_hash160?</span>;          <span class="ruby-value">:hash160</span>
+      <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">is_pubkey?</span>;           <span class="ruby-value">:pubkey</span>
+      <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">is_multisig?</span>;         <span class="ruby-value">:multisig</span>
+      <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">is_p2sh?</span>;             <span class="ruby-value">:p2sh</span>
+      <span class="ruby-keyword">else</span>;                       <span class="ruby-value">:unknown</span>
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-comment"># is namecoin name_new script</span>
+    <span class="ruby-comment"># OP_1 name_hash OP_2DROP &lt;hash160_script&gt;</span>
+    <span class="ruby-keyword">def</span> <span class="ruby-identifier">is_name_new?</span>
+      <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span>  <span class="ruby-keyword">if</span> <span class="ruby-ivar">@chunks</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value">8</span>
+      [<span class="ruby-value">-8</span>, <span class="ruby-value">-6</span>, <span class="ruby-value">-5</span>, <span class="ruby-value">-4</span>, <span class="ruby-value">-2</span>, <span class="ruby-value">-1</span>].<span class="ruby-identifier">map</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span> <span class="ruby-ivar">@chunks</span>[<span class="ruby-identifier">i</span>] } <span class="ruby-operator">==</span>
+        [<span class="ruby-constant">OP_1</span>, <span class="ruby-constant">OP_2DROP</span>, <span class="ruby-constant">OP_DUP</span>, <span class="ruby-constant">OP_HASH160</span>, <span class="ruby-constant">OP_EQUALVERIFY</span>, <span class="ruby-constant">OP_CHECKSIG</span>]
+    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-comment"># is namecoin name_firstupdate script</span>
+    <span class="ruby-comment"># OP_2 name rand value OP_2DROP OP_2DROP &lt;hash160_script&gt;</span>
+    <span class="ruby-keyword">def</span> <span class="ruby-identifier">is_name_firstupdate?</span>
+      <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span>  <span class="ruby-keyword">if</span> <span class="ruby-ivar">@chunks</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value">11</span>
+      [<span class="ruby-value">-11</span>, <span class="ruby-value">-7</span>, <span class="ruby-value">-6</span>, <span class="ruby-value">-5</span>, <span class="ruby-value">-4</span>, <span class="ruby-value">-2</span>, <span class="ruby-value">-1</span>].<span class="ruby-identifier">map</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span> <span class="ruby-ivar">@chunks</span>[<span class="ruby-identifier">i</span>] } <span class="ruby-operator">==</span>
+        [<span class="ruby-value">82</span>, <span class="ruby-constant">OP_2DROP</span>, <span class="ruby-constant">OP_2DROP</span>, <span class="ruby-constant">OP_DUP</span>, <span class="ruby-constant">OP_HASH160</span>, <span class="ruby-constant">OP_EQUALVERIFY</span>, <span class="ruby-constant">OP_CHECKSIG</span>]
+    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-comment"># is namecoin name_update script</span>
+    <span class="ruby-comment"># OP_3 name value OP_2DROP OP_DROP &lt;hash160_script&gt;</span>
+    <span class="ruby-keyword">def</span> <span class="ruby-identifier">is_name_update?</span>
+      <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span>  <span class="ruby-keyword">if</span> <span class="ruby-ivar">@chunks</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value">10</span>
+      [<span class="ruby-value">-10</span>, <span class="ruby-value">-7</span>, <span class="ruby-value">-6</span>, <span class="ruby-value">-5</span>, <span class="ruby-value">-4</span>, <span class="ruby-value">-2</span>, <span class="ruby-value">-1</span>].<span class="ruby-identifier">map</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span> <span class="ruby-ivar">@chunks</span>[<span class="ruby-identifier">i</span>] } <span class="ruby-operator">==</span>
+        [<span class="ruby-value">83</span>, <span class="ruby-constant">OP_2DROP</span>, <span class="ruby-constant">OP_DROP</span>, <span class="ruby-constant">OP_DUP</span>, <span class="ruby-constant">OP_HASH160</span>, <span class="ruby-constant">OP_EQUALVERIFY</span>, <span class="ruby-constant">OP_CHECKSIG</span>]
+    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-comment"># is any kind of namecoin script</span>
+    <span class="ruby-keyword">def</span> <span class="ruby-identifier">is_namecoin?</span>
+      <span class="ruby-identifier">is_name_new?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">is_name_firstupdate?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">is_name_update?</span>
+    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-comment"># get the name_hash of a namecoin name_new script</span>
+    <span class="ruby-keyword">def</span> <span class="ruby-identifier">get_namecoin_hash</span>
+      <span class="ruby-keyword">return</span> <span class="ruby-ivar">@chunks</span>[<span class="ruby-value">-7</span>].<span class="ruby-identifier">hth</span>  <span class="ruby-keyword">if</span> <span class="ruby-identifier">is_name_new?</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-identifier">is_name_firstupdate?</span>
+        <span class="ruby-identifier">name</span> = <span class="ruby-ivar">@chunks</span>[<span class="ruby-value">-10</span>].<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">hth</span>
+        <span class="ruby-identifier">rand</span> = <span class="ruby-ivar">@chunks</span>[<span class="ruby-value">-9</span>].<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">hth</span>
+        <span class="ruby-keyword">return</span> <span class="ruby-constant">Bitcoin</span>.<span class="ruby-identifier">hash160</span>(<span class="ruby-identifier">rand</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">name</span>)
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">rescue</span>
+      <span class="ruby-keyword">nil</span>
+    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-comment"># get the name of a namecoin name_firstupdate or name_update script</span>
+    <span class="ruby-keyword">def</span> <span class="ruby-identifier">get_namecoin_name</span>
+      <span class="ruby-keyword">return</span> <span class="ruby-ivar">@chunks</span>[<span class="ruby-value">-10</span>]  <span class="ruby-keyword">if</span> <span class="ruby-identifier">is_name_firstupdate?</span>
+      <span class="ruby-keyword">return</span> <span class="ruby-ivar">@chunks</span>[<span class="ruby-value">-9</span>]  <span class="ruby-keyword">if</span> <span class="ruby-identifier">is_name_update?</span>
+    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-comment"># get the value of a namecoin name_firstupdate or name_update script</span>
+    <span class="ruby-keyword">def</span> <span class="ruby-identifier">get_namecoin_value</span>
+      <span class="ruby-ivar">@chunks</span>[<span class="ruby-value">-8</span>]  <span class="ruby-keyword">if</span> <span class="ruby-identifier">is_name_firstupdate?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">is_name_update?</span>
+    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-comment"># generate name_new tx for given +name+ and +address+.</span>
+    <span class="ruby-comment"># the +caller+ should be the object that creates the script.</span>
+    <span class="ruby-comment"># it gets the used random value passed to #set_rand.</span>
+    <span class="ruby-comment"># OP_1 name_hash OP_2DROP &lt;hash160_script&gt;</span>
+    <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">to_name_new_script</span>(<span class="ruby-identifier">caller</span>, <span class="ruby-identifier">name</span>, <span class="ruby-identifier">address</span>)
+      <span class="ruby-identifier">rand</span> = <span class="ruby-identifier">rand</span>(<span class="ruby-value">2</span><span class="ruby-operator">**</span><span class="ruby-value">64</span>).<span class="ruby-identifier">to_s</span>(<span class="ruby-value">16</span>).<span class="ruby-identifier">rjust</span>(<span class="ruby-value">16</span>, <span class="ruby-string">'0'</span>)
+      <span class="ruby-identifier">name_hash</span> = <span class="ruby-constant">Bitcoin</span>.<span class="ruby-identifier">hash160</span>(<span class="ruby-identifier">rand</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">name</span>.<span class="ruby-identifier">unpack</span>(<span class="ruby-string">&quot;H*&quot;</span>)[<span class="ruby-value">0</span>])
+      <span class="ruby-identifier">caller</span>.<span class="ruby-identifier">set_rand</span> <span class="ruby-identifier">rand</span> <span class="ruby-comment"># TODO: this is still ugly</span>
+      [ [ <span class="ruby-string">&quot;51&quot;</span>, <span class="ruby-string">&quot;14&quot;</span>,   <span class="ruby-identifier">name_hash</span>, <span class="ruby-string">&quot;6d&quot;</span> ].<span class="ruby-identifier">join</span> ].<span class="ruby-identifier">pack</span>(<span class="ruby-string">&quot;H*&quot;</span>) <span class="ruby-operator">+</span> <span class="ruby-identifier">to_address_script</span>(<span class="ruby-identifier">address</span>)
+    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-comment"># generate name_firstupdate tx for given +name+, +rand+, +value+ and +address+.</span>
+    <span class="ruby-comment"># OP_2 name rand value OP_2DROP OP_2DROP &lt;hash160_script&gt;</span>
+    <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">to_name_firstupdate_script</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">rand</span>, <span class="ruby-identifier">value</span>, <span class="ruby-identifier">address</span>)
+      [ [ <span class="ruby-string">&quot;52&quot;</span>, <span class="ruby-identifier">name</span>.<span class="ruby-identifier">bytesize</span>.<span class="ruby-identifier">to_s</span>(<span class="ruby-value">16</span>).<span class="ruby-identifier">rjust</span>(<span class="ruby-value">2</span>, <span class="ruby-string">'0'</span>), <span class="ruby-identifier">name</span>.<span class="ruby-identifier">hth</span>,
+          <span class="ruby-identifier">rand</span>.<span class="ruby-identifier">htb</span>.<span class="ruby-identifier">bytesize</span>.<span class="ruby-identifier">to_s</span>(<span class="ruby-value">16</span>).<span class="ruby-identifier">rjust</span>(<span class="ruby-value">2</span>, <span class="ruby-string">'0'</span>), <span class="ruby-identifier">rand</span>,
+          <span class="ruby-identifier">value</span>.<span class="ruby-identifier">bytesize</span>.<span class="ruby-identifier">to_s</span>(<span class="ruby-value">16</span>).<span class="ruby-identifier">rjust</span>(<span class="ruby-value">2</span>, <span class="ruby-string">'0'</span>), <span class="ruby-identifier">value</span>.<span class="ruby-identifier">hth</span>,
+          <span class="ruby-string">&quot;6d&quot;</span>, <span class="ruby-string">&quot;6d&quot;</span> ].<span class="ruby-identifier">join</span> ].<span class="ruby-identifier">pack</span>(<span class="ruby-string">&quot;H*&quot;</span>) <span class="ruby-operator">+</span> <span class="ruby-identifier">to_address_script</span>(<span class="ruby-identifier">address</span>)
+    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-comment"># generate name_update script for given +name+, +value+ and +address+.</span>
+    <span class="ruby-comment"># OP_3 name value OP_2DROP OP_DROP &lt;hash160_script&gt;</span>
+    <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">to_name_update_script</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">value</span>, <span class="ruby-identifier">address</span>)
+      [ [ <span class="ruby-string">&quot;53&quot;</span>, <span class="ruby-identifier">name</span>.<span class="ruby-identifier">bytesize</span>.<span class="ruby-identifier">to_s</span>(<span class="ruby-value">16</span>).<span class="ruby-identifier">rjust</span>(<span class="ruby-value">2</span>, <span class="ruby-string">'0'</span>), <span class="ruby-identifier">name</span>.<span class="ruby-identifier">hth</span>,
+          <span class="ruby-identifier">value</span>.<span class="ruby-identifier">bytesize</span>.<span class="ruby-identifier">to_s</span>(<span class="ruby-value">16</span>).<span class="ruby-identifier">rjust</span>(<span class="ruby-value">2</span>, <span class="ruby-string">'0'</span>), <span class="ruby-identifier">value</span>.<span class="ruby-identifier">hth</span>,
+          <span class="ruby-string">&quot;6d&quot;</span>, <span class="ruby-string">&quot;75&quot;</span> ].<span class="ruby-identifier">join</span> ].<span class="ruby-identifier">pack</span>(<span class="ruby-string">&quot;H*&quot;</span>) <span class="ruby-operator">+</span> <span class="ruby-identifier">to_address_script</span>(<span class="ruby-identifier">address</span>)
+    <span class="ruby-keyword">end</span>
+
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- included-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- included-method -->
+
+    
+      <div id="method-c-to_name_firstupdate_script" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">to_name_firstupdate_script</span><span
+            class="method-args">(name, rand, value, address)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>generate name_firstupdate tx for given <code>name</code>,
+<code>rand</code>, <code>value</code> and <code>address</code>. OP_2 name
+rand value OP_2DROP OP_2DROP &lt;hash160_script&gt;</p>
+          
+          
+
+          
+          <div class="method-source-code" id="to_name_firstupdate_script-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/namecoin.rb, line 122</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">to_name_firstupdate_script</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">rand</span>, <span class="ruby-identifier">value</span>, <span class="ruby-identifier">address</span>)
+  [ [ <span class="ruby-string">&quot;52&quot;</span>, <span class="ruby-identifier">name</span>.<span class="ruby-identifier">bytesize</span>.<span class="ruby-identifier">to_s</span>(<span class="ruby-value">16</span>).<span class="ruby-identifier">rjust</span>(<span class="ruby-value">2</span>, <span class="ruby-string">'0'</span>), <span class="ruby-identifier">name</span>.<span class="ruby-identifier">hth</span>,
+      <span class="ruby-identifier">rand</span>.<span class="ruby-identifier">htb</span>.<span class="ruby-identifier">bytesize</span>.<span class="ruby-identifier">to_s</span>(<span class="ruby-value">16</span>).<span class="ruby-identifier">rjust</span>(<span class="ruby-value">2</span>, <span class="ruby-string">'0'</span>), <span class="ruby-identifier">rand</span>,
+      <span class="ruby-identifier">value</span>.<span class="ruby-identifier">bytesize</span>.<span class="ruby-identifier">to_s</span>(<span class="ruby-value">16</span>).<span class="ruby-identifier">rjust</span>(<span class="ruby-value">2</span>, <span class="ruby-string">'0'</span>), <span class="ruby-identifier">value</span>.<span class="ruby-identifier">hth</span>,
+      <span class="ruby-string">&quot;6d&quot;</span>, <span class="ruby-string">&quot;6d&quot;</span> ].<span class="ruby-identifier">join</span> ].<span class="ruby-identifier">pack</span>(<span class="ruby-string">&quot;H*&quot;</span>) <span class="ruby-operator">+</span> <span class="ruby-identifier">to_address_script</span>(<span class="ruby-identifier">address</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- to_name_firstupdate_script-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- to_name_firstupdate_script-method -->
+
+    
+      <div id="method-c-to_name_new_script" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">to_name_new_script</span><span
+            class="method-args">(caller, name, address)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>generate name_new tx for given <code>name</code> and <code>address</code>.
+the <code>caller</code> should be the object that creates the script. it
+gets the used random value passed to #set_rand. OP_1 name_hash OP_2DROP
+&lt;hash160_script&gt;</p>
+          
+          
+
+          
+          <div class="method-source-code" id="to_name_new_script-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/namecoin.rb, line 113</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">to_name_new_script</span>(<span class="ruby-identifier">caller</span>, <span class="ruby-identifier">name</span>, <span class="ruby-identifier">address</span>)
+  <span class="ruby-identifier">rand</span> = <span class="ruby-identifier">rand</span>(<span class="ruby-value">2</span><span class="ruby-operator">**</span><span class="ruby-value">64</span>).<span class="ruby-identifier">to_s</span>(<span class="ruby-value">16</span>).<span class="ruby-identifier">rjust</span>(<span class="ruby-value">16</span>, <span class="ruby-string">'0'</span>)
+  <span class="ruby-identifier">name_hash</span> = <span class="ruby-constant">Bitcoin</span>.<span class="ruby-identifier">hash160</span>(<span class="ruby-identifier">rand</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">name</span>.<span class="ruby-identifier">unpack</span>(<span class="ruby-string">&quot;H*&quot;</span>)[<span class="ruby-value">0</span>])
+  <span class="ruby-identifier">caller</span>.<span class="ruby-identifier">set_rand</span> <span class="ruby-identifier">rand</span> <span class="ruby-comment"># TODO: this is still ugly</span>
+  [ [ <span class="ruby-string">&quot;51&quot;</span>, <span class="ruby-string">&quot;14&quot;</span>,   <span class="ruby-identifier">name_hash</span>, <span class="ruby-string">&quot;6d&quot;</span> ].<span class="ruby-identifier">join</span> ].<span class="ruby-identifier">pack</span>(<span class="ruby-string">&quot;H*&quot;</span>) <span class="ruby-operator">+</span> <span class="ruby-identifier">to_address_script</span>(<span class="ruby-identifier">address</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- to_name_new_script-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- to_name_new_script-method -->
+
+    
+      <div id="method-c-to_name_update_script" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">to_name_update_script</span><span
+            class="method-args">(name, value, address)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>generate name_update script for given <code>name</code>, <code>value</code>
+and <code>address</code>. OP_3 name value OP_2DROP OP_DROP
+&lt;hash160_script&gt;</p>
+          
+          
+
+          
+          <div class="method-source-code" id="to_name_update_script-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/namecoin.rb, line 131</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">to_name_update_script</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">value</span>, <span class="ruby-identifier">address</span>)
+  [ [ <span class="ruby-string">&quot;53&quot;</span>, <span class="ruby-identifier">name</span>.<span class="ruby-identifier">bytesize</span>.<span class="ruby-identifier">to_s</span>(<span class="ruby-value">16</span>).<span class="ruby-identifier">rjust</span>(<span class="ruby-value">2</span>, <span class="ruby-string">'0'</span>), <span class="ruby-identifier">name</span>.<span class="ruby-identifier">hth</span>,
+      <span class="ruby-identifier">value</span>.<span class="ruby-identifier">bytesize</span>.<span class="ruby-identifier">to_s</span>(<span class="ruby-value">16</span>).<span class="ruby-identifier">rjust</span>(<span class="ruby-value">2</span>, <span class="ruby-string">'0'</span>), <span class="ruby-identifier">value</span>.<span class="ruby-identifier">hth</span>,
+      <span class="ruby-string">&quot;6d&quot;</span>, <span class="ruby-string">&quot;75&quot;</span> ].<span class="ruby-identifier">join</span> ].<span class="ruby-identifier">pack</span>(<span class="ruby-string">&quot;H*&quot;</span>) <span class="ruby-operator">+</span> <span class="ruby-identifier">to_address_script</span>(<span class="ruby-identifier">address</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- to_name_update_script-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- to_name_update_script-method -->
+
+    
+    </section><!-- public-class-method-details -->
+  
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="method-i-get_addresses" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">get_addresses</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>get all addresses this script corresponds to (if possible)</p>
+          
+          
+
+          
+          <div class="method-source-code" id="get_addresses-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/namecoin.rb, line 38</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">get_addresses</span>
+  <span class="ruby-keyword">return</span> [<span class="ruby-identifier">get_pubkey_address</span>]    <span class="ruby-keyword">if</span> <span class="ruby-identifier">is_pubkey?</span>
+  <span class="ruby-keyword">return</span> [<span class="ruby-identifier">get_hash160_address</span>]   <span class="ruby-keyword">if</span> <span class="ruby-identifier">is_hash160?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">is_namecoin?</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">get_multisig_addresses</span>  <span class="ruby-keyword">if</span> <span class="ruby-identifier">is_multisig?</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- get_addresses-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- get_addresses-method -->
+
+    
+      <div id="method-i-get_hash160" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">get_hash160</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>get the hash160 for this hash160, namecoin or pubkey script</p>
+          
+          
+
+          
+          <div class="method-source-code" id="get_hash160-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/namecoin.rb, line 31</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">get_hash160</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-ivar">@chunks</span>[<span class="ruby-value">2</span><span class="ruby-operator">..</span><span class="ruby-value">-3</span>][<span class="ruby-value">0</span>].<span class="ruby-identifier">unpack</span>(<span class="ruby-string">&quot;H*&quot;</span>)[<span class="ruby-value">0</span>]  <span class="ruby-keyword">if</span> <span class="ruby-identifier">is_hash160?</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-ivar">@chunks</span>[<span class="ruby-value">-3</span>].<span class="ruby-identifier">unpack</span>(<span class="ruby-string">&quot;H*&quot;</span>)[<span class="ruby-value">0</span>]        <span class="ruby-keyword">if</span> <span class="ruby-identifier">is_namecoin?</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-constant">Bitcoin</span>.<span class="ruby-identifier">hash160</span>(<span class="ruby-identifier">get_pubkey</span>)        <span class="ruby-keyword">if</span> <span class="ruby-identifier">is_pubkey?</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- get_hash160-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- get_hash160-method -->
+
+    
+      <div id="method-i-get_namecoin_hash" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">get_namecoin_hash</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>get the name_hash of a namecoin name_new script</p>
+          
+          
+
+          
+          <div class="method-source-code" id="get_namecoin_hash-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/namecoin.rb, line 87</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">get_namecoin_hash</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-ivar">@chunks</span>[<span class="ruby-value">-7</span>].<span class="ruby-identifier">hth</span>  <span class="ruby-keyword">if</span> <span class="ruby-identifier">is_name_new?</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">is_name_firstupdate?</span>
+    <span class="ruby-identifier">name</span> = <span class="ruby-ivar">@chunks</span>[<span class="ruby-value">-10</span>].<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">hth</span>
+    <span class="ruby-identifier">rand</span> = <span class="ruby-ivar">@chunks</span>[<span class="ruby-value">-9</span>].<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">hth</span>
+    <span class="ruby-keyword">return</span> <span class="ruby-constant">Bitcoin</span>.<span class="ruby-identifier">hash160</span>(<span class="ruby-identifier">rand</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">name</span>)
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">rescue</span>
+  <span class="ruby-keyword">nil</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- get_namecoin_hash-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- get_namecoin_hash-method -->
+
+    
+      <div id="method-i-get_namecoin_name" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">get_namecoin_name</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>get the name of a namecoin name_firstupdate or name_update script</p>
+          
+          
+
+          
+          <div class="method-source-code" id="get_namecoin_name-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/namecoin.rb, line 99</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">get_namecoin_name</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-ivar">@chunks</span>[<span class="ruby-value">-10</span>]  <span class="ruby-keyword">if</span> <span class="ruby-identifier">is_name_firstupdate?</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-ivar">@chunks</span>[<span class="ruby-value">-9</span>]  <span class="ruby-keyword">if</span> <span class="ruby-identifier">is_name_update?</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- get_namecoin_name-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- get_namecoin_name-method -->
+
+    
+      <div id="method-i-get_namecoin_value" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">get_namecoin_value</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>get the value of a namecoin name_firstupdate or name_update script</p>
+          
+          
+
+          
+          <div class="method-source-code" id="get_namecoin_value-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/namecoin.rb, line 105</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">get_namecoin_value</span>
+  <span class="ruby-ivar">@chunks</span>[<span class="ruby-value">-8</span>]  <span class="ruby-keyword">if</span> <span class="ruby-identifier">is_name_firstupdate?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">is_name_update?</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- get_namecoin_value-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- get_namecoin_value-method -->
+
+    
+      <div id="method-i-is_name_firstupdate-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">is_name_firstupdate?</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>is namecoin name_firstupdate script OP_2 name rand value OP_2DROP OP_2DROP
+&lt;hash160_script&gt;</p>
+          
+          
+
+          
+          <div class="method-source-code" id="is_name_firstupdate-3F-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/namecoin.rb, line 67</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">is_name_firstupdate?</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span>  <span class="ruby-keyword">if</span> <span class="ruby-ivar">@chunks</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value">11</span>
+  [<span class="ruby-value">-11</span>, <span class="ruby-value">-7</span>, <span class="ruby-value">-6</span>, <span class="ruby-value">-5</span>, <span class="ruby-value">-4</span>, <span class="ruby-value">-2</span>, <span class="ruby-value">-1</span>].<span class="ruby-identifier">map</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span> <span class="ruby-ivar">@chunks</span>[<span class="ruby-identifier">i</span>] } <span class="ruby-operator">==</span>
+    [<span class="ruby-value">82</span>, <span class="ruby-constant">OP_2DROP</span>, <span class="ruby-constant">OP_2DROP</span>, <span class="ruby-constant">OP_DUP</span>, <span class="ruby-constant">OP_HASH160</span>, <span class="ruby-constant">OP_EQUALVERIFY</span>, <span class="ruby-constant">OP_CHECKSIG</span>]
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- is_name_firstupdate-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- is_name_firstupdate-3F-method -->
+
+    
+      <div id="method-i-is_name_new-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">is_name_new?</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>is namecoin name_new script OP_1 name_hash OP_2DROP &lt;hash160_script&gt;</p>
+          
+          
+
+          
+          <div class="method-source-code" id="is_name_new-3F-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/namecoin.rb, line 59</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">is_name_new?</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span>  <span class="ruby-keyword">if</span> <span class="ruby-ivar">@chunks</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value">8</span>
+  [<span class="ruby-value">-8</span>, <span class="ruby-value">-6</span>, <span class="ruby-value">-5</span>, <span class="ruby-value">-4</span>, <span class="ruby-value">-2</span>, <span class="ruby-value">-1</span>].<span class="ruby-identifier">map</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span> <span class="ruby-ivar">@chunks</span>[<span class="ruby-identifier">i</span>] } <span class="ruby-operator">==</span>
+    [<span class="ruby-constant">OP_1</span>, <span class="ruby-constant">OP_2DROP</span>, <span class="ruby-constant">OP_DUP</span>, <span class="ruby-constant">OP_HASH160</span>, <span class="ruby-constant">OP_EQUALVERIFY</span>, <span class="ruby-constant">OP_CHECKSIG</span>]
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- is_name_new-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- is_name_new-3F-method -->
+
+    
+      <div id="method-i-is_name_update-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">is_name_update?</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>is namecoin name_update script OP_3 name value OP_2DROP OP_DROP
+&lt;hash160_script&gt;</p>
+          
+          
+
+          
+          <div class="method-source-code" id="is_name_update-3F-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/namecoin.rb, line 75</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">is_name_update?</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span>  <span class="ruby-keyword">if</span> <span class="ruby-ivar">@chunks</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value">10</span>
+  [<span class="ruby-value">-10</span>, <span class="ruby-value">-7</span>, <span class="ruby-value">-6</span>, <span class="ruby-value">-5</span>, <span class="ruby-value">-4</span>, <span class="ruby-value">-2</span>, <span class="ruby-value">-1</span>].<span class="ruby-identifier">map</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span> <span class="ruby-ivar">@chunks</span>[<span class="ruby-identifier">i</span>] } <span class="ruby-operator">==</span>
+    [<span class="ruby-value">83</span>, <span class="ruby-constant">OP_2DROP</span>, <span class="ruby-constant">OP_DROP</span>, <span class="ruby-constant">OP_DUP</span>, <span class="ruby-constant">OP_HASH160</span>, <span class="ruby-constant">OP_EQUALVERIFY</span>, <span class="ruby-constant">OP_CHECKSIG</span>]
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- is_name_update-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- is_name_update-3F-method -->
+
+    
+      <div id="method-i-is_namecoin-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">is_namecoin?</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>is any kind of namecoin script</p>
+          
+          
+
+          
+          <div class="method-source-code" id="is_namecoin-3F-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/namecoin.rb, line 82</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">is_namecoin?</span>
+  <span class="ruby-identifier">is_name_new?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">is_name_firstupdate?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">is_name_update?</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- is_namecoin-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- is_namecoin-3F-method -->
+
+    
+      <div id="method-i-type" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">type</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>get <a href="Script.html#method-i-type">#type</a> of this tx</p>
+          
+          
+
+          
+          <div class="method-source-code" id="type-source">
+            <pre><span class="ruby-comment"># File lib/bitcoin/namecoin.rb, line 45</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">type</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">is_name_new?</span>;            <span class="ruby-value">:name_new</span>
+  <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">is_name_firstupdate?</span>; <span class="ruby-value">:name_firstupdate</span>
+  <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">is_name_update?</span>;      <span class="ruby-value">:name_update</span>
+  <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">is_hash160?</span>;          <span class="ruby-value">:hash160</span>
+  <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">is_pubkey?</span>;           <span class="ruby-value">:pubkey</span>
+  <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">is_multisig?</span>;         <span class="ruby-value">:multisig</span>
+  <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">is_p2sh?</span>;             <span class="ruby-value">:p2sh</span>
+  <span class="ruby-keyword">else</span>;                       <span class="ruby-value">:unknown</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- type-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- type-method -->
+
+    
+    </section><!-- public-instance-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+</div><!-- documentation -->
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 4.0.1.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+

@@ -111,7 +111,7 @@ module Bitcoin
       # get the block header info
       # [<version>, <prev_block>, <merkle_root>, <time>, <bits>, <nonce>, <txcount>, <size>]
       def header_info
-        [@ver, @prev_block.reverse_hth, @mrkl_root.reverse_hth, Time.at(@time), @bits, @nonce, @tx.size, @payload.size]
+        [@ver, @prev_block.reverse_hth, @mrkl_root.reverse_hth, Time.at(@time), @bits, @nonce, @tx.size, to_payload.size]
       end
 
       # convert to raw binary format

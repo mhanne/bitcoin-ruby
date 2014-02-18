@@ -91,7 +91,7 @@ module Bitcoin::Electrum
     def peer; Socket.unpack_sockaddr_in(get_peername).reverse; end
 
     def client_connected
-      @block_channel = @server.node.notifiers[:block].subscribe do |block, depth|
+      @block_channel = @server.node.subscribe(:block) do |block, depth|
         if @subscribed_numblocks
           send_response(method: "blockchain.numblocks.subscribe", params: [depth])
         end
@@ -104,18 +104,22 @@ module Bitcoin::Electrum
     end
 
     def client_disconnected
-      @server.node.notifiers[:block].unsubscribe(@block_channel)  if @block_channel
+      @server.node.unsubscribe(:block, @block_channel)  if @block_channel
       log.info { "client disconnected" }
     end
 
     def handle_request pkt
+      @lock ||= Monitor.new
+      @lock.synchronize do
       log.debug { "req##{pkt['id']} #{pkt['method']}(#{pkt['params'].inspect})" }
       result = case pkt['method']
-               when /version/
-                 @version = pkt['params'][1]
+               when /server.version/
+                 @client_version, @protocol_version = *pkt['params']
                  Server::VERSION
-               when /banner/
+               when /server.banner/
                  @server.banner
+               when /server.peers/
+                 @server.peers.values
                when /blockchain.numblocks.subscribe/
                  @subscribed_numblocks = true
                  store.get_depth
@@ -124,8 +128,6 @@ module Bitcoin::Electrum
                  get_header
                when /blockchain.address.get_history/
                  get_history(pkt['params'][0])
-               when /server.peers/
-                 @server.peers.values
                when /blockchain.address.subscribe/
                  subscribe_address(pkt['params'][0])
                when /blockchain.transaction.get_merkle/
@@ -149,6 +151,7 @@ module Bitcoin::Electrum
 
       log.debug { "res##{pkt['id']} #{pkt.inspect}" }
       send_response({ id: pkt['id'], result: result })
+      end
     rescue Exception
       send_response({ id: pkt['id'], error: $!.message })
       log.warn { "error handling request: #{$!.inspect}" }
@@ -157,42 +160,6 @@ module Bitcoin::Electrum
     end
 
     def get_history addr
-      return get_history2(addr)  if @version && @version >= "0.5"
-      txouts = []
-      store.get_txouts_for_address(addr, true).each do |txout|
-        tx = txout.get_tx
-        block = store.db[:blk][id: tx.blk_id]
-        txouts << {
-          block_hash: (block ? block[:hash].hth : "mempool:#{tx.id}"),
-          tx_hash: tx.hash,
-          index: tx.out.index(txout),
-          is_input: 0,
-          outputs: tx.out.map(&:get_addresses).flatten,
-          inputs: tx.in.map(&:get_prev_out).map(&:get_addresses).flatten,
-          timestamp: (block ? block[:time] : 0),
-          value: txout.value,
-          height: (block ? block[:depth] : 0),
-          raw_output_script: txout.pk_script.unpack("H*")[0] }
-
-        next  unless txin = txout.get_next_in
-        txouts[-1].delete(:raw_output_script)
-        tx = txin.get_tx
-        block = store.db[:blk][id: tx.blk_id]
-        txouts << {
-          block_hash: (block ? block[:hash].hth : "mempool:#{tx.id}"),
-          tx_hash: tx.hash,
-          index: tx.in.index(txin),
-          is_input: 1,
-          outputs: tx.out.map(&:get_address).flatten,
-          inputs: tx.in.map(&:get_prev_out).map(&:get_addresses).flatten,
-          timestamp: (block ? block[:time] : 0),
-          value: 0 - txout.value,
-          height: (block ? block[:depth] : 0) }
-      end
-      txouts
-    end
-
-    def get_history2 addr
       txs = []
       store.get_txouts_for_address(addr, true).each do |txout|
         tx = txout.get_tx
@@ -215,21 +182,7 @@ module Bitcoin::Electrum
     end
 
     def get_status addr
-      return get_status2(addr)  if @version && @version >= "0.5"
-      txouts = store.get_txouts_for_address(addr)
-      if txouts.any?
-        hash = txouts.map do |txout|
-          block = store.db[:blk][id: txout.get_tx.blk_id]
-          [block[:hash].unpack("H*"), block[:depth]]
-        end.sort_by {|b| b[1]}.last[0]
-      else
-        hash = nil
-      end
-      hash
-    end
-
-    def get_status2 pkt
-      history = get_history2(pkt)
+      history = get_history(addr)
       return nil  unless history.any?
       status = history.map {|o| "#{o[:tx_hash]}:#{o[:height]}" }.join(":") + ":"
       Digest::SHA256.hexdigest(status)

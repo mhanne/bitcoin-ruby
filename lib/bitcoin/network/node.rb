@@ -502,6 +502,10 @@ module Bitcoin::Network
       @notifiers[channel.to_sym].subscribe {|*data| yield(*data) }
     end
 
+    def unsubscribe name, channel
+      @notifiers[name.to_sym].unsubscribe(channel)
+    end
+
     # should the node accept new incoming connections?
     def accept_connections?
       connections.select(&:incoming?).size < config[:max][:connections_in]

@@ -139,11 +139,14 @@ module Bitcoin::Electrum
                when /blockchain.block.get_header/
                  get_header(pkt['params'][0])
                when /blockchain.transaction.broadcast/
-                 tx = Bitcoin::P::Tx.new(pkt['params'].pack("H*"))
-                 if @server.node.relay_tx(tx)
+                 begin
+                   tx = Bitcoin::P::Tx.new(pkt['params'].pack("H*"))
+                   @server.node.relay_tx(tx)
                    tx.hash
-                 else
-                   raise "error broadcasting tx"
+                 rescue
+                   "error broadcasting tx: #{$!.inspect}"
+                   p $!
+                   puts *$@
                  end
                else
                  raise "Method #{pkt['method']} not supported."

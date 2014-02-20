@@ -44,7 +44,7 @@ module Bitcoin::Network
     # time when the last main chain block was added
     attr_reader :last_block_time
 
-    attr_accessor :relay_tx
+    attr_accessor :tx_to_relay
     attr_accessor :relay_propagation
 
 
@@ -108,7 +108,7 @@ module Bitcoin::Network
       @inv_cache = []
       @notifiers = {}
       @relay_propagation, @last_block_time, @external_ips = {}, Time.now, []
-      @unconfirmed, @relay_tx = {}, {}
+      @unconfirmed, @tx_to_relay = {}, {}
     end
 
     def set_store
@@ -476,9 +476,16 @@ module Bitcoin::Network
 
     def work_relay
       log.debug { "relay worker running" }
-      @store.get_unconfirmed_tx.each do |tx|
+      @tx_to_relay.each do |hash, tx|
         relay_tx(tx)
       end
+    end
+
+    def relay_tx tx, send_to = 3
+      push_tx_notification(tx)
+      @tx_to_relay[tx.hash] = tx
+      @relay_propagation[tx.hash] = 0
+      @connections.select(&:connected?).sample(send_to).each {|c| c.send_inv(:tx, tx.hash) }
     end
 
     # get the external ip that was suggested in version messages
@@ -488,6 +495,19 @@ module Bitcoin::Network
     rescue
       @config[:listen][0]
     end
+
+    def push_tx_notification tx
+      @unconfirmed[tx.hash] = tx
+      push_notification(:tx, [tx, 0])
+
+      if @notifiers[:output]
+        tx.out.each do |out|
+          address = Bitcoin::Script.new(out.pk_script).get_address
+          push_notification(:output, [tx.hash, address, out.value, 0])
+        end
+      end
+    end
+
 
     # push notification +message+ to +channel+
     def push_notification channel, message

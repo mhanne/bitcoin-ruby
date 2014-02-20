@@ -361,10 +361,7 @@ class Bitcoin::Network::CommandHandler < EM::Connection
                      details: validator.error })
     end
 
-    #@node.store.store_tx(tx)
-    @node.relay_tx[tx.hash] = tx
-    @node.relay_propagation[tx.hash] = 0
-    @node.connections.select(&:connected?).sample(send).each {|c| c.send_inv(:tx, tx.hash) }
+    @node.relay_tx(tx, send)
 
     EM.add_timer(wait) do
       received = @node.relay_propagation[tx.hash]

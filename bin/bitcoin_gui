@@ -4,17 +4,17 @@ $:.unshift( File.expand_path("../../lib", __FILE__) )
 require 'bitcoin'
 require 'optparse'
 
-Bitcoin.require_dependency 'ffi-gtk3', gem: "gir_ffi"
+Bitcoin.require_dependency :gir_ffi
 Bitcoin.require_dependency :eventmachine
 Bitcoin.require_dependency :notify
 Bitcoin.require_dependency :json
 
 
 defaults = {
-  :network => "bitcoin",
-  :storage => "dummy",
-  :keystore => "simple::file=~/.bitcoin-ruby/keys.json",
-  :command => "127.0.0.1:9999"
+  network: "bitcoin",
+  storage: "dummy",
+  keystore: nil,
+  command: ["127.0.0.1", 9999]
 }
 options = Bitcoin::Config.load(defaults, :wallet)
 
@@ -70,11 +70,12 @@ Bitcoin.network = options[:network]
 backend, config = options[:storage].split("::")
 @storage = Bitcoin::Storage.send(backend, :db => config)
 
+options[:keystore] ||= "simple::file=~/.bitcoin-ruby/#{Bitcoin.network_name}/keys.json"
 backend, config = options[:keystore].split("::")
 config = Hash[config.split(",").map{|c| c.split("=")}]
 
 EM.run do
   @gui = Bitcoin::Gui::Gui.new(@storage, config['file'])
-  Bitcoin::Gui::Connection.new(*options[:command].split(":"), @gui)
+  Bitcoin::Gui::Connection.new(*options[:command], @gui)
   EM.gtk_main
 end

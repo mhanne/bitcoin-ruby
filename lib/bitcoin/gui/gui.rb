@@ -7,7 +7,8 @@ require_relative "addr_view.rb"
 require_relative "tx_view.rb"
 require_relative "conn_view.rb"
 
-Gtk.init
+GirFFI.setup :Gtk
+Gtk.init ["3.1.0"]
 
 module Bitcoin::Gui
 
@@ -44,9 +45,10 @@ module Bitcoin::Gui
     def build
       @builder = Gtk::Builder.new
       @builder.add_from_file(File.join(File.dirname(__FILE__), "gui.builder"))
-      @builder.connect_signals_full(->(builder, widget, signal, handler, _, _, gui) do
-          GObject.signal_connect(widget, signal) { gui.send(handler) }
-        end, self)
+
+      # @builder.connect_signals_full(->(builder, widget, signal, handler, _, _, gui) do
+      #     GObject.signal_connect(widget, signal) { gui.send(handler) }
+      #   end, self)
 
       {
         "<Control>n" => :file_new,

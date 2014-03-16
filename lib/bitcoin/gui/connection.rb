@@ -18,7 +18,8 @@ module Bitcoin::Gui
 
         on_connected do
           request :info
-          request :monitor, "block", "connection"
+          request :monitor, channel: "block"
+          request :monitor, channel: "connection"
         end
 
         on_info do |info|

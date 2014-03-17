@@ -258,7 +258,7 @@ describe "transaction rules (#{options[0]} - #{options[1]})" do
     if @store.class.name =~ /Utxo/
       check_tx(@tx, [:prev_out, [[@tx.in[0].prev_out.reverse_hth, 0]]])
     else
-      check_tx(@tx, [:spent, [0]])
+      check_tx(@tx, [:not_spent, [0]])
     end
   end
   
@@ -270,6 +270,27 @@ describe "transaction rules (#{options[0]} - #{options[1]})" do
   it "16. Reject if the sum of input values < sum of output values" do
     tx = build_tx {|t| create_tx(t, @block1.tx.first, 0, [[100e8, @key]]) }
     check_tx(tx, [:output_sum, [100e8, 50e8]])
+  end
+
+
+  it "should not allow double spend within the same block" do
+    # double-spend output from previous block
+    prev_tx = @block1.tx[0]
+    block = create_block @block1.hash, false, [
+     ->(t) { create_tx(t, prev_tx, 0, [[prev_tx.out[0].value, @key]]) },
+     ->(t) { create_tx(t, prev_tx, 0, [[prev_tx.out[0].value, @key]]) }
+    ]
+    -> { @store.store_block(block) }.should.raise(Bitcoin::Validation::ValidationError)
+
+    # double-spend output from current block
+    block = create_block @block1.hash, false, [
+      ->(t) { create_tx(t, prev_tx, 0, [[prev_tx.out[0].value, @key]]) }
+    ]
+    prev_tx = block.tx[1]
+    block.tx << build_tx {|t| create_tx(t, prev_tx, 0, [[prev_tx.out[0].value, @key]]) }
+    block.tx << build_tx {|t| create_tx(t, prev_tx, 0, [[prev_tx.out[0].value, @key]]) }
+    block.recalc_mrkl_root; block.recalc_block_hash
+    -> { @store.store_block(block) }.should.raise(Bitcoin::Validation::ValidationError)
   end
 
 end

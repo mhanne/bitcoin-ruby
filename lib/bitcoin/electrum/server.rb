@@ -98,7 +98,12 @@ module Bitcoin::Electrum
         if @subscribed_headers
           send_response(method: "blockchain.headers.subscribe", params: [get_header])
         end
-        block.tx.each {|tx| check_tx(tx, block.hash) }
+        block.tx.each do |tx|
+          check_tx(tx, block.hash)
+        end
+      end
+      @tx_channel = @server.node.subscribe(:tx) do |tx, conf|
+        check_tx(tx)
       end
       log.info { "client connected" }
     end
@@ -171,11 +176,16 @@ module Bitcoin::Electrum
         txs << { tx_hash: tx.hash, height: block[:depth] }
         next  unless txin = txout.get_next_in
         tx = txin.get_tx
-        binding.pry  unless tx
         block = store.db[:blk][id: tx.blk_id]
         txs << { tx_hash: tx.hash, height: block[:depth] }
       end
-      txs.uniq.sort_by {|t| t[:height] }
+
+      @server.node.unconfirmed.each do |tx_hash, tx|
+        next  unless outs = get_all_outs(tx)
+        txs << { tx_hash: tx.hash, height: 0 }  if outs.map {|o|
+          o.parsed_script.get_addresses.include?(addr) }.any?
+      end
+      txs.uniq.sort_by {|t| [t[:height], t[:tx_hash]] }.reverse
     end
 
     def subscribe_address addr
@@ -200,7 +210,9 @@ module Bitcoin::Electrum
     end
 
     def get_transaction hash
-      store.get_tx(hash).to_payload.unpack("H*")[0]
+      tx = store.get_tx(hash) || @server.node.unconfirmed[hash]
+      return nil  unless tx
+      tx.to_payload.unpack("H*")[0]
     end
 
     def get_merkle hash
@@ -220,13 +232,26 @@ module Bitcoin::Electrum
       }.join.unpack("H*")[0]
     end
 
-    def check_tx tx, block_hash = "mempool:x"
+    # check if our client is interested in this tx and if so, send it.
+    # TODO: proper mempool, make it work for chains of unconfirmed tx
+    def check_tx tx, block_hash = nil, addr = nil
+      return  unless outs = get_all_outs(tx)
+      outs.map {|o| o.parsed_script.get_addresses & @subscribed_addresses }
+        .flatten.uniq.each {|a|
+        return true  if addr
+        hash = block_hash || get_status(a)
+        send_response(method: "blockchain.address.subscribe", params: [a, hash])
+      }
+    end
+
+    # get all outputs affected by this tx (all prev_outs and the outputs of this tx)
+    def get_all_outs tx
+      return  unless tx
       prev_outs = tx.in[0].coinbase? ? [] : tx.in.map {|i|
-        store.get_tx(i.prev_out.reverse_hth).out[i.prev_out_index] }
-      (prev_outs + tx.out).compact.map {|o|
-        Bitcoin::Script.new(o.pk_script).get_addresses & @subscribed_addresses
-      }.flatten.uniq.each {|a|
-        send_response(method: "blockchain.address.subscribe", params: [a, block_hash]) }
+        return  unless prev_tx = store.get_tx(i.prev_out.reverse_hth)
+        return  unless prev_tx
+        prev_tx.out[i.prev_out_index] }
+      (prev_outs + tx.out).compact
     end
 
   end
@@ -236,11 +261,10 @@ module Bitcoin::Electrum
     include ConnectionHandler
 
     def initialize server
-      @buf = BufferedTokenizer.new("\n")
-
       @server = server
       @subscribed_addresses = []
       @subscribed_numblocks = false
+      @buf = BufferedTokenizer.new("\n")
     end
 
     def post_init

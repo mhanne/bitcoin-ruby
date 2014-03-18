@@ -44,6 +44,9 @@ module Bitcoin::Network
     # time when the last main chain block was added
     attr_reader :last_block_time
 
+    # unconfirmed transactions
+    attr_accessor :unconfirmed
+
     attr_accessor :tx_to_relay
     attr_accessor :relay_propagation
 
@@ -423,7 +426,12 @@ module Bitcoin::Network
             drop = @unconfirmed.size - @config[:max][:unconfirmed] + 1
             drop.times { @unconfirmed.shift }  if drop > 0
             unless @unconfirmed[obj[1].hash]
-              @unconfirmed[obj[1].hash] = obj[1]
+              begin
+                @unconfirmed[obj[1].hash] = obj[1]
+              rescue
+                sleep 0.01
+                retry
+              end
               push_notification(:tx, [obj[1], 0])
 
               if @notifiers[:output]

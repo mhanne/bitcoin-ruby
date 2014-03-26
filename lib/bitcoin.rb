@@ -549,6 +549,7 @@ module Bitcoin
       :retarget_time => 1209600, # 2 weeks
       :max_money => 21_000_000 * COIN,
       :min_tx_fee => 10_000,
+      :no_difficulty => true,
       :min_relay_tx_fee => 10_000,
       :dns_seeds => [
         "testnet-seed.bitcoin.petertodd.org",

@@ -4,11 +4,10 @@ $:.unshift( File.expand_path("../../lib", __FILE__) )
 require 'bitcoin'
 require 'optparse'
 
-Bitcoin.require_dependency :gir_ffi
+Bitcoin.require_dependency "gir_ffi-gtk3"
 Bitcoin.require_dependency :eventmachine
 Bitcoin.require_dependency :notify
 Bitcoin.require_dependency :json
-
 
 defaults = {
   network: "bitcoin",

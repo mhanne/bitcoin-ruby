@@ -69,7 +69,7 @@ module Bitcoin::Gui::Helpers
 
   def message(type, title, text, buttons)
     dialog(:message, :setup => ->(dialog){
-        dialog.message_type = Gtk::MessageType.find(type.to_sym)
+        dialog.message_type = Gtk::MessageType[type.to_sym]
         dialog.text = title
         dialog.secondary_text = text
         [:yes, :no, :ok].each do |n|

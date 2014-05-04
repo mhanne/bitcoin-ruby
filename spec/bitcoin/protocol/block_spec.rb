@@ -153,6 +153,29 @@ describe 'Bitcoin::Protocol::Block' do
         .message.should.include?("Block merkle root mismatch!")
     end
 
+    it "should work on peercoin" do
+      Bitcoin.network = :ppcoin # change to ppcoin
+      ppcoin_block = "ppcoin-genesis-block-0000000032fe677166d54963b62a4677d8957e87c508eaa4fd7eb1c880cd27e3"
+      Bitcoin::Protocol::Block.from_json(fixtures_file(ppcoin_block + '.json'))
+        .to_payload.should == fixtures_file(ppcoin_block + '.bin')
+
+      json = Bitcoin::Protocol::Block.new(fixtures_file(ppcoin_block + '.bin')).to_json
+      Bitcoin::Protocol::Block.from_json(json)
+        .to_payload.should == fixtures_file(ppcoin_block + '.bin')
+      Bitcoin::Protocol::Block.from_json(json).hash == ppcoin_block.split("-").last
+
+      ppcoin_block = "ppcoin-block-00000000000be4e024af5071ba515c7510767f42ec9e40c5fba56775ff296658"
+      Bitcoin::Protocol::Block.from_json(fixtures_file(ppcoin_block + '.json'))
+        .to_payload.should == fixtures_file(ppcoin_block + '.bin')
+
+      json = Bitcoin::Protocol::Block.new(fixtures_file(ppcoin_block + '.bin')).to_json
+      Bitcoin::Protocol::Block.from_json(json)
+        .to_payload.should == fixtures_file(ppcoin_block + '.bin')
+      Bitcoin::Protocol::Block.from_json(json).hash == ppcoin_block.split("-").last
+
+
+      Bitcoin.network = :bitcoin # change back to bitcoin
+    end
   end
 
   it '#header_to_json' do

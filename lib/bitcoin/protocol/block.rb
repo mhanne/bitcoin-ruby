@@ -90,7 +90,7 @@ module Bitcoin
           @tx << t
         }
 
-        if Bitcoin.network_project == :ppcoin
+        if Bitcoin.network_project == :peercoin
           @block_signature = Protocol.unpack_var_string_from_io(buf)
           @block_signature ||= ""
         end
@@ -126,7 +126,7 @@ module Bitcoin
         return head if @tx.size == 0
         head << Protocol.pack_var_int(@tx.size)
         @tx.each{|tx| head << tx.to_payload }
-        head << Protocol.pack_var_string(@block_signature) if Bitcoin.network_project == :ppcoin
+        head << Protocol.pack_var_string(@block_signature) if Bitcoin.network_project == :peercoin
         head
       end
 
@@ -141,7 +141,7 @@ module Bitcoin
           'mrkl_tree' => Bitcoin.hash_mrkl_tree( @tx.map{|i| i.hash } )
         }
         h['aux_pow'] = @aux_pow.to_hash  if @aux_pow
-        h['signature'] = @block_signature.reverse_hth if Bitcoin.network_project == :ppcoin
+        h['signature'] = @block_signature.reverse_hth if Bitcoin.network_project == :peercoin
         h
       end
 
@@ -203,7 +203,7 @@ module Bitcoin
           if h['tx'].any? && !Bitcoin.freicoin?
             (raise "Block merkle root mismatch! Block: #{h['hash']}"  unless verify_mrkl_root) if do_raise
           end
-          @block_signature = h['signature'].htb_reverse if Bitcoin.network_project == :ppcoin
+          @block_signature = h['signature'].htb_reverse if Bitcoin.network_project == :peercoin
         }
         blk
       end

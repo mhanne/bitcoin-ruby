@@ -41,7 +41,7 @@ module Bitcoin
       # create tx from raw binary +data+
       def initialize(data=nil)
         @ver, @lock_time, @in, @out = 1, 0, [], []
-        @time = Time.now.to_i if Bitcoin.network_project == :ppcoin
+        @time = Time.now.to_i if Bitcoin.network_project == :peercoin
         parse_data_from_io(data) if data
       end
 
@@ -64,7 +64,7 @@ module Bitcoin
 
         @ver = buf.read(4).unpack("V")[0]
 
-        @time = buf.read(4).unpack("V")[0] if Bitcoin.network_project == :ppcoin
+        @time = buf.read(4).unpack("V")[0] if Bitcoin.network_project == :peercoin
 
         in_size = Protocol.unpack_var_int_from_io(buf)
         @in = []
@@ -98,7 +98,7 @@ module Bitcoin
         @out.each{|output| pout << output.to_payload }
 
         result = [@ver].pack("V")
-        result << [@time].pack("V") if Bitcoin.network_project == :ppcoin
+        result << [@time].pack("V") if Bitcoin.network_project == :peercoin
         result << Protocol.pack_var_int(@in.size) << pin << Protocol.pack_var_int(@out.size) << pout << [@lock_time].pack("V")
       end
 
@@ -155,7 +155,7 @@ module Bitcoin
           in_size, pin = Protocol.pack_var_int(1), [ pin[input_idx] ]
         end
 
-        if Bitcoin.network_project == :ppcoin
+        if Bitcoin.network_project == :peercoin
           buf = [ [@ver, @time].pack("VV"), in_size, pin, out_size, pout, [@lock_time, hash_type].pack("VV") ].join
         else
           buf = [ [@ver].pack("V"), in_size, pin, out_size, pout, [@lock_time, hash_type].pack("VV") ].join
@@ -194,7 +194,7 @@ module Bitcoin
           'in'  =>  @in.map{|i| i.to_hash(options) },
           'out' => @out.map{|o| o.to_hash(options) }
         }
-        h['time'] = @time if Bitcoin.network_project == :ppcoin
+        h['time'] = @time if Bitcoin.network_project == :peercoin
         h
       end
 
@@ -215,7 +215,7 @@ module Bitcoin
         tx.ver, tx.lock_time = *h.values_at('ver', 'lock_time')
         h['in'] .each{|input|   tx.add_in  TxIn.from_hash(input)   }
         h['out'].each{|output|  tx.add_out TxOut.from_hash(output) }
-        tx.instance_eval{ @time = h['time'] } if Bitcoin.network_project == :ppcoin
+        tx.instance_eval{ @time = h['time'] } if Bitcoin.network_project == :peercoin
         tx.instance_eval{ @hash = hash_from_payload(@payload = to_payload) }
         tx
       end

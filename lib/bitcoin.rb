@@ -703,8 +703,8 @@ module Bitcoin
       }
     },
 
-    :ppcoin => {
-      :project => :ppcoin,
+    :peercoin => {
+      :project => :peercoin,
       :magic_head => "\xe6\xe8\xe9\xe5",
       :address_version => "37",
       :p2sh_version => "75",
@@ -721,8 +721,8 @@ module Bitcoin
       ]
     },
 
-    :ppcoin_testnet => {
-      :project => :ppcoin,
+    :peercoin_testnet => {
+      :project => :peercoin,
       :magic_head => "\xcb\xf2\xc0\xef",
       :address_version => "6f",
       :p2sh_version => "c4",

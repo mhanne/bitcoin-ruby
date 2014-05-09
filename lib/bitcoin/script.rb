@@ -1199,7 +1199,8 @@ class Bitcoin::Script
     sigs = pop_string(n_sigs)
     drop_sigs = sigs.dup
 
-    @stack.pop if @stack[-1] && cast_to_bignum(@stack[-1]) == 0 # remove OP_0 from stack
+    # Bitcoin-core removes an extra item from the stack
+    @stack.pop
 
     subscript = sighash_subscript(drop_sigs)
 
@@ -1221,6 +1222,11 @@ class Bitcoin::Script
     end
 
     @stack << (success ? 1 : 0)
+  end
+
+  def op_checkmultisigverify(check_callback)
+    op_checkmultisig(check_callback)
+    op_verify
   end
 
   # op_eval: https://en.bitcoin.it/wiki/BIP_0012

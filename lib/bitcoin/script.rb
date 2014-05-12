@@ -1191,7 +1191,7 @@ class Bitcoin::Script
     #return invalid  if (nOpCount += n_pubkeys) > 201
     return invalid if @stack.size < n_pubkeys
     pubkeys = pop_string(n_pubkeys)
-
+    
     return invalid if @stack.size < 1
     n_sigs = pop_int
     return invalid if n_sigs < 0 || n_sigs > n_pubkeys
@@ -1212,7 +1212,7 @@ class Bitcoin::Script
         break
       end
       signature, hash_type = parse_sig(sig)
-      if check_callback.call(pub, signature, hash_type, subscript)
+      if pub.size > 0 && check_callback.call(pub, signature, hash_type, subscript)
         n_sigs -= 1
       else
         sigs << sig

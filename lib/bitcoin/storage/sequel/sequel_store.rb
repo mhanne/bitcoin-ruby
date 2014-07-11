@@ -555,6 +555,10 @@ module Bitcoin::Storage::Backends
       end
     end
 
+    def storage_mode
+      :full
+    end
+
   end
 
 end

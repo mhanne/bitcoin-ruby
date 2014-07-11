@@ -273,6 +273,10 @@ module Bitcoin::Storage::Backends
       txout
     end
 
+    def storage_mode
+      :spv
+    end
+
   end
 
 end

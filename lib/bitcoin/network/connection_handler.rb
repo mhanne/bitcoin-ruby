@@ -105,7 +105,7 @@ module Bitcoin::Network
         @started = Time.now
         @node.push_notification(:connection, info.merge(type: :connected))
         @node.addrs << addr
-        filterload  if @node.store.backend_name == "spv"
+        filterload  if @node.store.is_spv?
         send_getblocks
       end
       send_data P::Addr.pkt(@node.addr)  if @node.config[:announce]
@@ -240,7 +240,7 @@ module Bitcoin::Network
       @last_getblocks << [version, hashes, stop_hash]
       @last_getblocks.shift  if @last_getblocks.size > 3
 
-      return nil  unless @node.store.config[:mode] == :full
+      return nil  unless @node.store.is_full?
       blk = @node.store.db[:blk][hash: hashes[0].htb.blob]
       depth = blk[:depth]  if blk
       log.info { ">> getblocks #{hashes[0]} (#{depth || 'unknown'})" }
@@ -294,7 +294,7 @@ module Bitcoin::Network
 
     # send +getdata block+ message for given block +hash+
     def send_getdata_block(hash)
-      pkt = Protocol.getdata_pkt(:merkle_block, [hash])
+      pkt = Protocol.getdata_pkt(@node.store.is_spv? ? :merkle_block : :block, [hash])
       log.debug { "<< getdata block: #{hash.hth}" }
       send_data(pkt)
     end

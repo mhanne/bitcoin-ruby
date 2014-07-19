@@ -83,9 +83,8 @@ Bitcoin::network = :bitcoin
 Bitcoin::NETWORKS[:spec] = {
   :project => :bitcoin,
   :magic_head => "spec",
-  :address_version => "6f",
-  :p2sh_version => "c4",
-  :privkey_version => "ef",
+  address_versions: { pubkey_hash: "6f", script_hash: "c4" },
+  privkey_version: "ef",
   :default_port => 48333,
   :protocol_version => 70001,
   :max_money => 21_000_000 * 100_000_000,

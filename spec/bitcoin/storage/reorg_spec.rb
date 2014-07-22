@@ -7,8 +7,9 @@ include Bitcoin::Builder
 Bitcoin.network = :testnet
     
 [
+  [:sequel, :sqlite],
   [:utxo, :sqlite, index_all_addrs: true],
-  [:sequel, :sqlite], # [:sequel, :postgres],
+  [:sequel, :postgres],
   [:utxo, :postgres, index_all_addrs: true],
   [:sequel, :mysql],
   [:utxo, :mysql, index_all_addrs: true],
@@ -22,7 +23,7 @@ Bitcoin.network = :testnet
   describe "reorg (#{options[0]} - #{options[1]})" do
 
   def balance addr
-    @store.get_balance(Bitcoin.hash160_from_address(addr))
+    @store.balance(Bitcoin.hash160_from_address(addr))
   end
 
   before do
@@ -39,7 +40,7 @@ Bitcoin.network = :testnet
     Bitcoin.network[:genesis_hash] = @block0.hash
     
     @store.store_block(@block0)
-    @store.get_head.should == @block0
+    @store.head.should == @block0
   end
 
   it "should retarget" do
@@ -60,7 +61,7 @@ Bitcoin.network = :testnet
       .should.raise(Bitcoin::Validation::ValidationError).message.should =~ /difficulty/
 
     block = create_blocks block.hash, 1, time: time, bits: bits = 541065152
-    @store.get_head.should == block
+    @store.head.should == block
     time += 600
 
     # create too slow blocks
@@ -70,7 +71,7 @@ Bitcoin.network = :testnet
       .should.raise(Bitcoin::Validation::ValidationError).message.should =~ /difficulty/
 
     block = create_blocks block.hash, 1, bits: 553713663
-    @store.get_head.should == block
+    @store.head.should == block
   end
 
   it "should reorg across a retargetting boundary correctly" do
@@ -102,7 +103,7 @@ Bitcoin.network = :testnet
     block_b = create_blocks block_b.hash, 1, time: time_b, bits: 541568460
 
     # check that shorter branch B has overtaken longer branch A due to more work
-    @store.get_head.hash.should == block_b.hash
+    @store.head.hash.should == block_b.hash
   end
 
   it "should validate duplicate tx in a side chain" do
@@ -139,40 +140,40 @@ Bitcoin.network = :testnet
   end
 
   it "should reorg a single side block" do
-    @store.get_head.should == @block0
+    @store.head.should == @block0
 
     block1 = create_block @block0.hash
-    @store.get_head.should == block1
+    @store.head.should == block1
 
     block2_0 = create_block block1.hash
-    @store.get_head.should == block2_0
+    @store.head.should == block2_0
 
     block2_1 = create_block block1.hash
-    @store.get_head.should == block2_0
+    @store.head.should == block2_0
 
     block3 = create_block block2_1.hash
-    @store.get_head.should == block3
-    @store.get_block_by_depth(2).hash.should == block2_1.hash
+    @store.head.should == block3
+    @store.block_at_height(2).hash.should == block2_1.hash
   end
 
   it "should reorg two side blocks" do
     block1 = create_block @block0.hash
-    @store.get_head.should == block1
+    @store.head.should == block1
 
     block2_0 = create_block block1.hash
-    @store.get_head.should == block2_0
+    @store.head.should == block2_0
 
     block2_1 = create_block block1.hash
-    @store.get_head.should == block2_0
+    @store.head.should == block2_0
 
     block3_1 = create_block block2_1.hash
-    @store.get_head.should == block3_1
+    @store.head.should == block3_1
 
     block3_0 = create_block block2_0.hash
-    @store.get_head.should == block3_1
+    @store.head.should == block3_1
 
     block4 = create_block block3_0.hash
-    @store.get_head.should == block4
+    @store.head.should == block4
   end
 
   it "should reconnect orphans" do
@@ -190,14 +191,14 @@ Bitcoin.network = :testnet
       @store.reset
       order.each_with_index do |n, i|
         @store.store_block(blocks[n])
-        @store.get_head.should == blocks[result[i]]
+        @store.head.should == blocks[result[i]]
       end
     end
 
     i = 3; (0..i).to_a.permutation.each do |order|
       @store.reset
       order.each {|n| @store.store_block(blocks[n]) }
-      @store.get_head.should == blocks[i]
+      @store.head.should == blocks[i]
     end
   end
 
@@ -206,7 +207,7 @@ Bitcoin.network = :testnet
     3.times { blocks << create_block(blocks.last.hash, false) }
     blocks[1..-1].each.with_index {|b, idx| @store.store_block(b).should == [idx+1, 0] }
     3.times {|i| @store.store_block(blocks[i]).should == [i] }
-    @store.get_head.should == blocks[-1]
+    @store.head.should == blocks[-1]
   end
 
   # see https://bitcointalk.org/index.php?topic=46370.0
@@ -220,18 +221,18 @@ Bitcoin.network = :testnet
     # ["1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa", "1NiEGXeURREqqMjCvjCeZn6SwEBZ9AdVet", "1JyMKvPHkrCQd8jQrqTR1rBsAd1VpRhTiE"].each {|a| @store.add_watched_address a }
 
     @store.import "./spec/bitcoin/fixtures/reorg/blk_0_to_4.dat"
-    @store.get_depth.should == 4
-    @store.get_head.hash.should =~ /000000002f264d65040/
+    @store.height.should == 4
+    @store.head.hash.should =~ /000000002f264d65040/
     balance("1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa").should == 10000000000
     balance("1NiEGXeURREqqMjCvjCeZn6SwEBZ9AdVet").should == 0
     balance("1KXFNhNtrRMfgbdiQeuJqnfD7dR4PhniyJ").should == 5000000000
     balance("1JyMKvPHkrCQd8jQrqTR1rBsAd1VpRhTiE").should == 10000000000
     @store.import "./spec/bitcoin/fixtures/reorg/blk_3A.dat"
     @store.import "./spec/bitcoin/fixtures/reorg/blk_4A.dat"
-    @store.get_head.hash.should =~ /000000002f264d65040/
+    @store.head.hash.should =~ /000000002f264d65040/
     @store.import "./spec/bitcoin/fixtures/reorg/blk_5A.dat"
-    @store.get_depth.should == 5
-    @store.get_head.hash.should =~ /00000000195f85184e7/
+    @store.height.should == 5
+    @store.head.hash.should =~ /00000000195f85184e7/
     balance("1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa").should == 15000000000
     balance("1NiEGXeURREqqMjCvjCeZn6SwEBZ9AdVet").should == 1000000000
     balance("1KXFNhNtrRMfgbdiQeuJqnfD7dR4PhniyJ").should == 0

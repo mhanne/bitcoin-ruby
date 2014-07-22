@@ -26,7 +26,7 @@ def str_val(val, pre = "")
 end
 
 if ARGV[0] == "--list"
-  txouts = store.get_txouts_for_address(address)
+  txouts = store.txouts_for_address(address)
   unless txouts.any?
     puts "Address not seen."
     exit
@@ -34,26 +34,26 @@ if ARGV[0] == "--list"
 
   total = 0
   txouts.each do |txout|
-    tx = txout.get_tx
+    tx = txout.tx
     total += txout.value
     puts "#{tx.hash} |#{str_val(txout.value, '+ ')}  |=> #{str_val(total)}"
 
-    tx = txout.get_tx
+    tx = txout.tx
     if tx.is_coinbase?
-      puts " "*12 + "generated (#{tx.get_block.hash})"
+      puts " "*12 + "generated (#{tx.block.hash})"
     else
       tx.in.each do |txin|
-        addresses = txin.get_prev_out.get_addresses.join(", ")
-        puts "  #{str_val(txin.get_prev_out.value)} from #{addresses}"
+        addresses = txin.prev_out.get_addresses.join(", ")
+        puts "  #{str_val(txin.prev_out.value)} from #{addresses}"
       end
     end
     puts
 
-    if txin = txout.get_next_in
-      tx = txin.get_tx
+    if txin = txout.next_in
+      tx = txin.tx
       total -= txout.value
       puts "#{tx.hash} |#{str_val(txout.value, '- ')}  |=> #{str_val(total)}"
-      txin.get_tx.out.each do |out|
+      txin.tx.out.each do |out|
         puts "  #{str_val(out.value)} to #{out.get_addresses.join(", ")}"
       end
       puts
@@ -62,5 +62,5 @@ if ARGV[0] == "--list"
 end
 
 hash160 = Bitcoin.hash160_from_address(address)
-balance = store.get_balance(hash160)
+balance = store.balance(hash160)
 puts "Balance: %.8f" % (balance / 1e8)

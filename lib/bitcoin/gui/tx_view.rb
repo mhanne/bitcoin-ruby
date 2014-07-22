@@ -25,16 +25,16 @@ module Bitcoin::Gui
         txouts.each do |txout|
           row = @model.append(nil)
           @model.set_value(row, 0, txout.type.to_s)
-          @model.set_value(row, 1, txout.get_tx.hash)
+          @model.set_value(row, 1, txout.tx.hash)
           @model.set_value(row, 2, txout.value.to_s)
-          @model.set_value(row, 3, txout.get_tx.confirmations)
+          @model.set_value(row, 3, txout.tx.confirmations)
           @model.set_value(row, 4, "incoming")
           if txin = txout.get_next_in
             row = @model.append(nil)
             @model.set_value(row, 0, txout.type.to_s)
-            @model.set_value(row, 1, txin.get_tx.hash)
+            @model.set_value(row, 1, txin.tx.hash)
             @model.set_value(row, 2, (0 - txout.value).to_s)
-            @model.set_value(row, 3, txin.get_tx.confirmations)
+            @model.set_value(row, 3, txin.tx.confirmations)
             @model.set_value(row, 4, "outgoing")
           end
         end
@@ -56,7 +56,7 @@ module Bitcoin::Gui
     def update txins
       @model.clear
       txins.each do |txin|
-        txout = txin.get_prev_out
+        txout = txin.prev_out
         row = @model.append(nil)
         @model.set_value(row, 0, txout.type.to_s)
         @model.set_value(row, 1, txout.get_addresses.join(", "))

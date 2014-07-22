@@ -40,30 +40,30 @@ module Bitcoin::Storage::Backends
       @head = nil
     end
 
-    def add_watched_address address, depth = get_depth
+    def add_watched_address address, height = height
       hash160 = Bitcoin.hash160_from_address(address)
       @db[:addr].insert(hash160: hash160)  unless @db[:addr][hash160: hash160]
       @watched_addrs << hash160  unless @watched_addrs.include?(hash160)
     end
 
     # persist given block +blk+ to storage.
-    def persist_block blk, chain, depth, prev_work = 0
+    def persist_block blk, chain, height, prev_work = 0
       @db.transaction do
         attrs = {
-          :hash => blk.hash.htb.blob,
-          :depth => depth,
-          :chain => chain,
-          :version => blk.ver,
-          :prev_hash => blk.prev_block.reverse.blob,
-          :mrkl_root => blk.mrkl_root.reverse.blob,
-          :time => blk.time,
-          :bits => blk.bits,
-          :nonce => blk.nonce,
-          :blk_size => blk.to_payload.bytesize,
-          :work => (prev_work + blk.block_work).to_s
+          hash: blk.hash.htb.blob,
+          height: height,
+          chain: chain,
+          version: blk.ver,
+          prev_hash: blk.prev_block_hash.reverse.blob,
+          mrkl_root: blk.mrkl_root.reverse.blob,
+          time: blk.time,
+          bits: blk.bits,
+          nonce: blk.nonce,
+          blk_size: blk.to_payload.bytesize,
+          work: (prev_work + blk.block_work).to_s
         }
         attrs[:aux_pow] = blk.aux_pow.to_payload.blob  if blk.aux_pow
-        existing = @db[:blk].filter(:hash => blk.hash.htb.blob)
+        existing = @db[:blk].filter(hash: blk.hash.htb.blob)
         if existing.any?
           existing.update attrs
           block_id = existing.first[:id]
@@ -107,15 +107,15 @@ module Bitcoin::Storage::Backends
           names.each {|i, script| store_name(script, txout_ids[i]) }
         end
         @head = wrap_block(attrs.merge(id: block_id))  if chain == MAIN
-        @db[:blk].where(:prev_hash => blk.hash.htb.blob, :chain => ORPHAN).each do |b|
+        @db[:blk].where(prev_hash: blk.hash.htb.blob, chain: ORPHAN).each do |b|
           log.debug { "connecting orphan #{b[:hash].hth}" }
           begin
-            store_block(get_block(b[:hash].hth))
+            store_block(block(b[:hash].hth))
           rescue SystemStackError
-            EM.defer { store_block(get_block(b[:hash].hth)) }  if EM.reactor_running?
+            EM.defer { store_block(block(b[:hash].hth)) }  if EM.reactor_running?
           end
         end
-        return depth, chain
+        return height, chain
       end
     end
 
@@ -124,7 +124,7 @@ module Bitcoin::Storage::Backends
         @db[:blk].where(hash: new_side.map {|h| h.htb.blob }).update(chain: SIDE)
         new_main.each do |block_hash|
           unless @config[:skip_validation]
-            get_block(block_hash).validator(self).validate(raise_errors: true)
+            block(block_hash).validator(self).validate(raise_errors: true)
           end
           @db[:blk].where(hash: block_hash.htb.blob).update(chain: MAIN)
         end
@@ -195,7 +195,7 @@ module Bitcoin::Storage::Backends
       @log.debug { "Storing tx #{tx.hash} (#{tx.to_payload.bytesize} bytes)" }
       tx.validator(self).validate(raise_errors: true)  if validate
       @db.transaction do
-        transaction = @db[:tx][:hash => tx.hash.htb.blob]
+        transaction = @db[:tx][hash: tx.hash.htb.blob]
         return transaction[:id]  if transaction
         tx_id = @db[:tx].insert(tx_data(tx))
         tx.in.each_with_index {|i, idx| store_txin(tx_id, i, idx)}
@@ -243,167 +243,184 @@ module Bitcoin::Storage::Backends
     def delete_tx(hash)
       log.debug { "Deleting tx #{hash} since all its outputs are spent" }
       @db.transaction do
-        tx = get_tx(hash)
-        tx.in.each {|i| @db[:txin].where(:id => i.id).delete }
-        tx.out.each {|o| @db[:txout].where(:id => o.id).delete }
-        @db[:tx].where(:id => tx.id).delete
+        tx = tx(hash)
+        tx.in.each {|i| @db[:txin].where(id: i.id).delete }
+        tx.out.each {|o| @db[:txout].where(id: o.id).delete }
+        @db[:tx].where(id: tx.id).delete
       end
     end
 
     # check if block +blk_hash+ exists in the main chain
     def has_block(blk_hash)
-      !!@db[:blk].where(:hash => blk_hash.htb.blob, :chain => 0).get(1)
+      !!@db[:blk].where(hash: blk_hash.htb.blob, chain: 0).get(1)
     end
 
     # check if transaction +tx_hash+ exists
     def has_tx(tx_hash)
-      !!@db[:tx].where(:hash => tx_hash.htb.blob).get(1)
+      !!@db[:tx].where(hash: tx_hash.htb.blob).get(1)
     end
 
     # get head block (highest block from the MAIN chain)
-    def get_head
+    def head
       (@config[:cache_head] && @head) ? @head :
-        @head = wrap_block(@db[:blk].filter(:chain => MAIN).order(:depth).last)
+        @head = wrap_block(@db[:blk].filter(chain: MAIN).order(:height).last)
     end
+    alias :get_head :head
 
-    def get_head_hash
+    def head_hash
       (@config[:cache_head] && @head) ? @head.hash :
-        @head = @db[:blk].filter(:chain => MAIN).order(:depth).last[:hash].hth
+        @head = @db[:blk].filter(chain: MAIN).order(:height).last[:hash].hth
     end
+    alias :get_head_hash :head_hash
 
-    # get depth of MAIN chain
-    def get_depth
-      depth = (@config[:cache_head] && @head) ? @head.depth :
-        @depth = @db[:blk].filter(:chain => MAIN).order(:depth).last[:depth] rescue nil
+    # get height of MAIN chain
+    def height
+      height = (@config[:cache_head] && @head) ? @head.height :
+        @height = @db[:blk].filter(chain: MAIN).order(:height).last[:height] rescue nil
 
-      return -1  unless depth
-      depth
+      return -1  unless height
+      height
     end
+    alias :get_depth :height
 
     # get block for given +blk_hash+
-    def get_block(blk_hash)
-      wrap_block(@db[:blk][:hash => blk_hash.htb.blob])
+    def block(blk_hash)
+      wrap_block(@db[:blk][hash: blk_hash.htb.blob])
     end
+    alias :get_block :block
 
-    # get block by given +depth+
-    def get_block_by_depth(depth)
-      wrap_block(@db[:blk][:depth => depth, :chain => MAIN])
+    # get block by given +height+
+    def block_at_height(height)
+      wrap_block(@db[:blk][height: height, chain: MAIN])
     end
+    alias :get_block_by_depth :block_at_height
 
     # get block by given +prev_hash+
-    def get_block_by_prev_hash(prev_hash)
-      wrap_block(@db[:blk][:prev_hash => prev_hash.htb.blob, :chain => MAIN])
+    def block_by_prev_hash(prev_hash)
+      wrap_block(@db[:blk][prev_hash: prev_hash.htb.blob, chain: MAIN])
     end
+    alias :get_block_by_prev_hash :block_by_prev_hash
 
     # get block by given +tx_hash+
-    def get_block_by_tx(tx_hash)
-      tx = @db[:tx][:hash => tx_hash.htb.blob]
+    def block_by_tx(tx_hash)
+      tx = @db[:tx][hash: tx_hash.htb.blob]
       return nil  unless tx
-      parent = @db[:blk_tx][:tx_id => tx[:id]]
+      parent = @db[:blk_tx][tx_id: tx[:id]]
       return nil  unless parent
-      wrap_block(@db[:blk][:id => parent[:blk_id]])
+      wrap_block(@db[:blk][id: parent[:blk_id]])
     end
+    alias :get_block_by_tx :block_by_tx
 
     # get block by given +id+
-    def get_block_by_id(block_id)
-      wrap_block(@db[:blk][:id => block_id])
+    def block_by_id(block_id)
+      wrap_block(@db[:blk][id: block_id])
     end
+    alias :get_block_by_id :block_by_id
 
     # get block id in the main chain by given +tx_id+
-    def get_block_id_for_tx_id(tx_id)
+    def block_id_for_tx_id(tx_id)
       @db[:blk_tx].join(:blk, id: :blk_id)
         .where(tx_id: tx_id, chain: MAIN).first[:blk_id] rescue nil
     end
+    alias :get_block_id_for_tx_id :block_id_for_tx_id
 
     # get transaction for given +tx_hash+
-    def get_tx(tx_hash)
-      wrap_tx(@db[:tx][:hash => tx_hash.htb.blob])
+    def tx(tx_hash)
+      wrap_tx(@db[:tx][hash: tx_hash.htb.blob])
     end
+    alias :get_tx :tx
 
     # get array of txes with given +tx_hashes+
-    def get_txs(tx_hashes)
+    def txs(tx_hashes)
       txs = db[:tx].filter(hash: tx_hashes.map{|h| h.htb.blob})
       txs_ids = txs.map {|tx| tx[:id]}
       return [] if txs_ids.empty?
 
       # we fetch all needed block ids, inputs and outputs to avoid doing number of queries propertional to number of transactions
       block_ids = Hash[*db[:blk_tx].join(:blk, id: :blk_id).filter(tx_id: txs_ids, chain: 0).map {|b| [b[:tx_id], b[:blk_id]] }.flatten]
-      inputs = db[:txin].filter(:tx_id => txs_ids).order(:tx_idx).map.group_by{ |txin| txin[:tx_id] }
-      outputs = db[:txout].filter(:tx_id => txs_ids).order(:tx_idx).map.group_by{ |txout| txout[:tx_id] }
+      inputs = db[:txin].filter(tx_id: txs_ids).order(:tx_idx).map.group_by{ |txin| txin[:tx_id] }
+      outputs = db[:txout].filter(tx_id: txs_ids).order(:tx_idx).map.group_by{ |txout| txout[:tx_id] }
 
       txs.map {|tx| wrap_tx(tx, block_ids[tx[:id]], inputs: inputs[tx[:id]], outputs: outputs[tx[:id]]) }
     end
+    alias :get_txs :txs
 
     # get transaction by given +tx_id+
-    def get_tx_by_id(tx_id)
-      wrap_tx(@db[:tx][:id => tx_id])
+    def tx_by_id(tx_id)
+      wrap_tx(@db[:tx][id: tx_id])
     end
+    alias :get_tx_by_id :tx_by_id
 
     # get corresponding Models::TxIn for the txout in transaction
     # +tx_hash+ with index +txout_idx+
-    def get_txin_for_txout(tx_hash, txout_idx)
+    def txin_for_txout(tx_hash, txout_idx)
       tx_hash = tx_hash.htb_reverse.blob
-      wrap_txin(@db[:txin][:prev_out => tx_hash, :prev_out_index => txout_idx])
+      wrap_txin(@db[:txin][prev_out: tx_hash, prev_out_index: txout_idx])
     end
+    alias :get_txin_for_txout :txin_for_txout
 
-    # optimized version of Storage#get_txins_for_txouts
-    def get_txins_for_txouts(txouts)
+    # optimized version of Storage#txins_for_txouts
+    def txins_for_txouts(txouts)
       @db[:txin].filter([:prev_out, :prev_out_index] => txouts.map{|tx_hash, tx_idx| [tx_hash.htb_reverse.blob, tx_idx]}).map{|i| wrap_txin(i)}
     end
+    alias :get_txins_for_txouts :txins_for_txouts
 
-    def get_txout_by_id(txout_id)
-      wrap_txout(@db[:txout][:id => txout_id])
+    def txout_by_id(txout_id)
+      wrap_txout(@db[:txout][id: txout_id])
     end
+    alias :get_txout_by_id :txout_by_id
 
     # get corresponding Models::TxOut for +txin+
-    def get_txout_for_txin(txin)
-      tx = @db[:tx][:hash => txin.prev_out.reverse.blob]
+    def txout_for_txin(txin)
+      tx = @db[:tx][hash: txin.prev_out.reverse.blob]
       return nil  unless tx
-      wrap_txout(@db[:txout][:tx_idx => txin.prev_out_index, :tx_id => tx[:id]])
+      wrap_txout(@db[:txout][tx_idx: txin.prev_out_index, tx_id: tx[:id]])
     end
+    alias :get_txout_for_txin :txout_for_txin
 
     # get all Models::TxOut matching given +script+
-    def get_txouts_for_pk_script(script)
-      txouts = @db[:txout].filter(:pk_script => script.blob).order(:id)
+    def txouts_for_pk_script(script)
+      txouts = @db[:txout].filter(pk_script: script.blob).order(:id)
       txouts.map{|txout| wrap_txout(txout)}
     end
+    alias :get_txouts_for_pk_script :txouts_for_pk_script
 
     # get all Models::TxOut matching given +hash160+
-    def get_txouts_for_hash160(hash160, type = :hash160, unconfirmed = false)
+    def txouts_for_hash160(hash160, type = :hash160, unconfirmed = false)
       addr = @db[:addr][hash160: hash160, type: ADDRESS_TYPES.index(type)]
       return []  unless addr
       txouts = @db[:addr_txout].where(addr_id: addr[:id])
         .map{|t| @db[:txout][id: t[:txout_id]] }
         .map{|o| wrap_txout(o) }
       unless unconfirmed
-        txouts.select!{|o| @db[:blk][id: o.get_tx.blk_id][:chain] == MAIN rescue false }
+        txouts.select!{|o| @db[:blk][id: o.tx.blk_id][:chain] == MAIN rescue false }
       end
       txouts
     end
+    alias :get_txouts_for_hash160 :txouts_for_hash160
 
-    def get_txouts_for_name_hash(hash)
-      @db[:names].filter(hash: hash).map {|n| get_txout_by_id(n[:txout_id]) }
+    # TODO: move into Namecoin (?)
+    def txouts_for_name_hash(hash)
+      @db[:names].filter(hash: hash).map {|n| txout_by_id(n[:txout_id]) }
     end
-
-    # get all unconfirmed Models::TxOut
-    def get_unconfirmed_tx
-      @db[:unconfirmed].map{|t| wrap_tx(t)}
-    end
+    alias :get_txouts_for_name_hash :txouts_for_name_hash
 
     # Grab the position of a tx in a given block
-    def get_idx_from_tx_hash(tx_hash)
-      tx = @db[:tx][:hash => tx_hash.htb.blob]
+    def idx_from_tx_hash(tx_hash)
+      tx = @db[:tx][hash: tx_hash.htb.blob]
       return nil  unless tx
-      parent = @db[:blk_tx][:tx_id => tx[:id]]
+      parent = @db[:blk_tx][tx_id: tx[:id]]
       return nil  unless parent
       return parent[:idx]
     end
+    alias :get_idx_from_tx_hash :idx_from_tx_hash
 
     # wrap given +block+ into Models::Block
     def wrap_block(block)
       return nil  unless block
 
-      data = {:id => block[:id], :depth => block[:depth], :chain => block[:chain], :work => block[:work].to_i, :hash => block[:hash].hth, :size => block[:blk_size]}
+      data = { id: block[:id], height: block[:height], chain: block[:chain],
+        work: block[:work].to_i, hash: block[:hash].hth, size: block[:blk_size] }
       blk = Bitcoin::Storage::Models::Block.new(self, data)
 
       blk.ver = block[:version]
@@ -418,8 +435,8 @@ module Bitcoin::Storage::Backends
       blk_tx = db[:blk_tx].filter(blk_id: block[:id]).join(:tx, id: :tx_id).order(:idx)
 
       # fetch inputs and outputs for all transactions in the block to avoid additional queries for each transaction
-      inputs = db[:txin].filter(:tx_id => blk_tx.map{ |tx| tx[:id] }).order(:tx_idx).map.group_by{ |txin| txin[:tx_id] }
-      outputs = db[:txout].filter(:tx_id => blk_tx.map{ |tx| tx[:id] }).order(:tx_idx).map.group_by{ |txout| txout[:tx_id] }
+      inputs = db[:txin].filter(tx_id: blk_tx.map{ |tx| tx[:id] }).order(:tx_idx).map.group_by{ |txin| txin[:tx_id] }
+      outputs = db[:txout].filter(tx_id: blk_tx.map{ |tx| tx[:id] }).order(:tx_idx).map.group_by{ |txout| txout[:tx_id] }
 
       blk.tx = blk_tx.map { |tx| wrap_tx(tx, block[:id], inputs: inputs[tx[:id]], outputs: outputs[tx[:id]]) }
 
@@ -437,10 +454,10 @@ module Bitcoin::Storage::Backends
       data = {id: transaction[:id], blk_id: block_id, size: transaction[:tx_size], idx: transaction[:idx]}
       tx = Bitcoin::Storage::Models::Tx.new(self, data)
 
-      inputs = prefetched[:inputs] || db[:txin].filter(:tx_id => transaction[:id]).order(:tx_idx)
+      inputs = prefetched[:inputs] || db[:txin].filter(tx_id: transaction[:id]).order(:tx_idx)
       inputs.each { |i| tx.add_in(wrap_txin(i)) }
 
-      outputs = prefetched[:outputs] || db[:txout].filter(:tx_id => transaction[:id]).order(:tx_idx)
+      outputs = prefetched[:outputs] || db[:txout].filter(tx_id: transaction[:id]).order(:tx_idx)
       outputs.each { |o| tx.add_out(wrap_txout(o)) }
       tx.ver = transaction[:version]
       tx.lock_time = transaction[:lock_time]
@@ -451,8 +468,8 @@ module Bitcoin::Storage::Backends
     # wrap given +input+ into Models::TxIn
     def wrap_txin(input)
       return nil  unless input
-      data = { :id => input[:id], :tx_id => input[:tx_id], :tx_idx => input[:tx_idx],
-        :p2sh_type => input[:p2sh_type] ? SCRIPT_TYPES[input[:p2sh_type]] : nil }
+      data = { id: input[:id], tx_id: input[:tx_id], tx_idx: input[:tx_idx],
+        p2sh_type: input[:p2sh_type] ? SCRIPT_TYPES[input[:p2sh_type]] : nil }
       txin = Bitcoin::Storage::Models::TxIn.new(self, data)
       txin.prev_out = input[:prev_out]
       txin.prev_out_index = input[:prev_out_index]
@@ -465,8 +482,8 @@ module Bitcoin::Storage::Backends
     # wrap given +output+ into Models::TxOut
     def wrap_txout(output)
       return nil  unless output
-      data = {:id => output[:id], :tx_id => output[:tx_id], :tx_idx => output[:tx_idx],
-        :hash160 => output[:hash160], :type => SCRIPT_TYPES[output[:type]]}
+      data = { id: output[:id], tx_id: output[:tx_id], tx_idx: output[:tx_idx],
+        hash160: output[:hash160], type: SCRIPT_TYPES[output[:type]] }
       txout = Bitcoin::Storage::Models::TxOut.new(self, data)
       txout.value = output[:value]
       txout.pk_script = output[:pk_script]
@@ -478,18 +495,17 @@ module Bitcoin::Storage::Backends
     # - the prev_hash is the same as the previous blocks' hash
     # - the merkle root computed from all transactions is correct
     def check_consistency count = 1000
-      return  if get_depth < 1 || count <= 0
-      depth = get_depth
-      count = depth - 1  if count == -1
-      count = depth - 1  if count >= depth
+      return  if height < 1 || count <= 0
+      count = height - 1  if count == -1
+      count = height - 1  if count >= height
       log.info { "Checking consistency of last #{count} blocks..." }
-      prev_blk = get_block_by_depth(depth - count - 1)
-      (depth - count).upto(depth).each do |depth|
-        blk = get_block_by_depth(depth)
-        raise "Block hash #{blk.depth} invalid!"  unless blk.hash == blk.recalc_block_hash
-        raise "Prev hash #{blk.depth} invalid!"  unless blk.prev_block.reverse.hth == prev_blk.hash
-        raise "Merkle root #{blk.depth} invalid!"  unless blk.verify_mrkl_root
-        print "#{blk.hash} #{blk.depth} OK\r"
+      prev_blk = block_at_height(height - count - 1)
+      (height - count).upto(height).each do |height|
+        blk = block_at_height(height)
+        raise "Block hash #{blk.height} invalid!"  unless blk.hash == blk.recalc_block_hash
+        raise "Prev hash #{blk.height} invalid!"  unless blk.prev_block_hash.reverse.hth == prev_blk.hash
+        raise "Merkle root #{blk.height} invalid!"  unless blk.verify_mrkl_root
+        print "#{blk.hash} #{blk.height} OK\r"
         prev_blk = blk
       end
       log.info { "Last #{count} blocks are consistent." }
@@ -499,14 +515,14 @@ module Bitcoin::Storage::Backends
     def get_received(address)
       return 0 unless Bitcoin.valid_address?(address)
 
-      txouts = get_txouts_for_address(address)
+      txouts = txouts_for_address(address)
       return 0 unless txouts.any?
 
       txouts.inject(0){ |m, out| m + out.value }
 
       # total = 0
       # txouts.each do |txout|
-      #   tx = txout.get_tx
+      #   tx = txout.tx
       #   total += txout.value
       # end
     end

@@ -2,7 +2,7 @@ module Bitcoin::Protocol
 
   class MerkleBlock < Block
 
-    attr_accessor :hashes, :flags, :depth, :chain, :work
+    attr_accessor :hashes, :flags, :height, :chain, :work
 
     def initialize data = nil, header_only = true
       @tx, @tx_count, @hashes, @flags = [], 0, [], []

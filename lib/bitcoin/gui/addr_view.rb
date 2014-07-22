@@ -21,15 +21,15 @@ module Bitcoin::Gui
           @model.set_value(row, 3, !!addr[:mine])
           balance = 0
           unconfirmed = @gui.check_unconfirmed.active
-          @gui.storage.get_txouts_for_address(addr[:addr]).each do |txout|
-            next  if !unconfirmed && !txout.get_tx.get_block
+          @gui.storage.txouts_for_address(addr[:addr]).each do |txout|
+            next  if !unconfirmed && !txout.tx.get_block
             tx_row = @model.append(row)
-            @model.set_value(tx_row, 0, txout.get_tx.hash)
+            @model.set_value(tx_row, 0, txout.tx.hash)
             @model.set_value(tx_row, 2, txout.value.to_s)
             balance += txout.value
-            if txin = txout.get_next_in
+            if txin = txout.next_in
               tx_row = @model.append(row)
-              @model.set_value(tx_row, 0, txin.get_tx.hash)
+              @model.set_value(tx_row, 0, txin.tx.hash)
               @model.set_value(tx_row, 2, (0 - txout.value).to_s)
               balance -= txout.value
             end

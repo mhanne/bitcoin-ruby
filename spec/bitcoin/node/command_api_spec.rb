@@ -104,7 +104,7 @@ describe 'Node Command API' do
   it "should query info" do
     info = test_command "info"
     info.is_a?(Hash).should == true
-    info["blocks"].should == { "depth" => 0, "peers" => "?", "sync" => false }
+    info["blocks"].should == { "height" => 0, "depth" => 0, "peers" => "?", "sync" => false }
     info["addrs"].should == { "alive" => 0, "total" => 0 }
     info["connections"].should == {
       "established" => 0, "outgoing" => 0, "incoming" => 0, "connecting" => 0 }
@@ -138,10 +138,11 @@ describe 'Node Command API' do
   end
 
   it "should store block" do
-    test_command("info")["blocks"].should == {"depth" => 0, "peers" => "?", "sync" => false}
+    test_command("info")["blocks"].should == { "height" => 0, "depth" => 0, "peers" => "?", "sync" => false}
     res = test_command("store_block", { hex: @block.to_payload.hth })
     res.should == { "queued" => @block.hash }
     sleep 0.1
+    test_command("info")["blocks"]["height"].should == 1
     test_command("info")["blocks"]["depth"].should == 1
     test_command("info")["blocks"]["sync"].should == true
   end
@@ -314,8 +315,8 @@ describe 'Node Command API' do
         end
       end
 
-      def should_receive_block request, block, depth, client = @client
-        expected = { hash: block.hash, hex: block.to_payload.hth, depth: depth }
+      def should_receive_block request, block, height, client = @client
+        expected = { hash: block.hash, hex: block.to_payload.hth, height: height, depth: height }
         should_receive(request, expected, client)
       end
 

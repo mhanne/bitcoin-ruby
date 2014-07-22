@@ -256,21 +256,21 @@ module Bitcoin::Network
           self.stop
         end
 
-        subscribe(:block) do |blk, depth|
+        subscribe(:block) do |blk, height|
           next  unless @store.in_sync?
           @log.debug { "Relaying block #{blk.hash}" }
           @connections.select(&:connected?).each {|c| c.send_inv(:block, blk.hash) }
         end
 
         # subscribe to new watched address notifications and update filters
-        @store.subscribe(:watch_address) do |addr, depth|
+        @store.subscribe(:watch_address) do |addr, height|
           @connections.select(&:connected?).each(&:filterload)  if @store.is_spv?
         end
 
-        @store.subscribe(:block) do |blk, depth, chain|
-          if chain == 0 && blk.hash == @store.get_head.hash
+        @store.subscribe(:block) do |blk, height, chain|
+          if chain == 0 && blk.hash == @store.head_hash
             @last_block_time = Time.now
-            push_notification(:block, [blk, depth])
+            push_notification(:block, [blk, height])
             blk.tx.each {|tx| @unconfirmed.delete(tx.hash) }
           end
           getblocks  if chain == 2 && @store.in_sync?
@@ -364,7 +364,7 @@ module Bitcoin::Network
     end
 
     # query blocks from random peer
-    def getblocks locator = store.get_locator
+    def getblocks locator = store.locator
       return  if @last_getblocks && @last_getblocks == locator
       @last_getblocks = locator
       peer = @connections.select(&:connected?).sample

@@ -18,7 +18,7 @@ module Bitcoin::Namecoin
   FIRSTUPDATE_LIMIT = 12
 
   # number of blocks after which a name expires.
-  EXPIRATION_DEPTH = 36000
+  EXPIRATION_HEIGHT = 36000
 
   # Namecoin-specific Script methods for parsing and creating of namecoin scripts,
   # as well as methods to extract address, name_hash, name and value.
@@ -157,12 +157,10 @@ module Bitcoin::Namecoin
           def store_name(script, txout_id)
             if script.type == :name_new
               log.debug { "name_new #{script.get_namecoin_hash}" }
-              @db[:names].insert({
-                :txout_id => txout_id,
-                :hash => script.get_namecoin_hash })
+              @db[:names].insert({ txout_id: txout_id, hash: script.get_namecoin_hash })
             elsif script.type == :name_firstupdate
               name_hash = script.get_namecoin_hash
-              name_new = @db[:names].where(:hash => name_hash).order(:txout_id).first
+              name_new = @db[:names].where(hash: name_hash).order(:txout_id).first
               if self.class.name =~ /UtxoStore/
                 txout = @db[:utxo][id: name_new[:txout_id]] if name_new
                 blk = @db[:blk][id: txout[:blk_id]]  if txout
@@ -178,45 +176,46 @@ module Bitcoin::Namecoin
                 return nil
               end
 
-              unless blk[:depth] <= get_depth - Bitcoin::Namecoin::FIRSTUPDATE_LIMIT
+              unless blk[:height] <= height - Bitcoin::Namecoin::FIRSTUPDATE_LIMIT
                 log.debug { "name_new not yet valid: #{name_hash}" }
                 return nil
               end
 
               log.debug { "#{script.type}: #{script.get_namecoin_name}" }
-              @db[:names].where(:txout_id => name_new[:txout_id], :name => nil).update({
-                :name => script.get_namecoin_name.to_s.to_sequel_blob })
+              @db[:names].where(txout_id: name_new[:txout_id], name: nil).update({
+                name: script.get_namecoin_name.to_s.to_sequel_blob })
               @db[:names].insert({
-                :txout_id => txout_id,
-                :hash => name_hash,
-                :name => script.get_namecoin_name.to_s.to_sequel_blob,
-                :value => script.get_namecoin_value.to_s.to_sequel_blob })
+                txout_id: txout_id,
+                hash: name_hash,
+                name: script.get_namecoin_name.to_s.to_sequel_blob,
+                value: script.get_namecoin_value.to_s.to_sequel_blob })
             elsif script.type == :name_update
               log.debug { "#{script.type}: #{script.get_namecoin_name}" }
               @db[:names].insert({
-                :txout_id => txout_id,
-                :name => script.get_namecoin_name.to_s.to_sequel_blob,
-                :value => script.get_namecoin_value.to_s.to_sequel_blob })
+                txout_id: txout_id,
+                name: script.get_namecoin_name.to_s.to_sequel_blob,
+                value: script.get_namecoin_value.to_s.to_sequel_blob })
             end
           end
 
           def name_show name
-            names = @db[:names].where(:name => name.to_sequel_blob).order(:txout_id).reverse
+            names = @db[:names].where(name: name.to_sequel_blob).order(:txout_id).reverse
             return nil  unless names.any?
             wrap_name(names.first)
           end
           alias :get_name :name_show
 
           def name_history name
-            history = @db[:names].where(:name => name.to_sequel_blob)
+            history = @db[:names].where(name: name.to_sequel_blob)
               .where("value IS NOT NULL").order(:txout_id).map {|n| wrap_name(n) }
-            history.select! {|n| n.get_tx.blk_id }  unless self.class.name =~ /Utxo/ 
+            history.select! {|n| n.tx.blk_id }  unless self.class.name =~ /Utxo/ 
             history
           end
 
-          def get_name_by_txout_id txout_id
-            wrap_name(@db[:names][:txout_id => txout_id])
+          def name_by_txout_id txout_id
+            wrap_name(@db[:names][txout_id: txout_id])
           end
+          alias :get_name_by_txout_id :name_by_txout_id
 
           def wrap_name(data)
             return nil  unless data
@@ -242,33 +241,36 @@ module Bitcoin::Namecoin
           @value = data[:value]
         end
 
-        def get_txout
+        def txout
           if @txout_id.is_a?(Array)
-            @store.get_tx(@txout_id[0]).out[@txout_id[1]]
+            @store.tx(@txout_id[0]).out[@txout_id[1]]
           else
-            @store.get_txout_by_id(@txout_id)
+            @store.txout_by_id(@txout_id)
           end
         end
+        alias :get_txout :txout
 
-        def get_address
-          get_txout.get_address
+        def address
+          txout.get_address
         end
+        alias :get_address :address
 
-        def get_tx
-          get_txout.get_tx rescue nil
+        def tx
+          txout.tx rescue nil
         end
+        alias :get_tx :tx
 
-        def get_block
-          get_tx.get_block rescue nil
+        def block
+          tx.block rescue nil
         end
+        alias :get_block :block
 
         def expires_in
-          Bitcoin::Namecoin::EXPIRATION_DEPTH - (@store.get_depth - get_block.depth) rescue nil
+          Bitcoin::Namecoin::EXPIRATION_HEIGHT - (@store.height - block.height) rescue nil
         end
 
         def as_json(opts = {})
-          { name: @name, value: @value, txid: get_tx.hash,
-                                 address: get_address, expires_in: expires_in }
+          { name: @name, value: @value, txid: tx.hash, address: get_address, expires_in: expires_in }
         end
 
       end

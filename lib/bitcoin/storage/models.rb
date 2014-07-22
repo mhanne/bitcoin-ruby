@@ -13,13 +13,13 @@ module Bitcoin::Storage::Models
   # Block retrieved from storage. (see Bitcoin::Protocol::Block)
   class Block < Bitcoin::Protocol::MerkleBlock
 
-    attr_accessor :ver, :prev_block, :mrkl_root, :time, :bits, :nonce, :tx
-    attr_reader :store, :id, :depth, :chain, :work, :size
+    attr_accessor :ver, :prev_block_hash, :mrkl_root, :time, :bits, :nonce, :tx
+    attr_reader :store, :id, :height, :chain, :work, :size
 
     def initialize store, data
       @store = store
       @id = data[:id]
-      @depth = data[:depth]
+      @height = data[:height]
       @chain = data[:chain]
       @work = data[:work]
       @size = data[:size]
@@ -27,14 +27,20 @@ module Bitcoin::Storage::Models
     end
 
     # get the block this one builds upon
-    def get_prev_block
-      @store.get_block(@prev_block.reverse_hth)
+    def prev_block
+      @store.block(@prev_block_hash.reverse_hth)
+    end
+    alias :get_prev_block :prev_block
+
+    def prev_block_hash
+      @prev_block_hash
     end
 
     # get the block that builds upon this one
-    def get_next_block
-      @store.get_block_by_prev_hash(@hash)
+    def next_block
+      @store.block_by_prev_hash(@hash)
     end
+    alias :get_next_block :next_block
 
     def total_out
       @total_out ||= tx.inject(0){ |m,t| m + t.total_out }
@@ -47,6 +53,10 @@ module Bitcoin::Storage::Models
     def total_fee
       @total_fee ||= tx.inject(0){ |m,t| m + t.fee }
     end
+
+    # backward-compatibility
+    def depth; @height; end
+
   end
 
   # Transaction retrieved from storage. (see Bitcoin::Protocol::Tx)
@@ -65,15 +75,16 @@ module Bitcoin::Storage::Models
     end
 
     # get the block this transaction is in
-    def get_block
+    def block
       return nil  unless @blk_id
-      @block ||= @store.get_block_by_id(@blk_id)
+      @block ||= @store.block_by_id(@blk_id)
     end
+    alias :get_block :block
 
     # get the number of blocks that confirm this tx in the main chain
     def confirmations
-      return 0  unless get_block
-      @store.get_head.depth - get_block.depth + 1
+      return 0  unless block
+      @store.head.height - block.height + 1
     end
 
     def total_out
@@ -83,7 +94,7 @@ module Bitcoin::Storage::Models
     # if tx_in is coinbase, set in value as total_out, fee could be 0
     def total_in
       @total_in ||= self.in.inject(0){ |m, input|
-        m + (input.coinbase? ? total_out : (input.get_prev_out.try(:value) || 0))
+        m + (input.coinbase? ? total_out : (input.prev_out.try(:value) || 0))
       }
     end
 
@@ -106,18 +117,20 @@ module Bitcoin::Storage::Models
     end
 
     # get the transaction this input is in
-    def get_tx
-      @tx ||= @store.get_tx_by_id(@tx_id)
+    def tx
+      @tx ||= @store.tx_by_id(@tx_id)
     end
+    alias :get_tx :tx
 
     # get the previous output referenced by this input
-    def get_prev_out
+    def prev_out
       @prev_tx_out ||= begin
-        prev_tx = @store.get_tx(@prev_out.reverse_hth)
+        prev_tx = @store.tx(@prev_out.reverse_hth)
         return nil  unless prev_tx
         prev_tx.out[@prev_out_index]
       end
     end
+    alias :get_prev_out :prev_out
 
   end
 
@@ -139,28 +152,33 @@ module Bitcoin::Storage::Models
     end
 
     # get the transaction this output is in
-    def get_tx
-      @tx ||= @store.get_tx_by_id(@tx_id)
+    def tx
+      @tx ||= @store.tx_by_id(@tx_id)
     end
+    alias :get_tx :tx
 
     # get the next input that references this output
-    def get_next_in
-      @store.get_txin_for_txout(get_tx.hash, @tx_idx)
+    def next_in
+      @store.txin_for_txout(tx.hash, @tx_idx)
     end
-
-    # get all addresses this txout corresponds to (if possible)
-    def get_address
-      parsed_script.get_address
-    end
+    alias :get_next_in :next_in
 
     # get the single address this txout corresponds to (first for multisig tx)
-    def get_addresses
+    def address
+      parsed_script.get_address
+    end
+    alias :get_address :address
+
+    # get all addresses this txout corresponds to (if possible)
+    def addresses
       parsed_script.get_addresses
     end
+    alias :get_addresses :addresses
 
-    def get_namecoin_name
-      @store.get_name_by_txout_id(@id)
+    def namecoin_name
+      @store.name_by_txout_id(@id)
     end
+    alias :get_namecoin_name :namecoin_name
 
     def type
       parsed_script.type

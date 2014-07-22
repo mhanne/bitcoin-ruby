@@ -67,11 +67,11 @@ def create_blocks prev_hash, n, opts = {}
   interval = opts[:interval] || 600
   time = opts[:time] || Time.now.to_i
   bits = opts[:bits] || 553713663
-  block = @store.get_block(prev_hash)
+  block = @store.block(prev_hash)
   n.times do |i|
     block = create_block block.hash, true, [], @key, 50e8, {
       time: time += interval, bits: bits }
-    # block = @store.get_block(block.hash)
+    # block = @store.block(block.hash)
     # puts "#{i} #{block.hash[0..8]} #{block.prev_block.reverse_hth[0..8]} #{Time.at(block.time).strftime('%Y-%m-%d %H:%M:%S')} c: #{block.chain} b: #{block.bits} n: #{block.nonce} w: #{block.work}"
   end
   block

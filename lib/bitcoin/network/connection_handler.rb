@@ -112,7 +112,7 @@ module Bitcoin::Network
     end
 
     def filterload
-      return  unless (addrs = @node.store.watched_addrs(@node.store.get_depth)) && addrs.any?
+      return  unless (addrs = @node.store.watched_addrs(@node.store.height)) && addrs.any?
       log.info { "Setting bloom filter for #{addrs.size} addresses." }
       filter = Bitcoin::BloomFilter.new(addrs.size * 22, 0.000001, 0, :update_all)
       addrs.each {|a| filter.insert(Bitcoin.hash160_from_address(a).htb) }
@@ -142,7 +142,7 @@ module Bitcoin::Network
     # send specified tx if we have it
     def on_get_transaction(hash)
       log.debug { ">> get transaction: #{hash.hth}" }
-      tx = @node.store.get_tx(hash.hth)
+      tx = @node.store.tx(hash.hth)
       tx ||= @node.relay_tx[hash.hth]
       return  unless tx
       pkt = Bitcoin::Protocol.pkt("tx", tx.to_payload)
@@ -154,7 +154,7 @@ module Bitcoin::Network
     # send specified block if we have it
     def on_get_block(hash)
       log.debug { ">> get block: #{hash.hth}" }
-      blk = @node.store.get_block(hash.hth)
+      blk = @node.store.block(hash.hth)
       return  unless blk
       pkt = Bitcoin::Protocol.pkt("block", blk.to_payload)
       log.debug { "<< block: #{blk.hash}" }
@@ -242,12 +242,12 @@ module Bitcoin::Network
 
       return nil  unless @node.store.is_full?
       blk = @node.store.db[:blk][hash: hashes[0].htb.blob]
-      depth = blk[:depth]  if blk
-      log.info { ">> getblocks #{hashes[0]} (#{depth || 'unknown'})" }
+      height = blk[:height]  if blk
+      log.info { ">> getblocks #{hashes[0]} (#{height || 'unknown'})" }
 
-      return  unless depth && depth <= @node.store.get_depth
-      range = (depth+1..depth+500)
-      blocks = @node.store.db[:blk].where(chain: 0, depth: range).order(:depth).select(:hash).all
+      return  unless height && height <= @node.store.height
+      range = (height+1..height+500)
+      blocks = @node.store.db[:blk].where(chain: 0, height: range).order(:height).select(:hash).all
       send_inv(:block, *blocks.map {|b| b[:hash].hth })
     end
 
@@ -265,7 +265,7 @@ module Bitcoin::Network
       from = "#{@node.external_ip}:#{@node.config[:listen][1]}"
       version = Bitcoin::Protocol::Version.new({
         :version    => 70001,
-        :last_block => @node.store.get_depth,
+        :last_block => @node.store.height,
         :from       => from,
         :to         => @host,
         :user_agent => "/bitcoin-ruby:#{Bitcoin::VERSION}/",
@@ -300,8 +300,8 @@ module Bitcoin::Network
     end
 
     # send +getblocks+ message
-    def send_getblocks locator = @node.store.get_locator
-      if @node.store.get_depth == -1
+    def send_getblocks locator = @node.store.locator
+      if @node.store.height == -1
         EM.add_timer(3) { send_getblocks }
         return get_genesis_block
       end
@@ -311,8 +311,8 @@ module Bitcoin::Network
     end
 
     # send +getheaders+ message
-    def send_getheaders locator = @node.store.get_locator
-      return get_genesis_block  if @node.store.get_depth == -1
+    def send_getheaders locator = @node.store.locator
+      return get_genesis_block  if @node.store.height == -1
       pkt = Protocol.pkt("getheaders", [Bitcoin::network[:magic_head],
           locator.size.chr, *locator.map{|l| l.htb_reverse}, "\x00"*32].join)
       log.debug { "<< getheaders: #{locator.first}" }
@@ -371,7 +371,7 @@ module Bitcoin::Network
       from = "#{@node.external_ip}:#{@node.config[:listen][1]}"
       version = Bitcoin::Protocol::Version.new({
         :version    => 70001,
-        :last_block => @node.store.get_depth,
+        :last_block => @node.store.height,
         :from       => from,
         :to         => @host,
         :user_agent => "/bitcoin-ruby:#{Bitcoin::VERSION}/",

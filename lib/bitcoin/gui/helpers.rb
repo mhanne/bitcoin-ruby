@@ -3,7 +3,7 @@
 module Bitcoin::Gui::Helpers
 
   def display_tx tx_hash
-    tx = @storage.get_tx(tx_hash)
+    tx = @storage.tx(tx_hash)
     dialog(:tx, setup: ->(d) {
         tx_label_hash.text = tx.hash
         tx_label_value.text = format_value(tx.out.map(&:value).inject(:+))

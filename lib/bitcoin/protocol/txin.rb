@@ -7,6 +7,7 @@ module Bitcoin
 
       # previous output hash
       attr_accessor :prev_out
+      alias :prev_out_hash :prev_out
 
       # previous output index
       attr_accessor :prev_out_index

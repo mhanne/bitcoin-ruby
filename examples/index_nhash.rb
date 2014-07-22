@@ -9,15 +9,15 @@ Bitcoin.network = :testnet3
 #@store.db.execute "DROP INDEX tx_nhash_index"
 
 def process_block blk
-  print "\r#{blk.hash} - #{blk.depth}"
+  print "\r#{blk.hash} - #{blk.height}"
   blk.tx.each do |tx|
     @store.db[:tx].where(hash: tx.hash.htb.blob).update(nhash: tx.nhash.htb.blob)
   end
 end
 
-blk = @store.get_block_by_depth(0)
+blk = @store.block_at_height(0)
 process_block(blk)
-while blk = blk.get_next_block
+while blk = blk.next_block
   process_block(blk)
 end
 

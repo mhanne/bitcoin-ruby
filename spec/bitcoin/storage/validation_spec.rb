@@ -25,7 +25,7 @@ Bitcoin.network = :spec
   describe "block rules (#{options[0]} - #{options[1]})" do
 
   def balance addr
-    @store.get_balance(Bitcoin.hash160_from_address(addr))
+    @store.balance(Bitcoin.hash160_from_address(addr))
   end
 
   before do
@@ -37,9 +37,9 @@ Bitcoin.network = :spec
     @block0 = create_block "00"*32, false, [], @key
     Bitcoin.network[:genesis_hash] = @block0.hash
     @store.store_block(@block0)
-    @store.get_head.should == @block0
+    @store.head.should == @block0
     @block1 = create_block @block0.hash, true, [], @key
-    @store.get_head.should == @block1
+    @store.head.should == @block1
     @block = create_block @block1.hash, false
   end
 
@@ -120,8 +120,8 @@ Bitcoin.network = :spec
 
     block = create_block(prev_block.hash, false, [], @key)
 
-    fake_time = @store.get_block_by_depth(8).time - 1
-    times = @store.db[:blk].where("depth > 2").map{|b|b[:time]}.sort
+    fake_time = @store.block_at_height(8).time - 1
+    times = @store.db[:blk].where("height > 2").map{|b|b[:time]}.sort
     m, r = times.size.divmod(2)
     min_time = (r == 0 ? times[m-1, 2].inject(:+) / 2.0 : times[m])
 
@@ -129,11 +129,11 @@ Bitcoin.network = :spec
     check_block(block, [:min_timestamp, [fake_time, min_time]]) {|b| b.time = fake_time }
 
     # reject at exactly median time
-    fake_time = @store.get_block_by_depth(8).time
+    fake_time = @store.block_at_height(8).time
     check_block(block, [:min_timestamp, [fake_time, fake_time]]) {|b| b.time = fake_time }
 
     # accept after median time
-    block.time = @store.get_block_by_depth(8).time + 1; block.recalc_block_hash
+    block.time = @store.block_at_height(8).time + 1; block.recalc_block_hash
     @store.store_block(block).should == [14, 0]
   end
 
@@ -181,9 +181,9 @@ describe "transaction rules (#{options[0]} - #{options[1]})" do
     @block0 = create_block "00"*32, false, [], @key
     Bitcoin.network[:genesis_hash] = @block0.hash
     @store.store_block(@block0)
-    @store.get_head.should == @block0
+    @store.head.should == @block0
     @block1 = create_block @block0.hash, true, [], @key
-    @store.get_head.should == @block1
+    @store.head.should == @block1
     @tx = build_tx {|t| create_tx(t, @block1.tx.first, 0, [[50, @key]]) }
   end
 

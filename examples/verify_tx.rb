@@ -17,7 +17,7 @@ store = Bitcoin::Storage.sequel(:db => "sqlite://bitcoin.db")
 
 tx_hash = ARGV.shift
 
-tx1 = store.get_tx(tx_hash)
+tx1 = store.tx(tx_hash)
 
 unless tx1
   puts "Tx #{tx_hash} not found."
@@ -34,7 +34,7 @@ tx1.in.each_with_index do |txin, idx|
     puts "skipping coinbase transaction input.."; next
   end
 
-  prev_tx = txin.get_prev_out.get_tx
+  prev_tx = txin.prev_out.tx
   if prev_tx
     puts "Found prev tx #{prev_tx.hash}"
     txout = prev_tx.out[txin.prev_out_index]

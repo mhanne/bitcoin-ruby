@@ -172,9 +172,9 @@ describe 'Bitcoin::Namecoin' do
           t.output {|o| o.value 50e8; o.script {|s|; s.type(:name_firstupdate)
             s.recipient("test", @rand, "testvalue", @key.addr) } } }], @key
 
-        @store.name_show("test").expires_in.should == Namecoin::EXPIRATION_DEPTH
+        @store.name_show("test").expires_in.should == Namecoin::EXPIRATION_HEIGHT
         @block = create_block @block.hash, true, [], @key
-        @store.name_show("test").expires_in.should == Namecoin::EXPIRATION_DEPTH - 1
+        @store.name_show("test").expires_in.should == Namecoin::EXPIRATION_HEIGHT - 1
       end
 
     end

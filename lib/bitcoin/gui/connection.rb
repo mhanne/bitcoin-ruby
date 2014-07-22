@@ -28,8 +28,8 @@ module Bitcoin::Gui
           EM::defer { sleep(1) && request(:info) }
         end
 
-        on_block do |block, depth|
-          gui { status_store.push 0, "Blocks: #{depth}" }
+        on_block do |block, height|
+          gui { status_store.push 0, "Blocks: #{height}" }
         end
 
         on_connection do |state, data|

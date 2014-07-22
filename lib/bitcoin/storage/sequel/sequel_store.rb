@@ -496,6 +496,7 @@ module Bitcoin::Storage::Backends
     # - the merkle root computed from all transactions is correct
     def check_consistency count = 1000
       return  if height < 1 || count <= 0
+      height = height
       count = height - 1  if count == -1
       count = height - 1  if count >= height
       log.info { "Checking consistency of last #{count} blocks..." }

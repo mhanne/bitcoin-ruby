@@ -500,7 +500,6 @@ module Bitcoin
   MIN_FEE_MODE     = [ :block, :relay, :send ]
 
   NETWORKS = {
-
     bitcoin: {
       project: :bitcoin,
       magic_head: "\xF9\xBE\xB4\xD9",
@@ -567,10 +566,8 @@ module Bitcoin
   NETWORKS[:regtest] = NETWORKS[:testnet].merge({
       default_port: 18444,
       genesis_hash: "0f9188f13cb7b2c71f2a335e3a4fc328bf5beb436012afca590b1a11466e2206",
-      proof_of_work_limit: (1 << 255) - 1,
+      proof_of_work_limit: 0x207fffff,
     })
-
-
 
   NETWORKS[:testnet3] = NETWORKS[:testnet].merge({
       magic_head: "\x0B\x11\x09\x07",
@@ -702,7 +699,6 @@ module Bitcoin
         165000 => "823d7a54ebab04d14c4ba3508f6b5f25977406f4d389539eac0174d52c6b4b62",
       }
     })
-
 
   NETWORKS[:namecoin_testnet] = NETWORKS[:namecoin].merge({
       magic_head: "\xFA\xBF\xB5\xFE",

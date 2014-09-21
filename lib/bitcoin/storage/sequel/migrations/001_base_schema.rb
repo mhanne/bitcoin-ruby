@@ -12,9 +12,9 @@ Sequel.migration do
       add_column :backend, :varchar # storage backend
     end
 
-    next  if tables.include?(:blk)
+    next  if tables.include?(@tables[:blocks])
 
-    create_table :blk do
+    create_table @tables[:blocks] do
       primary_key :id
       column :hash, binary, :null => false, :unique => true, :index => true
       column :depth, :int, :null => false, :index => true
@@ -30,17 +30,17 @@ Sequel.migration do
       column :aux_pow, binary
     end
 
-    create_table :addr do
+    create_table @tables[:addresses] do
       primary_key :id
       column :hash160, String, :null => false, :index => true
     end
 
-    create_table :addr_txout do
+    create_table @tables[:address_outputs] do
       column :addr_id, :int, :null => false, :index => true
       column :txout_id, :int, :null => false, :index => true
     end
 
-    create_table :names do
+    create_table @tables[:names] do
       column :txout_id, :int, :null => false, :index => true
       column :hash, binary, :index => true
       column :name, binary, :index => true

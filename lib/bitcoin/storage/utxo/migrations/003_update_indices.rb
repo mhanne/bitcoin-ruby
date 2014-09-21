@@ -2,7 +2,7 @@ Sequel.migration do
   up do
     @log.info { "Running migration #{__FILE__}" }
 
-    alter_table :utxo do
+    alter_table @tables[:outputs] do
       # This is used when deleting spent uxto rows
       add_index([:tx_hash, :tx_idx])
 

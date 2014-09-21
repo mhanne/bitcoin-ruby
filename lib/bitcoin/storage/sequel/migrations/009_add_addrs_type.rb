@@ -6,44 +6,44 @@ Sequel.migration do
 
     @log.info { "Running migration #{__FILE__}" }
 
-    add_column :addr, :type, :int, default: 0, null: false
+    add_column @tables[:addresses], :type, :int, default: 0, null: false
 
-    if (count = self[:txout].where(type: 4).count) > 0
+    if (count = outputs.where(type: 4).count) > 0
       puts "Fixing address types for #{count} p2sh addresses..."
     end
 
     i = 0
     # iterate over all txouts with p2sh type
-    self[:txout].where(type: 4).each do |txout|
+    outputs.where(type: 4).each do |txout|
       # find addr_txout mapping
-      addr_txout = self[:addr_txout][txout_id: txout[:id]]
+      addr_txout = address_outputs[txout_id: txout[:id]]
 
       # find currently linked address
-      addr = self[:addr][id: addr_txout[:addr_id]]
+      addr = addresses[id: addr_txout[:addr_id]]
 
       # skip if address type is already p2sh
       next i+=1  if addr[:type] == 1
 
       # if address has other txouts, that are not p2sh-type, we need a different one
-      if self[:addr_txout].where(addr_id: addr[:id])
+      if address_outputs.where(addr_id: addr[:id])
           .join(:txout, id: :txout_id).where("type != 4").any?
 
         # if there is already a corrected address
-        if a = self[:addr][hash160: addr[:hash160], type: 1]
+        if a = addresses[hash160: addr[:hash160], type: 1]
           # use the existing corrected address
           addr_id = a[:id]
         else
           # create new address with correct p2sh type
-          addr_id = self[:addr].insert(hash160: addr[:hash160], type: 1)
+          addr_id = addresses.insert(hash160: addr[:hash160], type: 1)
         end
 
         # change mapping to point to new address
-        self[:addr_txout].where(txout_id: txout[:id]).update(addr_id: addr_id)
+        address_outputs.where(txout_id: txout[:id]).update(addr_id: addr_id)
 
       # if address has only this txout
       else
         # change to correct type
-        self[:addr].where(id: addr[:id]).update(type: 1)
+        addresses.where(id: addr[:id]).update(type: 1)
       end
 
       print "\r#{i}"; i+=1
@@ -51,7 +51,7 @@ Sequel.migration do
     end
     puts
 
-    add_index :addr, [:hash160, :type]
+    add_index @tables[:addresses], [:hash160, :type]
 
   end
 

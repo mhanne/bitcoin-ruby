@@ -6,7 +6,7 @@ Sequel.migration do
 
     next  if tables.include?(:tx)
 
-    create_table :tx do
+    create_table @tables[:transactions] do
       primary_key :id
       column :hash, :varchar, :null => false, :unique => true, :index => true
       column :version, :bigint, :null => false
@@ -15,13 +15,13 @@ Sequel.migration do
       column :tx_size, :int, :null => false
     end
 
-    create_table :blk_tx do
+    create_table @tables[:block_transactions] do
       column :blk_id, :int, :null => false, :index => true
       column :tx_id, :int, :null => false, :index => true
       column :idx, :int, :null => false
     end
 
-    create_table :txin do
+    create_table @tables[:inputs] do
       primary_key :id
       column :tx_id, :int, :null => false, :index => true
       column :tx_idx, :int, :null => false
@@ -31,7 +31,7 @@ Sequel.migration do
       column :sequence, :bigint, :null => false
     end
 
-    create_table :txout do
+    create_table @tables[:outputs] do
       primary_key :id
       column :tx_id, :int, :null => false, :index => true
       column :tx_idx, :int, :null => false

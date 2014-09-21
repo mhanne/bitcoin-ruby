@@ -9,9 +9,9 @@ include Bitcoin::Builder
 
 Bitcoin::network = :testnet
 [
-# [:dummy],
+ [:dummy],
  [:sequel, :sqlite],
-# [:utxo, :sqlite, index_all_addrs: true],
+ [:utxo, :sqlite, index_all_addrs: true],
  [:sequel, :postgres],
  [:utxo, :postgres, index_all_addrs: true],
  [:sequel, :mysql],
@@ -59,23 +59,25 @@ Bitcoin::network = :testnet
         @block.next_block.should == @store.block_at_height(2)
       end
 
-      it "should get total out" do
-        @block.total_out.should == 5000000000
-      end
+      if @store.backend_name == "sequel"
+        it "should get total out" do
+          @block.total_out.should == 5000000000
+        end
 
-      it "should get total in" do
-        @block.total_in.should == 5000000000
-      end
+        it "should get total in" do
+          @block.total_in.should == 5000000000
+        end
 
-      it "should get total fee" do
-        @block.total_fee.should == 0
+        it "should get total fee" do
+          @block.total_fee.should == 0
+        end
       end
 
     end
 
     describe "Tx" do
 
-      before { @tx = @store.block_at_height(1).tx[0] }
+      before { @tx = @store.tx("0e8e58ecdacaa7b3c6304a35ae4ffff964816d2b80b62b58558866ce4e648c10") }
 
       it "should get block" do
         @tx.block.should == @store.block_at_height(1)
@@ -85,16 +87,18 @@ Bitcoin::network = :testnet
         @tx.confirmations.should == 3
       end
 
-      it "should get total out" do
-        @tx.total_out.should == 5000000000
-      end
+      unless @store.backend_name == "utxo"
+        it "should get total out" do
+          @tx.total_out.should == 5000000000
+        end
 
-      it "should get total in" do
-        @tx.total_in.should == 5000000000
-      end
+        it "should get total in" do
+          @tx.total_in.should == 5000000000
+        end
 
-      it "should get fee" do
-        @tx.fee.should == 0
+        it "should get fee" do
+          @tx.fee.should == 0
+        end
       end
 
     end

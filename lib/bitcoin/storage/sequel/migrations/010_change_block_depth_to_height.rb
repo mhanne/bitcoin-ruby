@@ -6,7 +6,7 @@ Sequel.migration do
 
     @log.info { "Running migration #{__FILE__}" }
 
-    rename_column :blk, :depth, :height
+    rename_column @tables[:blocks], :depth, :height
 
   end
 

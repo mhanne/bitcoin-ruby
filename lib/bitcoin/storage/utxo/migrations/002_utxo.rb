@@ -4,7 +4,7 @@ Sequel.migration do
 
     @log.info { "Running migration #{__FILE__}" }
 
-    create_table :utxo do
+    create_table @tables[:outputs] do
       primary_key :id
       column :tx_hash, String, null: false, index: true
       column :tx_idx, :int, null: false, index: true

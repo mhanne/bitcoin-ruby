@@ -6,8 +6,8 @@ Sequel.migration do
 
     @log.info { "Running migration #{__FILE__}" }
 
-    add_column :addr, :type, :int, default: 0, null: false
-    add_index :addr, [:hash160, :type]
+    add_column @tables[:addresses], :type, :int, default: 0, null: false
+    add_index @tables[:addresses], [:hash160, :type]
 
   end
 

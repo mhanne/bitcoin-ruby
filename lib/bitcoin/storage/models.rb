@@ -26,32 +26,39 @@ module Bitcoin::Storage::Models
       @tx = []
     end
 
-    # get the block this one builds upon
+    # Get the previous block this one builds upon.
     def prev_block
       @store.block(@prev_block_hash.reverse_hth)
     end
     alias :get_prev_block :prev_block
 
+    # Get the hash of the previous block.
     def prev_block_hash
       @prev_block_hash
     end
 
-    # get the block that builds upon this one
+    # Get the next block that builds upon this one.
     def next_block
       @store.block_by_prev_hash(@hash)
     end
     alias :get_next_block :next_block
 
+    # Get the total value of outputs of all transaction in this block.
+    # Note:: only works with +sequel+ backend
     def total_out
-      @total_out ||= tx.inject(0){ |m,t| m + t.total_out }
+      @total_out ||= tx.inject(0){ |m,t| m + t.total_out } rescue nil
     end
 
+    # Get the total value of inputs to al transactions in this block.
+    # Note:: only works with +sequel+ backend
     def total_in
-      @total_in ||= tx.inject(0){ |m,t| m + t.total_in }
+      @total_in ||= tx.inject(0){ |m,t| m + t.total_in } rescue nil
     end
 
+    # Get the total fee of all transactions in this block.
+    # Note:: only works with +sequel+ backend
     def total_fee
-      @total_fee ||= tx.inject(0){ |m,t| m + t.fee }
+      @total_fee ||= tx.inject(0){ |m,t| m + t.fee } rescue nil
     end
 
     # backward-compatibility
@@ -74,30 +81,36 @@ module Bitcoin::Storage::Models
       super(nil)
     end
 
-    # get the block this transaction is in
+    # Get the block this transaction is in.
     def block
       return nil  unless @blk_id
       @block ||= @store.block_by_id(@blk_id)
     end
     alias :get_block :block
 
-    # get the number of blocks that confirm this tx in the main chain
+    # Get the number of blocks that confirm this tx in the main chain.
     def confirmations
       return 0  unless block
       @store.head.height - block.height + 1
     end
 
+    # Get the total value of all outputs of this transaction.
+    # Note:: doesn't work with +utxo+ backend
     def total_out
       @total_out ||= self.out.inject(0){ |e, o| e + o.value }
     end
 
-    # if tx_in is coinbase, set in value as total_out, fee could be 0
+    # Get the total value of all inputs to this transaction.
+    # If tx_in is coinbase, set in value as total_out, fee could be 0.
+    # Note:: doesn't work with +utxo+ backend
     def total_in
       @total_in ||= self.in.inject(0){ |m, input|
         m + (input.coinbase? ? total_out : (input.prev_out.try(:value) || 0))
       }
     end
 
+    # Get the fee (input value - output value) of this transaction.
+    # Note:: doesn't work with +utxo+ backend
     def fee
       @fee ||= total_in - total_out
     end

@@ -9,12 +9,12 @@ include Bitcoin::Validation
 Bitcoin.network = :spec
 
 [
-  [:sequel, :sqlite],
-  [:utxo, :sqlite, index_all_addrs: true],
-  [:sequel, :postgres],
-  [:utxo, :postgres, index_all_addrs: true],
-  [:sequel, :mysql],
-  [:utxo, :mysql, index_all_addrs: true],
+ [:sequel, :sqlite],
+ [:utxo, :sqlite, index_all_addrs: true],
+ [:sequel, :postgres],
+ [:utxo, :postgres, index_all_addrs: true],
+ [:sequel, :mysql],
+ [:utxo, :mysql, index_all_addrs: true],
 
 # TODO
 # [:spv, "spec/test_spv"],
@@ -121,7 +121,7 @@ Bitcoin.network = :spec
     block = create_block(prev_block.hash, false, [], @key)
 
     fake_time = @store.block_at_height(8).time - 1
-    times = @store.db[:blk].where("height > 2").map{|b|b[:time]}.sort
+    times = @store.db.blocks.where("height > 2").map{|b|b[:time]}.sort
     m, r = times.size.divmod(2)
     min_time = (r == 0 ? times[m-1, 2].inject(:+) / 2.0 : times[m])
 
@@ -268,7 +268,7 @@ describe "transaction rules (#{options[0]} - #{options[1]})" do
   end
   
   it "15. Using the referenced output transactions to get input values, check that each input value, as well as the sum, are in legal money range" do
-    @store.db[@store.class.name =~ /Utxo/ ? :utxo : :txout].order(:id).reverse.limit(1).update(value: 22e14)
+    @store.db.outputs.order(:id).reverse.limit(1).update(value: 22e14)
     check_tx(@tx, [:input_values, [22e14, 21e14]])
   end
 

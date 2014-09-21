@@ -10,14 +10,14 @@ include Bitcoin::Validation
 
 Bitcoin::network = :testnet
 [
-  [:dummy],
-  [:sequel, :sqlite],
-  [:utxo, :sqlite, index_all_addrs: true],
-  [:sequel, :postgres],
-  [:utxo, :postgres, index_all_addrs: true],
-  [:sequel, :mysql],
-  [:utxo, :mysql, index_all_addrs: true],
-  [:spv, "spec/test_spv"],
+ [:dummy],
+ [:sequel, :sqlite],
+ [:utxo, :sqlite, index_all_addrs: true],
+ [:sequel, :postgres],
+ [:utxo, :postgres, index_all_addrs: true],
+ [:sequel, :mysql],
+ [:utxo, :mysql, index_all_addrs: true],
+# [:spv, "spec/test_spv"],
 ].compact.each do |options|
 
   next  unless storage = setup_db(*options)

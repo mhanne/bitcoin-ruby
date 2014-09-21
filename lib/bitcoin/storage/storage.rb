@@ -516,7 +516,23 @@ module Bitcoin::Storage
 
       SEQUEL_ADAPTERS = { sqlite: "sqlite3", postgres: "pg", mysql: "mysql" }
 
-      #set the connection
+      # table names to be used in the database
+      # TODO: make this configurable
+      TABLES= {
+        # used by both stores
+        blocks: :blocks,
+        outputs: :outputs,  # this is the only one with different columns in the two stores
+        addresses: :addresses,
+        address_outputs: :address_outputs,
+        names: :names,
+
+        # used only by sequel store
+        transactions: :transactions,
+        block_transactions: :block_transactions,
+        inputs: :inputs
+      }
+
+      # setup the DB connection, according to given config
       def init_store_connection
         return  unless (self.is_a?(SequelStore) || self.is_a?(UtxoStore)) && @config[:db]
         @config[:db].sub!("~", ENV["HOME"])
@@ -531,8 +547,15 @@ module Bitcoin::Storage
         Sequel.extension(:core_extensions, :sequel_3_dataset_methods)
         @db = Sequel.connect(@config[:db].sub("~", ENV["HOME"]))
         @db.extend_datasets(Sequel::Sequel3DatasetMethods)
+        TABLES.each {|k, v| @db.instance_eval "def #{k}; self[:#{v}]; end" }
         sqlite_pragmas; migrate; check_metadata
         log.info { "opened #{backend_name} store #{@db.uri}" }
+      end
+
+      # delete all tables (so they will be created fresh) and reset cached head block
+      def reset
+        TABLES.values.each.each {|table| db[table].delete rescue nil }
+        @head = nil
       end
 
       # check if schema is up to date and migrate to current version if necessary
@@ -540,7 +563,12 @@ module Bitcoin::Storage
         migrations_path = File.join(File.dirname(__FILE__), "#{backend_name}/migrations")
         Sequel.extension :migration
         unless Sequel::Migrator.is_current?(@db, migrations_path)
-          store = self; log = @log; @db.instance_eval { @log = log; @store = store }
+          store = self
+          @db.instance_eval do
+            @store = store
+            @log = store.log
+            @tables = store.class::TABLES
+          end
           Sequel::Migrator.run(@db, migrations_path)
           unless (v = @db[:schema_info].first) && v[:magic] && v[:backend]
             @db[:schema_info].update(
@@ -574,6 +602,7 @@ module Bitcoin::Storage
           log.debug { "set sqlite pragma #{name} to #{value}" }
         end
       end
+
     end
 
   end

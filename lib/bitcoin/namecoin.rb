@@ -157,18 +157,18 @@ module Bitcoin::Namecoin
           def store_name(script, txout_id)
             if script.type == :name_new
               log.debug { "name_new #{script.get_namecoin_hash}" }
-              @db[:names].insert({ txout_id: txout_id, hash: script.get_namecoin_hash })
+              @db.names.insert({ txout_id: txout_id, hash: script.get_namecoin_hash })
             elsif script.type == :name_firstupdate
               name_hash = script.get_namecoin_hash
-              name_new = @db[:names].where(hash: name_hash).order(:txout_id).first
+              name_new = db.names.where(hash: name_hash).order(:txout_id).first
               if self.class.name =~ /UtxoStore/
-                txout = @db[:utxo][id: name_new[:txout_id]] if name_new
-                blk = @db[:blk][id: txout[:blk_id]]  if txout
+                txout = db.outputs[id: name_new[:txout_id]] if name_new
+                blk = db.blocks[id: txout[:blk_id]]  if txout
               else
-                txout = @db[:txout][id: name_new[:txout_id]] if name_new
-                tx = @db[:tx][id: txout[:tx_id]] if txout
-                blk_tx = @db[:blk_tx][tx_id: tx[:id]]  if tx
-                blk = @db[:blk][id: blk_tx[:blk_id]] if blk_tx
+                txout = db.outputs[id: name_new[:txout_id]] if name_new
+                tx = db.transactions[id: txout[:tx_id]] if txout
+                blk_tx = db.block_transactions[tx_id: tx[:id]]  if tx
+                blk = db.blocks[id: blk_tx[:blk_id]] if blk_tx
               end
 
               unless name_new && blk && blk[:chain] == 0
@@ -182,16 +182,16 @@ module Bitcoin::Namecoin
               end
 
               log.debug { "#{script.type}: #{script.get_namecoin_name}" }
-              @db[:names].where(txout_id: name_new[:txout_id], name: nil).update({
+              db.names.where(txout_id: name_new[:txout_id], name: nil).update({
                 name: script.get_namecoin_name.to_s.to_sequel_blob })
-              @db[:names].insert({
+              db.names.insert({
                 txout_id: txout_id,
                 hash: name_hash,
                 name: script.get_namecoin_name.to_s.to_sequel_blob,
                 value: script.get_namecoin_value.to_s.to_sequel_blob })
             elsif script.type == :name_update
               log.debug { "#{script.type}: #{script.get_namecoin_name}" }
-              @db[:names].insert({
+              db.names.insert({
                 txout_id: txout_id,
                 name: script.get_namecoin_name.to_s.to_sequel_blob,
                 value: script.get_namecoin_value.to_s.to_sequel_blob })
@@ -199,21 +199,21 @@ module Bitcoin::Namecoin
           end
 
           def name_show name
-            names = @db[:names].where(name: name.to_sequel_blob).order(:txout_id).reverse
+            names = db.names.where(name: name.to_sequel_blob).order(:txout_id).reverse
             return nil  unless names.any?
             wrap_name(names.first)
           end
           alias :get_name :name_show
 
           def name_history name
-            history = @db[:names].where(name: name.to_sequel_blob)
+            history = db.names.where(name: name.to_sequel_blob)
               .where("value IS NOT NULL").order(:txout_id).map {|n| wrap_name(n) }
             history.select! {|n| n.tx.blk_id }  unless self.class.name =~ /Utxo/ 
             history
           end
 
           def name_by_txout_id txout_id
-            wrap_name(@db[:names][txout_id: txout_id])
+            wrap_name(db.names[txout_id: txout_id])
           end
           alias :get_name_by_txout_id :name_by_txout_id
 

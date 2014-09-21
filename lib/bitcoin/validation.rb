@@ -141,9 +141,9 @@ module Bitcoin::Validation
       return true  if store.height <= 11
       d = store.height
       if ["sequel", "utxo"].include?(store.backend_name)
-        first = store.db[:blk][hash: block.prev_block.reverse.blob]
+        first = store.db.blocks[hash: block.prev_block.reverse.blob]
         times = [first[:time]]
-        (10).times { first = store.db[:blk][hash: first[:prev_hash].blob];
+        (10).times { first = store.db.blocks[hash: first[:prev_hash].blob];
         times << first[:time] }
       else
         first = store.block(block.prev_block.reverse.hth)
@@ -214,9 +214,9 @@ module Bitcoin::Validation
       max_target = Bitcoin.decode_compact_bits(Bitcoin.network[:proof_of_work_limit]).to_i(16)
       return Bitcoin.network[:proof_of_work_limit]  if index == 0
       return prev_block.bits  if (prev_block.height + 1) % retarget != 0
-      last = store.db[:blk][hash: prev_block.hash.htb.blob]
-      first = store.db[:blk][hash: last[:prev_hash].blob]
-      (retarget - 2).times { first = store.db[:blk][hash: first[:prev_hash].blob] }
+      last = store.db.blocks[hash: prev_block.hash.htb.blob]
+      first = store.db.blocks[hash: last[:prev_hash].blob]
+      (retarget - 2).times { first = store.db.blocks[hash: first[:prev_hash].blob] }
 
       nActualTimespan = last[:time] - first[:time]
       nTargetTimespan = retarget * 600

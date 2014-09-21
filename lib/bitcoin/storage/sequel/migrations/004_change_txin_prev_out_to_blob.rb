@@ -5,12 +5,12 @@ Sequel.migration do
     @log.info { "Running migration #{__FILE__}" }
 
     if adapter_scheme == :postgres
-      add_column :txin, :tmp_prev_out, :bytea
-      self[:txin].where.update("tmp_prev_out = prev_out::bytea")
-      drop_column :txin, :prev_out
-      add_column :txin, :prev_out, :bytea, index: true
-      self[:txin].where.update("prev_out = tmp_prev_out")
-      drop_column :txin, :tmp_prev_out
+      add_column @tables[:inputs], :tmp_prev_out, :bytea
+      inputs.where.update("tmp_prev_out = prev_out::bytea")
+      drop_column @tables[:inputs], :prev_out
+      add_column @tables[:inputs], :prev_out, :bytea, index: true
+      inputs.where.update("prev_out = tmp_prev_out")
+      drop_column @tables[:inputs], :tmp_prev_out
     end
 
   end

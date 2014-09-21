@@ -29,26 +29,15 @@ module Bitcoin::Storage::Backends
       @watched_addrs = [] # TODO
     end
 
-    # connect to database
-    def connect
-      super
-    end
-
-    # reset database; delete all data
-    def reset
-      [:blk, :blk_tx, :tx, :txin, :txout, :addr, :addr_txout, :names].each {|table| @db[table].delete }
-      @head = nil
-    end
-
     def add_watched_address address, height = height
       hash160 = Bitcoin.hash160_from_address(address)
-      @db[:addr].insert(hash160: hash160)  unless @db[:addr][hash160: hash160]
+      db.addresses.insert(hash160: hash160)  unless db.addresses[hash160: hash160]
       @watched_addrs << hash160  unless @watched_addrs.include?(hash160)
     end
 
     # persist given block +blk+ to storage.
     def persist_block blk, chain, height, prev_work = 0
-      @db.transaction do
+      db.transaction do
         attrs = {
           hash: blk.hash.htb.blob,
           height: height,
@@ -63,28 +52,29 @@ module Bitcoin::Storage::Backends
           work: (prev_work + blk.block_work).to_s
         }
         attrs[:aux_pow] = blk.aux_pow.to_payload.blob  if blk.aux_pow
-        existing = @db[:blk].filter(hash: blk.hash.htb.blob)
+        existing = db.blocks.filter(hash: blk.hash.htb.blob)
         if existing.any?
           existing.update attrs
           block_id = existing.first[:id]
         else
-          block_id = @db[:blk].insert(attrs)
+          block_id = db.blocks.insert(attrs)
           blk_tx, new_tx, addrs, names = [], [], [], []
 
           # store tx
-          existing_tx = Hash[*@db[:tx].filter(hash: blk.tx.map {|tx| tx.hash.htb.blob }).map { |tx| [tx[:hash].hth, tx[:id]] }.flatten]
+          existing_tx = Hash[*db.transactions.filter(hash: blk.tx.map {|tx| tx.hash.htb.blob })
+                               .map { |tx| [tx[:hash].hth, tx[:id]] }.flatten]
           blk.tx.each.with_index do |tx, idx|
             existing = existing_tx[tx.hash]
             existing ? blk_tx[idx] = existing : new_tx << [tx, idx]
           end
 
-          new_tx_ids = fast_insert(:tx, new_tx.map {|tx, _| tx_data(tx) }, return_ids: true)
+          new_tx_ids = fast_insert(:transactions, new_tx.map {|tx, _| tx_data(tx) }, return_ids: true)
           new_tx_ids.each.with_index {|tx_id, idx| blk_tx[new_tx[idx][1]] = tx_id }
 
-          fast_insert(:blk_tx, blk_tx.map.with_index {|id, idx| { blk_id: block_id, tx_id: id, idx: idx } })
+          fast_insert(:block_transactions, blk_tx.map.with_index {|id, idx| { blk_id: block_id, tx_id: id, idx: idx } })
 
           # store txins
-          fast_insert(:txin, new_tx.map.with_index {|tx, tx_idx|
+          fast_insert(:inputs, new_tx.map.with_index {|tx, tx_idx|
             tx, _ = *tx
             tx.in.map.with_index {|txin, txin_idx|
               p2sh_type = nil
@@ -95,7 +85,7 @@ module Bitcoin::Storage::Backends
 
           # store txouts
           txout_i = 0
-          txout_ids = fast_insert(:txout, new_tx.map.with_index {|tx, tx_idx|
+          txout_ids = fast_insert(:outputs, new_tx.map.with_index {|tx, tx_idx|
             tx, _ = *tx
             tx.out.map.with_index {|txout, txout_idx|
               script_type, a, n = *parse_script(txout, txout_i, tx.hash, txout_idx)
@@ -107,7 +97,7 @@ module Bitcoin::Storage::Backends
           names.each {|i, script| store_name(script, txout_ids[i]) }
         end
         @head = wrap_block(attrs.merge(id: block_id))  if chain == MAIN
-        @db[:blk].where(prev_hash: blk.hash.htb.blob, chain: ORPHAN).each do |b|
+        db.blocks.where(prev_hash: blk.hash.htb.blob, chain: ORPHAN).each do |b|
           log.debug { "connecting orphan #{b[:hash].hth}" }
           begin
             store_block(block(b[:hash].hth))
@@ -120,13 +110,13 @@ module Bitcoin::Storage::Backends
     end
 
     def reorg new_side, new_main
-      @db.transaction do
-        @db[:blk].where(hash: new_side.map {|h| h.htb.blob }).update(chain: SIDE)
+      db.transaction do
+        db.blocks.where(hash: new_side.map {|h| h.htb.blob }).update(chain: SIDE)
         new_main.each do |block_hash|
           unless @config[:skip_validation]
             block(block_hash).validator(self).validate(raise_errors: true)
           end
-          @db[:blk].where(hash: block_hash.htb.blob).update(chain: MAIN)
+          db.blocks.where(hash: block_hash.htb.blob).update(chain: MAIN)
         end
       end
     end
@@ -140,7 +130,7 @@ module Bitcoin::Storage::Backends
       addrs.each do |i, addr|
         hash160 = Bitcoin.hash160_from_address(addr)
         type = Bitcoin.address_type(addr)
-        if existing = @db[:addr][hash160: hash160, type: ADDRESS_TYPES.index(type)]
+        if existing = db.addresses[hash160: hash160, type: ADDRESS_TYPES.index(type)]
           existing_addr[[hash160, type]] = existing[:id]
         end
       end
@@ -160,7 +150,7 @@ module Bitcoin::Storage::Backends
       end
 
       # insert all new addresses
-      new_addr_ids = fast_insert(:addr, new_addrs.map {|hash160_and_type, txout_id|
+      new_addr_ids = fast_insert(:addresses, new_addrs.map {|hash160_and_type, txout_id|
           hash160, type = *hash160_and_type
           { hash160: hash160, type: ADDRESS_TYPES.index(type) }
         }, return_ids: true)
@@ -174,7 +164,7 @@ module Bitcoin::Storage::Backends
       end
 
       # insert addr/txout links
-      fast_insert(:addr_txout, addr_txouts.map {|addr_id, txout_id| { addr_id: addr_id, txout_id: txout_id }})
+      fast_insert(:address_outputs, addr_txouts.map {|addr_id, txout_id| { addr_id: addr_id, txout_id: txout_id }})
     end
 
     # prepare transaction data for storage
@@ -194,10 +184,10 @@ module Bitcoin::Storage::Backends
       return  if validate && tx.is_coinbase?
       @log.debug { "Storing tx #{tx.hash} (#{tx.to_payload.bytesize} bytes)" }
       tx.validator(self).validate(raise_errors: true)  if validate
-      @db.transaction do
-        transaction = @db[:tx][hash: tx.hash.htb.blob]
+      db.transaction do
+        transaction = db.transactions[hash: tx.hash.htb.blob]
         return transaction[:id]  if transaction
-        tx_id = @db[:tx].insert(tx_data(tx))
+        tx_id = db.transactions.insert(tx_data(tx))
         tx.in.each_with_index {|i, idx| store_txin(tx_id, i, idx)}
         tx.out.each_with_index {|o, idx| store_txout(tx_id, o, idx, tx.hash)}
         tx_id
@@ -219,7 +209,7 @@ module Bitcoin::Storage::Backends
 
     # store input +txin+
     def store_txin(tx_id, txin, idx, p2sh_type = nil)
-      @db[:txin].insert(txin_data(tx_id, txin, idx, p2sh_type))
+      db.inputs.insert(txin_data(tx_id, txin, idx, p2sh_type))
     end
 
     # prepare txout data for storage
@@ -232,7 +222,7 @@ module Bitcoin::Storage::Backends
     # store output +txout+
     def store_txout(tx_id, txout, idx, tx_hash = "")
       script_type, addrs, names = *parse_script(txout, idx, tx_hash, idx)
-      txout_id = @db[:txout].insert(txout_data(tx_id, txout, idx, script_type))
+      txout_id = db.outputs.insert(txout_data(tx_id, txout, idx, script_type))
       persist_addrs addrs.map {|i, h| [txout_id, h] }
       names.each {|i, script| store_name(script, txout_id) }
       txout_id
@@ -242,41 +232,41 @@ module Bitcoin::Storage::Backends
     # TODO: also delete blk_tx mapping
     def delete_tx(hash)
       log.debug { "Deleting tx #{hash} since all its outputs are spent" }
-      @db.transaction do
+      db.transaction do
         tx = tx(hash)
-        tx.in.each {|i| @db[:txin].where(id: i.id).delete }
-        tx.out.each {|o| @db[:txout].where(id: o.id).delete }
-        @db[:tx].where(id: tx.id).delete
+        tx.in.each {|i| db.inputs.where(id: i.id).delete }
+        tx.out.each {|o| db.outputs.where(id: o.id).delete }
+        db.transactions.where(id: tx.id).delete
       end
     end
 
     # check if block +blk_hash+ exists in the main chain
     def has_block(blk_hash)
-      !!@db[:blk].where(hash: blk_hash.htb.blob, chain: 0).get(1)
+      !!db.blocks.where(hash: blk_hash.htb.blob, chain: 0).get(1)
     end
 
     # check if transaction +tx_hash+ exists
     def has_tx(tx_hash)
-      !!@db[:tx].where(hash: tx_hash.htb.blob).get(1)
+      !!db.transactions.where(hash: tx_hash.htb.blob).get(1)
     end
 
     # get head block (highest block from the MAIN chain)
     def head
       (@config[:cache_head] && @head) ? @head :
-        @head = wrap_block(@db[:blk].filter(chain: MAIN).order(:height).last)
+        @head = wrap_block(db.blocks.filter(chain: MAIN).order(:height).last)
     end
     alias :get_head :head
 
     def head_hash
       (@config[:cache_head] && @head) ? @head.hash :
-        @head = @db[:blk].filter(chain: MAIN).order(:height).last[:hash].hth
+        @head = db.blocks.filter(chain: MAIN).order(:height).last[:hash].hth
     end
     alias :get_head_hash :head_hash
 
     # get height of MAIN chain
     def height
       height = (@config[:cache_head] && @head) ? @head.height :
-        @height = @db[:blk].filter(chain: MAIN).order(:height).last[:height] rescue nil
+        @height = db.blocks.filter(chain: MAIN).order(:height).last[:height] rescue nil
 
       return -1  unless height
       height
@@ -285,61 +275,61 @@ module Bitcoin::Storage::Backends
 
     # get block for given +blk_hash+
     def block(blk_hash)
-      wrap_block(@db[:blk][hash: blk_hash.htb.blob])
+      wrap_block(db.blocks[hash: blk_hash.htb.blob])
     end
     alias :get_block :block
 
     # get block by given +height+
     def block_at_height(height)
-      wrap_block(@db[:blk][height: height, chain: MAIN])
+      wrap_block(db.blocks[height: height, chain: MAIN])
     end
     alias :get_block_by_depth :block_at_height
 
     # get block by given +prev_hash+
     def block_by_prev_hash(prev_hash)
-      wrap_block(@db[:blk][prev_hash: prev_hash.htb.blob, chain: MAIN])
+      wrap_block(db.blocks[prev_hash: prev_hash.htb.blob, chain: MAIN])
     end
     alias :get_block_by_prev_hash :block_by_prev_hash
 
     # get block by given +tx_hash+
     def block_by_tx(tx_hash)
-      tx = @db[:tx][hash: tx_hash.htb.blob]
+      tx = db.transactions[hash: tx_hash.htb.blob]
       return nil  unless tx
-      parent = @db[:blk_tx][tx_id: tx[:id]]
+      parent = db.block_transactions[tx_id: tx[:id]]
       return nil  unless parent
-      wrap_block(@db[:blk][id: parent[:blk_id]])
+      wrap_block(db.blocks[id: parent[:blk_id]])
     end
     alias :get_block_by_tx :block_by_tx
 
     # get block by given +id+
     def block_by_id(block_id)
-      wrap_block(@db[:blk][id: block_id])
+      wrap_block(db.blocks[id: block_id])
     end
     alias :get_block_by_id :block_by_id
 
     # get block id in the main chain by given +tx_id+
     def block_id_for_tx_id(tx_id)
-      @db[:blk_tx].join(:blk, id: :blk_id)
+      db.block_transactions.join(TABLES[:blocks], id: :blk_id)
         .where(tx_id: tx_id, chain: MAIN).first[:blk_id] rescue nil
     end
     alias :get_block_id_for_tx_id :block_id_for_tx_id
 
     # get transaction for given +tx_hash+
     def tx(tx_hash)
-      wrap_tx(@db[:tx][hash: tx_hash.htb.blob])
+      wrap_tx(db.transactions[hash: tx_hash.htb.blob])
     end
     alias :get_tx :tx
 
     # get array of txes with given +tx_hashes+
     def txs(tx_hashes)
-      txs = db[:tx].filter(hash: tx_hashes.map{|h| h.htb.blob})
+      txs = db.transactions.filter(hash: tx_hashes.map{|h| h.htb.blob})
       txs_ids = txs.map {|tx| tx[:id]}
       return [] if txs_ids.empty?
 
       # we fetch all needed block ids, inputs and outputs to avoid doing number of queries propertional to number of transactions
-      block_ids = Hash[*db[:blk_tx].join(:blk, id: :blk_id).filter(tx_id: txs_ids, chain: 0).map {|b| [b[:tx_id], b[:blk_id]] }.flatten]
-      inputs = db[:txin].filter(tx_id: txs_ids).order(:tx_idx).map.group_by{ |txin| txin[:tx_id] }
-      outputs = db[:txout].filter(tx_id: txs_ids).order(:tx_idx).map.group_by{ |txout| txout[:tx_id] }
+      block_ids = Hash[*db.block_transactions.join(TABLES[:blocks], id: :blk_id).filter(tx_id: txs_ids, chain: 0).map {|b| [b[:tx_id], b[:blk_id]] }.flatten]
+      inputs = db.inputs.filter(tx_id: txs_ids).order(:tx_idx).map.group_by{ |txin| txin[:tx_id] }
+      outputs = db.outputs.filter(tx_id: txs_ids).order(:tx_idx).map.group_by{ |txout| txout[:tx_id] }
 
       txs.map {|tx| wrap_tx(tx, block_ids[tx[:id]], inputs: inputs[tx[:id]], outputs: outputs[tx[:id]]) }
     end
@@ -347,7 +337,7 @@ module Bitcoin::Storage::Backends
 
     # get transaction by given +tx_id+
     def tx_by_id(tx_id)
-      wrap_tx(@db[:tx][id: tx_id])
+      wrap_tx(db.transactions[id: tx_id])
     end
     alias :get_tx_by_id :tx_by_id
 
@@ -355,45 +345,45 @@ module Bitcoin::Storage::Backends
     # +tx_hash+ with index +txout_idx+
     def txin_for_txout(tx_hash, txout_idx)
       tx_hash = tx_hash.htb_reverse.blob
-      wrap_txin(@db[:txin][prev_out: tx_hash, prev_out_index: txout_idx])
+      wrap_txin(db.inputs[prev_out: tx_hash, prev_out_index: txout_idx])
     end
     alias :get_txin_for_txout :txin_for_txout
 
     # optimized version of Storage#txins_for_txouts
     def txins_for_txouts(txouts)
-      @db[:txin].filter([:prev_out, :prev_out_index] => txouts.map{|tx_hash, tx_idx| [tx_hash.htb_reverse.blob, tx_idx]}).map{|i| wrap_txin(i)}
+      db.inputs.filter([:prev_out, :prev_out_index] => txouts.map{|tx_hash, tx_idx| [tx_hash.htb_reverse.blob, tx_idx]}).map{|i| wrap_txin(i)}
     end
     alias :get_txins_for_txouts :txins_for_txouts
 
     def txout_by_id(txout_id)
-      wrap_txout(@db[:txout][id: txout_id])
+      wrap_txout(db.outputs[id: txout_id])
     end
     alias :get_txout_by_id :txout_by_id
 
     # get corresponding Models::TxOut for +txin+
     def txout_for_txin(txin)
-      tx = @db[:tx][hash: txin.prev_out.reverse.blob]
+      tx = db.transactions[hash: txin.prev_out.reverse.blob]
       return nil  unless tx
-      wrap_txout(@db[:txout][tx_idx: txin.prev_out_index, tx_id: tx[:id]])
+      wrap_txout(db.outputs[tx_idx: txin.prev_out_index, tx_id: tx[:id]])
     end
     alias :get_txout_for_txin :txout_for_txin
 
     # get all Models::TxOut matching given +script+
     def txouts_for_pk_script(script)
-      txouts = @db[:txout].filter(pk_script: script.blob).order(:id)
+      txouts = db.outputs.filter(pk_script: script.blob).order(:id)
       txouts.map{|txout| wrap_txout(txout)}
     end
     alias :get_txouts_for_pk_script :txouts_for_pk_script
 
     # get all Models::TxOut matching given +hash160+
     def txouts_for_hash160(hash160, type = :hash160, unconfirmed = false)
-      addr = @db[:addr][hash160: hash160, type: ADDRESS_TYPES.index(type)]
+      addr = db.addresses[hash160: hash160, type: ADDRESS_TYPES.index(type)]
       return []  unless addr
-      txouts = @db[:addr_txout].where(addr_id: addr[:id])
-        .map{|t| @db[:txout][id: t[:txout_id]] }
+      txouts = db.address_outputs.where(addr_id: addr[:id])
+        .map{|t| db.outputs[id: t[:txout_id]] }
         .map{|o| wrap_txout(o) }
       unless unconfirmed
-        txouts.select!{|o| @db[:blk][id: o.tx.blk_id][:chain] == MAIN rescue false }
+        txouts.select!{|o| db.blocks[id: o.tx.blk_id][:chain] == MAIN rescue false }
       end
       txouts
     end
@@ -401,15 +391,15 @@ module Bitcoin::Storage::Backends
 
     # TODO: move into Namecoin (?)
     def txouts_for_name_hash(hash)
-      @db[:names].filter(hash: hash).map {|n| txout_by_id(n[:txout_id]) }
+      db.names.filter(hash: hash).map {|n| txout_by_id(n[:txout_id]) }
     end
     alias :get_txouts_for_name_hash :txouts_for_name_hash
 
     # Grab the position of a tx in a given block
     def idx_from_tx_hash(tx_hash)
-      tx = @db[:tx][hash: tx_hash.htb.blob]
+      tx = db.transactions[hash: tx_hash.htb.blob]
       return nil  unless tx
-      parent = @db[:blk_tx][tx_id: tx[:id]]
+      parent = db.block_transactions[tx_id: tx[:id]]
       return nil  unless parent
       return parent[:idx]
     end
@@ -432,11 +422,12 @@ module Bitcoin::Storage::Backends
 
       blk.aux_pow = Bitcoin::P::AuxPow.new(block[:aux_pow])  if block[:aux_pow]
 
-      blk_tx = db[:blk_tx].filter(blk_id: block[:id]).join(:tx, id: :tx_id).order(:idx)
+      blk_tx = db.block_transactions.filter(blk_id: block[:id])
+        .join(TABLES[:transactions], id: :tx_id).order(:idx)
 
       # fetch inputs and outputs for all transactions in the block to avoid additional queries for each transaction
-      inputs = db[:txin].filter(tx_id: blk_tx.map{ |tx| tx[:id] }).order(:tx_idx).map.group_by{ |txin| txin[:tx_id] }
-      outputs = db[:txout].filter(tx_id: blk_tx.map{ |tx| tx[:id] }).order(:tx_idx).map.group_by{ |txout| txout[:tx_id] }
+      inputs = db.inputs.filter(tx_id: blk_tx.map{ |tx| tx[:id] }).order(:tx_idx).map.group_by{ |txin| txin[:tx_id] }
+      outputs = db.outputs.filter(tx_id: blk_tx.map{ |tx| tx[:id] }).order(:tx_idx).map.group_by{ |txout| txout[:tx_id] }
 
       blk.tx = blk_tx.map { |tx| wrap_tx(tx, block[:id], inputs: inputs[tx[:id]], outputs: outputs[tx[:id]]) }
 
@@ -448,16 +439,16 @@ module Bitcoin::Storage::Backends
     def wrap_tx(transaction, block_id = nil, prefetched = {})
       return nil  unless transaction
 
-      block_id ||= @db[:blk_tx].join(:blk, id: :blk_id)
+      block_id ||= db.block_transactions.join(TABLES[:blocks], id: :blk_id)
         .where(tx_id: transaction[:id], chain: 0).first[:blk_id] rescue nil
 
       data = {id: transaction[:id], blk_id: block_id, size: transaction[:tx_size], idx: transaction[:idx]}
       tx = Bitcoin::Storage::Models::Tx.new(self, data)
 
-      inputs = prefetched[:inputs] || db[:txin].filter(tx_id: transaction[:id]).order(:tx_idx)
+      inputs = prefetched[:inputs] || db.inputs.filter(tx_id: transaction[:id]).order(:tx_idx)
       inputs.each { |i| tx.add_in(wrap_txin(i)) }
 
-      outputs = prefetched[:outputs] || db[:txout].filter(tx_id: transaction[:id]).order(:tx_idx)
+      outputs = prefetched[:outputs] || db.outputs.filter(tx_id: transaction[:id]).order(:tx_idx)
       outputs.each { |o| tx.add_out(wrap_txout(o)) }
       tx.ver = transaction[:version]
       tx.lock_time = transaction[:lock_time]
@@ -537,36 +528,37 @@ module Bitcoin::Storage::Backends
     # ** return_ids - if true table of inserted rows ids will be returned
     def fast_insert(table, data, opts={})
       return [] if data.empty?
+      table_name = TABLES[table]
       # For postgres we are using COPY which is much faster than separate INSERTs
-      if @db.adapter_scheme == :postgres
+      if db.adapter_scheme == :postgres
 
         columns = data.first.keys
         if opts[:return_ids]
           ids = db.transaction do
             # COPY does not return ids, so we set ids manually based on current sequence value
             # We lock the table to avoid inserts that could happen in the middle of COPY
-            db.execute("LOCK TABLE #{table} IN SHARE UPDATE EXCLUSIVE MODE")
-            first_id = db.fetch("SELECT nextval('#{table}_id_seq') AS id").first[:id]
+            db.execute("LOCK TABLE #{table_name} IN SHARE UPDATE EXCLUSIVE MODE")
+            first_id = db.fetch("SELECT nextval('#{table_name}_id_seq') AS id").first[:id]
 
             # Blobs need to be represented in the hex form (yes, we do hth on them earlier, could be improved
             # \\x is the format of bytea as hex encoding in postgres
             csv = data.map.with_index{|x,i| [first_id + i, columns.map{|c| x[c].kind_of?(Sequel::SQL::Blob) ? "\\x#{x[c].hth}" : x[c]}].join(',')}.join("\n")
-            db.copy_into(table, columns: [:id] + columns, format: :csv, data: csv)
+            db.copy_into(table_name, columns: [:id] + columns, format: :csv, data: csv)
             last_id = first_id + data.size - 1
 
             # Set sequence value to max id, last arg true means it will be incremented before next value
-            db.execute("SELECT setval('#{table}_id_seq', #{last_id}, true)")
+            db.execute("SELECT setval('#{table_name}_id_seq', #{last_id}, true)")
             (first_id..last_id).to_a # returned ids
           end
         else
           csv = data.map{|x| columns.map{|c| x[c].kind_of?(Sequel::SQL::Blob) ? "\\x#{x[c].hth}" : x[c]}.join(',')}.join("\n")
-          @db.copy_into(table, format: :csv, columns: columns, data: csv)
+          db.copy_into(table_name, format: :csv, columns: columns, data: csv)
         end
 
       else
 
         # Life is simple when your are not optimizing ;)
-        @db[table].insert_multiple(data)
+        db[table_name].insert_multiple(data)
 
       end
     end

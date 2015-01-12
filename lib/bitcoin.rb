@@ -275,8 +275,7 @@ module Bitcoin
     def mrkl_branch_root(branch, target, idx)
       branch.each do |hash|
         a, b = *( idx & 1 == 0 ? [target, hash] : [hash, target] )
-        idx >>= 1;
-	target = bitcoin_mrkl( a, b )
+        idx >>= 1; target = bitcoin_mrkl( a, b )
       end
       target
     end
@@ -782,34 +781,16 @@ module Bitcoin
     })
 
   NETWORKS[:dogecoin_testnet] = NETWORKS[:dogecoin].merge({
-      project: :dogecoin,
       magic_head: "\xfc\xc1\xb7\xdc",
       address_versions: { pubkey_hash: "71", script_hash: "c4" },
       privkey_version: "f1",
       extended_privkey_version: "0432a243",
       extended_pubkey_version: "0432a9a8",
       default_port: 44556,
-      protocol_version: 70003,
-      min_tx_fee: COIN,
-      min_relay_tx_fee: COIN,
-      dust: COIN,
-      per_dust_fee: true,
-      free_tx_bytes: 26_000,
-      coinbase_maturity: 30,
-      coinbase_maturity_new: 240,
-      reward_base: 500_000 * COIN,
-      reward_halving: 100_000,
-      retarget_interval: 240,
-      retarget_time: 14400, # 4 hours
-      retarget_time_new: 60, # 1 minute
-      target_spacing: 60, # block interval
-      max_money: 100_000_000_000 * COIN,
       dns_seeds: [ 
         "testdoge-seed.lionservers.de",
       ],
       genesis_hash: "bb0a78264637406b6360aad926284d544d7049f45189db5664f3c4d07350559e",
-      proof_of_work_limit: 0x1e0fffff,
-      alert_pubkeys: [],
       known_nodes: [
 		    "localhost",
         "testnets.chain.so", 
@@ -817,11 +798,6 @@ module Bitcoin
       checkpoints: {
         546 => "ac537cfeda975e45040e9938d08e40a16e0fbd6388d02d9b4928b8ae0108c626",
       },
-      auxpow_chain_id: 0x0062,
-      # Doge-specific hard-fork cutoffs
-      difficulty_change_block: 145000,
-      maturity_change_block: 145000,
-      reset_target_block: 157500,
       auxpow_start_block: 158100
     })
 

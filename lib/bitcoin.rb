@@ -833,6 +833,7 @@ module Bitcoin
 
   NETWORKS[:namecoin_testnet] = NETWORKS[:namecoin].merge({
       magic_head: "\xFA\xBF\xB5\xFE",
+      address_versions: { pubkey_hash: "6f", script_hash: "c4" },
       default_port: 18334,
       genesis_hash: "00000007199508e34a9ff81e6ec0c477a4cccff2a4767a8eee39c11db367b008",
       dns_seeds: [
@@ -852,7 +853,6 @@ module Bitcoin
       dns_seeds: [], known_nodes: [],
       proof_of_work_limit: 0x207fffff,
       checkpoints: { },
-      address_versions: { pubkey_hash: "6f", script_hash: "c4" },
       privkey_version: "ef",
     })
 

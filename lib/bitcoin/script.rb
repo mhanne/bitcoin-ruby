@@ -731,7 +731,7 @@ class Bitcoin::Script
   # returns a raw binary script of the form:
   #  <m> <pubkey> [<pubkey> ...] <n_pubkeys> OP_CHECKMULTISIG
   def self.to_multisig_script(m, *pubkeys)
-    raise "invalid m-of-n number" unless [m, pubkeys.size].all?{|i| (0..20).include?(i) }
+    raise "invalid m-of-n number" if m > 20 || pubkeys.size > 20
     raise "invalid m-of-n number" if pubkeys.size < m
     pubs = pubkeys.map{|pk| pack_pushdata([pk].pack("H*")) }
 

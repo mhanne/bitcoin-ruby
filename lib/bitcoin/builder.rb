@@ -117,10 +117,7 @@ module Bitcoin
     #      i.prev_out prev_tx, 0
     #      i.signature_key key
     #    end
-    #    t.output do |o|
-    #      o.value 12345 # 0.00012345 BTC
-    #      o.to key.addr
-    #    end
+    #    t.output 12345, key.addr  # 0.00012345 BTC
     #  end
     #
     # Signs every input that has a signature key and where the previous outputs
@@ -428,17 +425,26 @@ module Bitcoin
 
     # Create a Bitcoin::Protocol::TxOut used by TxBuilder#output.
     #
+    # Send given amount to address of default type (pubkey_hash/p2pkh):
     #  t.output 12345, address
+    #
+    # Send given amount to a p2sh-type address:
     #  t.output 12345, p2sh_address, :script_hash
     #
-    #  t.output {|o| o.value 12345; o.to address }
+    # Alternate form, passing amount and recipient separately:
+    #  t.output do |o|
+    #    o.value 12345
+    #    o.to address
+    #  end
     #
+    # Create an OP_RETURN-type output storing up to 80 bytes of data (expected in hex encoding):
+    #  t.output {|o| o.to "deadbeef", :op_return }
+    #
+    # The .to method is just a shortcut, you can create a custom script like this:
     #  t.output do |o|
     #    o.value 12345
     #    o.script {|s| s.recipient address }
     #  end
-    #
-    #  t.output {|o| o.to "deadbeef", :op_return }
     class TxOutBuilder
       attr_reader :txout
 
